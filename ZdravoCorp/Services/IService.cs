@@ -11,6 +11,6 @@ namespace ZdravoCorp.Services
         IEnumerable<T> GetAll();
         T? GetById(int id);
         void Update(T entity);
-        void Delete(int id);
+        void Delete(T entity);
     }
 }
