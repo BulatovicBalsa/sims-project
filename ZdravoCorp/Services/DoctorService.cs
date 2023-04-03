@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using ZdravoCorp.Models.Doctors;
 using ZdravoCorp.Repositories;
 
-namespace ZdravoCorp.Models.Services
+namespace ZdravoCorp.Services
 {
-    public class DoctorService: IService<Doctor>
+    internal class DoctorService: IService<Doctor>
     {
         private readonly DoctorRepository _doctorRepository;
 
