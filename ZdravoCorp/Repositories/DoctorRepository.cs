@@ -37,7 +37,6 @@ namespace ZdravoCorp.Repositories
         public void Add(Doctor entity)
         {
             var records = GetAll().ToList();
-            entity.Id = records.Any() ? records.Max(x => x.Id) + 1 : 1;
             records.Add(entity);
             using var writer = new StreamWriter(_csvFilePath);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
