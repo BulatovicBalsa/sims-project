@@ -13,13 +13,17 @@ namespace ZdravoCorp.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string JMBG { get; set; }
-        public Person(string firstName, string lastName, string jmbg)
+        public Profile Profile { get; set; }
+        public Person(string firstName, string lastName, string jmbg, string username, string password)
         {
             Id = freeId;
             freeId++;
             FirstName = firstName;
             LastName = lastName;
             JMBG = jmbg;
+            Profile = new Profile(username, password);
         }
+
+        
     }
 }
