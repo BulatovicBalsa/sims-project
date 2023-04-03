@@ -7,4 +7,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Managers\" />
+    <Folder Include="Models\Nurses\" />
+  </ItemGroup>
+
 </Project>
