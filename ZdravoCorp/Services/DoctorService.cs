@@ -8,7 +8,7 @@ using ZdravoCorp.Repositories;
 
 namespace ZdravoCorp.Services
 {
-    internal class DoctorService: IService<Doctor>
+    public class DoctorService: IService<Doctor>
     {
         private readonly DoctorRepository _doctorRepository;
 
