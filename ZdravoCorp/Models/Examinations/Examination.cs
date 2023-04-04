@@ -10,7 +10,9 @@ namespace ZdravoCorp.Models
 {
     public class Examination
     {
-        const int DURATION = 15;
+        public const int DURATION = 15;
+        static int id = 0;
+        public int Id { get; set; }
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
         public DateTime Start { get; set; }
@@ -23,6 +25,22 @@ namespace ZdravoCorp.Models
             Patient = patient;
             Start = start;
             IsOperation = isOperation;
+            Id = id;
+            id++;
+        }
+
+        public bool DoesInterfereWith(Examination otherExamination)
+        {
+            return DoesInterfereWith(otherExamination.Start);
+        }
+
+        public bool DoesInterfereWith(DateTime start)
+        {
+            DateTime end = start.AddMinutes(DURATION);
+            bool startOverlap = this.End > start;
+            bool endOverlap = this.Start < end;
+
+            return startOverlap && endOverlap;
         }
     }
 }
