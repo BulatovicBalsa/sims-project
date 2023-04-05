@@ -11,7 +11,7 @@ using ZdravoCorp.Models.Examinations;
 
 namespace ZdravoCorp.Repositories
 {
-    internal class ExaminationChangesTrackerRepository : IRepository<PatientExaminationLog>
+    public class ExaminationChangesTrackerRepository : IRepository<PatientExaminationLog>
     {
         private readonly string _csvFilePath;
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZdravoCorp.Models;
 using ZdravoCorp.Models.Doctors;
+using ZdravoCorp.Models.Examinations;
 using ZdravoCorp.Models.Patients;
 using ZdravoCorp.Repositories;
 
@@ -19,6 +20,10 @@ namespace ZdravoCorp.Services
 
         private readonly PatientRepository _patientRepository;
 
+        public PatientService(PatientRepository patientRepository)
+        {
+            _patientRepository = patientRepository;
+        }
         public void Delete(Patient patient, bool isPatient)
         {
             _patientRepository.Delete(patient);

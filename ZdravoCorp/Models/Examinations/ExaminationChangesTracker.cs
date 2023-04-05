@@ -8,11 +8,15 @@ using ZdravoCorp.Repositories;
 
 namespace ZdravoCorp.Models.Examinations
 {
-    internal class ExaminationChangesTracker
+    public class ExaminationChangesTracker
     {
-        private List<PatientExaminationLog> logs;
 
         private readonly ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;    
+
+        public ExaminationChangesTracker(ExaminationChangesTrackerRepository examinationChangesTrackerRepository)
+        {
+            _examinationChangesTrackerRepository = examinationChangesTrackerRepository;
+        }
 
         public void Add(PatientExaminationLog log)
         {

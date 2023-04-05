@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZdravoCorp.Models;
 using ZdravoCorp.Models.Doctors;
+using ZdravoCorp.Models.Examinations;
 using ZdravoCorp.Models.Patients;
 using ZdravoCorp.Repositories;
 
@@ -13,10 +14,12 @@ namespace ZdravoCorp.Services
     public class ExaminationService: IService<Examination>
     {
         private readonly ExaminationRepository _examinationRepository;
+        private readonly ExaminationChangesTracker _examinationChangesTracker;
 
-        public ExaminationService(ExaminationRepository ExaminationRepository)
+        public ExaminationService(ExaminationRepository ExaminationRepository, ExaminationChangesTracker ExaminationChangesTracker)
         {
             _examinationRepository = ExaminationRepository;
+            _examinationChangesTracker = ExaminationChangesTracker;
         }
 
         public IEnumerable<Examination> GetAll()
@@ -29,10 +32,15 @@ namespace ZdravoCorp.Services
             return _examinationRepository.GetById(id);
         }
 
-        public void Add(Examination examination)
+        public void Add(Examination examination, bool isPatient)
         {
             if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
             if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (isPatient)
+            {
+                PatientExaminationLog log = new(examination.Patient, true);
+                _examinationChangesTracker.Add(log);
+            }
             _examinationRepository.Add(examination);
         }
 
@@ -40,14 +48,28 @@ namespace ZdravoCorp.Services
         {
             if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
             if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
-            if (examination.Start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT) && isPatient)
-                throw new Exception("It is not possible to schedule an appointment less than 24 hours in advance.");
-
+            if (isPatient)
+            {
+                ValidateExaminationTiming(examination.Start);
+                ValidateMaxChangesOrDeletesLast30Days(examination.Patient);
+                ValidateMaxAllowedExaminationsLast30Days(examination.Patient);
+                PatientExaminationLog log = new(examination.Patient, false);
+                _examinationChangesTracker.Add(log);
+            }
             _examinationRepository.Update(examination);
+            
         }
 
         public void Delete(Examination examination,bool isPatient)
         {
+            if (isPatient)
+            {
+                ValidateExaminationTiming(examination.Start);
+                ValidateMaxChangesOrDeletesLast30Days(examination.Patient);
+                ValidateMaxAllowedExaminationsLast30Days(examination.Patient);
+                PatientExaminationLog log = new(examination.Patient, false);
+                _examinationChangesTracker.Add(log);
+            }
             _examinationRepository.Delete(examination);
         }
 
@@ -97,6 +119,29 @@ namespace ZdravoCorp.Services
             bool isAvailable = !allExaminations.Any(examination => examination.DoesInterfereWith(start));
 
             return isAvailable;
+        }
+        private void ValidateExaminationTiming(DateTime start)
+        {
+            if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT))
+            {
+                throw new InvalidOperationException("It is not possible to schedule an appointment less than 24 hours in advance.");
+            }
+        }
+
+        private void ValidateMaxChangesOrDeletesLast30Days(Patient patient)
+        {
+            if (_examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(patient) > Patient.MAX_CHANGES_OR_DELETES_LAST_30_DAYS)
+            {
+                throw new InvalidOperationException("Patient made too many changes in last 30 days");
+            }
+        }
+
+        private void ValidateMaxAllowedExaminationsLast30Days(Patient patient)
+        {
+            if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) > Patient.MAX_ALLOWED_APPOINTMENTS_LAST_30_DAYS)
+            {
+                throw new InvalidOperationException("Patient made too many examinations in last 30 days");
+            }
         }
 
     }

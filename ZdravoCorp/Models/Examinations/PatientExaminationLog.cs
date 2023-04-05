@@ -7,16 +7,16 @@ using ZdravoCorp.Models.Patients;
 
 namespace ZdravoCorp.Models.Examinations
 {
-    internal class PatientExaminationLog
+    public class PatientExaminationLog
     {
         public Patient Patient { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; }
         public bool IsCreationLog { get; set; } 
 
-        public PatientExaminationLog(Patient patient, DateTime timestamp,bool isCreationLog)
+        public PatientExaminationLog(Patient patient,bool isCreationLog)
         {
             Patient = patient;
-            Timestamp = timestamp;
+            Timestamp = DateTime.Now;
             IsCreationLog = isCreationLog;
         }
 
