@@ -19,9 +19,9 @@ namespace ZdravoCorp.Services
 
         private readonly PatientRepository _patientRepository;
 
-        public void Delete(Patient item)
+        public void Delete(Patient patient, bool isPatient)
         {
-            _patientRepository.Delete(item);
+            _patientRepository.Delete(patient);
         }
 
         public IEnumerable<Patient> GetAll()
@@ -34,25 +34,14 @@ namespace ZdravoCorp.Services
             return _patientRepository.GetById(id);
         }
 
-        public void Update(Patient item)
+        public void Update(Patient patient, bool isPatient)
         {
-            _patientRepository.Update(item); 
+            _patientRepository.Update(patient); 
         }
 
-        public void Add(Patient item)
+        public void Add(Patient patient)
         {
-            _patientRepository.Add(item);
-        }
-
-        public void MakeAppointment(Patient patient,Doctor doctor,DateTime start)
-        {
-            if (patient.IsBlocked) throw new Exception("Patient profile is blocked");
-
-            Examination examination = new(doctor,patient,false,start);
-
-            if (examination.Start < DateTime.Now.AddDays(MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT))
-                throw new Exception("It is not possible to schedule an appointment less than 24 hours in advance.");
-
+            _patientRepository.Add(patient);
         }
 
         

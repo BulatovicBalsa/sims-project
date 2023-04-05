@@ -11,7 +11,7 @@ using ZdravoCorp.Models.Examinations;
 
 namespace ZdravoCorp.Repositories
 {
-    internal class ExaminationChangesTrackerRepository : IRepository<ExaminationChangesTracker>
+    internal class ExaminationChangesTrackerRepository : IRepository<PatientExaminationLog>
     {
         private readonly string _csvFilePath;
 
@@ -20,34 +20,33 @@ namespace ZdravoCorp.Repositories
             _csvFilePath = csvFilePath;
         }
 
-        public void Add(ExaminationChangesTracker examinationChangesTracker)
+        public void Add(PatientExaminationLog patientExaminationLog)
         {
             var records = GetAll().ToList();
-            records.Add(examinationChangesTracker);
+            records.Add(patientExaminationLog);
             using var writer = new StreamWriter(_csvFilePath);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             csv.WriteRecords(records);
         }
-
-        public void Delete(ExaminationChangesTracker examinationChangesTracker)
-        {
-            var records = GetAll().ToList();
-            //TO DO
-        }
-
-        public IEnumerable<ExaminationChangesTracker> GetAll()
+        public IEnumerable<PatientExaminationLog> GetAll()
         {
             using var reader = new StreamReader(_csvFilePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-            return csv.GetRecords<ExaminationChangesTracker>().ToList();
+            return csv.GetRecords<PatientExaminationLog>().ToList();
         }
 
-        public ExaminationChangesTracker? GetById(int id)
+
+        public void Delete(PatientExaminationLog patientExaminationLog)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ExaminationChangesTracker examinationChangesTracker)
+        public PatientExaminationLog? GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(PatientExaminationLog patientExaminationLog)
         {
             throw new NotImplementedException();
         }
