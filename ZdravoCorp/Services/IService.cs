@@ -10,7 +10,7 @@ namespace ZdravoCorp.Services
     {
         IEnumerable<T> GetAll();
         T? GetById(int id);
-        void Update(T entity);
-        void Delete(T entity);
+        void Update(T entity, bool isPatient);
+        void Delete(T entity, bool isPatient);
     }
 }

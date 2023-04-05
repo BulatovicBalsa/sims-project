@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZdravoCorp.Models;
 using ZdravoCorp.Models.Doctors;
+using ZdravoCorp.Models.Patients;
 using ZdravoCorp.Repositories;
 
 namespace ZdravoCorp.Services
@@ -28,26 +29,35 @@ namespace ZdravoCorp.Services
             return _examinationRepository.GetById(id);
         }
 
-        public void Add(Examination item)
+        public void Add(Examination examination)
         {
-            if (!IsFree(item.Doctor, item.Start)) throw new Exception("Doctor is busy");
-            // TODO: check if patient is free
-            _examinationRepository.Add(item);
+            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            _examinationRepository.Add(examination);
         }
 
-        public void Update(Examination item)
+        public void Update(Examination examination, bool isPatient)
         {
-            _examinationRepository.Update(item);
+            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (examination.Start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT) && isPatient)
+                throw new Exception("It is not possible to schedule an appointment less than 24 hours in advance.");
+
+            _examinationRepository.Update(examination);
         }
 
-        public void Delete(Examination item)
+        public void Delete(Examination examination,bool isPatient)
         {
-            _examinationRepository.Delete(item);
+            _examinationRepository.Delete(examination);
         }
 
         public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime requestedDate)
         {
             return _getAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
+        }
+        public List<Examination> GetExaminationsForDate(Patient patient, DateTime requestedDate)
+        {
+            return _getAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
         }
 
         public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor) 
@@ -65,9 +75,25 @@ namespace ZdravoCorp.Services
             return doctorExaminations;
         }
 
+        private List<Examination> _getAll(Patient patient)
+        {
+            List<Examination> patientExaminations = _examinationRepository.GetAll()
+            .Where(appointment => appointment.Patient.Equals(patient))
+            .ToList();
+            return patientExaminations;
+        }
+
         public bool IsFree(Doctor doctor, DateTime start)
         {
             var allExaminations = _getAll(doctor);
+            bool isAvailable = !allExaminations.Any(examination => examination.DoesInterfereWith(start));
+
+            return isAvailable;
+        }
+
+        public bool IsFree(Patient patient, DateTime start)
+        {
+            var allExaminations = _getAll(patient);
             bool isAvailable = !allExaminations.Any(examination => examination.DoesInterfereWith(start));
 
             return isAvailable;

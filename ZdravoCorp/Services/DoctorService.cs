@@ -27,19 +27,19 @@ namespace ZdravoCorp.Services
             return _doctorRepository.GetById(id);
         }
 
-        public void Add(Doctor item)
+        public void Add(Doctor doctor)
         {
-            _doctorRepository.Add(item);
+            _doctorRepository.Add(doctor);
         }
 
-        public void Update(Doctor item)
+        public void Update(Doctor doctor, bool isPatient)
         {
-            _doctorRepository.Update(item);
+            _doctorRepository.Update(doctor);
         }
 
-        public void Delete(Doctor item)
+        public void Delete(Doctor doctor, bool isPatient)
         {
-            _doctorRepository.Delete(item);
+            _doctorRepository.Delete(doctor);
         }
     }
 }
