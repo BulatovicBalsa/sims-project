@@ -8,7 +8,7 @@ namespace Hospital.Model
 {
     public class Person
     {
-        public int Id { get; }
+        public string Id { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Jmbg { get; set; }
@@ -16,6 +16,7 @@ namespace Hospital.Model
 
         public Person(string firstName, string lastName, string jmbg, string username, string password)
         {
+            Id = System.Guid.NewGuid().ToString();
             FirstName = firstName;
             LastName = lastName;
             Jmbg = jmbg;
