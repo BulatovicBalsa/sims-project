@@ -1,6 +1,6 @@
 ﻿namespace Hospital.Models.Patient
 {
-    public class Perscription
+    public class Prescription
     {
     }
 }
