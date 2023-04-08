@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.Views.LoginView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace Hospital
         public MainWindow()
         {
             InitializeComponent();
+
+            // Instantiate the Login window as a modal dialog box
+            Login loginWindow = new Login();
+            bool? result = loginWindow.ShowDialog();
+
+            if (result == true)
+            {
+                // If the user logs in successfully, set the MainWindow as the application's main window and show it
+                this.Visibility = Visibility.Visible;
+                Application.Current.MainWindow = this;
+            }
+            else
+            {
+                // If the user cancels the login, close the application
+                Application.Current.Shutdown();
+            }
         }
     }
 }
