@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Globalization;
-using System.Windows.Documents;
+﻿using System.Globalization;
 using CsvHelper;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
@@ -33,9 +31,9 @@ public class EquipmentRepositoryTests
         var equipmentRepository = new EquipmentRepository();
 
         var loadedEquipment = equipmentRepository.GetAll();
-        Assert.AreEqual(loadedEquipment.Count, 4);
-        Assert.AreEqual(equipment[3].Type, Equipment.EquipmentType.HALLWAY_EQUIPMENT);
-        Assert.AreEqual(equipment[1].Name, "Operating Table");
+        Assert.AreEqual(4, loadedEquipment.Count);
+        Assert.AreEqual(Equipment.EquipmentType.OPERATION_EQUIPMENT, loadedEquipment[1].Type);
+        Assert.AreEqual("Operating Table", loadedEquipment[1].Name);
     }
 
     [TestMethod]
@@ -58,11 +56,9 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        Assert.AreEqual(equipmentRepository.GetById(3).Name, "Stethoscope");
-        Assert.AreEqual(equipmentRepository.GetById(1).Type, Equipment.EquipmentType.FURNITURE);
+        Assert.AreEqual("Stethoscope", equipmentRepository.GetById(3).Name);
+        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById(1).Type);
         Assert.IsNull(equipmentRepository.GetById(0));
-
-
     }
 
     [TestMethod]
@@ -85,10 +81,10 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        equipmentRepository.Update(new(1, "Table", Equipment.EquipmentType.FURNITURE));
+        equipmentRepository.Update(new Equipment(1, "Table", Equipment.EquipmentType.FURNITURE));
 
-        Assert.AreEqual(equipmentRepository.GetById(1).Name, "Table");
-        Assert.AreEqual(equipmentRepository.GetById(1).Type, Equipment.EquipmentType.FURNITURE);
+        Assert.AreEqual("Table", equipmentRepository.GetById(1).Name);
+        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById(1).Type);
     }
 
     [TestMethod]
@@ -115,12 +111,11 @@ public class EquipmentRepositoryTests
 
         equipmentRepository.Delete(equipmentToDelete);
 
-        Assert.AreEqual(equipmentRepository.GetAll().Count, 4);
+        Assert.AreEqual(4, equipmentRepository.GetAll().Count);
         Assert.IsNull(equipmentRepository.GetById(5));
-
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void TestAdd()
     {
         var newEquipment = new Equipment(5, "C-Arm", Equipment.EquipmentType.OPERATION_EQUIPMENT);
@@ -142,11 +137,11 @@ public class EquipmentRepositoryTests
         var equipmentRepository = new EquipmentRepository();
 
         equipmentRepository.Add(newEquipment);
-
-        Assert.AreEqual(equipmentRepository.GetAll().Count, 5);
         var loadedNewEquipment = equipmentRepository.GetById(5);
-        Assert.AreEqual(loadedNewEquipment.Name, "C-Arm");
-        Assert.AreEqual(loadedNewEquipment.Type, Equipment.EquipmentType.OPERATION_EQUIPMENT);
+
+        Assert.AreEqual(5, equipmentRepository.GetAll().Count);
+        Assert.AreEqual("C-Arm", loadedNewEquipment.Name);
+        Assert.AreEqual(Equipment.EquipmentType.OPERATION_EQUIPMENT, loadedNewEquipment.Type);
     }
 
     [TestMethod]
