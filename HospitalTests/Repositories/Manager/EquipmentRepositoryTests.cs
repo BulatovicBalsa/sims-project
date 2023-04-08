@@ -12,7 +12,6 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestGetAll()
     {
-        //TODO: Fix arrange code duplication
         var equipment = new List<Equipment>
         {
             new(1, "Chair", Equipment.EquipmentType.FURNITURE),
