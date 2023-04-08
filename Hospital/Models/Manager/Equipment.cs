@@ -8,31 +8,12 @@ namespace Hospital.Models.Manager
 {
     public class Equipment
     {
-        private int _id;
+        public int Id { get; set; }
 
-        public int Id
-        {
-            get => _id;
-            set => _id = value;
-        }
+        public string Name { get; set; }
 
-        private string _name;
+        public EquipmentType Type { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-        
-        private EquipmentType _type;
-        
-        public EquipmentType Type
-        {
-            get => _type;
-            set => _type = value;
-        }
-
-        
 
         public enum EquipmentType
         {
@@ -41,7 +22,7 @@ namespace Hospital.Models.Manager
 
         public Equipment()
         {
-            _name = "";
+            Name = "";
         }
 
         public Equipment(int id, string name, EquipmentType type)
