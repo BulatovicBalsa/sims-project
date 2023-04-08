@@ -12,9 +12,9 @@ namespace Hospital.Repositories.Manager
 {
 
 
-    internal class EquipmentRepository
+    public class EquipmentRepository
     {
-        private const String FilePath = "../../equipment.csv";
+        private const String FilePath = "../../../Data/equipment.csv";
 
         public List<Equipment> GetAll()
         {
