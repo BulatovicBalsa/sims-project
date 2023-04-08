@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hospital.Models.Manager;
 using CsvHelper;
+using Hospital.Serialization;
 
 namespace Hospital.Repositories.Manager
 {
@@ -18,9 +19,7 @@ namespace Hospital.Repositories.Manager
 
         public List<Equipment> GetAll()
         {
-            using StreamReader reader = new StreamReader(FilePath);
-            using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-            return csvReader.GetRecords<Equipment>().ToList();
+            return Serializer<Equipment>.FromCSV(FilePath);
         }
 
         public Equipment? GetById(int id)
@@ -34,9 +33,7 @@ namespace Hospital.Repositories.Manager
 
             allEquipment.Add(equipment);
             
-            using StreamWriter writer = new StreamWriter(FilePath);
-            using CsvWriter csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(allEquipment);
+            Serializer<Equipment>.ToCSV(allEquipment, FilePath);
         }
         
         public void Update(Equipment equipment)
@@ -51,9 +48,7 @@ namespace Hospital.Repositories.Manager
 
             allEquipment[indexToUpdate] = equipment;
 
-            using StreamWriter writer = new StreamWriter(FilePath);
-            using CsvWriter csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(allEquipment);
+            Serializer<Equipment>.ToCSV(allEquipment, FilePath);
         }
 
         public void Delete(Equipment equipment)
@@ -68,10 +63,7 @@ namespace Hospital.Repositories.Manager
 
             allEquipment.RemoveAt(indexToDelete);
 
-            //TODO: Extract saving to file
-            using StreamWriter writer = new StreamWriter(FilePath);
-            using CsvWriter csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(allEquipment);
+            Serializer<Equipment>.ToCSV(allEquipment, FilePath);
         }
     }
 }
