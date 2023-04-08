@@ -25,7 +25,7 @@ namespace Hospital.Repositories.Manager
 
         public Equipment? GetById(int id)
         {
-            return GetAll().First(equipment => equipment.Id == id);
+            return GetAll().Find(equipment => equipment.Id == id);
         }
         
         public void Update(Equipment equipment)
