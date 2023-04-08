@@ -27,6 +27,17 @@ namespace Hospital.Repositories.Manager
         {
             return GetAll().Find(equipment => equipment.Id == id);
         }
+
+        public void Add(Equipment equipment)
+        {
+            var allEquipment = GetAll();
+
+            allEquipment.Add(equipment);
+            
+            using StreamWriter writer = new StreamWriter(FilePath);
+            using CsvWriter csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csvWriter.WriteRecords(allEquipment);
+        }
         
         public void Update(Equipment equipment)
         {
