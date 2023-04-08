@@ -14,6 +14,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestGetAll()
     {
+        //TODO: Fix arrange code duplication
         var equipment = new List<Equipment>
         {
             new(1, "Chair", Equipment.EquipmentType.FURNITURE),
@@ -144,7 +145,55 @@ public class EquipmentRepositoryTests
 
         Assert.AreEqual(equipmentRepository.GetAll().Count, 5);
         var loadedNewEquipment = equipmentRepository.GetById(5);
-        Assert.AreEqual(loadedNewEquipment.Name, "C-Arm"); 
+        Assert.AreEqual(loadedNewEquipment.Name, "C-Arm");
         Assert.AreEqual(loadedNewEquipment.Type, Equipment.EquipmentType.OPERATION_EQUIPMENT);
+    }
+
+    [TestMethod]
+    public void TestUpdateNonExistentEquipment()
+    {
+        var equipment = new List<Equipment>
+        {
+            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
+            new(2, "Operating Table",
+                Equipment.EquipmentType.OPERATION_EQUIPMENT),
+            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+        };
+        using (var writer = new StreamWriter("../../../Data/equipment.csv"))
+        {
+            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csvWriter.WriteRecords(equipment);
+            csvWriter.Flush();
+        }
+
+        var equipmentRepository = new EquipmentRepository();
+
+        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Update(new Equipment(0, "Nonexistent",
+            Equipment.EquipmentType.FURNITURE)));
+    }
+
+    [TestMethod]
+    public void TestDeleteNonExistentEquipment()
+    {
+        var equipment = new List<Equipment>
+        {
+            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
+            new(2, "Operating Table",
+                Equipment.EquipmentType.OPERATION_EQUIPMENT),
+            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+        };
+        using (var writer = new StreamWriter("../../../Data/equipment.csv"))
+        {
+            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csvWriter.WriteRecords(equipment);
+            csvWriter.Flush();
+        }
+
+        var equipmentRepository = new EquipmentRepository();
+
+        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment(0, "Nonexistent",
+            Equipment.EquipmentType.FURNITURE)));
     }
 }
