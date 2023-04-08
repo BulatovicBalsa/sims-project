@@ -8,7 +8,7 @@ namespace Hospital.Models.Manager
 {
     public class Equipment
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 
@@ -25,9 +25,17 @@ namespace Hospital.Models.Manager
             Name = "";
         }
 
-        public Equipment(int id, string name, EquipmentType type)
+        public Equipment(string id, string name, EquipmentType type)
         {
             Id = id;
+            Name = name; 
+            Type = type;
+        }
+
+
+        public Equipment(string name, EquipmentType type)
+        {
+            Id = System.Guid.NewGuid().ToString();
             Name = name; 
             Type = type;
         }

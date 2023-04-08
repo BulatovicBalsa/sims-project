@@ -22,7 +22,7 @@ namespace Hospital.Repositories.Manager
             return Serializer<Equipment>.FromCSV(FilePath);
         }
 
-        public Equipment? GetById(int id)
+        public Equipment? GetById(string id)
         {
             return GetAll().Find(equipment => equipment.Id == id);
         }

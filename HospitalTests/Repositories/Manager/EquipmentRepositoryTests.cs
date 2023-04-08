@@ -14,11 +14,11 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -40,11 +40,11 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -55,9 +55,9 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        Assert.AreEqual("Stethoscope", equipmentRepository.GetById(3).Name);
-        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById(1).Type);
-        Assert.IsNull(equipmentRepository.GetById(0));
+        Assert.AreEqual("Stethoscope", equipmentRepository.GetById("3").Name);
+        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById("1").Type);
+        Assert.IsNull(equipmentRepository.GetById("0"));
     }
 
     [TestMethod]
@@ -65,11 +65,11 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -80,24 +80,24 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        equipmentRepository.Update(new Equipment(1, "Table", Equipment.EquipmentType.FURNITURE));
+        equipmentRepository.Update(new Equipment("1", "Table", Equipment.EquipmentType.FURNITURE));
 
-        Assert.AreEqual("Table", equipmentRepository.GetById(1).Name);
-        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById(1).Type);
+        Assert.AreEqual("Table", equipmentRepository.GetById("1").Name);
+        Assert.AreEqual(Equipment.EquipmentType.FURNITURE, equipmentRepository.GetById("1").Type);
     }
 
     [TestMethod]
     public void TestDelete()
     {
-        var equipmentToDelete = new Equipment(5, "TO DELETE", Equipment.EquipmentType.EXAMINATION_EQUIPMENT);
+        var equipmentToDelete = new Equipment("5", "TO DELETE", Equipment.EquipmentType.EXAMINATION_EQUIPMENT);
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
             equipmentToDelete,
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -111,20 +111,20 @@ public class EquipmentRepositoryTests
         equipmentRepository.Delete(equipmentToDelete);
 
         Assert.AreEqual(4, equipmentRepository.GetAll().Count);
-        Assert.IsNull(equipmentRepository.GetById(5));
+        Assert.IsNull(equipmentRepository.GetById("5"));
     }
 
     [TestMethod]
     public void TestAdd()
     {
-        var newEquipment = new Equipment(5, "C-Arm", Equipment.EquipmentType.OPERATION_EQUIPMENT);
+        var newEquipment = new Equipment("5", "C-Arm", Equipment.EquipmentType.OPERATION_EQUIPMENT);
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -136,7 +136,7 @@ public class EquipmentRepositoryTests
         var equipmentRepository = new EquipmentRepository();
 
         equipmentRepository.Add(newEquipment);
-        var loadedNewEquipment = equipmentRepository.GetById(5);
+        var loadedNewEquipment = equipmentRepository.GetById("5");
 
         Assert.AreEqual(5, equipmentRepository.GetAll().Count);
         Assert.AreEqual("C-Arm", loadedNewEquipment.Name);
@@ -148,11 +148,11 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -163,7 +163,7 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Update(new Equipment(0, "Nonexistent",
+        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Update(new Equipment("0", "Nonexistent",
             Equipment.EquipmentType.FURNITURE)));
     }
 
@@ -172,11 +172,11 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new(1, "Chair", Equipment.EquipmentType.FURNITURE),
-            new(2, "Operating Table",
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
                 Equipment.EquipmentType.OPERATION_EQUIPMENT),
-            new(3, "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
-            new(4, "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
+            new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
+            new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
         using (var writer = new StreamWriter("../../../Data/equipment.csv"))
         {
@@ -187,7 +187,7 @@ public class EquipmentRepositoryTests
 
         var equipmentRepository = new EquipmentRepository();
 
-        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment(0, "Nonexistent",
+        Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment("0", "Nonexistent",
             Equipment.EquipmentType.FURNITURE)));
     }
 }
