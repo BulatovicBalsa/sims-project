@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hospital.Models.Manager
 {
@@ -35,7 +31,7 @@ namespace Hospital.Models.Manager
 
         public Equipment(string name, EquipmentType type)
         {
-            Id = System.Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
             Name = name; 
             Type = type;
         }
