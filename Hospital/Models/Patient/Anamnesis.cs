@@ -14,6 +14,7 @@ namespace Hospital.Models.Patient
         public Anamnesis()
         {
             Symptoms = new List<string>();
+            Report = "";
         }
 
         public void AddSymptom(string symptom)
