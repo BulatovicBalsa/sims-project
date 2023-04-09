@@ -1,3 +1,4 @@
+
 ﻿namespace Hospital.Models
 {
     public abstract class Person
@@ -18,3 +19,4 @@
         }
     }
 }
+
