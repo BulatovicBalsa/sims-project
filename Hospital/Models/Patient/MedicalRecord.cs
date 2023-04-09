@@ -12,7 +12,7 @@ namespace Hospital.Models.Patient
         public int Height { get; set; }
         public List<string> Allergies { get; set; }
         public List<string> MedicalHistory { get; set; }
-        public List<Prescription> Prescriptions { get; set; }
+        //public List<Prescription> Prescriptions { get; set; }
 
         public MedicalRecord()
         {
@@ -20,7 +20,7 @@ namespace Hospital.Models.Patient
             Height = -1;
             Allergies = new List<string>();
             MedicalHistory = new List<string>();
-            Prescriptions = new List<Prescription>();
+            //Prescriptions = new List<Prescription>();
         }
 
         public MedicalRecord(int height, int weight)
@@ -29,7 +29,7 @@ namespace Hospital.Models.Patient
             Weight = weight;
             Allergies = new List<string>();
             MedicalHistory = new List<string>();
-            Prescriptions = new List<Prescription>();
+            //Prescriptions = new List<Prescription>();
         }
 
         public MedicalRecord(int height, int weight, List<string> allergies, List<string> medicalHistory, List<Prescription> prescriptions)
@@ -38,7 +38,7 @@ namespace Hospital.Models.Patient
             Weight = weight;
             Allergies = allergies;
             MedicalHistory = medicalHistory;
-            Prescriptions = prescriptions;
+            //Prescriptions = prescriptions;
         }
     }
 }
