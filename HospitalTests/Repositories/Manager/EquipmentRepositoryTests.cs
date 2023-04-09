@@ -43,7 +43,7 @@ public class EquipmentRepositoryTests
             File.Delete("../../../Data/equipment.csv");
         }
 
-        Assert.AreEqual(0, new EquipmentRepository().GetAll());
+        Assert.AreEqual(0, new EquipmentRepository().GetAll().Count);
     }
 
     [TestMethod]
