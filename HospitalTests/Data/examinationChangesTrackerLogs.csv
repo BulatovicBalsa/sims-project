@@ -1,0 +1,19 @@
+IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,IsCreationLog
+False,80,180,698b4934-389d-46e0-9ceb-832d24eb4b0d,Alice,Smith,1234567890124,alicesmith,password1,04/09/2023 21:33:43,True
+False,80,180,4560941f-0756-49ce-aed1-eeeb75d7a78f,Bob,Johnson,1234567890125,bobjohnson,password2,04/09/2023 21:33:43,True
+False,80,180,6deae999-d518-4ec8-ba06-1bdfc351064c,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:33:43,True
+False,80,180,a6e771bf-e427-469a-9965-2ddccf70e4fc,Alice,Smith,1234567890124,alicesmith,password1,04/09/2023 21:33:43,True
+False,80,180,c42247aa-38e2-46e9-856d-bfc165a6735f,Bob,Johnson,1234567890125,bobjohnson,password2,04/09/2023 21:33:43,True
+False,80,180,76885cc8-1613-42e3-b345-9e2771416a9c,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:33:43,True
+False,80,180,76885cc8-1613-42e3-b345-9e2771416a9c,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:33:43,False
+False,80,180,fbc405db-9a5e-4baf-9e3f-e64bebac20cf,Alice,Smith,1234567890124,alicesmith,password1,04/09/2023 21:33:46,True
+False,80,180,260fc628-fbca-4cd9-af6e-62b9f2451657,Bob,Johnson,1234567890125,bobjohnson,password2,04/09/2023 21:33:46,True
+False,80,180,0b02cce5-9910-4ba0-ad3e-1b92c1cfbf2b,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:34:04,True
+False,80,180,0b02cce5-9910-4ba0-ad3e-1b92c1cfbf2b,UpdatedName,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:39:33,False
+False,80,180,04848e29-8f7e-487d-b15f-486801d21860,Alice,Smith,1234567890124,alicesmith,password1,04/09/2023 21:47:21,True
+False,80,180,d58809da-df61-44f4-b67c-92b495b27602,Bob,Johnson,1234567890125,bobjohnson,password2,04/09/2023 21:47:21,True
+False,80,180,5f659e0d-6090-4b1a-b34f-ab68c591e4a9,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:47:21,True
+False,80,180,bf306285-120a-4cfd-964a-44cef53bc659,Alice,Smith,1234567890124,alicesmith,password1,04/09/2023 21:47:21,True
+False,80,180,12d10d63-f709-4dec-94a3-69534af76656,Bob,Johnson,1234567890125,bobjohnson,password2,04/09/2023 21:47:21,True
+False,80,180,d92fe59f-339d-4cbc-b54b-1a0b80cfb03e,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:47:21,True
+False,80,180,d92fe59f-339d-4cbc-b54b-1a0b80cfb03e,Charlie,Williams,1234567890126,charliewilliams,password3,04/09/2023 21:47:21,False

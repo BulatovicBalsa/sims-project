@@ -159,5 +159,11 @@ namespace Hospital.Repositories.Examinaton
                 throw new InvalidOperationException("Patient made too many examinations in last 30 days");
             }
         }
+
+        public void DeleteAll()
+        {
+            List<Examination> emptyList = new List<Examination>();
+            Serializer<Examination>.ToCSV(emptyList, FilePath);
+        }
     }
 }

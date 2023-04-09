@@ -23,5 +23,6 @@ namespace Hospital.Repositories.Patient
             allLogs.Add(log);
             Serializer<PatientExaminationLog>.ToCSV(allLogs,FilePath);
         }
+
     }
 }

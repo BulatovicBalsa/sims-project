@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Repositories\Examination\" />
   </ItemGroup>
 
 </Project>

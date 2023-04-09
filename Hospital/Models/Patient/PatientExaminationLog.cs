@@ -9,7 +9,7 @@ namespace Hospital.Models.Patient
     public class PatientExaminationLog
     {
         public Patient Patient { get; set; }
-        public DateTime Timestamp { get; }
+        public DateTime Timestamp { get; set; }
         public bool IsCreationLog { get; set; }
 
         public PatientExaminationLog(Patient patient, bool isCreationLog)
@@ -18,6 +18,8 @@ namespace Hospital.Models.Patient
             Timestamp = DateTime.Now;
             IsCreationLog = isCreationLog;
         }
+
+        public PatientExaminationLog() {}
 
 
     }
