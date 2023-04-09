@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Hospital.Models.Manager;
+using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Manager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +22,32 @@ namespace Hospital.Views.LoginView
     /// </summary>
     public partial class Login : Window
     {
+        public string UserId { get; private set; }
         public Login()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            UserId = string.Empty;
+            new EquipmentRepository().Add(new Equipment("mik", Equipment.EquipmentType.FURNITURE));
+            new DoctorRepository().Add(new Models.Doctor.Doctor("mik", "", "", "miki", "milan"));
         }
 
         private void OnLoginButtonClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+            foreach (var doctor in new DoctorRepository().GetAll())
+            {
+                if (doctor.Profile.Username == username)
+                {
+                    if (doctor.Profile.Password == password)
+                    {
+                        UserId = doctor.Id;
+                        this.DialogResult = true;
+                        return;
+                    }
+                }
+            }
         }
     }
 }

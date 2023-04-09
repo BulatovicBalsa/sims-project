@@ -17,6 +17,6 @@ namespace Hospital.Models
             JMBG = jmbg;
             Profile = new Profile(username, password);
         }
-
+        public Person() { }
     }
 }
