@@ -14,9 +14,14 @@ namespace HospitalTests.Repositories.Patient
     public class PatientRepositoryTests
     {
         private const string TestFilePath = "../../../Data/patients.csv";
-        [TestMethod]
-        public void TestGetAll()
+
+        private void SaveTestPatients()
         {
+            if (File.Exists(TestFilePath))
+            {
+                return;
+            }
+
             var testPatients = new List<Patient>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
@@ -26,6 +31,12 @@ namespace HospitalTests.Repositories.Patient
             };
 
             Serializer<Patient>.ToCSV(testPatients, TestFilePath, new PatientWriteMapper());
+        }
+
+        [TestMethod]
+        public void TestGetAll()
+        {
+            SaveTestPatients();
 
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
@@ -50,6 +61,25 @@ namespace HospitalTests.Repositories.Patient
             }
 
             Assert.AreEqual(0, new PatientRepository().GetAll().Count);
+        }
+
+        [TestMethod]
+        public void TestGetById()
+        {
+            SaveTestPatients();
+
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
+
+            var testPatient = loadedPatients[0];
+            Console.WriteLine(testPatient.Id);
+            foreach (var loadedPatient in loadedPatients)
+            {
+                Console.WriteLine(loadedPatient.Id);
+            }
+            Assert.AreEqual(testPatient.FirstName, patientRepository.GetById(testPatient.Id)?.FirstName);
+            Assert.IsNull(patientRepository.GetById("0"));
+            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
         }
     }
 }
