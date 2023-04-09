@@ -1,17 +1,1 @@
 IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password
-False,80,180,,Alice,Smith,1234567890124,alicesmith,password1
-False,80,180,,Bob,Johnson,1234567890125,bobjohnson,password2
-False,80,180,,Charlie,Williams,1234567890126,charliewilliams,password3
-False,80,180,,John,Doe,1234567890123,johndoe,password
-False,80,180,,Alice,Smith,1234567890124,alicesmith,password1
-False,80,180,,Bob,Johnson,1234567890125,bobjohnson,password2
-False,80,180,,Charlie,Williams,1234567890126,charliewilliams,password3
-False,80,180,,John,Doe,1234567890123,johndoe,password
-False,80,180,,Alice,Smith,1234567890124,alicesmith,password1
-False,80,180,,Bob,Johnson,1234567890125,bobjohnson,password2
-False,80,180,,Charlie,Williams,1234567890126,charliewilliams,password3
-False,80,180,,John,Doe,1234567890123,johndoe,password
-False,80,180,,Alice,Smith,1234567890124,alicesmith,password1
-False,80,180,,Bob,Johnson,1234567890125,bobjohnson,password2
-False,80,180,,Charlie,Williams,1234567890126,charliewilliams,password3
-False,80,180,8301b0a0-1482-4a6d-8e20-ab0feccf6870,John,Doe,1234567890123,johndoe,password

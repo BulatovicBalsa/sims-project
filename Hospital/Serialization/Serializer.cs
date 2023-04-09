@@ -16,6 +16,7 @@ public class Serializer<T>
             using var reader = new StreamReader(filePath);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             return csvReader.GetRecords<T>().ToList();
+
         }
         catch (FileNotFoundException e)
         {
