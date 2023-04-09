@@ -29,5 +29,6 @@ public class Serializer<T>
         using var writer = new StreamWriter(filePath);
         using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
         csvWriter.WriteRecords(records);
+        csvWriter.Flush();
     }
 }
