@@ -12,10 +12,7 @@ namespace Hospital.Models.Doctor
 
         public Doctor(string firstName, string lastName, string jmbg, string username, string password) : base(firstName, lastName, jmbg, username, password) { }
 
-        public Doctor():base()
-        {
-            
-        }
+        public Doctor():base() { }
 
         public override bool Equals(object? obj)
         {

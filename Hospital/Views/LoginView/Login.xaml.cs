@@ -28,15 +28,13 @@ namespace Hospital.Views.LoginView
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             UserId = string.Empty;
-            new EquipmentRepository().Add(new Equipment("mik", Equipment.EquipmentType.FURNITURE));
-            new DoctorRepository().Add(new Models.Doctor.Doctor("mik", "", "", "miki", "milan"));
         }
 
         private void OnLoginButtonClick(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
-            foreach (var doctor in new DoctorRepository().GetAll())
+            foreach (var doctor in new DoctorRepository().GetAll()) //TODO: add other user repositories
             {
                 if (doctor.Profile.Username == username)
                 {
