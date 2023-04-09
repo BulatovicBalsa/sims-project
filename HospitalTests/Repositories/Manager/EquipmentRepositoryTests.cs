@@ -38,10 +38,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestGetAllNonExistentFile()
     {
-        if (File.Exists("../../../Data/equipment.csv"))
-        {
-            File.Delete("../../../Data/equipment.csv");
-        }
+        if (File.Exists("../../../Data/equipment.csv")) File.Delete("../../../Data/equipment.csv");
 
         Assert.AreEqual(0, new EquipmentRepository().GetAll().Count);
     }

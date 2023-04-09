@@ -58,6 +58,15 @@ public class RoomRepositoryTests
     }
 
     [TestMethod]
+    public void TestGetAllNonExistentFile()
+    {
+        if (File.Exists("../../../Data/rooms.csv")) File.Delete("../../../Data/rooms.csv");
+
+        Assert.AreEqual(0, new RoomRepository().GetAll().Count);
+    }
+
+
+    [TestMethod]
     public void TestGetByIdNonExistentId()
     {
         var rooms = new List<Room>
