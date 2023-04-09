@@ -17,14 +17,14 @@ namespace HospitalTests.Repositories.Patient
         {
             var testPatients = new List<Patient>
             {
-                new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70)),
-                new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234", new MedicalRecord(176, 71)),
-                new("Balsa", "Bulatovic", "0123456789012", "balsa1234", "balsa1234", new MedicalRecord(177, 72)),
-                new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234", new MedicalRecord(178, 73)),
+                new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
+                new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234", new MedicalRecord(176, 71, new List<string> { "penicillin", "sulfa", "aspirin" }, new List<string>() { "mental illness", "cold", })),
+                new("Balsa", "Bulatovic", "0123456789012", "balsa1234", "balsa1234", new MedicalRecord(177, 72, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
+                new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234", new MedicalRecord(178, 73, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
             };
             var testFilePath = "../../../Data/patients.csv";
 
-            Serializer<Patient>.ToCSV(testPatients, testFilePath);
+            Serializer<Patient>.ToCSV(testPatients, testFilePath, new PatientWriteMapper());
 
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
@@ -35,6 +35,9 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual(177, loadedPatients[2].MedicalRecord.Height);
             Assert.AreNotEqual(177, loadedPatients[0].MedicalRecord.Height);
             Assert.AreNotEqual("1111111111111", loadedPatients[3].Jmbg);
+            Assert.IsTrue(loadedPatients[0].MedicalRecord.Allergies.Count == 3);
+            Assert.IsTrue(loadedPatients[2].MedicalRecord.MedicalHistory.Count == 2);
+            Assert.IsTrue(loadedPatients[3].MedicalRecord.MedicalHistory.Contains("mental illness"));
         }
     }
 }
