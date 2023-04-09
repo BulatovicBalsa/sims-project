@@ -32,33 +32,63 @@ namespace Hospital.Repositories.Examinaton
             return GetAll().Find(examination => examination.Id == id);
         }
 
-        public void Add(Examination examination)
+        public void Add(Examination examination, bool isMadeByPatient)
         {
             var allExamination = GetAll();
+
+            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (isMadeByPatient)
+            {
+                PatientExaminationLog log = new(examination.Patient, true);
+                _examinationChangesTracker.Add(log);
+            }
 
             allExamination.Add(examination);
 
             Serializer<Examination>.ToCSV(allExamination, FilePath);
         }
 
-        public void Update(Examination examination)
+        public void Update(Examination examination,bool isMadeByPatient)
         {
             var allExamination = GetAll();
 
             var indexToUpdate = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToUpdate == -1) throw new KeyNotFoundException();
 
+            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (isMadeByPatient)
+            {
+                ValidateExaminationTiming(examination.Start);
+                ValidateMaxChangesOrDeletesLast30Days(examination.Patient);
+                ValidateMaxAllowedExaminationsLast30Days(examination.Patient);
+                PatientExaminationLog log = new(examination.Patient, false);
+                _examinationChangesTracker.Add(log);
+            }
+
             allExamination[indexToUpdate] = examination;
 
             Serializer<Examination>.ToCSV(allExamination, FilePath);
         }
 
-        public void Delete(Examination examination)
+        public void Delete(Examination examination, bool isMadeByPatient)
         {
             var allExamination = GetAll();
 
             var indexToDelete = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToDelete == -1) throw new KeyNotFoundException();
+
+            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (isMadeByPatient)
+            {
+                ValidateExaminationTiming(examination.Start);
+                ValidateMaxChangesOrDeletesLast30Days(examination.Patient);
+                ValidateMaxAllowedExaminationsLast30Days(examination.Patient);
+                PatientExaminationLog log = new(examination.Patient, false);
+                _examinationChangesTracker.Add(log);
+            }
 
             allExamination.RemoveAt(indexToDelete);
 
