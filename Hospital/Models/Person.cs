@@ -1,3 +1,5 @@
+using System;
+
 namespace Hospital.Models
 {
     public abstract class Person
@@ -8,9 +10,18 @@ namespace Hospital.Models
         public string Jmbg { get; set; }
         public Profile Profile { get; set; }
 
+        protected Person()
+        {
+            Id = Guid.NewGuid().ToString();
+            FirstName = "";
+            LastName = "";
+            Jmbg = "";
+            Profile = new Profile();
+        }
+
         protected Person(string firstName, string lastName, string jmbg, string username, string password)
         {
-            Id = System.Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
             FirstName = firstName;
             LastName = lastName;
             Jmbg = jmbg;
