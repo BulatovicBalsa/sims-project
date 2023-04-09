@@ -14,8 +14,6 @@ namespace Hospital.Models.Patient
         public List<string> MedicalHistory { get; set; }
         public List<Prescription> Prescriptions { get; set; }
 
-        // TODO: Add a list of Examinations, each Examination has an Anamnesis attached to it
-
         public MedicalRecord()
         {
             Weight = -1;
