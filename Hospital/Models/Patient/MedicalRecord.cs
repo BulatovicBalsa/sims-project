@@ -33,5 +33,14 @@ namespace Hospital.Models.Patient
             MedicalHistory = new List<string>();
             Prescriptions = new List<Prescription>();
         }
+
+        public MedicalRecord(int weight, int height, List<string> allergies, List<string> medicalHistory, List<Prescription> prescriptions)
+        {
+            Weight = weight;
+            Height = height;
+            Allergies = allergies;
+            MedicalHistory = medicalHistory;
+            Prescriptions = prescriptions;
+        }
     }
 }
