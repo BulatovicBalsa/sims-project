@@ -28,7 +28,9 @@
     <Resource Include="Images\PasswordIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\UsernameIcon.png" />
+    <Resource Include="Images\UsernameIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
