@@ -1,4 +1,4 @@
-﻿namespace Hospital.Models
+namespace Hospital.Models
 {
     public abstract class Person
     {
