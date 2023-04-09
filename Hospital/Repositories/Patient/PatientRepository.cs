@@ -46,5 +46,11 @@ namespace Hospital.Repositories.Patient
             allPatient.RemoveAt(indexToDelete);
             Serializer<Patient>.ToCSV(allPatient,FilePath);
         }
+
+        public static void DeleteAll()
+        {
+            var emptyPatientList = new List<Patient>();
+            Serializer<Patient>.ToCSV(emptyPatientList, FilePath);
+        }
     }
 }

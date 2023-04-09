@@ -24,5 +24,7 @@ namespace Hospital.Models.Patient
             MedicalHistory = new List<string>();
             Prescriptions = new List<Prescription>();
         }
+
+        public MedicalRecord() {}
     }
 }

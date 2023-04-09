@@ -10,6 +10,8 @@
             Username = username;
             Password = password;
         }
+
+        public Profile() { }    
     }
 }
 

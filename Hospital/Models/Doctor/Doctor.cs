@@ -11,7 +11,7 @@ namespace Hospital.Models.Doctor
         private const int DAYS_TO_CHECK = 3;
 
         public Doctor(string firstName, string lastName, string jmbg, string username, string password) : base(firstName, lastName, jmbg, username, password) { }
-
+        public Doctor() : base() { }
         public override bool Equals(object? obj)
         {
             if (obj == null || GetType() != obj.GetType())

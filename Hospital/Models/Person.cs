@@ -17,6 +17,8 @@
             Jmbg = jmbg;
             Profile = new Profile(username, password);
         }
+
+        public Person() { } 
     }
 }
 

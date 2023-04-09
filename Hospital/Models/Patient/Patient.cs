@@ -19,6 +19,23 @@ namespace Hospital.Models.Patient
             MedicalRecord = medicalRecord;
             IsBlocked = false;
         }
+
+        public Patient() : base() {}
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType()) return false;
+
+            Patient? other = obj as Patient;
+            if (other == null) return false;
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
     }
 }
 
