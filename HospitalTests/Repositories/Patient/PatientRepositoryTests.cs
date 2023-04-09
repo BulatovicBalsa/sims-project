@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 
@@ -12,6 +13,7 @@ namespace HospitalTests.Repositories.Patient
     [TestClass]
     public class PatientRepositoryTests
     {
+        private const string TestFilePath = "../../../Data/patients.csv";
         [TestMethod]
         public void TestGetAll()
         {
@@ -22,9 +24,8 @@ namespace HospitalTests.Repositories.Patient
                 new("Balsa", "Bulatovic", "0123456789012", "balsa1234", "balsa1234", new MedicalRecord(177, 72, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234", new MedicalRecord(178, 73, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
             };
-            var testFilePath = "../../../Data/patients.csv";
 
-            Serializer<Patient>.ToCSV(testPatients, testFilePath, new PatientWriteMapper());
+            Serializer<Patient>.ToCSV(testPatients, TestFilePath, new PatientWriteMapper());
 
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
@@ -38,6 +39,17 @@ namespace HospitalTests.Repositories.Patient
             Assert.IsTrue(loadedPatients[0].MedicalRecord.Allergies.Count == 3);
             Assert.IsTrue(loadedPatients[2].MedicalRecord.MedicalHistory.Count == 2);
             Assert.IsTrue(loadedPatients[3].MedicalRecord.MedicalHistory.Contains("mental illness"));
+        }
+
+        [TestMethod]
+        public void TestNonExistentFile()
+        {
+            if (File.Exists(TestFilePath))
+            {
+                File.Delete(TestFilePath);
+            }
+
+            Assert.AreEqual(0, new PatientRepository().GetAll().Count);
         }
     }
 }
