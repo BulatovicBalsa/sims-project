@@ -18,6 +18,7 @@ namespace Hospital.Models.Manager
 
         public Equipment()
         {
+            Id = System.Guid.NewGuid().ToString();
             Name = "";
         }
 
