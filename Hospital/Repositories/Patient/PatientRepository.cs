@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Hospital.Serialization;
 
 namespace Hospital.Repositories.Patient
 {
@@ -17,9 +18,7 @@ namespace Hospital.Repositories.Patient
 
         public List<Patient> GetAll()
         {
-            using var reader = new StreamReader(FilePath);
-            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-            return csv.GetRecords<Patient>().ToList();
+            return Serializer<Patient>.FromCSV(FilePath);
         }
 
         public Patient? GetById(string id)
@@ -29,39 +28,31 @@ namespace Hospital.Repositories.Patient
 
         public void Add(Patient patient)
         {
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                HasHeaderRecord = File.ReadLines(FilePath).Count() > 1,
-            };
-            using var stream = File.Open(FilePath, FileMode.Append);
-            using var writer = new StreamWriter(stream);
-            using var csv = new CsvWriter(writer, config);
-            csv.WriteRecord(patient);
+            var allPatients = GetAll();
+            allPatients.Add(patient);
+            Serializer<Patient>.ToCSV(allPatients, FilePath);
         }
 
-        public void Update(Patient updatedPatient)
+        public void Update(Patient patient)
         {
-            var patientRecords = GetAll();
-            var patientToUpdate = patientRecords.FirstOrDefault(patient => patient.Id == updatedPatient.Id) ?? throw new Exception($"Patient with id {updatedPatient.Id} was not found.");
-            var indexToUpdate = patientRecords.IndexOf(patientToUpdate);
-            patientRecords[indexToUpdate] = updatedPatient;
+            var allPatients = GetAll();
 
-            using var writer = new StreamWriter(FilePath);
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csv.WriteRecords(patientRecords);
+            var indexToUpdate = allPatients.FindIndex(patientRecord => patientRecord.Id == patient.Id);
+            if (indexToUpdate == -1) 
+                throw new KeyNotFoundException($"Patient with id {patient.Id} was not found.");
+            allPatients[indexToUpdate] = patient;
+
+            Serializer<Patient>.ToCSV(allPatients, FilePath);
         }
 
-        public void Delete(Patient patientToDelete)
+        public void Delete(Patient patient)
         {
             var patientRecords = GetAll();
-            if (!patientRecords.Remove(patientToDelete))
-            {
-                throw new Exception($"Patient with id {patientToDelete.Id} was not found.");
-            }
 
-            using var writer = new StreamWriter(FilePath);
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csv.WriteRecords(patientRecords);
+            if (!patientRecords.Remove(patient))
+                throw new KeyNotFoundException($"Patient with id {patient.Id} was not found.");
+
+            Serializer<Patient>.ToCSV(patientRecords, FilePath);
         }
     }
 }
