@@ -19,6 +19,11 @@ public class DoctorRepository
         return GetAll().Find(doctor => doctor.Id == id);
     }
 
+    public Doctor? GetByUsername(string username)
+    {
+        return GetAll().Find(doctor => doctor.Profile.Username == username);
+    }
+
     public void Add(Doctor doctor)
     {
         var allDoctor = GetAll();
