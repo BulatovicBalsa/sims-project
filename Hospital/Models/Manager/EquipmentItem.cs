@@ -20,4 +20,6 @@ public class EquipmentItem
     public string RoomId { get; set; }
 
     public int Amount { get; set; }
+
+    public Equipment? Equipment { get; set; }
 }

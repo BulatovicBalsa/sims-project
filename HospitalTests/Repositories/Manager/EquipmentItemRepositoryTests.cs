@@ -1,6 +1,7 @@
 ﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Serialization;
+using NuGet.Frameworks;
 
 namespace HospitalTests.Repositories.Manager;
 
@@ -68,5 +69,34 @@ public class EquipmentItemRepositoryTests
         Assert.AreEqual(1, equipmentItemRepository.GetAll().Count);
         Assert.AreEqual(1, equipmentItemRepository.GetAll()[0].Amount);
         Assert.AreEqual("1", equipmentItemRepository.GetAll()[0].RoomId);
+    }
+
+    public void TestGetAllJoinWithEquipment()
+    {
+        var equipmentItems = new List<EquipmentItem>
+        {
+            new("1", "1", 1),
+            new("2", "2", 2)
+        };
+        Serializer<EquipmentItem>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
+
+        var equipment = new List<Equipment>
+        {
+            new("1", "Chair", Equipment.EquipmentType.FURNITURE),
+            new("2", "Operating Table",
+                Equipment.EquipmentType.OPERATION_EQUIPMENT),
+        };
+
+        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+
+        var loadedEquipmentItems = new EquipmentItemRepository().GetAll();
+
+        Assert.AreEqual(2, loadedEquipmentItems.Count);
+        Assert.IsNotNull(loadedEquipmentItems[0].Equipment);
+        Assert.IsNotNull(loadedEquipmentItems[1].Equipment);
+        Assert.Equals("Chair", loadedEquipmentItems[0].Equipment?.Name);
+        Assert.Equals("Operating table", loadedEquipmentItems[1].Equipment?.Name);
+
+
     }
 }
