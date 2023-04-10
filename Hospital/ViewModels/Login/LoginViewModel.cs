@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security;
+using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels.Login
 {
@@ -14,6 +18,8 @@ namespace Hospital.ViewModels.Login
         private SecureString _password;
         private string _errorMessage;
         private bool _isViewVisible = true;
+
+        private LoginService _loginService;
 
         public string Username
         {
@@ -52,12 +58,12 @@ namespace Hospital.ViewModels.Login
         }
 
         public ICommand LoginCommand { get; }
-        public ICommand ShowPassowrdCommand { get; }
 
         public LoginViewModel()
         {
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             _password = new SecureString();
+            _loginService = new LoginService();
         }
 
         private bool CanExecuteLoginCommand(object obj)
@@ -70,7 +76,15 @@ namespace Hospital.ViewModels.Login
 
         private void ExecuteLoginCommand(object obj)
         {
-            throw new NotImplementedException();
+            if (_loginService.AuthenticateUser(new NetworkCredential(Username, Password)))
+            {
+                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(_loginService.LoggedUser.Id), null);
+                IsViewVisible = false;
+            }
+            else
+            {
+                ErrorMessage = "* Invalid username or password";
+            }
         }
     }
 }
