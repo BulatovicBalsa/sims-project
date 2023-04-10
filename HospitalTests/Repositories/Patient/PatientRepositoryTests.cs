@@ -17,11 +17,6 @@ namespace HospitalTests.Repositories.Patient
 
         private void SaveTestPatients()
         {
-            if (File.Exists(TestFilePath))
-            {
-                return;
-            }
-
             var testPatients = new List<Patient>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
@@ -72,14 +67,30 @@ namespace HospitalTests.Repositories.Patient
             var loadedPatients = patientRepository.GetAll();
 
             var testPatient = loadedPatients[0];
-            Console.WriteLine(testPatient.Id);
-            foreach (var loadedPatient in loadedPatients)
-            {
-                Console.WriteLine(loadedPatient.Id);
-            }
             Assert.AreEqual(testPatient.FirstName, patientRepository.GetById(testPatient.Id)?.FirstName);
             Assert.IsNull(patientRepository.GetById("0"));
             Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
+        }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            SaveTestPatients();
+
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
+            
+            var testPatient = loadedPatients[1];
+            testPatient.FirstName = "TestFirstName";
+            testPatient.LastName = "TestLastName";
+            testPatient.MedicalRecord.Allergies = new List<string> { "testAllergy" };
+
+            patientRepository.Update(testPatient);
+
+            Assert.AreEqual("TestFirstName", patientRepository.GetById(testPatient.Id)?.FirstName);
+            Assert.AreEqual("TestLastName", patientRepository.GetById(testPatient.Id)?.LastName);
+            Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
+            Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
         }
     }
 }
