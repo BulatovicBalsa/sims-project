@@ -11,6 +11,8 @@ using Hospital.Models.Doctor;
 namespace Hospital.Repositories.Examinaton
 {
     using Hospital.Models.Patient;
+    using Hospital.Serialization.Mappers;
+
     public class ExaminationRepository
     {
         private const string FilePath = "../../../Data/examination.csv";
@@ -24,7 +26,7 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll()
         {
-            return Serializer<Examination>.FromCSV(FilePath);
+            return Serializer<Examination, ExaminationMapper>.FromCSV(FilePath);
         }
 
         public Examination? GetById(string id)
@@ -46,7 +48,7 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination.Add(examination);
 
-            Serializer<Examination>.ToCSV(allExamination, FilePath);
+            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
         }
 
         public void Update(Examination examination,bool isMadeByPatient)
@@ -69,7 +71,7 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination[indexToUpdate] = examination;
 
-            Serializer<Examination>.ToCSV(allExamination, FilePath);
+            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
         }
 
         public void Delete(Examination examination, bool isMadeByPatient)
@@ -92,7 +94,7 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination.RemoveAt(indexToDelete);
 
-            Serializer<Examination>.ToCSV(allExamination, FilePath);
+            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
         }
 
         private List<Examination> _getAll(Doctor doctor)
@@ -163,7 +165,7 @@ namespace Hospital.Repositories.Examinaton
         public void DeleteAll()
         {
             List<Examination> emptyList = new List<Examination>();
-            Serializer<Examination>.ToCSV(emptyList, FilePath);
+            Serializer<Examination, ExaminationMapper>.ToCSV(emptyList, FilePath);
         }
     }
 }
