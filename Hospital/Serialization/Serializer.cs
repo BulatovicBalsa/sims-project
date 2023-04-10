@@ -22,7 +22,6 @@ public class Serializer<T, M> where M : ClassMap<T>, new()
                 csvReader.Context.RegisterClassMap<M>();
             }
             return csvReader.GetRecords<T>().ToList();
-
         }
         catch (FileNotFoundException e)
         {
