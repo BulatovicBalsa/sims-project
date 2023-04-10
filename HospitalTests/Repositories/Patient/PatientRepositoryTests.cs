@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hospital.Models.Patient;
+using Hospital.Models.Manager;
+using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Patient
 {
@@ -12,87 +14,129 @@ namespace HospitalTests.Repositories.Patient
     [TestClass]
     public class PatientRepositoryTests
     {
-        private PatientRepository _patientRepository;
-        private Patient _patient;
+        private const string TestFilePath = "../../../Data/patients.csv";
+
         [TestInitialize]
         public void TestInitialize()
         {
-            PatientRepository.DeleteAll();
-            _patientRepository = CreateTestPatientRepository();
-            _patient = CreateTestPatient();
-            _patientRepository.Add(_patient);
-        }
-        private PatientRepository CreateTestPatientRepository()
-        {
-            var patientRepository = new PatientRepository();
-            var testPatient1 = new Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1", new MedicalRecord(80,180));
-            var testPatient2 = new Patient("Bob", "Johnson", "1234567890125", "bobjohnson", "password2", new MedicalRecord(80, 180));
-            var testPatient3 = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3", new MedicalRecord(80, 180));
+            var testPatients = new List<Patient>
+            {
+                new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
+                new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234", new MedicalRecord(176, 71, new List<string> { "penicillin", "sulfa", "aspirin" }, new List<string>() { "mental illness", "cold", })),
+                new("Balsa", "Bulatovic", "0123456789012", "balsa1234", "balsa1234", new MedicalRecord(177, 72, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
+                new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234", new MedicalRecord(178, 73, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
+            };
 
-
-            patientRepository.Add(testPatient1);
-            patientRepository.Add(testPatient2);
-            patientRepository.Add(testPatient3);
-
-            return patientRepository;
-        }
-
-        private Patient CreateTestPatient()
-        {
-            return new Patient("John", "Doe", "1234567890123", "johndoe", "password", new MedicalRecord(80, 180));
-
+            Serializer<Patient>.ToCSV(testPatients, TestFilePath, new PatientWriteMapper());
         }
 
         [TestMethod]
-        public void TestAdd()
+        public void TestGetAll()
         {
-            var addedPatient = _patientRepository.GetById(_patient.Id);
-            Assert.IsNotNull(addedPatient);
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
 
-            PatientRepository.DeleteAll();
+            Assert.IsNotNull(loadedPatients);
+            Assert.AreEqual(4, loadedPatients.Count);
+            Assert.AreEqual("Balsa", loadedPatients[2].FirstName);
+            Assert.AreEqual(177, loadedPatients[2].MedicalRecord.Height);
+            Assert.AreNotEqual(177, loadedPatients[0].MedicalRecord.Height);
+            Assert.AreNotEqual("1111111111111", loadedPatients[3].Jmbg);
+            Assert.IsTrue(loadedPatients[0].MedicalRecord.Allergies.Count == 3);
+            Assert.IsTrue(loadedPatients[2].MedicalRecord.MedicalHistory.Count == 2);
+            Assert.IsTrue(loadedPatients[3].MedicalRecord.MedicalHistory.Contains("mental illness"));
+        }
+
+        [TestMethod]
+        public void TestNonExistentFile()
+        {
+            if (File.Exists(TestFilePath))
+            {
+                File.Delete(TestFilePath);
+            }
+
+            Assert.AreEqual(0, new PatientRepository().GetAll().Count);
         }
 
         [TestMethod]
         public void TestGetById()
         {
-            var foundPatient = _patientRepository.GetById(_patient.Id);
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
 
-            Assert.IsNotNull(foundPatient);
-            Assert.AreEqual(_patient.Id,foundPatient.Id);
-
-            string nonExistingPatientId = "non-existing-id";
-
-            foundPatient = _patientRepository.GetById(nonExistingPatientId);
-
-            Assert.IsNull(foundPatient);
-
-            PatientRepository.DeleteAll();
+            var testPatient = loadedPatients[0];
+            Assert.AreEqual(testPatient.FirstName, patientRepository.GetById(testPatient.Id)?.FirstName);
+            Assert.IsNull(patientRepository.GetById("0"));
+            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
         }
 
         [TestMethod]
         public void TestUpdate()
         {
-            _patient.FirstName = "UpdatedFirstName";
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
+            
+            var testPatient = loadedPatients[1];
+            testPatient.FirstName = "TestFirstName";
+            testPatient.LastName = "TestLastName";
+            testPatient.MedicalRecord.Allergies = new List<string> { "testAllergy" };
 
-            _patientRepository.Update(_patient);
+            patientRepository.Update(testPatient);
 
-            var updatedPatient = _patientRepository.GetById(_patient.Id);
-            Assert.IsNotNull(updatedPatient);
-            Assert.AreEqual("UpdatedFirstName",updatedPatient.FirstName);
-
-            PatientRepository.DeleteAll();
+            Assert.AreEqual("TestFirstName", patientRepository.GetById(testPatient.Id)?.FirstName);
+            Assert.AreEqual("TestLastName", patientRepository.GetById(testPatient.Id)?.LastName);
+            Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
+            Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
         }
 
         [TestMethod]
         public void TestDelete()
         {
-            _patientRepository.Delete(_patient);
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
 
-            var deletedPatient = _patientRepository.GetById(_patient.Id);
-            Assert.IsNull(deletedPatient);
+            var testPatient = loadedPatients[1];
 
-            PatientRepository.DeleteAll();
+            patientRepository.Delete(testPatient);
+
+            Assert.AreEqual(3, patientRepository.GetAll().Count);
+            Assert.IsNull(patientRepository.GetById(testPatient.Id));
         }
-        
+
+        [TestMethod]
+        public void TestAdd()
+        {
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+            var patientRepository = new PatientRepository();
+            
+            patientRepository.Add(newPatient);
+            var loadedPatients = patientRepository.GetAll();
+
+            var testPatient = loadedPatients[4];
+            
+            Assert.AreEqual(5, patientRepository.GetAll().Count);
+            Assert.AreEqual(testPatient, patientRepository.GetById(testPatient.Id));
+        }
+
+        [TestMethod]
+        public void TestUpdateNonExistent()
+        {
+            var patientRepository = new PatientRepository();
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+
+            Assert.ThrowsException<KeyNotFoundException>(() => patientRepository.Update(newPatient));
+        }
+
+        [TestMethod]
+        public void TestDeleteNonExistent()
+        {
+            var patientRepository = new PatientRepository();
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+
+            Assert.ThrowsException<KeyNotFoundException>(() => patientRepository.Delete(newPatient));
+        }
     }
 }

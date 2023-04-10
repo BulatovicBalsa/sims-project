@@ -20,7 +20,10 @@ namespace Hospital.Models.Patient
             IsBlocked = false;
         }
 
-        public Patient() : base() {}
+        public Patient() : base()
+        {
+            MedicalRecord = new MedicalRecord();
+        }
 
         public override bool Equals(object? obj)
         {
@@ -38,4 +41,3 @@ namespace Hospital.Models.Patient
 
     }
 }
-

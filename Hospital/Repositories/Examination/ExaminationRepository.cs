@@ -27,7 +27,7 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll()
         {
-            return Serializer<Examination, ExaminationMapper>.FromCSV(FilePath);
+            return Serializer<Examination>.FromCSV(FilePath);
         }
 
         public Examination? GetById(string id)
@@ -49,7 +49,7 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination.Add(examination);
 
-            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
+            Serializer<Examination>.ToCSV(allExamination, FilePath);
         }
 
         public void Update(Examination examination,bool isMadeByPatient)
@@ -72,7 +72,7 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination[indexToUpdate] = examination;
 
-            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
+            Serializer<Examination>.ToCSV(allExamination, FilePath);
         }
 
         public void Delete(Examination examination, bool isMadeByPatient)
@@ -95,11 +95,12 @@ namespace Hospital.Repositories.Examinaton
 
             allExamination.RemoveAt(indexToDelete);
 
-            Serializer<Examination, ExaminationMapper>.ToCSV(allExamination, FilePath);
+            Serializer<Examination>.ToCSV(allExamination, FilePath);
         }
 
         private List<Examination> _getAll(Doctor doctor)
         {
+            var lista = GetAll();
             List<Examination> doctorExaminations = GetAll()
                 .Where(appointment => appointment.Doctor.Equals(doctor))
                 .ToList();
@@ -166,7 +167,7 @@ namespace Hospital.Repositories.Examinaton
         public static void DeleteAll()
         {
             List<Examination> emptyList = new List<Examination>();
-            Serializer<Examination, ExaminationMapper>.ToCSV(emptyList, FilePath);
+            Serializer<Examination>.ToCSV(emptyList, FilePath);
         }
     }
 }

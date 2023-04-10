@@ -1,3 +1,2 @@
 IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,IsCreationLog
-False,80,180,c19c3cae-ad13-43d7-9409-f81ddbed999f,Alice,Smith,1234567890124,alicesmith,password1,03/31/2023 18:28:35,True
-False,80,180,c19c3cae-ad13-43d7-9409-f81ddbed999f,Alice,Smith,1234567890124,alicesmith,password1,03/06/2023 18:28:35,True
+False,180,80,7205c9a1-3447-4964-875c-8632a941aa7e,Alice,Smith,1234567890124,alicesmith,password1,04/10/2023 19:30:09,True

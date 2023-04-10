@@ -9,17 +9,19 @@ using CsvHelper.Configuration;
 
 namespace Hospital.Serialization;
 
-public class Serializer<T, M> where M : ClassMap<T>, new()
+public class Serializer<T>
 {
-    public static List<T> FromCSV(string filePath)
+    private const string DirectoryPath = "../../../Data/";
+
+    public static List<T> FromCSV(string filePath, ClassMap<T>? mapper = null)
     {
         try
         {
             using var reader = new StreamReader(filePath);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-            if (!isDefaultType())
+            if (mapper != null)
             {
-                csvReader.Context.RegisterClassMap<M>();
+                csvReader.Context.RegisterClassMap(mapper);
             }
             return csvReader.GetRecords<T>().ToList();
         }
@@ -28,35 +30,38 @@ public class Serializer<T, M> where M : ClassMap<T>, new()
             Console.WriteLine(e);
             return new List<T>();
         }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
+            return new List<T>();
+        }
     }
 
-    public static void ToCSV(List<T> records, string filePath)
+    public static void ToCSV(List<T> records, string filePath, ClassMap<T>? mapper = null)
     {
-        using var writer = new StreamWriter(filePath);
-        using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-        if (!isDefaultType())
+        StreamWriter writer;
+
+        try
         {
-            csvWriter.Context.RegisterClassMap<M>();
+            writer = new StreamWriter(filePath);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
+            writer = new StreamWriter(filePath);
+        }
+
+        using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+        if (mapper != null)
+        {
+            csvWriter.Context.RegisterClassMap(mapper);
         }
         csvWriter.WriteRecords(records);
-    }
 
-    private static bool isDefaultType()
-    {
-        return typeof(M).Equals(typeof(DefaultClassMap<T>));
-    }
-}
-
-public class Serializer<T>
-{
-    public static List<T> FromCSV(string filePath)
-    {
-        return Serializer<T, DefaultClassMap<T>>.FromCSV(filePath);
-    }
-
-    public static void ToCSV(List<T> records, string filePath)
-    {
-        Serializer<T, DefaultClassMap<T>>.ToCSV(records, filePath);
+        csvWriter.Flush();
     }
 
 }
+

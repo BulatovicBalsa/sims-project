@@ -70,7 +70,6 @@ namespace HospitalTests.Repositories.Examination
         }
 
         [TestMethod]
-        //need to fix this one
         public void TestUpdate()
         {
             _examination.Start = _examination.Start.AddHours(5);
