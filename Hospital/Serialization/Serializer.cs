@@ -10,6 +10,7 @@ namespace Hospital.Serialization;
 
 public class Serializer<T>
 {
+    private const string DirectoryPath = "../../../Data/";
     public static List<T> FromCSV(string filePath)
     {
         try
@@ -21,6 +22,12 @@ public class Serializer<T>
         catch (FileNotFoundException e)
         {
             Console.WriteLine(e);
+            return new List<T>();
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
             return new List<T>();
         }
     }
@@ -39,22 +46,54 @@ public class Serializer<T>
             Console.WriteLine(e);
             return new List<T>();
         }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
+            return new List<T>();
+        }
     }
 
     public static void ToCSV(List<T> records, string filePath)
     {
-        using var writer = new StreamWriter(filePath);
+        StreamWriter writer;
+
+        try
+        {
+            writer = new StreamWriter(filePath);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
+            writer = new StreamWriter(filePath);
+        }
+
         using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
         csvWriter.WriteRecords(records);
+
         csvWriter.Flush();
     }
 
     public static void ToCSV(List<T> records, string filePath, ClassMap<T> mapper)
     {
-        using var writer = new StreamWriter(filePath);
+        StreamWriter writer;
+
+        try
+        {
+            writer = new StreamWriter(filePath);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+            Directory.CreateDirectory(DirectoryPath);
+            writer = new StreamWriter(filePath);
+        }
+
         using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
         csvWriter.Context.RegisterClassMap(mapper);
         csvWriter.WriteRecords(records);
+
         csvWriter.Flush();
     }
 }
