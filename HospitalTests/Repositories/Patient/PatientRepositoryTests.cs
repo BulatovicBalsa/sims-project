@@ -12,6 +12,16 @@ namespace HospitalTests.Repositories.Patient
     [TestClass]
     public class PatientRepositoryTests
     {
+        private PatientRepository _patientRepository;
+        private Patient _patient;
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            PatientRepository.DeleteAll();
+            _patientRepository = CreateTestPatientRepository();
+            _patient = CreateTestPatient();
+            _patientRepository.Add(_patient);
+        }
         private PatientRepository CreateTestPatientRepository()
         {
             var patientRepository = new PatientRepository();
@@ -36,12 +46,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestAdd()
         {
-            var patientRepository = CreateTestPatientRepository();
-            var patient = CreateTestPatient();
-
-            patientRepository.Add(patient);
-
-            var addedPatient = patientRepository.GetById(patient.Id);
+            var addedPatient = _patientRepository.GetById(_patient.Id);
             Assert.IsNotNull(addedPatient);
 
             PatientRepository.DeleteAll();
@@ -50,20 +55,14 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestGetById()
         {
-            var patientRepository = CreateTestPatientRepository();
-            var patient = CreateTestPatient();
-            patientRepository.Add(patient);
-
-            var foundPatient = patientRepository.GetById(patient.Id);
+            var foundPatient = _patientRepository.GetById(_patient.Id);
 
             Assert.IsNotNull(foundPatient);
-            Assert.AreEqual(patient.Id,foundPatient.Id);
-
-
+            Assert.AreEqual(_patient.Id,foundPatient.Id);
 
             string nonExistingPatientId = "non-existing-id";
 
-            foundPatient = patientRepository.GetById(nonExistingPatientId);
+            foundPatient = _patientRepository.GetById(nonExistingPatientId);
 
             Assert.IsNull(foundPatient);
 
@@ -73,14 +72,11 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestUpdate()
         {
-            var patientRepository = CreateTestPatientRepository();
-            var patient = CreateTestPatient();
-            patientRepository.Add(patient);
-            patient.FirstName = "UpdatedFirstName";
+            _patient.FirstName = "UpdatedFirstName";
 
-            patientRepository.Update(patient);
+            _patientRepository.Update(_patient);
 
-            var updatedPatient = patientRepository.GetById(patient.Id);
+            var updatedPatient = _patientRepository.GetById(_patient.Id);
             Assert.IsNotNull(updatedPatient);
             Assert.AreEqual("UpdatedFirstName",updatedPatient.FirstName);
 
@@ -90,13 +86,9 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestDelete()
         {
-            var patientRepository = CreateTestPatientRepository();
-            var patient = CreateTestPatient();
-            patientRepository.Add(patient);
+            _patientRepository.Delete(_patient);
 
-            patientRepository.Delete(patient);
-
-            var deletedPatient = patientRepository.GetById(patient.Id);
+            var deletedPatient = _patientRepository.GetById(_patient.Id);
             Assert.IsNull(deletedPatient);
 
             PatientRepository.DeleteAll();
