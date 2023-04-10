@@ -1,3 +1,0 @@
-IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,IsCreationLog
-False,180,80,473b6ace-2a8f-49e7-8b3f-61d5825abd04,Alice,Smith,1234567890124,alicesmith,password1,03/31/2023 20:38:38,True
-False,180,80,473b6ace-2a8f-49e7-8b3f-61d5825abd04,Alice,Smith,1234567890124,alicesmith,password1,03/06/2023 20:38:38,True
