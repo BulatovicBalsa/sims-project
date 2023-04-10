@@ -12,6 +12,7 @@ namespace Hospital.Repositories.Examinaton
 {
     using Hospital.Models.Patient;
     using Hospital.Serialization.Mappers;
+    using Hospital.Models.Doctor;
 
     public class ExaminationRepository
     {
