@@ -1,7 +1,6 @@
-﻿using System.Globalization;
-using CsvHelper;
-using Hospital.Models.Manager;
+﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Manager;
 
@@ -21,12 +20,7 @@ public class RoomRepositoryTests
             new("5", "Ward", Room.RoomType.WARD),
             new("6", "Intensive care unit", Room.RoomType.WARD)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var loadedRooms = new RoomRepository().GetAll();
         Assert.AreEqual(rooms.Count, loadedRooms.Count);
@@ -44,12 +38,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", Room.RoomType.EXAMINATION_ROOM),
             new("5", "Ward", Room.RoomType.WARD)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var foundRoom = new RoomRepository().GetById("2");
         Assert.IsNotNull(foundRoom);
@@ -77,12 +66,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", Room.RoomType.EXAMINATION_ROOM),
             new("5", "Ward", Room.RoomType.WARD)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var foundRoom = new RoomRepository().GetById("");
         Assert.IsNull(foundRoom);
@@ -99,12 +83,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", Room.RoomType.EXAMINATION_ROOM),
             new("5", "Ward", Room.RoomType.WARD)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = new RoomRepository();
         roomRepository.Add(new Room("7", "New room", Room.RoomType.WAITING_ROOM));
@@ -121,12 +100,7 @@ public class RoomRepositoryTests
             new("0", "Warehouse", Room.RoomType.WAREHOUSE),
             new("1", "Waiting room", Room.RoomType.WAITING_ROOM)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = new RoomRepository();
         var idToUpdate = "1";
@@ -149,13 +123,7 @@ public class RoomRepositoryTests
             new("0", "Warehouse", Room.RoomType.WAREHOUSE),
             new("1", "Waiting room", Room.RoomType.WAITING_ROOM)
         };
-        using (var writer = new StreamWriter("../../../Data/rooms.csv"))
-        {
-            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csvWriter.WriteRecords(rooms);
-            csvWriter.Flush();
-        }
-
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
         var roomRepository = new RoomRepository();
 
         roomRepository.Delete(rooms[1]);
