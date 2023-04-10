@@ -15,84 +15,69 @@ namespace HospitalTests.Repositories.Patient
         private ExaminationChangesTracker _examinationChangesTracker;
         private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
         private Patient _patient;
+        private PatientExaminationLog _log;
+        private PatientExaminationLog _oldLog;
+        private PatientExaminationLog _recentLog;
 
         [TestInitialize]
         public void TestInitialize()
         {
+
             _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
 
             _examinationChangesTrackerRepository.DeleteAll();
             _patient = new Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1", new MedicalRecord(80, 180));
 
+            _log = new PatientExaminationLog(_patient, false);
+
+            var now = DateTime.Now;
+            _recentLog = new PatientExaminationLog
+            {
+                Patient = _patient,
+                Timestamp = now.AddDays(-10),
+                IsCreationLog = false
+            };
+            _oldLog = new PatientExaminationLog
+            {
+                Patient = _patient,
+                Timestamp = now.AddDays(-35),
+                IsCreationLog = false
+            };
         }
 
         [TestMethod]
         public void TestAdd()
         {
-            var log = new PatientExaminationLog(_patient, false);
-
-            _examinationChangesTracker.Add(log);
+            _examinationChangesTracker.Add(_log);
 
             var logs = _examinationChangesTrackerRepository.GetAll();
-            Assert.IsTrue(logs.Contains(log));
-
-            _examinationChangesTrackerRepository.DeleteAll();
+            Assert.IsTrue(logs.Contains(_log));
         }
 
         [TestMethod]
         public void TestGetNumberOfChangeLogsForPatientInLast30Days()
         {
-            var now = DateTime.Now;
-            var recentLog = new PatientExaminationLog
-            {
-                Patient = _patient,
-                Timestamp = now.AddDays(-10),
-                IsCreationLog = false
-            };
-            var oldLog = new PatientExaminationLog
-            {
-                Patient = _patient,
-                Timestamp = now.AddDays(-35),
-                IsCreationLog = false
-            };
-
-            _examinationChangesTracker.Add(recentLog);
-            _examinationChangesTracker.Add(oldLog);
+            _examinationChangesTracker.Add(_recentLog);
+            _examinationChangesTracker.Add(_oldLog);
 
             var count = _examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(_patient);
 
             Assert.AreEqual(1, count);
-
-            _examinationChangesTrackerRepository.DeleteAll();
         }
 
         [TestMethod]
         public void TestGetNumberOfCreationLogsForPatientInLast30Days()
         {
-            var now = DateTime.Now;
-            var recentLog = new PatientExaminationLog
-            {
-                Patient = _patient,
-                Timestamp = now.AddDays(-10),
-                IsCreationLog = true
-            };
-            var oldLog = new PatientExaminationLog
-            {
-                Patient = _patient,
-                Timestamp = now.AddDays(-35),
-                IsCreationLog = true
-            };
+            _oldLog.IsCreationLog = true;
+            _oldLog.IsCreationLog = true;
 
-            _examinationChangesTracker.Add(recentLog);
-            _examinationChangesTracker.Add(oldLog);
+            _examinationChangesTracker.Add(_recentLog);
+            _examinationChangesTracker.Add(_oldLog);
 
             var count = _examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(_patient);
 
             Assert.AreEqual(1, count);
-
-            _examinationChangesTrackerRepository.DeleteAll();
-
         }
 
 

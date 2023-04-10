@@ -58,8 +58,8 @@ namespace Hospital.Repositories.Examinaton
             var indexToUpdate = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
-            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (!IsFree(examination.Doctor, examination.Start,examination.Id)) throw new Exception("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start, examination.Id)) throw new Exception("Patient is busy");
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
@@ -122,18 +122,18 @@ namespace Hospital.Repositories.Examinaton
             return _getAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
         }
 
-        public bool IsFree(Doctor doctor, DateTime start)
+        public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)
         {
             var allExaminations = _getAll(doctor);
-            bool isAvailable = !allExaminations.Any(examination => examination.DoesInterfereWith(start));
+            bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
             return isAvailable;
         }
 
-        public bool IsFree(Patient patient, DateTime start)
+        public bool IsFree(Patient patient, DateTime start, string examinationId = null)
         {
             var allExaminations = _getAll(patient);
-            bool isAvailable = !allExaminations.Any(examination => examination.DoesInterfereWith(start));
+            bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
             return isAvailable;
         }
