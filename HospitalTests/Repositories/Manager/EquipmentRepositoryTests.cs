@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using CsvHelper;
-using Hospital.Models.Manager;
+﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Serialization;
 
@@ -21,15 +19,13 @@ public class EquipmentRepositoryTests
             new("3", "Stethoscope", Equipment.EquipmentType.EXAMINATION_EQUIPMENT),
             new("4", "Wheelchair", Equipment.EquipmentType.HALLWAY_EQUIPMENT)
         };
-        
-        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
 
-    } 
+        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+    }
 
     [TestMethod]
     public void TestGetAll()
     {
-
         var equipmentRepository = new EquipmentRepository();
 
         var loadedEquipment = equipmentRepository.GetAll();
@@ -48,7 +44,7 @@ public class EquipmentRepositoryTests
 
     [TestMethod]
     public void TestGetById()
-    { 
+    {
         var equipmentRepository = new EquipmentRepository();
 
         Assert.AreEqual("Stethoscope", equipmentRepository.GetById("3").Name);
@@ -71,7 +67,7 @@ public class EquipmentRepositoryTests
     public void TestDelete()
     {
         var equipmentToDelete = new Equipment("2", "Operating table", Equipment.EquipmentType.OPERATION_EQUIPMENT);
-        
+
         var equipmentRepository = new EquipmentRepository();
 
         equipmentRepository.Delete(equipmentToDelete);
@@ -107,8 +103,6 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestDeleteNonExistentEquipment()
     {
-        
-
         var equipmentRepository = new EquipmentRepository();
 
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment("0", "Nonexistent",

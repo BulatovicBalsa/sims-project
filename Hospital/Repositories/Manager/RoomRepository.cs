@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -10,7 +11,28 @@ public class RoomRepository
 
     public List<Room> GetAll()
     {
-        return Serializer<Room>.FromCSV(FilePath);
+        var rooms = Serializer<Room>.FromCSV(FilePath);
+        PlaceEquipment(rooms);
+
+        return rooms;
+    }
+
+    private static void PlaceEquipment(List<Room> rooms)
+    {
+        var equipmentItems = new EquipmentItemRepository().GetAll();
+
+        var equipmentItemsByRoom =
+            from equipmentItem in equipmentItems
+            group equipmentItem by equipmentItem.RoomId
+            into equipmentInRoom
+            select equipmentInRoom;
+
+        foreach (var roomGroup in equipmentItemsByRoom)
+        {
+            var room = rooms.Find(room => room.Id == roomGroup.Key);
+            if (room == null) continue;
+            room.Equipment = roomGroup.ToList();
+        }
     }
 
     public Room? GetById(string id)

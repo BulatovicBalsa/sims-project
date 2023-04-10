@@ -131,4 +131,32 @@ public class RoomRepositoryTests
         Assert.AreEqual(1, roomRepository.GetAll().Count);
         Assert.IsNull(roomRepository.GetById(rooms[1].Id));
     }
+
+    [TestMethod]
+    public void TestGetAllEquipmentLoading()
+    {
+        var rooms = new List<Room>
+        {
+            new("0", "Warehouse", Room.RoomType.WAREHOUSE),
+            new("1", "Waiting room", Room.RoomType.WAITING_ROOM)
+        };
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+
+        var equipmentInRooms = new List<EquipmentItem>()
+        {
+            new("1", "0", 1),
+            new("2", "0", 2),
+            new("1", "1", 3)
+        };
+        Serializer<EquipmentItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
+
+        var loadedRooms = new RoomRepository().GetAll();
+
+        Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
+        Assert.AreEqual(1, loadedRooms[1].Equipment.Count);
+        Assert.AreEqual(1, loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.EXAMINATION_EQUIPMENT)));
+        Assert.AreEqual(3, loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.EXAMINATION_EQUIPMENT)));
+        
+
+    }
 }
