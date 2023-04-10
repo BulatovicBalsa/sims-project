@@ -40,32 +40,32 @@ public class RoomRepository
         return GetAll().Find(equipment => equipment.Id == id);
     }
 
-    public void Add(Room equipment)
+    public void Add(Room room)
     {
         var rooms = GetAll();
 
-        rooms.Add(equipment);
+        rooms.Add(room);
 
         Serializer<Room>.ToCSV(rooms, FilePath);
     }
 
-    public void Update(Room equipment)
+    public void Update(Room room)
     {
         var rooms = GetAll();
 
-        var indexToUpdate = rooms.FindIndex(e => e.Id == equipment.Id);
+        var indexToUpdate = rooms.FindIndex(e => e.Id == room.Id);
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-        rooms[indexToUpdate] = equipment;
+        rooms[indexToUpdate] = room;
 
         Serializer<Room>.ToCSV(rooms, FilePath);
     }
 
-    public void Delete(Room equipment)
+    public void Delete(Room room)
     {
         var rooms = GetAll();
 
-        var indexToDelete = rooms.FindIndex(e => e.Id == equipment.Id);
+        var indexToDelete = rooms.FindIndex(e => e.Id == room.Id);
         if (indexToDelete == -1) throw new KeyNotFoundException();
 
         rooms.RemoveAt(indexToDelete);
