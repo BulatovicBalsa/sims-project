@@ -57,12 +57,13 @@ namespace Hospital.ViewModels.Login
         public LoginViewModel()
         {
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
+            _password = new SecureString();
         }
 
         private bool CanExecuteLoginCommand(object obj)
         {
             var emptyOrShortFields = string.IsNullOrWhiteSpace(Username) || Username.Length < 4 ||
-                                      Password.Length < 4 || string.IsNullOrWhiteSpace(Password.ToString());
+                                      Password.Length < 4 || string.IsNullOrWhiteSpace(Password?.ToString());
             
             return !emptyOrShortFields;
         }
