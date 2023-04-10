@@ -81,8 +81,8 @@ namespace Hospital.Repositories.Examinaton
             var indexToDelete = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToDelete == -1) throw new KeyNotFoundException();
 
-            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
-            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is not busy,although he should be");
+            if (IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is not busy,although he should be");
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
@@ -162,7 +162,7 @@ namespace Hospital.Repositories.Examinaton
             }
         }
 
-        public void DeleteAll()
+        public static void DeleteAll()
         {
             List<Examination> emptyList = new List<Examination>();
             Serializer<Examination, ExaminationMapper>.ToCSV(emptyList, FilePath);

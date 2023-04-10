@@ -24,7 +24,7 @@ namespace Hospital.Repositories.Patient
             Serializer<PatientExaminationLog>.ToCSV(allLogs,FilePath);
         }
 
-        public void DeleteAll()
+        public static void DeleteAll()
         {
             Serializer<PatientExaminationLog>.ToCSV(new List<PatientExaminationLog>(), FilePath);
         }

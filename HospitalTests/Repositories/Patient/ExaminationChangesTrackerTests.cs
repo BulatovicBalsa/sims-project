@@ -26,7 +26,7 @@ namespace HospitalTests.Repositories.Patient
             _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
 
-            _examinationChangesTrackerRepository.DeleteAll();
+            ExaminationChangesTrackerRepository.DeleteAll();
             _patient = new Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1", new MedicalRecord(80, 180));
 
             _log = new PatientExaminationLog(_patient, false);
@@ -70,7 +70,7 @@ namespace HospitalTests.Repositories.Patient
         public void TestGetNumberOfCreationLogsForPatientInLast30Days()
         {
             _oldLog.IsCreationLog = true;
-            _oldLog.IsCreationLog = true;
+            _recentLog.IsCreationLog = true;
 
             _examinationChangesTracker.Add(_recentLog);
             _examinationChangesTracker.Add(_oldLog);

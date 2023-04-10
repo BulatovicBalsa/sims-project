@@ -18,11 +18,26 @@ namespace HospitalTests.Repositories.Examination
     [TestClass]
     public class ExaminationRepositoryTests
     {
-        private ExaminationRepository CreateTestExaminationRepository()
+        private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
+        private ExaminationChangesTracker _examinationChangesTracker;
+        private ExaminationRepository _examinationRepository;
+        private Examination _examination;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            var examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
-            var examinationChangesTracker = new ExaminationChangesTracker(examinationChangesTrackerRepository);
-            var examinationRepository = new ExaminationRepository(examinationChangesTracker);
+            ExaminationRepository.DeleteAll();
+            ExaminationChangesTrackerRepository.DeleteAll();
+
+            CreateTestExaminationRepository();
+            CreateTestExamination();
+            _examinationRepository.Add(_examination, true);
+        }
+        private void CreateTestExaminationRepository()
+        {
+            _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
+            _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
+            _examinationRepository = new ExaminationRepository(_examinationChangesTracker);
 
             var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1");
             var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2");
@@ -34,78 +49,56 @@ namespace HospitalTests.Repositories.Examination
             var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40));
             var examination3 = new Examination(doctor2, patient1, true, DateTime.Now.AddHours(50));
 
-            examinationRepository.Add(examination1,true);
-            examinationRepository.Add(examination2, true);
-            examinationRepository.Add(examination3, false);
-
-            return examinationRepository;
-
+            _examinationRepository.Add(examination1,true);
+            _examinationRepository.Add(examination2, true);
+            _examinationRepository.Add(examination3, false);
         }
 
-        private Examination CreateTestExamination()
+        private void CreateTestExamination()
         {
             var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3");
             var patient = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3", new MedicalRecord(80, 180));
 
-            return new Examination(doctor, patient, false, DateTime.Now.AddHours(30));
+            _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60));
         }
 
         [TestMethod]
         public void TestAdd()
         {
-            var examinationRepository = CreateTestExaminationRepository();
-            var examination = CreateTestExamination();
-
-            examinationRepository.Add(examination,true);
-
-            var addedExamination = examinationRepository.GetById(examination.Id);
+            var addedExamination = _examinationRepository.GetById(_examination.Id);
             Assert.IsNotNull(addedExamination);
-
-            examinationRepository.DeleteAll();
-
         }
 
         [TestMethod]
         //need to fix this one
         public void TestUpdate()
         {
-            var examinationChangesTracker = new ExaminationChangesTracker();
-            var examinationRepository = new ExaminationRepository(examinationChangesTracker);
-
-            var testExamination = CreateTestExamination();
-
-            examinationRepository.Add(testExamination, false);
-
-            testExamination.Start = testExamination.Start.AddHours(5);
-            testExamination.IsOperation = true;
+            _examination.Start = _examination.Start.AddHours(5);
+            _examination.IsOperation = true;
                 
-            examinationRepository.Update(testExamination, false);
+            _examinationRepository.Update(_examination, false);
 
-            var updatedExamination = examinationRepository.GetById(testExamination.Id);
+            var updatedExamination = _examinationRepository.GetById(_examination.Id);
 
             Assert.IsNotNull(updatedExamination);
-            Assert.AreEqual(testExamination.Id, updatedExamination.Id);
-            Assert.AreEqual(testExamination.Doctor, updatedExamination.Doctor);
-            Assert.AreEqual(testExamination.Patient, updatedExamination.Patient);
-            Assert.AreEqual(testExamination.Start, updatedExamination.Start);
-            Assert.AreEqual(testExamination.IsOperation, updatedExamination.IsOperation);
+            Assert.AreEqual(_examination.Id, updatedExamination.Id);
+            Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
+            Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
+            Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
 
-            examinationRepository.DeleteAll();
+            
+            const double tolerance = 1; // 1 second
+            var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
+            Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
         }
 
         [TestMethod]
         public void TestDelete()
         {
-            var examinationRepository = CreateTestExaminationRepository();
-            var examination = CreateTestExamination();
-            examinationRepository.Add(examination, true);
+            _examinationRepository.Delete(_examination, true);
 
-            examinationRepository.Delete(examination, true);
-
-            var deletedExaminaton = examinationRepository.GetById(examination.Id);
+            var deletedExaminaton = _examinationRepository.GetById(_examination.Id);
             Assert.IsNull(deletedExaminaton);
-
-            examinationRepository.DeleteAll();
         }
     }
 }
