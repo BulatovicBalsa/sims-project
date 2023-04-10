@@ -18,6 +18,7 @@ public class Room
     {
         Id = Guid.NewGuid().ToString();
         Name = "";
+        Equipment = new List<EquipmentItem>();
     }
 
     public Room(string name, RoomType type)
@@ -25,6 +26,7 @@ public class Room
         Id = Guid.NewGuid().ToString();
         Name = name;
         Type = type;
+        Equipment = new List<EquipmentItem>();
     }
 
     public Room(string id, string name, RoomType type)
@@ -32,6 +34,7 @@ public class Room
         Id = id;
         Name = name;
         Type = type;
+        Equipment = new List<EquipmentItem>();
     }
 
     public string Id { get; set; }
