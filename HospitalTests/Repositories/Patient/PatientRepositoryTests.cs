@@ -16,7 +16,8 @@ namespace HospitalTests.Repositories.Patient
     {
         private const string TestFilePath = "../../../Data/patients.csv";
 
-        private void SaveTestPatients()
+        [TestInitialize]
+        public void TestInitialize()
         {
             var testPatients = new List<Patient>
             {
@@ -32,8 +33,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestGetAll()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
 
@@ -62,8 +61,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestGetById()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
 
@@ -76,8 +73,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestUpdate()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
             
@@ -97,8 +92,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestDelete()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var loadedPatients = patientRepository.GetAll();
 
@@ -113,8 +106,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestAdd()
         {
-            SaveTestPatients();
-
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
             var patientRepository = new PatientRepository();
@@ -131,8 +122,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestUpdateNonExistent()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
@@ -143,8 +132,6 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestDeleteNonExistent()
         {
-            SaveTestPatients();
-
             var patientRepository = new PatientRepository();
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
