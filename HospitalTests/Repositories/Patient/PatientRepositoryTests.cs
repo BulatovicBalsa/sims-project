@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
@@ -107,6 +108,24 @@ namespace HospitalTests.Repositories.Patient
 
             Assert.AreEqual(3, patientRepository.GetAll().Count);
             Assert.IsNull(patientRepository.GetById(testPatient.Id));
+        }
+
+        [TestMethod]
+        public void TestAdd()
+        {
+            SaveTestPatients();
+
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+            var patientRepository = new PatientRepository();
+            
+            patientRepository.Add(newPatient);
+            var loadedPatients = patientRepository.GetAll();
+
+            var testPatient = loadedPatients[4];
+            
+            Assert.AreEqual(5, patientRepository.GetAll().Count);
+            Assert.AreEqual(testPatient, patientRepository.GetById(testPatient.Id));
         }
     }
 }
