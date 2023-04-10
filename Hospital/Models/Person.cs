@@ -10,6 +10,7 @@ namespace Hospital.Models
         public string LastName { get; set; }
         public string Jmbg { get; set; }
         public Profile Profile { get; set; }
+
         protected Person()
         {
             Id = Guid.NewGuid().ToString();
