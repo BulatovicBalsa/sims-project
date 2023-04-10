@@ -127,5 +127,29 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual(5, patientRepository.GetAll().Count);
             Assert.AreEqual(testPatient, patientRepository.GetById(testPatient.Id));
         }
+
+        [TestMethod]
+        public void TestUpdateNonExistent()
+        {
+            SaveTestPatients();
+
+            var patientRepository = new PatientRepository();
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+
+            Assert.ThrowsException<KeyNotFoundException>(() => patientRepository.Update(newPatient));
+        }
+
+        [TestMethod]
+        public void TestDeleteNonExistent()
+        {
+            SaveTestPatients();
+
+            var patientRepository = new PatientRepository();
+            var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword", new MedicalRecord(179, 80));
+
+            Assert.ThrowsException<KeyNotFoundException>(() => patientRepository.Delete(newPatient));
+        }
     }
 }
