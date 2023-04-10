@@ -18,7 +18,7 @@ namespace Hospital.Repositories.Nurse
             return Serializer<Nurse>.FromCSV(FilePath);
         }
 
-        public Nurse? Get(string id)
+        public Nurse? GetById(string id)
         {
             return GetAll().FirstOrDefault(nurse => nurse.Id == id);
         }
