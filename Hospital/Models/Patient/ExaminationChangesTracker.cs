@@ -28,14 +28,14 @@ namespace Hospital.Models.Patient
         {
             IEnumerable<PatientExaminationLog> logs = _examinationChangesTrackerRepository.GetAll();
             DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30);
-            return logs.Count(log => log.Patient == patient && log.Timestamp > thirtyDaysAgo && !log.IsCreationLog);
+            return logs.Count(log => log.Patient.Equals(patient) && log.Timestamp > thirtyDaysAgo && !log.IsCreationLog);
         }
 
         public int GetNumberOfCreationLogsForPatientInLast30Days(Patient patient)
         {
             IEnumerable<PatientExaminationLog> logs = _examinationChangesTrackerRepository.GetAll();
             DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30);
-            return logs.Count(log => log.Patient == patient && log.Timestamp > thirtyDaysAgo && log.IsCreationLog);
+            return logs.Count(log => log.Patient.Equals(patient) && log.Timestamp > thirtyDaysAgo && log.IsCreationLog);
         }
     }
 }
