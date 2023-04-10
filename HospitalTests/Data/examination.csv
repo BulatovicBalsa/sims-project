@@ -1,2 +1,5 @@
-Id,Id,FirstName,LastName,Jmbg,Username,Password,IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Start,End,IsOperation
-aa9e233c-9e9d-4adc-9829-c7e1ccb0c5cd,53394dee-0545-4530-b9ff-efa74b879290,Dr. Emily,Brown,1234567890121,dremilybrown,docpassword1,False,180,80,7205c9a1-3447-4964-875c-8632a941aa7e,Alice,Smith,1234567890124,alicesmith,password1,04/12/2023 01:28:44,04/12/2023 01:43:44,False
+Id,IsOperation,Start,Id,FirstName,LastName,Jmbg,Username,Password,Id,FirstName,LastName,Jmbg,Username,Password,Height,Weight,Allergies,MedicalHistory
+dc6fb72f-8d3e-4911-9f5a-78d37ec02a66,False,04/12/2023 02:38:38,f9df8afc-42cf-44cb-ae61-534cdf7f957e,Dr. Emily,Brown,1234567890121,dremilybrown,docpassword1,09f528d5-b69f-4872-a1da-e5ec4f3b879f,Alice,Smith,1234567890124,alicesmith,password1,80,180,,
+4464154d-c422-4601-9bd7-2162e81e5f61,False,04/12/2023 12:38:38,f9df8afc-42cf-44cb-ae61-534cdf7f957e,Dr. Emily,Brown,1234567890121,dremilybrown,docpassword1,1149da22-4f27-4fc7-bb69-ada3e95e2ddc,Bob,Johnson,1234567890125,bobjohnson,password2,80,180,,
+a94ecde2-8e01-474d-802f-b99a1a3d8059,True,04/12/2023 22:38:38,73a43bd0-9e0d-4a86-b86d-0e9bad82c2c3,Dr. Jake,Wilson,1234567890122,drjakewilson,docpassword2,09f528d5-b69f-4872-a1da-e5ec4f3b879f,Alice,Smith,1234567890124,alicesmith,password1,80,180,,
+44548104-06e4-47bf-95e3-1f50062f2ad9,True,04/13/2023 13:38:38,55a920ae-7fa4-4c6e-98a1-332c4e24f103,Dr. Linda,Miller,1234567890123,drlindamiller,docpassword3,97d559a4-06d9-43e1-ae51-f2f9a1b9a828,Charlie,Williams,1234567890126,charliewilliams,password3,80,180,,
