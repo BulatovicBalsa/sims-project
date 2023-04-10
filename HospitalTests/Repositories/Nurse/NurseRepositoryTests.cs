@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Repositories.Nurse;
-using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Nurse
 {
     using Hospital.Models.Nurse;
-    using Hospital.Models.Patient;
 
     [TestClass]
     public class NurseRepositoryTests
@@ -100,6 +98,22 @@ namespace HospitalTests.Repositories.Nurse
 
             Assert.AreEqual(3, nurseRepository.GetAll().Count);
             Assert.IsNull(nurseRepository.GetById(testNurse.Id));
+        }
+
+        [TestMethod]
+        public void TestAdd()
+        {
+            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword");
+            var nurseRepository = new NurseRepository();
+
+            nurseRepository.Add(newNurse);
+            var loadedNurses= nurseRepository.GetAll();
+
+            var testNurse= loadedNurses[4];
+
+            Assert.AreEqual(5, nurseRepository.GetAll().Count);
+            Assert.AreEqual(testNurse, nurseRepository.GetById(testNurse.Id));
         }
     }
 }
