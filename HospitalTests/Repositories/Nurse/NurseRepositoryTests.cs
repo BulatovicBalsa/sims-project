@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Nurse
@@ -41,6 +42,30 @@ namespace HospitalTests.Repositories.Nurse
             Assert.AreEqual("Teodor", loadedNurses[3].FirstName);
             Assert.AreNotEqual("11", loadedNurses[0].Jmbg);
             Assert.AreEqual("Milutinovic", loadedNurses[1].LastName);
+        }
+
+        [TestMethod]
+        public void TestNonExistentFile()
+        {
+            if (File.Exists(TestFilePath))
+            {
+                File.Delete(TestFilePath);
+            }
+
+            Assert.AreEqual(0, new NurseRepository().GetAll().Count);
+        }
+
+        [TestMethod]
+        public void TestGetById()
+        {
+            var nurseRepository = new NurseRepository();
+            var loadedNurses = nurseRepository.GetAll();
+
+            var testNurse = loadedNurses[0];
+            
+            Assert.AreEqual(testNurse.FirstName, nurseRepository.GetById(testNurse.Id).FirstName);
+            Assert.IsNull(nurseRepository.GetById("0"));
+            Assert.AreEqual(testNurse.LastName, nurseRepository.GetById(testNurse.Id).LastName);
         }
     }
 }
