@@ -115,5 +115,25 @@ namespace HospitalTests.Repositories.Nurse
             Assert.AreEqual(5, nurseRepository.GetAll().Count);
             Assert.AreEqual(testNurse, nurseRepository.GetById(testNurse.Id));
         }
+
+        [TestMethod]
+        public void TestUpdateNonExistent()
+        {
+            var nurseRepository = new NurseRepository();
+            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword");
+
+            Assert.ThrowsException<KeyNotFoundException>(() => nurseRepository.Update(newNurse));
+        }
+
+        [TestMethod]
+        public void TestDeleteNonExistent()
+        {
+            var nurseRepository = new NurseRepository();
+            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+                "testPassword");
+
+            Assert.ThrowsException<KeyNotFoundException>(() => nurseRepository.Delete(newNurse));
+        }
     }
 }
