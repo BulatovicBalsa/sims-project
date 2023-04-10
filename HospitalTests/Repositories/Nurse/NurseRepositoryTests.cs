@@ -87,6 +87,19 @@ namespace HospitalTests.Repositories.Nurse
             Assert.AreEqual("TestUsername", nurseRepository.GetById(testNurse.Id)?.Profile.Username);
             Assert.AreEqual("TestPassword", nurseRepository.GetById(testNurse.Id)?.Profile.Password);
         }
-        
+
+        [TestMethod]
+        public void TestDelete()
+        {
+            var nurseRepository = new NurseRepository();
+            var loadedNurses= nurseRepository.GetAll();
+
+            var testNurse= loadedNurses[1];
+
+            nurseRepository.Delete(testNurse);
+
+            Assert.AreEqual(3, nurseRepository.GetAll().Count);
+            Assert.IsNull(nurseRepository.GetById(testNurse.Id));
+        }
     }
 }
