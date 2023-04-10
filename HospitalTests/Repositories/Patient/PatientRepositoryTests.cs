@@ -92,5 +92,21 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
             Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
         }
+
+        [TestMethod]
+        public void TestDelete()
+        {
+            SaveTestPatients();
+
+            var patientRepository = new PatientRepository();
+            var loadedPatients = patientRepository.GetAll();
+
+            var testPatient = loadedPatients[1];
+
+            patientRepository.Delete(testPatient);
+
+            Assert.AreEqual(3, patientRepository.GetAll().Count);
+            Assert.IsNull(patientRepository.GetById(testPatient.Id));
+        }
     }
 }
