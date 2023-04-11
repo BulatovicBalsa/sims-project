@@ -137,8 +137,8 @@ public class EquipmentFilterServiceTests
     public void TestGetEquipmentInRoomType()
     {
         var equipmentInExaminationRooms =
-            new EquipmentFilterService().GetEquipmentInRoomType(Room.RoomType.ExaminationRoom);
-        var equipmentInWaitingRooms = new EquipmentFilterService().GetEquipmentInRoomType(Room.RoomType.WaitingRoom);
+            new EquipmentFilterService().GetEquipment(Room.RoomType.ExaminationRoom);
+        var equipmentInWaitingRooms = new EquipmentFilterService().GetEquipment(Room.RoomType.WaitingRoom);
 
         Assert.AreEqual(2, equipmentInWaitingRooms.Count); // magazine stand and chairs
         Assert.AreEqual(5, equipmentInExaminationRooms.Count); // EKG, Xray, Blood pressure monitor, chair, nebulizer
@@ -148,7 +148,7 @@ public class EquipmentFilterServiceTests
     public void TestGetEquipmentOfType()
     {
         var equipmentFilterService = new EquipmentFilterService();
-        Assert.AreEqual(7, equipmentFilterService.GetEquipmentOfType(Equipment.EquipmentType.ExaminationEquipment).Count);
-        Assert.AreEqual(5, equipmentFilterService.GetEquipmentOfType(Equipment.EquipmentType.Furniture).Count);
+        Assert.AreEqual(7, equipmentFilterService.GetEquipment(Equipment.EquipmentType.ExaminationEquipment).Count);
+        Assert.AreEqual(5, equipmentFilterService.GetEquipment(Equipment.EquipmentType.Furniture).Count);
     }
 }
