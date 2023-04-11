@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Hospital.Repositories.Patient;
 using Hospital.Views;
 
 namespace Hospital
@@ -28,7 +29,14 @@ namespace Hospital
 
                 if (role == "PATIENT")
                 {
-                    var patientView = new PatientView();
+                    var id = identityName.Split("|")[0];
+                    var patient = new PatientRepository().GetById(id);
+                    if (patient == null)
+                    {
+                        MessageBox.Show("Login was not successful.");
+                        return;
+                    }
+                    var patientView = new PatientView(patient);
                     patientView.Show();
                 }
 
