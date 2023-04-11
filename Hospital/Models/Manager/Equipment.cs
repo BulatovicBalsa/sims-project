@@ -13,11 +13,12 @@ namespace Hospital.Models.Manager
 
         public enum EquipmentType
         {
-           FURNITURE, HALLWAY_EQUIPMENT, EXAMINATION_EQUIPMENT, OPERATION_EQUIPMENT 
+           Furniture, HallwayEquipment, ExaminationEquipment, OperationEquipment 
         }
 
         public Equipment()
         {
+            Id = System.Guid.NewGuid().ToString();
             Name = "";
         }
 
