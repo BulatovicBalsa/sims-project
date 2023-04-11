@@ -46,6 +46,12 @@ namespace Hospital.Services
                 return true;
             }
 
+            if (credential.UserName == "manager" && credential.Password == "manager")
+            {
+                LoggedUser = new Models.Manager.Manager();
+                return true;
+            }
+
             return false;
         }
     }
