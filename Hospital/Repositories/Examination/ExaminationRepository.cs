@@ -155,6 +155,11 @@ namespace Hospital.Repositories.Examinaton
             return _getAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
         }
 
+        public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
+        {
+            return _getAll(doctor).Where(examination => examination.Start.Date >= DateTime.Now.Date && examination.End.Date <= DateTime.Now.Date.AddDays(2)).ToList();
+        }
+
         public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)
         {
             var allExaminations = _getAll(doctor);
