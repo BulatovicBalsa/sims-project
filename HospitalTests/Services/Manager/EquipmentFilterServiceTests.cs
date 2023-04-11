@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.ComponentModel;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
@@ -17,7 +18,7 @@ public class EquipmentFilterServiceTests
             "../../../Data/equipmentItems.csv",
             "../../../Data/rooms.csv"
         };
-        foreach(var file in filesUsed) if (File.Exists(file)) File.Delete(file);
+        foreach (var file in filesUsed) if (File.Exists(file)) File.Delete(file);
 
 
         var equipmentRepository = new EquipmentRepository();
@@ -45,7 +46,7 @@ public class EquipmentFilterServiceTests
             new("1020", "Oxygen Tank", Equipment.EquipmentType.HallwayEquipment),
             new("1021", "Chair", Equipment.EquipmentType.Furniture),
             new("1022", "Magazine stand", Equipment.EquipmentType.Furniture)
-            
+
 
         };
 
@@ -59,7 +60,7 @@ public class EquipmentFilterServiceTests
             new Room("5000","Warehouse Room", Room.RoomType.Warehouse),
             new Room("0001","Operating Room 1", Room.RoomType.OperatingRoom),
             new Room("0002","Operating Room 2", Room.RoomType.OperatingRoom),
-            
+
             new Room("1001","Examination Room 1", Room.RoomType.ExaminationRoom),
 
             new Room("1002", "Examination Room 2", Room.RoomType.ExaminationRoom),
@@ -68,7 +69,7 @@ public class EquipmentFilterServiceTests
 
             new Room("1004", "Examination Room 4", Room.RoomType.ExaminationRoom),
             new Room("2001","Waiting Room 1", Room.RoomType.WaitingRoom),
-            
+
 
             new Room("2002","Waiting Room 2", Room.RoomType.WaitingRoom),
             new Room("3001","Ward Room 101", Room.RoomType.Ward),
@@ -182,7 +183,28 @@ public class EquipmentFilterServiceTests
     {
         var equipmentFilterService = new EquipmentFilterService();
         var equipmentNotInWarehouse = equipmentFilterService.GetEquipmentNotInWarehouse();
-        Assert.AreEqual(22-5, equipmentNotInWarehouse.Count);
+        Assert.AreEqual(22 - 5, equipmentNotInWarehouse.Count);
 
+    }
+
+    [TestMethod]
+    public void TestSelectByStringTypeOnly()
+    {
+        var allEquipment = new EquipmentRepository().GetAll();
+        var equipmentFilterService = new EquipmentFilterService();
+        var furniture = equipmentFilterService.Select(allEquipment, "fUrNiture");
+        
+        Assert.AreEqual(5, furniture.Count);
+
+    }
+
+    [TestMethod]
+    public void TestSelectByStringBothTypeAndName()
+    {
+        var allEquipment = new EquipmentRepository().GetAll();
+        var equipmentFilterService = new EquipmentFilterService();
+        var equipmentWithF = equipmentFilterService.Select(allEquipment, "f");
+
+        Assert.AreEqual(6, equipmentWithF.Count); // Should select 5 furniture and defibrilator
     }
 }
