@@ -27,7 +27,9 @@ namespace Hospital.Views
     public partial class ExaminationDialog : Window
     {
         private Doctor _doctor;
-        private ObservableCollection<Examination> _examinations; 
+        private ObservableCollection<Examination> _examinations;
+        private bool _isUpdate = false;
+        private Examination? examinationToChange = null;
 
         public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinations)
         {
@@ -36,6 +38,21 @@ namespace Hospital.Views
             this._doctor = doctor;
             this.PatientComboBox.ItemsSource = GetPatients();
             this._examinations = examinations;
+        }
+
+        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinations, Examination examinationToChange)
+        {
+            InitializeComponent();
+
+            this._isUpdate = true;
+            this._doctor = doctor;
+            this.PatientComboBox.ItemsSource = GetPatients();
+            this._examinations = examinations;
+            this.examinationToChange = examinationToChange;
+
+            ExaminationDatePicker.SelectedDate = examinationToChange.Start;
+            IsOperation.IsChecked = examinationToChange.IsOperation;
+            PatientComboBox.SelectedItem = examinationToChange.Patient;
         }
 
         private List<Patient> GetPatients()
@@ -64,15 +81,31 @@ namespace Hospital.Views
 
             Examination examination = new Examination(_doctor, patient, isOperationNullable.GetValueOrDefault(), startDate.GetValueOrDefault());
 
-            try{
-                new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false); 
-            }catch(Exception ex)
+            
+            try
             {
-                MessageBox.Show(ex.Message());
+                if (this._isUpdate)
+                {
+                    new ExaminationRepository(new ExaminationChangesTracker()).Update(examination, false);
+                    _examinations.Add(examination);
+                }
+                else
+                {
+                    new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false);
+                    _examinations.Clear();
+                    foreach (var examinationToAdd in new ExaminationRepository(new ExaminationChangesTracker()).GetAll())
+                    {
+                        _examinations.Add(examinationToAdd);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
                 return;
             }
 
-            _examinations.Add(examination);
+            MessageBox.Show("Succeed");
             DialogResult = true;
         }
     }
