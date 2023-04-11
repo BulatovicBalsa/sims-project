@@ -6,7 +6,7 @@ using NuGet.Frameworks;
 namespace HospitalTests.Repositories.Manager;
 
 [TestClass]
-public class EquipmentItemRepositoryTests
+public class EquipmentPlacementRepositoryTests
 {
     [TestMethod]
     public void TestGetAll()
@@ -71,6 +71,7 @@ public class EquipmentItemRepositoryTests
         Assert.AreEqual("1", equipmentItemRepository.GetAll()[0].RoomId);
     }
 
+    [TestMethod]
     public void TestGetAllJoinWithEquipment()
     {
         var equipmentItems = new List<EquipmentPlacement>
@@ -83,7 +84,7 @@ public class EquipmentItemRepositoryTests
         var equipment = new List<Equipment>
         {
             new("1", "Chair", Equipment.EquipmentType.Furniture),
-            new("2", "Operating Table",
+            new("2", "Operating table",
                 Equipment.EquipmentType.OperationEquipment),
         };
 
@@ -94,8 +95,8 @@ public class EquipmentItemRepositoryTests
         Assert.AreEqual(2, loadedEquipmentPlacements.Count);
         Assert.IsNotNull(loadedEquipmentPlacements[0].Equipment);
         Assert.IsNotNull(loadedEquipmentPlacements[1].Equipment);
-        Assert.Equals("Chair", loadedEquipmentPlacements[0].Equipment?.Name);
-        Assert.Equals("Operating table", loadedEquipmentPlacements[1].Equipment?.Name);
+        Assert.AreEqual("Chair", loadedEquipmentPlacements[0].Equipment?.Name);
+        Assert.AreEqual("Operating table", loadedEquipmentPlacements[1].Equipment?.Name);
 
 
     }
