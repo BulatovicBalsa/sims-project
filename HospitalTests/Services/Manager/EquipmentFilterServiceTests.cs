@@ -174,7 +174,7 @@ public class EquipmentFilterServiceTests
         var warehouse = roomRepository.GetById("5000");
 
         Assert.IsNotNull(warehouse);
-        Assert.AreEqual(3, equipmentFilterService.SelectEquipment(warehouse.Equipment, 10).Count);
+        Assert.AreEqual(3, equipmentFilterService.Select(warehouse.Equipment, 10).Count);
 
     }
 
