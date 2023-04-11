@@ -78,6 +78,7 @@ namespace Hospital.ViewModels
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
             Examination = new Examination();
+            Examination.Patient = patient;
             SaveCommand = new RelayCommand(Save);
             Patient = patient;
             CancelCommand = new RelayCommand(Cancel);

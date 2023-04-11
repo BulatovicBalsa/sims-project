@@ -28,7 +28,7 @@ namespace Hospital.Views
 
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
-            _viewModel = new PatientViewModel(_examinationRepository);
+            _viewModel = new PatientViewModel(patient,_examinationRepository);
             _viewModel.LoadExaminations(patient);
             _patient = patient;
             this.DataContext = _viewModel;

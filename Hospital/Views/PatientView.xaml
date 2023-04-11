@@ -94,11 +94,11 @@
                             Margin="5" Click="BtnDeleteExamination_Click"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.Name}" Width="*"/>
-                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient.FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.Id}" Width="*"/>
+                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient.Id}" Width="*"/>
                         <DataGridTextColumn Header="Start" Binding="{Binding Start}" Width="*"/>
                         <DataGridTextColumn Header="End" Binding="{Binding End}" Width="*"/>
                         <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}" Width="*"/>

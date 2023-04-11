@@ -26,7 +26,7 @@ namespace Hospital.ViewModels
             set
             {
                 _examinations = value;
-                OnPropertyChanged(nameof(Examinations));
+                OnPropertyChanged();
             }
         }
 
@@ -37,9 +37,10 @@ namespace Hospital.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PatientViewModel(ExaminationRepository examinationRepository)
+        public PatientViewModel(Patient patient,ExaminationRepository examinationRepository)
         {
             _examinationRepository = examinationRepository;
+            LoadExaminations(patient);
         }
 
         public PatientViewModel()

@@ -140,8 +140,9 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll(Patient patient)
         {
+            var all =GetAll();
             List<Examination> patientExaminations = GetAll()
-                .Where(appointment => appointment.Patient.Equals(patient))
+                .Where(examination => examination.Patient.Equals(patient))
                 .ToList();
             return patientExaminations;
         }
