@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Text;
+using System.Windows.Controls;
 
 namespace Hospital.Models
 {
@@ -38,6 +40,19 @@ namespace Hospital.Models
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("");
+            stringBuilder.Append(FirstName);
+            stringBuilder.Append(" ");
+            stringBuilder.Append(LastName);
+            stringBuilder.Append(", ");
+            stringBuilder.Append(Jmbg);
+
+            return stringBuilder.ToString();
         }
     }
 }
