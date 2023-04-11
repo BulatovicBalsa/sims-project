@@ -59,7 +59,7 @@
                         FontSize="12"
                         FontFamily="Montserrat"
                         Cursor="Hand"
-                        Grid.Column="2">
+                        Grid.Column="2" HorizontalAlignment="Right" Width="25">
                 </Button>
             </Grid>
 
@@ -89,16 +89,17 @@
                             Margin="5"/>
                 </StackPanel>
 
-                <DataGrid x:Name="ExaminationsDataGrid"
-                          Grid.Row="1"
-                          AutoGenerateColumns="True"
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          CanUserResizeRows="False"
-                          CanUserSortColumns="True"
-                          SelectionMode="Single"
-                          IsReadOnly="True">
-                    <!-- Bind the ItemsSource to the list of examinations in the ViewModel -->
+                <TextBlock Grid.Row="2" Text="Your examinations" FontSize="24" Margin="10,0,10,301" HorizontalAlignment="Center"/>
+
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,46,10,215" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Examination ID"  Binding="{Binding ExaminationId}" IsReadOnly="True" Width="*" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding ExaminationDate}" Width="*"/>
+                        <DataGridTextColumn Header="Diagnosis" Binding="{Binding Diagnosis}" Width="*"/>
+                        <DataGridTextColumn Header="Therapy" Binding="{Binding Therapy}" Width="*"/>
+                        <DataGridTextColumn Header="Note" Binding="{Binding Notes}" Width="*"/>
+                        <DataGridTextColumn Header="Doctor" Width="*"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </Grid>
