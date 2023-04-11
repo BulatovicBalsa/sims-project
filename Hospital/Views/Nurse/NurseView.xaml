@@ -15,7 +15,7 @@
     <Window.DataContext>
         <viewModel:NurseViewModel/>
     </Window.DataContext>
-    
+
     <Border CornerRadius="15">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -73,8 +73,83 @@
 
                     </StackPanel>
 
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="BtnMinimize" 
+                                BorderThickness="0"
+                                Content="-"
+                                Foreground="Black"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"
+                                Grid.Column="1"
+                                Click="BtnMinimize_OnClick">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="White"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightSlateGray"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="18" Height="18"
+                                    CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button x:Name="BtnClose" 
+                        BorderThickness="0"
+                        Content="X"
+                        Foreground="Black"
+                        FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="2"
+                        Click="BtnClose_OnClick">
+
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="White"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightSlateGray"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="18" Height="18"
+                                    CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+
                     <DataGrid Grid.Row="2" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
-                              SelectedItem="{Binding Path=SelectedPatient}">
+                              SelectedItem="{Binding Path=SelectedPatient}"
+                              SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Width="*" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName}"/>
@@ -84,6 +159,28 @@
                             <DataGridTextColumn Header="Password" Width="*" Binding="{Binding Path=Profile.Password}"/>
                             <DataGridTextColumn Header="Height" Width="*" Binding="{Binding Path=MedicalRecord.Height}"/>
                             <DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Path=MedicalRecord.Weight}"/>
+                            <DataGridTemplateColumn Header="MedicalHistory" Width="*">
+
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ListBox  
+                                            Name="list"  
+                                            Margin="4,4,4,4"  
+                                            ItemsSource="{Binding MedicalRecord.MedicalHistory}"  
+                                            SelectionMode="Extended">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBox BorderThickness="0" Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged}" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+
+
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

@@ -28,5 +28,15 @@ namespace Hospital.Views.Nurse
         {
             DragMove();
         }
+
+        private void BtnMinimize_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
