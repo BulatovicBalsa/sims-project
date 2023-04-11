@@ -93,14 +93,14 @@
                             Margin="5" Click="BtnDeleteExamination_Click"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Examination ID"  Binding="{Binding ExaminationId}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding ExaminationDate}" Width="*"/>
-                        <DataGridTextColumn Header="Start Time" Binding="{Binding Diagnosis}" Width="*"/>
-                        <DataGridTextColumn Header="End Time" Binding="{Binding Therapy}" Width="*"/>
-                        <DataGridTextColumn Header="Type of examination" Binding="{Binding isOperation}" Width="*"/>
-                        <DataGridTextColumn Header="Doctor" Width="*"/>
+                        <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.Name}" Width="*"/>
+                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient.FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" Width="*"/>
+                        <DataGridTextColumn Header="End" Binding="{Binding End}" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
