@@ -12,24 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Hospital.Views
+namespace Hospital.Views.Nurse
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for NurseView.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class NurseView : Window
     {
-        public LoginView()
+        public NurseView()
         {
             InitializeComponent();
         }
 
-        private void LoginView_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void ControlBar_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
+            DragMove();
         }
 
         private void BtnMinimize_OnClick(object sender, RoutedEventArgs e)

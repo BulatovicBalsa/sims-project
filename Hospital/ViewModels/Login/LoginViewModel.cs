@@ -9,12 +9,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hospital.Models.Doctor;
+using Hospital.Models.Manager;
 using Hospital.Models.Nurse;
 using Hospital.Models.Patient;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login
 {
+    using Hospital.Models.Doctor;
+    using Hospital.Models.Nurse;
     public class LoginViewModel : ViewModelBase
     {
         private string _username;
@@ -113,6 +116,11 @@ namespace Hospital.ViewModels.Login
             if (_loginService.LoggedUser.GetType() == typeof(Nurse))
             {
                 return userId + "|" + "NURSE";
+            }
+
+            if (_loginService.LoggedUser.GetType() == typeof(Manager))
+            {
+                return userId + "|" + "MANAGER";
             }
 
             return "";

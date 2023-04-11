@@ -6,8 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Hospital.Models.Doctor;
+using Hospital.Repositories.Doctor;
+using Hospital.Views;
 using Hospital.Repositories.Patient;
 using Hospital.Views;
+using Hospital.Views.Manager;
+using Hospital.Views.Nurse;
 
 namespace Hospital
 {
@@ -25,11 +30,11 @@ namespace Hospital
                 if (loginView.IsVisible || !loginView.IsLoaded) return;
 
                 var identityName = Thread.CurrentPrincipal.Identity.Name;
+                var id = identityName.Split("|")[0];
                 var role = identityName.Split("|")[1];
 
                 if (role == "PATIENT")
                 {
-                    var id = identityName.Split("|")[0];
                     var patient = new PatientRepository().GetById(id);
                     if (patient == null)
                     {
@@ -42,17 +47,23 @@ namespace Hospital
 
                 else if (role == "NURSE")
                 {
-                    throw new NotImplementedException();
+                    var nurseView = new NurseView();
+                    nurseView.Show();
                 }
 
                 else if (role == "MANAGER")
                 {
-                    throw new NotImplementedException();
+                    var managerView = new ManagerView();
+                    managerView.Show();
+                    
+                    //throw new NotImplementedException();
                 }
 
                 else if (role == "DOCTOR")
                 {
-                    throw new NotImplementedException();
+                    var doctor = new DoctorRepository().GetById(id);
+                    DoctorView doctorView = new DoctorView(doctor);
+                    doctorView.Show();
                 }
 
                 loginView.Close();
