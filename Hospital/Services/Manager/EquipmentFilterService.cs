@@ -39,7 +39,7 @@ namespace Hospital.Services.Manager
             return _equipmentRepository.GetAll().Where(equipment => equipment.Type == type).ToList();
         }
 
-        public List<Equipment> SelectEquipment(List<EquipmentPlacement> equipmentPlacements, int maxAmountInclusive)
+        public List<Equipment> Select(List<EquipmentPlacement> equipmentPlacements, int maxAmountInclusive)
         {
             var equipmentPlacementsByEquipment =
                 from equipmentPlacement in equipmentPlacements
