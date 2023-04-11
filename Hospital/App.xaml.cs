@@ -9,6 +9,7 @@ using System.Windows;
 using Hospital.Repositories.Patient;
 using Hospital.Views;
 using Hospital.Views.Manager;
+using Hospital.Views.Nurse;
 
 namespace Hospital
 {
