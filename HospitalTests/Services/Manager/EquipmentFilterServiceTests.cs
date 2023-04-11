@@ -136,9 +136,11 @@ public class EquipmentFilterServiceTests
     [TestMethod]
     public void TestGetEquipmentInRoomType()
     {
+        var equipmentFilterService = new EquipmentFilterService();
+
         var equipmentInExaminationRooms =
-            new EquipmentFilterService().GetEquipment(Room.RoomType.ExaminationRoom);
-        var equipmentInWaitingRooms = new EquipmentFilterService().GetEquipment(Room.RoomType.WaitingRoom);
+            equipmentFilterService.GetEquipment(Room.RoomType.ExaminationRoom);
+        var equipmentInWaitingRooms = equipmentFilterService.GetEquipment(Room.RoomType.WaitingRoom);
 
         Assert.AreEqual(2, equipmentInWaitingRooms.Count); // magazine stand and chairs
         Assert.AreEqual(5, equipmentInExaminationRooms.Count); // EKG, Xray, Blood pressure monitor, chair, nebulizer
@@ -150,5 +152,28 @@ public class EquipmentFilterServiceTests
         var equipmentFilterService = new EquipmentFilterService();
         Assert.AreEqual(7, equipmentFilterService.GetEquipment(Equipment.EquipmentType.ExaminationEquipment).Count);
         Assert.AreEqual(5, equipmentFilterService.GetEquipment(Equipment.EquipmentType.Furniture).Count);
+    }
+
+    [TestMethod]
+    public void TestGetEquipmentByAmount()
+    {
+        var equipmentFilterService = new EquipmentFilterService();
+
+        Assert.AreEqual(22, equipmentFilterService.GetEquipment(30).Count);
+        Assert.AreEqual(20, equipmentFilterService.GetEquipment(22).Count); // There are 23 chairs and beds each in the hospital and only they won't be returned.
+        Assert.AreEqual(11, equipmentFilterService.GetEquipment(0).Count);
+    }
+
+    [TestMethod]
+    public void TestSelectEquipment()
+    {
+        var equipmentFilterService = new EquipmentFilterService();
+        var roomRepository = new RoomRepository();
+
+        var warehouse = roomRepository.GetById("5000");
+
+        Assert.IsNotNull(warehouse);
+        Assert.AreEqual(3, equipmentFilterService.SelectEquipment(warehouse.Equipment, 10).Count);
+
     }
 }
