@@ -7,7 +7,7 @@ namespace Hospital.Repositories.Doctor;
 using Hospital.Models.Doctor;
 public class DoctorRepository
 {
-    private const string FilePath = "../../../Data/doctor.csv";
+    private const string FilePath = "../../../Data/doctors.csv";
 
     public List<Doctor> GetAll()
     {

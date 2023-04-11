@@ -27,7 +27,10 @@ namespace Hospital.Models.Examination
             Id = Guid.NewGuid().ToString();
         }
 
-        public Examination() { }
+        public Examination()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
 
         public bool DoesInterfereWith(Examination otherExamination)
         {

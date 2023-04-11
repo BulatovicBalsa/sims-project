@@ -13,6 +13,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Patient;
+using Hospital.Repositories.Doctor;
 
 namespace Hospital.ViewModels
 {
@@ -20,11 +22,21 @@ namespace Hospital.ViewModels
     {
         private Examination _examination;
         private PatientViewModel _patientViewModel;
+        private Patient _patient;
         private IEnumerable<Doctor> _recommendedDoctors;
         private bool _isUpdate;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public Patient Patient
+        {
+            get { return _patient;}
+            set
+            {
+                _patient = value;
+                OnPropertyChanged();
+            }
+        }
         public Examination Examination
         {
             get { return _examination;}
@@ -61,20 +73,21 @@ namespace Hospital.ViewModels
         public ICommand CancelCommand { get; set; }
 
 
-        public ExaminationDialogViewModel(IEnumerable<Doctor> doctors, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = doctors;
+            RecommendedDoctors = new DoctorRepository().GetAll();
             Examination = new Examination();
             SaveCommand = new RelayCommand(Save);
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        public ExaminationDialogViewModel(IEnumerable<Doctor> doctors, Examination examination, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(Examination examination, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = doctors;
+            RecommendedDoctors = new DoctorRepository().GetAll(); 
             Examination = examination;
+            Patient = examination.Patient;
             IsUpdate = true;
             SaveCommand = new RelayCommand(Save);
             CancelCommand = new RelayCommand(Cancel);

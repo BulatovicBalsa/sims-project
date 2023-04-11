@@ -20,8 +20,8 @@ namespace Hospital.Views
             InitializeComponent();
 
             _viewModel = examination != null
-                ? new ExaminationDialogViewModel(recommendedDoctors, examination, patientViewModel)
-                : new ExaminationDialogViewModel(recommendedDoctors, patientViewModel);
+                ? new ExaminationDialogViewModel( examination, patientViewModel)
+                : new ExaminationDialogViewModel( patientViewModel);
 
             _viewModel.IsUpdate = isUpdate;
             this.DataContext = _viewModel;
@@ -34,7 +34,7 @@ namespace Hospital.Views
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SaveCommand.Execute(null);
+            //_viewModel.SaveCommand.Execute(null);
         }
     }
 }

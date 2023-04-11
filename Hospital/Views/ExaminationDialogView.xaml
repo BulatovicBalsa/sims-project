@@ -5,14 +5,14 @@
         Title="{Binding Title}" Height="300" Width="400" Background="#F7DC6F">
     <StackPanel Margin="10">
         <TextBlock Text="Patient name" Margin="0 5 0 0"/>
-        <TextBox Text="{Binding Examination.Patient.FullName}" IsReadOnly="True" Margin="0 0 0 10"/>
+        <TextBox Text="{ Binding Examination.Patient.FirstName, Mode=OneWay}" IsReadOnly="True" Margin="0 0 0 10"/>
 
         <TextBlock Text="Start date and time" Margin="0 5 0 0"/>
         <DatePicker SelectedDate="{Binding Examination.Start}" Margin="0 0 0 5"/>
         <TextBox Text="{Binding Examination.Start, StringFormat='HH:mm'}" Margin="0 0 0 5"/>
 
         <TextBlock Text="Recommended doctor" Margin="0 5 0 0"/>
-        <ComboBox ItemsSource="{Binding RecommendedDoctors}" SelectedValue="{Binding Examination.Doctor}" DisplayMemberPath="FullName" Margin="0 0 0 5"/>
+        <ComboBox ItemsSource="{Binding RecommendedDoctors}" SelectedValue="{Binding Examination.Doctor}" DisplayMemberPath="FirstName" Margin="0 0 0 5"/>
 
         <StackPanel Orientation="Horizontal">
             <Button Content="Save" Click="BtnSave_Click" Command="{Binding SaveCommand}" MinWidth="75" Margin="0 0 10 0"/>
