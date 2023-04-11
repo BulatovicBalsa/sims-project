@@ -25,7 +25,7 @@ namespace Hospital.Views
     /// </summary>
     public partial class DoctorView : Window
     {
-        ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>() { new Examination(new Doctor(), new Models.Patient.Patient(), false, DateTime.Now)};
+        ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>();
 
         private PatientRepository patientRepository = new PatientRepository();
         private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
@@ -56,10 +56,6 @@ namespace Hospital.Views
             if (result == true)
             {
                 MessageBox.Show("Succeed");
-            }
-            else
-            {
-                // The dialog was closed without a result
             }
         }
 
