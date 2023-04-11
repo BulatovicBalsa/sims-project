@@ -1,5 +1,5 @@
 Id,FirstName,LastName,Jmbg,Username,Password
-4d3e3500-a282-41ae-9289-4bb71f4fbd16,Vladimir,Popov,0123456789012,vlada1234,vlada1234
-a962c71a-2bf4-4f5d-b500-c1862281aee1,Momir,Milutinovic,0123456789012,momir12345,momir12345
-27258cfd-f3fe-4225-829e-92b3ce14828d,Balsa,Bulatovic,0123456789012,balsa1234,balsa1234
-3291f0cd-3aa6-4a36-aec3-e9dc76b9d075,Teodor,Vidakovic,0123456789012,teodor1234,teodor1234
+a4e4da86-994d-4aa0-b85d-c242fb1ce5bf,Vladimir,Popov,0123456789012,vladaNurse,vladaNurse
+13362ec1-7610-4a1d-ba35-0d18248e7727,Momir,Milutinovic,0123456789012,momirNurse,momirNurse
+761259be-a0de-4fdf-95b2-6bad9293e62b,Balsa,Bulatovic,0123456789012,balsaNurse,balsaNurse
+a4786197-03a5-4233-a9e0-7683d1bc5587,Teodor,Vidakovic,0123456789012,teodorNurse,teodorNurse
