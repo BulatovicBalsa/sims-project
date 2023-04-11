@@ -17,7 +17,7 @@ namespace Hospital.Views
             InitializeComponent();
         }
 
-        private void LoginView_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void PatientView_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -30,11 +30,14 @@ namespace Hospital.Views
             WindowState = WindowState.Minimized;
         }
 
-        private void BtnClose_OnClick_OnClick(object sender, RoutedEventArgs e)
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

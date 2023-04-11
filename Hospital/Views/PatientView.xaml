@@ -59,8 +59,7 @@
                         FontSize="12"
                         FontFamily="Segoe UI"
                         Cursor="Hand"
-                        Grid.Column="2" HorizontalAlignment="Right" Width="25">
-                </Button>
+                        Grid.Column="2" HorizontalAlignment="Right" Width="25" Click="BtnClose_Click"/>
             </Grid>
 
             <!-- Profile Image and Name -->
@@ -80,27 +79,27 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Button x:Name="BtnAddExamination"
                             Content="Add Examination"
-                            Margin="5"/>
+                            Margin="5" Click="BtnAddExamination_Click"/>
                     <Button x:Name="BtnUpdateExamination"
                             Content="Update Examination"
-                            Margin="5"/>
+                            Margin="5" Click="BtnUpdateExamination_Click"/>
                     <Button x:Name="BtnDeleteExamination"
                             Content="Delete Examination"
-                            Margin="5"/>
+                            Margin="5" Click="BtnDeleteExamination_Click"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding ExaminationId}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="Date" Binding="{Binding ExaminationDate}" Width="*"/>
-                        <DataGridTextColumn Header="Diagnosis" Binding="{Binding Diagnosis}" Width="*"/>
-                        <DataGridTextColumn Header="Therapy" Binding="{Binding Therapy}" Width="*"/>
-                        <DataGridTextColumn Header="Note" Binding="{Binding Notes}" Width="*"/>
+                        <DataGridTextColumn Header="Start Time" Binding="{Binding Diagnosis}" Width="*"/>
+                        <DataGridTextColumn Header="End Time" Binding="{Binding Therapy}" Width="*"/>
+                        <DataGridTextColumn Header="Type of examination" Binding="{Binding isOperation}" Width="*"/>
                         <DataGridTextColumn Header="Doctor" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
