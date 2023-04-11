@@ -23,5 +23,10 @@ namespace Hospital.Views.Nurse
         {
             InitializeComponent();
         }
+
+        private void ControlBar_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }

@@ -4,13 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Nurse"
+        xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse"
         mc:Ignorable="d"
-        Title="NurseView" Height="480" Width="800"
+        Title="NurseView" Height="480" Width="1000"
         WindowStyle="None"
-        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
+    
+    <Window.DataContext>
+        <viewModel:NurseViewModel/>
+    </Window.DataContext>
+    
     <Border CornerRadius="15">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -25,9 +30,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border CornerRadius="15,0,0,15"
-                    Grid.Column="0"
-                    Background="Black"
-                    Opacity="0.3">
+                    Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="#4d000000"/>
+                </Border.Background>
                 <StackPanel>
                     <TextBlock Height="35"
                                Margin="15,25,0,40"
@@ -37,13 +43,59 @@
                                FontWeight="Bold"
                                FontFamily="Montserrat"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Left"></TextBlock>
+                               HorizontalAlignment="Left"
+                               Opacity="1"/>
+                    
+                    <RadioButton Style="{StaticResource MenuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
                 </StackPanel>
             </Border>
 
             <Border CornerRadius="0,15,15,0"
                     Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
 
+                    <StackPanel x:Name="ControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
+
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="2" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
+                              SelectedItem="{Binding Path=SelectedPatient}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Width="*" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="LastName" Width="*" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="JMBG" Width="*" Binding="{Binding Path=Jmbg}"/>
+                            <DataGridTextColumn Header="Username" Width="*" Binding="{Binding Path=Profile.Username}"/>
+                            <DataGridTextColumn Header="Password" Width="*" Binding="{Binding Path=Profile.Password}"/>
+                            <DataGridTextColumn Header="Height" Width="*" Binding="{Binding Path=MedicalRecord.Height}"/>
+                            <DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Path=MedicalRecord.Weight}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="3">
+                        <Button Content="Update"
+                                Command="{Binding Path=UpdatePatientCommand}"></Button>
+                        <Button Content="Delete"
+                                Command="{Binding Path=DeletePatientCommand}"></Button>
+                    </StackPanel>
+
+                </Grid>
             </Border>
         </Grid>
 
