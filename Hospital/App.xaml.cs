@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Hospital.Views;
-using Hospital.Views.Nurse;
 
 namespace Hospital
 {
