@@ -28,6 +28,7 @@ namespace Hospital.Views
     {
         private Doctor _doctor;
         private ObservableCollection<Examination> _examinations; 
+
         public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinations)
         {
             InitializeComponent();
@@ -63,8 +64,16 @@ namespace Hospital.Views
 
             Examination examination = new Examination(_doctor, patient, isOperationNullable.GetValueOrDefault(), startDate.GetValueOrDefault());
 
-            new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false);
+            try{
+                new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false); 
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message());
+                return;
+            }
+
             _examinations.Add(examination);
+            DialogResult = true;
         }
     }
 }
