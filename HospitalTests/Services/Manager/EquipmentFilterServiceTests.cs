@@ -176,4 +176,13 @@ public class EquipmentFilterServiceTests
         Assert.AreEqual(3, equipmentFilterService.SelectEquipment(warehouse.Equipment, 10).Count);
 
     }
+
+    [TestMethod]
+    public void TestGetEquipmentNotInWarehouse()
+    {
+        var equipmentFilterService = new EquipmentFilterService();
+        var equipmentNotInWarehouse = equipmentFilterService.GetEquipmentNotInWarehouse();
+        Assert.AreEqual(22-5, equipmentNotInWarehouse.Count);
+
+    }
 }
