@@ -181,7 +181,7 @@ namespace Hospital.Repositories.Examinaton
 
         private void ValidateMaxChangesOrDeletesLast30Days(Patient patient)
         {
-            if (_examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(patient) > Patient.MAX_CHANGES_OR_DELETES_LAST_30_DAYS)
+            if (_examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(patient) + 1 > Patient.MAX_CHANGES_OR_DELETES_LAST_30_DAYS)
             {
                 throw new InvalidOperationException("Patient made too many changes in last 30 days");
             }
@@ -189,7 +189,7 @@ namespace Hospital.Repositories.Examinaton
 
         private void ValidateMaxAllowedExaminationsLast30Days(Patient patient)
         {
-            if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) > Patient.MAX_ALLOWED_APPOINTMENTS_LAST_30_DAYS)
+            if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) + 1 > Patient.MAX_ALLOWED_APPOINTMENTS_LAST_30_DAYS)
             {
                 throw new InvalidOperationException("Patient made too many examinations in last 30 days");
             }
