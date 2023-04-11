@@ -7,11 +7,11 @@ public class Room
 {
     public enum RoomType
     {
-        WAREHOUSE,
-        OPERATING_ROOM,
-        EXAMINATION_ROOM,
-        WAITING_ROOM,
-        WARD
+        Warehouse,
+        OperatingRoom,
+        ExaminationRoom,
+        WaitingRoom,
+        Ward
     }
 
     public Room()
