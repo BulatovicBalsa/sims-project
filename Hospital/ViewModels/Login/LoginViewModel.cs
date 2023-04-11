@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Hospital.Models.Doctor;
+using Hospital.Models.Nurse;
+using Hospital.Models.Patient;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login
@@ -78,13 +81,41 @@ namespace Hospital.ViewModels.Login
         {
             if (_loginService.AuthenticateUser(new NetworkCredential(Username, Password)))
             {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(_loginService.LoggedUser.Id), null);
+                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
                 IsViewVisible = false;
             }
             else
             {
+                _loginService.LoggedUser = null;
                 ErrorMessage = "* Invalid username or password";
             }
+        }
+
+        private string GetIdentity()
+        {
+            if (_loginService.LoggedUser == null)
+            {
+                return "";
+            }
+
+            var userId = _loginService.LoggedUser.Id;
+
+            if (_loginService.LoggedUser.GetType() == typeof(Patient))
+            {
+                return userId + "|" + "PATIENT";
+            }
+
+            if (_loginService.LoggedUser.GetType() == typeof(Doctor))
+            {
+                return userId + "|" + "DOCTOR";
+            }
+
+            if (_loginService.LoggedUser.GetType() == typeof(Nurse))
+            {
+                return userId + "|" + "NURSE";
+            }
+
+            return "";
         }
     }
 }
