@@ -19,15 +19,15 @@ public class RoomRepository
 
     private static void PlaceEquipment(List<Room> rooms)
     {
-        var equipmentItems = new EquipmentItemRepository().GetAll();
+        var equipmentPlacements = new EquipmentPlacementRepository().GetAll();
 
-        var equipmentItemsByRoom =
-            from equipmentItem in equipmentItems
-            group equipmentItem by equipmentItem.RoomId
+        var equipmentPlacementsByRoom =
+            from equipmentPlacement in equipmentPlacements
+            group equipmentPlacement by equipmentPlacement.RoomId
             into equipmentInRoom
             select equipmentInRoom;
 
-        foreach (var roomGroup in equipmentItemsByRoom)
+        foreach (var roomGroup in equipmentPlacementsByRoom)
         {
             var room = rooms.Find(room => room.Id == roomGroup.Key);
             if (room == null) continue;

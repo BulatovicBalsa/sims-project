@@ -18,7 +18,7 @@ public class Room
     {
         Id = Guid.NewGuid().ToString();
         Name = "";
-        Equipment = new List<EquipmentItem>();
+        Equipment = new List<EquipmentPlacement>();
     }
 
     public Room(string name, RoomType type)
@@ -26,7 +26,7 @@ public class Room
         Id = Guid.NewGuid().ToString();
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentItem>();
+        Equipment = new List<EquipmentPlacement>();
     }
 
     public Room(string id, string name, RoomType type)
@@ -34,7 +34,7 @@ public class Room
         Id = id;
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentItem>();
+        Equipment = new List<EquipmentPlacement>();
     }
 
     public string Id { get; set; }
@@ -42,7 +42,7 @@ public class Room
 
     public RoomType Type { get; set; }
 
-    public List<EquipmentItem> Equipment { get; set; }
+    public List<EquipmentPlacement> Equipment { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
@@ -56,6 +56,6 @@ public class Room
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentItem(equipment.Id, Id, amount));
+            Equipment.Add(new EquipmentPlacement(equipment.Id, Id, amount));
     }
 }

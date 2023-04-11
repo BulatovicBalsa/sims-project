@@ -1,15 +1,15 @@
 ﻿namespace Hospital.Models.Manager;
 
-public class EquipmentItem
+public class EquipmentPlacement
 {
-    public EquipmentItem()
+    public EquipmentPlacement()
     {
         Amount = 0;
         EquipmentId = "";
         RoomId = "";
     }
 
-    public EquipmentItem(string equipmentId, string roomId, int amount)
+    public EquipmentPlacement(string equipmentId, string roomId, int amount)
     {
         EquipmentId = equipmentId;
         RoomId = roomId;

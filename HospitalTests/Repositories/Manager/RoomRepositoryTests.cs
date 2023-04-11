@@ -142,13 +142,13 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var equipmentInRooms = new List<EquipmentItem>()
+        var equipmentInRooms = new List<EquipmentPlacement>()
         {
             new("1", "0", 1),
             new("2", "0", 2),
             new("1", "1", 3)
         };
-        Serializer<EquipmentItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
+        Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
 
         var loadedRooms = new RoomRepository().GetAll();
 
