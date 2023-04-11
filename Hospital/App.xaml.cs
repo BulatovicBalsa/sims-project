@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Hospital.Repositories.Patient;
 using Hospital.Views;
 using Hospital.Views.Manager;
 
@@ -29,7 +30,15 @@ namespace Hospital
 
                 if (role == "PATIENT")
                 {
-                    throw new NotImplementedException();
+                    var id = identityName.Split("|")[0];
+                    var patient = new PatientRepository().GetById(id);
+                    if (patient == null)
+                    {
+                        MessageBox.Show("Login was not successful.");
+                        return;
+                    }
+                    var patientView = new PatientView(patient);
+                    patientView.Show();
                 }
 
                 else if (role == "NURSE")

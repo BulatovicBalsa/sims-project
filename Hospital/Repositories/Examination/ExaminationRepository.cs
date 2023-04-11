@@ -129,7 +129,7 @@ namespace Hospital.Repositories.Examinaton
             Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
         }
 
-        private List<Examination> _getAll(Doctor doctor)
+        public List<Examination> GetAll(Doctor doctor)
         {
             var lista = GetAll();
             List<Examination> doctorExaminations = GetAll()
@@ -138,26 +138,27 @@ namespace Hospital.Repositories.Examinaton
             return doctorExaminations;
         }
 
-        private List<Examination> _getAll(Patient patient)
+        public List<Examination> GetAll(Patient patient)
         {
+            var all =GetAll();
             List<Examination> patientExaminations = GetAll()
-                .Where(appointment => appointment.Patient.Equals(patient))
+                .Where(examination => examination.Patient.Equals(patient))
                 .ToList();
             return patientExaminations;
         }
 
         public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime requestedDate)
         {
-            return _getAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
+            return GetAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
         }
         public List<Examination> GetExaminationsForDate(Patient patient, DateTime requestedDate)
         {
-            return _getAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
+            return GetAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
         }
 
         public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)
         {
-            var allExaminations = _getAll(doctor);
+            var allExaminations = GetAll(doctor);
             bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
             return isAvailable;
@@ -165,7 +166,7 @@ namespace Hospital.Repositories.Examinaton
 
         public bool IsFree(Patient patient, DateTime start, string examinationId = null)
         {
-            var allExaminations = _getAll(patient);
+            var allExaminations = GetAll(patient);
             bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
             return isAvailable;
