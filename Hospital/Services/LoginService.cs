@@ -13,9 +13,9 @@ namespace Hospital.Services
 {
     public class LoginService
     {
-        private DoctorRepository _doctorRepository;
-        private NurseRepository _nurseRepository;
-        private PatientRepository _patientRepository;
+        private readonly DoctorRepository _doctorRepository;
+        private readonly NurseRepository _nurseRepository;
+        private readonly PatientRepository _patientRepository;
 
         public Person? LoggedUser { get; set; }
 
@@ -34,7 +34,7 @@ namespace Hospital.Services
                 return true;
             }
 
-            LoggedUser = _doctorRepository.GetByUsername(credential.UserName);
+            LoggedUser = _nurseRepository.GetByUsername(credential.UserName);
             if (LoggedUser != null && LoggedUser.Profile.Password == credential.Password)
             {
                 return true;
