@@ -22,76 +22,79 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="67*"/>
-                <RowDefinition Height="143*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <!-- Window Header -->
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="25"/>
                     <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="PATIENT" 
-                           Foreground="DarkGray" 
-                           FontSize="10" 
-                           FontFamily="Montserrat"
+                <TextBlock Text="PATIENT"
+                           Foreground="DarkGray"
+                           FontSize="16"
+                           FontWeight="Bold"
                            Grid.Column="0"
                            VerticalAlignment="Center"
                            Margin="10,0,0,0"/>
 
-                <Button x:Name="BtnMinimize" 
+                <Button x:Name="BtnMinimize"
                         BorderThickness="0"
                         Content="-"
                         Foreground="Black"
                         FontSize="16"
-                        FontFamily="Montserrat"
+                        FontFamily="Segoe UI"
                         Cursor="Hand"
                         Grid.Column="1">
                 </Button>
 
-                <Button x:Name="BtnClose" 
+                <Button x:Name="BtnClose"
                         BorderThickness="0"
                         Content="X"
                         Foreground="Black"
                         FontSize="12"
-                        FontFamily="Montserrat"
+                        FontFamily="Segoe UI"
                         Cursor="Hand"
                         Grid.Column="2" HorizontalAlignment="Right" Width="25">
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="1"
-                  Margin="0,35,0,0" Grid.RowSpan="2">
+            <!-- Profile Image and Name -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                <Image Source="../Images/UsernameIcon.png" Width="100" Height="100" Stretch="UniformToFill" Margin="0,10,10,0"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding FirstName}" FontSize="20" FontWeight="Bold" />
+                    <TextBlock Text="{Binding LastName}" FontSize="20" FontWeight="Bold" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Examinations -->
+            <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Row="0" 
-                            Orientation="Horizontal" 
-                            HorizontalAlignment="Center" 
-                            Margin="0,0,0,10">
-                    <Button x:Name="BtnAddExamination" 
-                            Content="Add Examination" 
+                <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Left"/>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                    <Button x:Name="BtnAddExamination"
+                            Content="Add Examination"
                             Margin="5"/>
-                    <Button x:Name="BtnUpdateExamination" 
-                            Content="Update Examination" 
+                    <Button x:Name="BtnUpdateExamination"
+                            Content="Update Examination"
                             Margin="5"/>
-                    <Button x:Name="BtnDeleteExamination" 
-                            Content="Delete Examination" 
+                    <Button x:Name="BtnDeleteExamination"
+                            Content="Delete Examination"
                             Margin="5"/>
                 </StackPanel>
 
-                <TextBlock Grid.Row="2" Text="Your examinations" FontSize="24" Margin="10,0,10,301" HorizontalAlignment="Center"/>
-
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,46,10,215" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" SelectionChanged="ExaminationsDataGrid_SelectionChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding ExaminationId}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="Date" Binding="{Binding ExaminationDate}" Width="*"/>
@@ -102,6 +105,6 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-        </Grid>
+            </Grid>
     </Border>
 </Window>
