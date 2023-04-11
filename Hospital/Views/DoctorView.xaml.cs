@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
+using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Patient;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +25,22 @@ namespace Hospital.Views
     /// </summary>
     public partial class DoctorView : Window
     {
-        public DoctorView()
+        ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>();
+
+        private PatientRepository patientRepository = new PatientRepository();
+        private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
+        private Doctor Doctor;
+
+        public DoctorView(Doctor doctor)
         {
             InitializeComponent();
+            this.Doctor = doctor;
+            this.DataContext = this;
+
+            foreach (var examination in examinationRepository.GetExaminationsForNextThreeDays(doctor))
+            {
+                Examinations.Add(examination);
+            }
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
@@ -35,6 +54,11 @@ namespace Hospital.Views
         }
 
         private void BtnDeleteExamination_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
 
         }
