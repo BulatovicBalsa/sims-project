@@ -72,7 +72,7 @@ namespace HospitalTests.Repositories.Examination
         [TestMethod]
         public void TestUpdate()
         {
-            _examination.Start = _examination.Start.AddHours(5);
+            _examination.Start = _examination.Start.AddMinutes(5);
             _examination.IsOperation = true;
                 
             _examinationRepository.Update(_examination, false);

@@ -15,6 +15,7 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels
 {
@@ -99,14 +100,36 @@ namespace Hospital.ViewModels
         {
             if (!IsUpdate)
             {
-                _patientViewModel.AddExamination(Examination);
+                try
+                {
+                    _patientViewModel.AddExamination(Examination);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
             }
             else
             {
-                _patientViewModel.UpdateExamination(Examination);
-            }
+                try
+                {
+                    _patientViewModel.UpdateExamination(Examination);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
 
-            Close();
+                    if (ex.Message.Contains("Patient made too many changes in last 30 days") || ex.Message.Contains("Patient made too many examinations in last 30 days"))
+                    {
+                        Patient.IsBlocked=true;
+                        new PatientRepository().Update(Patient);
+                        Application.Current.Shutdown();
+                    }
+
+                }
+
+                Close();
+            }
         }
 
         private void Cancel()

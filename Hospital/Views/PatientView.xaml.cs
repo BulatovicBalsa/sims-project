@@ -69,7 +69,20 @@ namespace Hospital.Views
 
             if (examination != null)
             {
-                _viewModel.DeleteExamination(examination);
+                try
+                {
+                    _viewModel.DeleteExamination(examination);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                    if (ex.Message.Contains("Patient made too many changes in last 30 days"))
+                    {
+                        _patient.IsBlocked = true;
+                        new PatientRepository().Update(_patient);
+                        Application.Current.Shutdown();
+                    }
+                }
             }
         }
     }

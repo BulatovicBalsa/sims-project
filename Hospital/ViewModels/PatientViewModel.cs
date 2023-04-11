@@ -19,6 +19,7 @@ namespace Hospital.ViewModels
     {
         private ObservableCollection<Examination> _examinations;
         private readonly ExaminationRepository _examinationRepository;
+       
 
         public ObservableCollection<Examination> Examinations
         {
@@ -40,7 +41,6 @@ namespace Hospital.ViewModels
         public PatientViewModel(Patient patient,ExaminationRepository examinationRepository)
         {
             _examinationRepository = examinationRepository;
-            LoadExaminations(patient);
         }
 
         public PatientViewModel()
@@ -50,6 +50,7 @@ namespace Hospital.ViewModels
         public void LoadExaminations(Patient patient)
         {
             var examinations = _examinationRepository.GetAll(patient);
+
             Examinations = new ObservableCollection<Examination>(examinations);
         }
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)

@@ -2,3 +2,7 @@ IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,I
 False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/11/2023 23:51:39,True
 False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/11/2023 23:52:02,False
 False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/11/2023 23:52:35,True
+False,-1,-1,74849bff-e9a8-4fd6-8d47-151718cec5a2,,,,,,04/12/2023 00:42:09,False
+False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/12/2023 00:52:47,True
+False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/12/2023 00:53:24,True
+False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/12/2023 00:53:38,True

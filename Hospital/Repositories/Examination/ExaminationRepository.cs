@@ -131,7 +131,6 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll(Doctor doctor)
         {
-            var lista = GetAll();
             List<Examination> doctorExaminations = GetAll()
                 .Where(appointment => appointment.Doctor.Equals(doctor))
                 .ToList();
@@ -140,7 +139,6 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll(Patient patient)
         {
-            var all =GetAll();
             List<Examination> patientExaminations = GetAll()
                 .Where(examination => examination.Patient.Equals(patient))
                 .ToList();
