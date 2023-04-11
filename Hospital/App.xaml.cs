@@ -34,7 +34,8 @@ namespace Hospital
 
                 else if (role == "NURSE")
                 {
-                    throw new NotImplementedException();
+                    var nurseView = new NurseView();
+                    nurseView.Show();
                 }
 
                 else if (role == "MANAGER")

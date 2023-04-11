@@ -15,6 +15,7 @@ using Hospital.Services;
 
 namespace Hospital.ViewModels.Login
 {
+    using Hospital.Models.Nurse;
     public class LoginViewModel : ViewModelBase
     {
         private string _username;

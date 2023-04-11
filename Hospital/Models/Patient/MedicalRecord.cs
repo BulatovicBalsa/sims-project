@@ -16,8 +16,8 @@ namespace Hospital.Models.Patient
 
         public MedicalRecord()
         {
-            Weight = -1;
-            Height = -1;
+            Weight = 0;
+            Height = 0;
             Allergies = new List<string>();
             MedicalHistory = new List<string>();
             //Prescriptions = new List<Prescription>();
