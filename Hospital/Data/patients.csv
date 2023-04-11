@@ -1,0 +1,5 @@
+Id,FirstName,LastName,Jmbg,Username,Password,Height,Weight,Allergies,MedicalHistory
+73aeffdf-d265-4231-b933-159e13a1c21f,Vladimir,Popov,0123456789012,vlada1234,vlada1234,175,70,penicillin|sulfa|aspirin,mental illness|cold
+84f5fc32-07cc-4e6c-ac85-d636a5ae8ee1,Momir,Milutinovic,0123456789012,momir1234,momir1234,176,71,penicillin|sulfa|aspirin,mental illness|cold
+c43e10ab-7408-42b8-9d72-809e85bfa7a8,Balsa,Bulatovic,0123456789012,balsa1234,balsa1234,177,72,penicillin|sulfa|aspirin,mental illness|cold
+c5b6ff50-567d-40f5-985e-f7ca3b29532c,Teodor,Vidakovic,0123456789012,teodor1234,teodor1234,178,73,penicillin|sulfa|aspirin,mental illness|cold
