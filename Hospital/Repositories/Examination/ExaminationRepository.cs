@@ -11,7 +11,6 @@ using Hospital.Models.Doctor;
 namespace Hospital.Repositories.Examinaton
 {
     using Hospital.Models.Patient;
-    using Hospital.Serialization.Mappers;
     using Hospital.Models.Doctor;
     using CsvHelper.Configuration;
     using CsvHelper.TypeConversion;
@@ -23,26 +22,9 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Id).Index(0);
             Map(examination => examination.IsOperation).Index(1);
             Map(examination => examination.Start).Index(2);
-
-            // Doctor fields
             Map(examination => examination.Doctor.Id).Index(3);
-            Map(examination => examination.Doctor.FirstName).Index(4);
-            Map(examination => examination.Doctor.LastName).Index(5);
-            Map(examination => examination.Doctor.Jmbg).Index(6);
-            Map(examination => examination.Doctor.Profile.Username).Index(7);
-            Map(examination => examination.Doctor.Profile.Password).Index(8);
-
-            // Patient fields
-            Map(examination => examination.Patient.Id).Index(9);
-            Map(examination => examination.Patient.FirstName).Index(10);
-            Map(examination => examination.Patient.LastName).Index(11);
-            Map(examination => examination.Patient.Jmbg).Index(12);
-            Map(examination => examination.Patient.Profile.Username).Index(13);
-            Map(examination => examination.Patient.Profile.Password).Index(14);
-            Map(examination => examination.Patient.MedicalRecord.Height).Index(15);
-            Map(examination => examination.Patient.MedicalRecord.Weight).Index(16);
-            Map(examination => examination.Patient.MedicalRecord.Allergies).Index(17).Convert(row => SplitColumnValues(row.Row.GetField<string>("Allergies")));
-            Map(examination => examination.Patient.MedicalRecord.MedicalHistory).Index(18).Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
+            Map(examination => examination.Patient.Id).Index(4);
+            
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -58,26 +40,8 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Id).Index(0);
             Map(examination => examination.IsOperation).Index(1);
             Map(examination => examination.Start).Index(2);
-
-            // Doctor fields
             Map(examination => examination.Doctor.Id).Index(3);
-            Map(examination => examination.Doctor.FirstName).Index(4);
-            Map(examination => examination.Doctor.LastName).Index(5);
-            Map(examination => examination.Doctor.Jmbg).Index(6);
-            Map(examination => examination.Doctor.Profile.Username).Index(7);
-            Map(examination => examination.Doctor.Profile.Password).Index(8);
-
-            // Patient fields
-            Map(examination => examination.Patient.Id).Index(9);
-            Map(examination => examination.Patient.FirstName).Index(10);
-            Map(examination => examination.Patient.LastName).Index(11);
-            Map(examination => examination.Patient.Jmbg).Index(12);
-            Map(examination => examination.Patient.Profile.Username).Index(13);
-            Map(examination => examination.Patient.Profile.Password).Index(14);
-            Map(examination => examination.Patient.MedicalRecord.Height).Index(15);
-            Map(examination => examination.Patient.MedicalRecord.Weight).Index(16);
-            Map(examination => examination.Patient.MedicalRecord.Allergies).Convert(row => string.Join("|", row.Value.Patient.MedicalRecord.Allergies)).Index(17);
-            Map(examination => examination.Patient.MedicalRecord.MedicalHistory).Convert(row => string.Join("|", row.Value.Patient.MedicalRecord.MedicalHistory)).Index(18);
+            Map(examination => examination.Patient.Id).Index(4);
         }
     }
 
