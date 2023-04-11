@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Hospital.Serialization;
+
 
 namespace Hospital.Repositories.Patient
 {
@@ -89,6 +90,7 @@ namespace Hospital.Repositories.Patient
 
             if (!patientRecords.Remove(patient))
                 throw new KeyNotFoundException($"Patient with id {patient.Id} was not found.");
+
 
             Serializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
         }
