@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Hospital.Models.Doctor;
+using Hospital.Repositories.Doctor;
 using Hospital.Views;
 
 namespace Hospital
@@ -24,6 +26,7 @@ namespace Hospital
                 if (loginView.IsVisible || !loginView.IsLoaded) return;
 
                 var identityName = Thread.CurrentPrincipal.Identity.Name;
+                var id = identityName.Split("|")[0];
                 var role = identityName.Split("|")[1];
 
                 if (role == "PATIENT")
@@ -43,7 +46,9 @@ namespace Hospital
 
                 else if (role == "DOCTOR")
                 {
-                    throw new NotImplementedException();
+                    var doctor = new DoctorRepository().GetById(id);
+                    DoctorView doctorView = new DoctorView(doctor);
+                    doctorView.Show();
                 }
 
                 loginView.Close();
