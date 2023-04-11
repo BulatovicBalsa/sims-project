@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Patient;
 using Hospital.ViewModels;
 
 namespace Hospital.Views
@@ -14,14 +15,14 @@ namespace Hospital.Views
     {
         private readonly ExaminationDialogViewModel _viewModel;
 
-        public ExaminationDialogView(PatientViewModel patientViewModel, bool isUpdate, 
+        public ExaminationDialogView(Patient patient,PatientViewModel patientViewModel, bool isUpdate, 
              Examination examination = null, IEnumerable<Doctor> recommendedDoctors = null)
         {
             InitializeComponent();
 
             _viewModel = examination != null
-                ? new ExaminationDialogViewModel( examination, patientViewModel)
-                : new ExaminationDialogViewModel( patientViewModel);
+                ? new ExaminationDialogViewModel( patient,examination, patientViewModel)
+                : new ExaminationDialogViewModel( patient,patientViewModel);
 
             _viewModel.IsUpdate = isUpdate;
             this.DataContext = _viewModel;

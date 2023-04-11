@@ -73,21 +73,22 @@ namespace Hospital.ViewModels
         public ICommand CancelCommand { get; set; }
 
 
-        public ExaminationDialogViewModel(PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(Patient patient,PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
             Examination = new Examination();
             SaveCommand = new RelayCommand(Save);
+            Patient = patient;
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        public ExaminationDialogViewModel(Examination examination, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(Patient patient,Examination examination, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll(); 
             Examination = examination;
-            Patient = examination.Patient;
+            Patient = patient;
             IsUpdate = true;
             SaveCommand = new RelayCommand(Save);
             CancelCommand = new RelayCommand(Cancel);

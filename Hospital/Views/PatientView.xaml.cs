@@ -19,6 +19,8 @@ namespace Hospital.Views
     {
         private PatientViewModel _viewModel;
         private ExaminationRepository _examinationRepository;
+        private Patient _patient;
+
 
         public PatientView(Patient patient)
         {
@@ -27,9 +29,10 @@ namespace Hospital.Views
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
             _viewModel = new PatientViewModel(_examinationRepository);
-            _viewModel.LoadExaminations(patient); 
-            
+            _viewModel.LoadExaminations(patient);
+            _patient = patient;
             this.DataContext = _viewModel;
+
 
         }
 
@@ -45,7 +48,7 @@ namespace Hospital.Views
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationDialogView examinationDialog = new ExaminationDialogView(_viewModel,false);
+            ExaminationDialogView examinationDialog = new ExaminationDialogView(_patient,_viewModel,false);
             examinationDialog.ShowDialog();
         }
 
@@ -55,7 +58,7 @@ namespace Hospital.Views
 
             if (examination != null)
             {
-                ExaminationDialogView examinationDialog = new ExaminationDialogView(_viewModel, true,examination);
+                ExaminationDialogView examinationDialog = new ExaminationDialogView(_patient,_viewModel, true,examination);
                 examinationDialog.ShowDialog();
             }
         }
