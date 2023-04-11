@@ -65,6 +65,11 @@ namespace Hospital.Repositories.Patient
             return GetAll().FirstOrDefault(patient => patient.Id == id);
         }
 
+        public Patient? GetByUsername(string username)
+        {
+            return GetAll().FirstOrDefault(patient => patient.Profile.Username == username);
+        }
+
         public void Add(Patient patient)
         {
             var allPatients = GetAll();

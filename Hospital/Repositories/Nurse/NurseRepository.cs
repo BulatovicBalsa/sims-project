@@ -23,6 +23,11 @@ namespace Hospital.Repositories.Nurse
             return GetAll().FirstOrDefault(nurse => nurse.Id == id);
         }
 
+        public Nurse? GetByUsername(string username)
+        {
+            return GetAll().FirstOrDefault(nurse => nurse.Profile.Username == username);
+        }
+
         public void Add(Nurse nurse)
         {
             var allNurses = GetAll();
