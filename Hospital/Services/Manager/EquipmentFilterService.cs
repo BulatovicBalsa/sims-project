@@ -78,22 +78,29 @@ namespace Hospital.Services.Manager
         public List<Equipment> GetEquipmentNotInWarehouse()
         {
             var allEquipment = _equipmentRepository.GetAll();
+            
+
+            return SelectNotInWarehouse(allEquipment);
+
+        }
+
+        public List<Equipment> SelectNotInWarehouse(List<Equipment> equipment)
+        {
             var warehouse = _roomRepository.GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
             var result = new List<Equipment>();
 
             if (warehouse == null)
             {
-                return result;
+                return equipment;
             }
 
-            foreach (var equipment in allEquipment)
+            foreach (var e in equipment)
             {
-                if (warehouse.GetAmount(equipment) == 0) result.Add(equipment);
+                if (warehouse.GetAmount(e) == 0) result.Add(e);
 
             }
 
             return result;
-
         }
     }
 }
