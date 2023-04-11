@@ -12,11 +12,12 @@ namespace Hospital.Services.Manager
     {
         private RoomRepository _roomRepository;
         private EquipmentPlacementRepository _equipmentPlacementRepository;
-
+        private EquipmentRepository _equipmentRepository;
         public EquipmentFilterService()
         {
             _roomRepository = new RoomRepository();
             _equipmentPlacementRepository = new EquipmentPlacementRepository();
+            _equipmentRepository = new EquipmentRepository();
         }
 
         public List<Equipment> GetEquipmentInRoomType(Room.RoomType type)
@@ -30,6 +31,11 @@ namespace Hospital.Services.Manager
             }
 
             return result.ToList();
+        }
+
+        public List<Equipment> GetEquipmentOfType(Equipment.EquipmentType type)
+        {
+            return _equipmentRepository.GetAll().Where(equipment => equipment.Type == type).ToList();
         }
     }
 }
