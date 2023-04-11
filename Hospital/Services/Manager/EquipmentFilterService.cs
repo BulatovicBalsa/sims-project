@@ -20,7 +20,7 @@ namespace Hospital.Services.Manager
             _equipmentRepository = new EquipmentRepository();
         }
 
-        public List<Equipment> GetEquipmentInRoomType(Room.RoomType type)
+        public List<Equipment> GetEquipment(Room.RoomType type)
         {
             var result = new HashSet<Equipment>();
             var rooms = _roomRepository.GetAll();
@@ -33,7 +33,7 @@ namespace Hospital.Services.Manager
             return result.ToList();
         }
 
-        public List<Equipment> GetEquipmentOfType(Equipment.EquipmentType type)
+        public List<Equipment> GetEquipment(Equipment.EquipmentType type)
         {
             return _equipmentRepository.GetAll().Where(equipment => equipment.Type == type).ToList();
         }
