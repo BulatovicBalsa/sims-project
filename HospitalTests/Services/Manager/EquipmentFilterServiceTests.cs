@@ -142,6 +142,13 @@ public class EquipmentFilterServiceTests
 
         Assert.AreEqual(2, equipmentInWaitingRooms.Count); // magazine stand and chairs
         Assert.AreEqual(5, equipmentInExaminationRooms.Count); // EKG, Xray, Blood pressure monitor, chair, nebulizer
-        //Assert.Fail();
+    }
+
+    [TestMethod]
+    public void TestGetEquipmentOfType()
+    {
+        var equipmentFilterService = new EquipmentFilterService();
+        Assert.AreEqual(7, equipmentFilterService.GetEquipmentOfType(Equipment.EquipmentType.ExaminationEquipment).Count);
+        Assert.AreEqual(5, equipmentFilterService.GetEquipmentOfType(Equipment.EquipmentType.Furniture).Count);
     }
 }
