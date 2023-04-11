@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Hospital.Models.Doctor;
 using Hospital.Models.Nurse;
 using Hospital.Models.Patient;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login
 {
+using Hospital.Models.Doctor;
     public class LoginViewModel : ViewModelBase
     {
         private string _username;
