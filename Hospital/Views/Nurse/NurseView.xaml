@@ -93,6 +93,9 @@
                                 Command="{Binding Path=UpdatePatientCommand}"></Button>
                         <Button Content="Delete"
                                 Command="{Binding Path=DeletePatientCommand}"></Button>
+                        <TextBlock Text="{Binding Path=ErrorMessage}" 
+                                   Foreground="Red"
+                                   FontSize="25"/>
                     </StackPanel>
 
                 </Grid>

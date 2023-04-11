@@ -16,8 +16,17 @@ namespace Hospital.ViewModels.Nurse
         private ObservableCollection<Patient> _patients;
         private PatientRepository _patientRepository;
         private Patient _selectedPatient;
+        private string _errorMessage;
 
-
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
+        }
         public Patient SelectedPatient
         {
             get => _selectedPatient;
@@ -82,7 +91,47 @@ namespace Hospital.ViewModels.Nurse
 
         private void ExecuteUpdatePatientCommand(object obj)
         {
-            _patientRepository.Update(SelectedPatient);
+            if (string.IsNullOrEmpty(SelectedPatient.FirstName))
+            {
+                ErrorMessage = "FirstName field can't be empty";
+            }
+
+            else if (string.IsNullOrEmpty(SelectedPatient.LastName))
+            {
+                ErrorMessage = "LastName field can't be empty";
+            }
+
+            else if (SelectedPatient.Jmbg.Length != 13)
+            {
+                ErrorMessage = "JMBG field needs to have 13 characters";
+            }
+            
+            else if (string.IsNullOrEmpty(SelectedPatient.Profile.Username) ||
+                     SelectedPatient.Profile.Username.Length < 4)
+            {
+                ErrorMessage = "Username field needs to have at least 4 characters";
+            }
+            
+            else if (string.IsNullOrEmpty(SelectedPatient.Profile.Password) ||
+                     SelectedPatient.Profile.Password.Length < 4)
+            {
+                ErrorMessage = "Password field needs to have at least 4 characters";
+            }
+
+            else if (SelectedPatient.MedicalRecord.Height <= 0)
+            {
+                ErrorMessage = "Invalid height";
+            }
+
+            else if (SelectedPatient.MedicalRecord.Weight <= 0)
+            {
+                ErrorMessage = "Invalid weight";
+            }
+            else
+            {
+                ErrorMessage = "";
+                _patientRepository.Update(SelectedPatient);
+            }
         }
 
 
