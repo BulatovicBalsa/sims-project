@@ -9,6 +9,10 @@ using System.Windows;
 using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
 using Hospital.Views;
+using Hospital.Repositories.Patient;
+using Hospital.Views;
+using Hospital.Views.Manager;
+using Hospital.Views.Nurse;
 
 namespace Hospital
 {
@@ -31,17 +35,29 @@ namespace Hospital
 
                 if (role == "PATIENT")
                 {
-                    throw new NotImplementedException();
+                    var id = identityName.Split("|")[0];
+                    var patient = new PatientRepository().GetById(id);
+                    if (patient == null)
+                    {
+                        MessageBox.Show("Login was not successful.");
+                        return;
+                    }
+                    var patientView = new PatientView(patient);
+                    patientView.Show();
                 }
 
                 else if (role == "NURSE")
                 {
-                    throw new NotImplementedException();
+                    var nurseView = new NurseView();
+                    nurseView.Show();
                 }
 
                 else if (role == "MANAGER")
                 {
-                    throw new NotImplementedException();
+                    var managerView = new ManagerView();
+                    managerView.Show();
+                    
+                    //throw new NotImplementedException();
                 }
 
                 else if (role == "DOCTOR")

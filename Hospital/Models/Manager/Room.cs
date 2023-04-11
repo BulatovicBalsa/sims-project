@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Models.Manager;
 
@@ -57,5 +58,12 @@ public class Room
             equipmentItem.Amount = amount;
         else
             Equipment.Add(new EquipmentPlacement(equipment.Id, Id, amount));
+    }
+
+    public List<Equipment> GetEquipment()
+    {
+        return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
+
+
     }
 }
