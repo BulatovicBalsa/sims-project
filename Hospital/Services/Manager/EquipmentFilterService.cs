@@ -102,5 +102,34 @@ namespace Hospital.Services.Manager
 
             return result;
         }
+
+        private string GetStringRepresentation(Equipment.EquipmentType type)
+        {
+            switch (type)
+            {
+                case(Equipment.EquipmentType.ExaminationEquipment):
+                return "examination equipment";
+                case (Equipment.EquipmentType.Furniture):
+                    return "furniture";
+                case (Equipment.EquipmentType.HallwayEquipment):
+                    return "hallway equipment";
+                case (Equipment.EquipmentType.OperationEquipment):
+                    return "operation equipment";
+                default:
+                    return "";
+
+            }
+        }
+
+        public List<Equipment> Select(List<Equipment> equipment, string searchTerm)
+        {
+            var caseInsensitiveSearchTerm = searchTerm.ToLower();
+
+            return equipment.Where(e =>
+                e.Name.ToLower().Contains(caseInsensitiveSearchTerm) ||
+                GetStringRepresentation(e.Type).Contains(caseInsensitiveSearchTerm)).ToList();
+        }
+
+        
     }
 }
