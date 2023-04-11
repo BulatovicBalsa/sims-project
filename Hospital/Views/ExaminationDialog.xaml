@@ -25,8 +25,8 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Examinaiton Date:" />
         <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker" />
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Is Operation:" />
-        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="IsOperation" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Is Operation:" />
+        <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" />
 
         <Button Grid.Row="3" Grid.Column="1" Content="Create" Click="AddExaminaiton_Click" />
 
