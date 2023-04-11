@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Hospital.Views;
+using Hospital.Views.Manager;
 
 namespace Hospital
 {
@@ -38,7 +39,10 @@ namespace Hospital
 
                 else if (role == "MANAGER")
                 {
-                    throw new NotImplementedException();
+                    var managerView = new ManagerView();
+                    managerView.Show();
+                    
+                    //throw new NotImplementedException();
                 }
 
                 else if (role == "DOCTOR")
