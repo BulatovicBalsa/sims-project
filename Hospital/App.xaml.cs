@@ -35,7 +35,6 @@ namespace Hospital
 
                 if (role == "PATIENT")
                 {
-                    var id = identityName.Split("|")[0];
                     var patient = new PatientRepository().GetById(id);
                     if (patient == null)
                     {

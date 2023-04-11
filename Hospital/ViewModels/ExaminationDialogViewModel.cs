@@ -23,7 +23,7 @@ namespace Hospital.ViewModels
         private Examination _examination;
         private PatientViewModel _patientViewModel;
         private Patient _patient;
-        private IEnumerable<Doctor> _recommendedDoctors;
+        private IEnumerable<Hospital.Models.Doctor.Doctor> _recommendedDoctors;
         private bool _isUpdate;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -47,7 +47,7 @@ namespace Hospital.ViewModels
             }
         }
 
-        public IEnumerable<Doctor> RecommendedDoctors
+        public IEnumerable<Hospital.Models.Doctor.Doctor> RecommendedDoctors
         {
             get { return _recommendedDoctors; }
             set
