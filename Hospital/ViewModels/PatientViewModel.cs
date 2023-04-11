@@ -6,16 +6,15 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
-
+using Hospital.Models.Patient;
 using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
-using Hospital.Models.Patient;
+
 using Hospital.Repositories.Examinaton;
 
 
 namespace Hospital.ViewModels
 {
-
     public class PatientViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Examination> _examinations;
@@ -23,7 +22,7 @@ namespace Hospital.ViewModels
 
         public ObservableCollection<Examination> Examinations
         {
-            get { return _examinations;}
+            get { return _examinations; }
             set
             {
                 _examinations = value;
@@ -43,6 +42,10 @@ namespace Hospital.ViewModels
             _examinationRepository = examinationRepository;
         }
 
+        public PatientViewModel()
+        {
+        }
+
         public void LoadExaminations(Patient patient)
         {
             var examinations = _examinationRepository.GetAll(patient);
@@ -54,6 +57,23 @@ namespace Hospital.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public void AddExamination(Examination examination)
+        {
+            _examinationRepository.Add(examination,true);
+            Examinations.Add(examination);
+        }
+
+        public void UpdateExamination(Examination examination)
+        {
+            _examinationRepository.Update(examination,true);
+        }
+
+        public void DeleteExamination(Examination examination)
+        {
+            _examinationRepository.Delete(examination,true);
+            Examinations.Remove(examination);
         }
     }
 }

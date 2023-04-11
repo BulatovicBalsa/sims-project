@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
@@ -32,6 +33,10 @@ namespace Hospital.Views
 
         }
 
+        public PatientView()
+        {
+        }
+
         private void PatientView_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -52,17 +57,29 @@ namespace Hospital.Views
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
         {
-
+            ExaminationDialogView examinationDialog = new ExaminationDialogView(_viewModel,false);
+            examinationDialog.ShowDialog();
         }
 
         private void BtnUpdateExamination_Click(object sender, RoutedEventArgs e)
         {
+            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
 
+            if (examination != null)
+            {
+                ExaminationDialogView examinationDialog = new ExaminationDialogView(_viewModel, true,examination);
+                examinationDialog.ShowDialog();
+            }
         }
 
         private void BtnDeleteExamination_Click(object sender, RoutedEventArgs e)
         {
+            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
 
+            if (examination != null)
+            {
+                _viewModel.DeleteExamination(examination);
+            }
         }
     }
 }

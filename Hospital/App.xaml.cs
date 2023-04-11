@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Hospital.Views;
-using Hospital.Views.Nurse;
 
 namespace Hospital
 {
@@ -29,7 +28,8 @@ namespace Hospital
 
                 if (role == "PATIENT")
                 {
-                    throw new NotImplementedException();
+                    var patientView = new PatientView();
+                    patientView.Show();
                 }
 
                 else if (role == "NURSE")
