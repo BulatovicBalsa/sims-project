@@ -53,6 +53,7 @@ namespace Hospital.Views
             ExaminationDatePicker.SelectedDate = examinationToChange.Start;
             IsOperation.IsChecked = examinationToChange.IsOperation;
             PatientComboBox.SelectedItem = examinationToChange.Patient;
+            ConfirmButton.Content = "Update";
         }
 
         private List<Patient> GetPatients()
@@ -87,16 +88,16 @@ namespace Hospital.Views
                 if (this._isUpdate)
                 {
                     new ExaminationRepository(new ExaminationChangesTracker()).Update(examination, false);
-                    _examinations.Add(examination);
-                }
-                else
-                {
-                    new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false);
                     _examinations.Clear();
                     foreach (var examinationToAdd in new ExaminationRepository(new ExaminationChangesTracker()).GetAll())
                     {
                         _examinations.Add(examinationToAdd);
                     }
+                }
+                else
+                {
+                    new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false);
+                    _examinations.Add(examination);
                 }
             }
             catch (Exception ex)
@@ -105,7 +106,6 @@ namespace Hospital.Views
                 return;
             }
 
-            MessageBox.Show("Succeed");
             DialogResult = true;
         }
     }

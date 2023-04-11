@@ -28,7 +28,7 @@
         <Label Grid.Row="2" Grid.Column="0" Content="Is Operation:" />
         <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" />
 
-        <Button Grid.Row="3" Grid.Column="1" Content="Create" Click="AddExamination_Click" />
+        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="Create" Click="AddExamination_Click" />
 
     </Grid>
 </Window>
