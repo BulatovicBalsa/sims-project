@@ -37,7 +37,7 @@ namespace Hospital.Views
             WindowState = WindowState.Minimized;
         }
 
-        private void BtnClose_OnClick_OnClick(object sender, RoutedEventArgs e)
+        private void BtnClose_OnClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

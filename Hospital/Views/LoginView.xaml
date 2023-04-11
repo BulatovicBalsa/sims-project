@@ -97,7 +97,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Click="BtnClose_OnClick_OnClick">
+                        Click="BtnClose_OnClick">
 
                     <Button.Style>
                         <Style TargetType="Button">
