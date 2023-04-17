@@ -14,6 +14,9 @@ namespace Hospital.Repositories.Examinaton
     using Hospital.Models.Doctor;
     using CsvHelper.Configuration;
     using CsvHelper.TypeConversion;
+    using CsvHelper;
+    using Hospital.Repositories.Doctor;
+    using Hospital.Repositories.Patient;
 
     public sealed class ExaminationReadMapper : ClassMap<Examination>
     {
@@ -22,14 +25,35 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Id).Index(0);
             Map(examination => examination.IsOperation).Index(1);
             Map(examination => examination.Start).Index(2);
-            Map(examination => examination.Doctor.Id).Index(3);
-            Map(examination => examination.Patient.Id).Index(4);
-            
+            Map(examination => examination.Doctor).Index(3).TypeConverter<DoctorTypeConverter>();
+            Map(examination => examination.Patient).Index(4).TypeConverter<PatientTypeConverter>();
         }
 
         private List<string> SplitColumnValues(string? columnValue)
         {
             return columnValue?.Split("|").ToList() ?? new List<string>();
+        }
+
+        public class DoctorTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            {
+                string doctorId = text.Trim();
+                // Retrieve the Doctor object based on the ID
+                Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new Exception($"Doctor with ID {doctorId} not found");
+                return doctor;
+            }
+        }
+
+        public class PatientTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            {
+                string patientId = text.Trim();
+                // Retrieve the Patient object based on the ID
+                Patient patient = new PatientRepository().GetById(patientId) ?? throw new Exception($"Patient with ID {patientId} not found");
+                return patient;
+            }
         }
     }
 

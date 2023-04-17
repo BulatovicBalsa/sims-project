@@ -1,0 +1,2 @@
+IsBlocked,Weight,Height,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,IsCreationLog
+False,70,175,74849bff-e9a8-4fd6-8d47-151718cec5a2,Vladimir,Popov,0123456789012,vladaPatient,vladaPatient,04/17/2023 11:20:59,True
