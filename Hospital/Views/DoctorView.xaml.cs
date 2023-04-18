@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Doctor;
+﻿using Hospital.Exceptions;
+using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
@@ -92,7 +93,12 @@ namespace Hospital.Views
             try
             {
                 examinationRepository.Delete(examination, false);
-            }catch(Exception ex)
+            }catch(BusyDoctorException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (BusyPatientException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
