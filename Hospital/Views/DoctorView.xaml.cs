@@ -1,6 +1,8 @@
-﻿using Hospital.Exceptions;
+﻿using Hospital.Coordinators;
+using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
@@ -27,7 +29,9 @@ namespace Hospital.Views
     public partial class DoctorView : Window
     {
         ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>();
+        ObservableCollection<Patient> Patients = new ObservableCollection<Patient>();
 
+        private readonly DoctorCoordinator _coordinator;
         private PatientRepository patientRepository = new PatientRepository();
         private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
         private Doctor Doctor;
@@ -37,12 +41,16 @@ namespace Hospital.Views
             InitializeComponent();
             this.Doctor = doctor;
             this.DataContext = this;
+            
+            _coordinator = new DoctorCoordinator(examinationRepository, patientRepository);
+            
+            Examinations = new ObservableCollection<Examination>(examinationRepository.GetExaminationsForNextThreeDays(doctor));
+            Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
+            
             ExaminationsDataGrid.ItemsSource = Examinations;
+            PatientsDataGrid.ItemsSource = Patients;
 
-            foreach (var examination in examinationRepository.GetExaminationsForNextThreeDays(doctor))
-            {
-                Examinations.Add(examination);
-            }
+
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)

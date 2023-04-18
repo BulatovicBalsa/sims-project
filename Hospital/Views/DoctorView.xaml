@@ -7,13 +7,13 @@
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Doctor"
         
         mc:Ignorable="d"
-        Title="PatientView" Height="450" Width="800"
+        Title="PatientView" Height="Auto" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border CornerRadius="15" Margin="0,0,0,-229">
+    <Border CornerRadius="15" Margin="0,0,0,0">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#a1ffce" Offset="0"></GradientStop>
@@ -25,7 +25,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Window Header -->
@@ -81,7 +81,7 @@
                             Margin="5" Click="BtnUpdateExamination_Click"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,-219">
+                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" Width="*"/>
@@ -93,7 +93,7 @@
             
 
             <!-- Examinations -->
-            <Grid Grid.Row="2" Margin="0,223,0,0">
+            <Grid Grid.Row="2" Margin="0,0,0, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
