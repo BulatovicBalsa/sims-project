@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hospital.Exceptions
 {
-    internal class BusyDoctorException
+    public class BusyDoctorException : Exception
     {
+        public BusyDoctorException(string message) : base(message) { }
     }
 }
