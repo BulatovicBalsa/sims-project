@@ -3,4 +3,3 @@ Id,FirstName,LastName,Jmbg,Username,Password,Height,Weight,Allergies,MedicalHist
 868422c4-6735-4e77-b5cd-f5149ce4c5b7,Momir,Milutinovic,0123456789012,momirPatient,momirPatient,176,71,penicillin|sulfa|aspirin,mental illness|cold
 5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,177,72,penicillin|sulfa|aspirin,mental illness|cold
 b9be3d6a-0c58-4502-a724-db6476203324,Teodor,Vidakovic,0123456789012,teodorPatient,teodorPatient,178,73,penicillin|sulfa|aspirin,mental illness|cold
-d3383f89-40b4-4d9a-a7e5-cda8663621fe,,,,,,0,0,,
