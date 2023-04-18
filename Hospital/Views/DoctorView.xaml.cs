@@ -49,8 +49,6 @@ namespace Hospital.Views
             
             ExaminationsDataGrid.ItemsSource = Examinations;
             PatientsDataGrid.ItemsSource = Patients;
-
-
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
@@ -118,6 +116,19 @@ namespace Hospital.Views
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void BtnViewMedicalRecord_Click(object sender, RoutedEventArgs e)
+        {
+            Patient? patient = PatientsDataGrid.SelectedItem as Patient;
+            if (patient == null)
+            {
+                MessageBox.Show("Please select examination in order to delete it");
+                return;
+            }
+
+            var dialog = new MedicalRecordDialog(patient);
+            dialog.ShowDialog();
         }
     }
 }

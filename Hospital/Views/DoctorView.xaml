@@ -78,7 +78,7 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Button x:Name="BtnViewMedicalRecord"
                             Content="View Medical Record"
-                            Margin="5" Click="BtnUpdateExamination_Click"/>
+                            Margin="5" Click="BtnViewMedicalRecord_Click"/>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
