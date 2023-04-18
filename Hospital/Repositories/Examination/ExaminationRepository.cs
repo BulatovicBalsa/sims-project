@@ -151,7 +151,7 @@ namespace Hospital.Repositories.Examinaton
         public List<Examination> GetFinishedExaminations(Doctor doctor)
         {
             var currentTime = DateTime.Now;
-            List<Examination> finishedExaminations = GetAll().Where(examination => examination.Doctor.Equals(doctor) && examination.Start > currentTime).ToList();
+            List<Examination> finishedExaminations = GetAll().Where(examination => examination.Doctor.Equals(doctor) && examination.Start < currentTime).ToList();
             return finishedExaminations;
         }
 
