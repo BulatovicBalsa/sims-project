@@ -148,6 +148,13 @@ namespace Hospital.Repositories.Examinaton
             return patientExaminations;
         }
 
+        public List<Examination> GetFinishedExaminations(Doctor doctor)
+        {
+            var currentTime = DateTime.Now;
+            List<Examination> finishedExaminations = GetAll().Where(examination => examination.Doctor.Equals(doctor) && examination.Start > currentTime).ToList();
+            return finishedExaminations;
+        }
+
         public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime requestedDate)
         {
             return GetAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
