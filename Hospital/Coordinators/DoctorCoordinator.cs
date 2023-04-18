@@ -24,8 +24,9 @@ namespace Hospital.Coordinators
         public List<Patient> GetViewedPatients(Doctor doctor)
         {
             var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
-            List<Patient> patients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
-            return patients;
+            List<Patient> patientsWihoutFullData = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
+            var patientsWithFullData = patientsWihoutFullData.Select(patient => _patientRepository.GetById(patient.Id)).Distinct().ToList();
+            return patientsWithFullData;
         }
     }
 }
