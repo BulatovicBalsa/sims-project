@@ -70,7 +70,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Your patients" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
@@ -79,6 +79,8 @@
                     <Button x:Name="BtnViewMedicalRecord"
                             Content="View Medical Record"
                             Margin="5" Click="BtnViewMedicalRecord_Click"/>
+                    <TextBox x:Name="SearchBox" Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
+                    </TextBox>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
@@ -97,7 +99,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>

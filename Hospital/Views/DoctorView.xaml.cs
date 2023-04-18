@@ -36,6 +36,9 @@ namespace Hospital.Views
         private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
         private Doctor Doctor;
 
+        private bool isUserInput = true;
+        private string placeholder = "Search...";
+
         public DoctorView(Doctor doctor)
         {
             InitializeComponent();
@@ -49,6 +52,11 @@ namespace Hospital.Views
             
             ExaminationsDataGrid.ItemsSource = Examinations;
             PatientsDataGrid.ItemsSource = Patients;
+            
+            isUserInput = false;
+            SearchBox.Text = placeholder;
+
+            this.SizeToContent = SizeToContent.Height;
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
@@ -129,6 +137,45 @@ namespace Hospital.Views
 
             var dialog = new MedicalRecordDialog(patient);
             dialog.ShowDialog();
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!isUserInput)
+            {
+                isUserInput = true;
+                return;
+            }
+            SearchBox.Foreground = Brushes.Black;
+            string searchText = SearchBox.Text.ToLower();
+
+            // Filter the patient list based on the search text
+            List<Patient> filteredPatients = Patients.Where(patient =>
+                patient.FirstName.ToLower().Contains(searchText) ||
+                patient.LastName.ToLower().Contains(searchText) ||
+                patient.Jmbg.ToLower().ToLower().Contains(searchText) ||
+                patient.Id.ToLower().Contains(searchText)).ToList();
+            // Update the data context of the patient grid to show the filtered patients
+            PatientsDataGrid.ItemsSource = filteredPatients;
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SearchBox.Text == placeholder)
+            {
+                isUserInput = false;
+                SearchBox.Text = "";
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchBox.Text))
+            {
+                isUserInput = false;
+                SearchBox.Text = placeholder;
+                SearchBox.Foreground = Brushes.Gray;
+            }
         }
     }
 }
