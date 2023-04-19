@@ -15,6 +15,7 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels
@@ -26,9 +27,23 @@ namespace Hospital.ViewModels
         private Patient _patient;
         private IEnumerable<Hospital.Models.Doctor.Doctor> _recommendedDoctors;
         private bool _isUpdate;
+        private DateTime? _selectedDate;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public DateTime? SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                _selectedDate = value;
+                OnPropertyChanged();
 
+                if (_selectedDate.HasValue)
+                {
+                    Examination.Start = _selectedDate.Value.Date.Add(Examination.Start.TimeOfDay);
+                }
+            }
+        }
         public Patient Patient
         {
             get { return _patient;}
@@ -121,11 +136,13 @@ namespace Hospital.ViewModels
 
                     if (ex.Message.Contains("Patient made too many changes in last 30 days") || ex.Message.Contains("Patient made too many examinations in last 30 days"))
                     {
-                        Patient.IsBlocked=true;
+                        Patient.IsBlocked = true;
                         new PatientRepository().Update(Patient);
                         Application.Current.Shutdown();
                     }
 
+                    _patientViewModel.RefreshExaminations(_patient);
+                    return; 
                 }
 
                 Close();
@@ -157,5 +174,7 @@ namespace Hospital.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
+
+        
     }
 }

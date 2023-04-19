@@ -77,5 +77,10 @@ namespace Hospital.ViewModels
             _examinationRepository.Delete(examination,true);
             Examinations.Remove(examination);
         }
+
+        public void RefreshExaminations(Patient patient)
+        {
+            Examinations = new ObservableCollection<Examination>(_examinationRepository.GetAll(patient));
+        }
     }
 }

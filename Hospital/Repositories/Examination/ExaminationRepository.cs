@@ -203,7 +203,7 @@ namespace Hospital.Repositories.Examinaton
         {
             if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT))
             {
-                throw new InvalidOperationException("It is not possible to schedule an appointment less than 24 hours in advance.");
+                throw new InvalidOperationException("It is not possible to schedule/delete an appointment less than 24 hours in advance.");
             }
         }
 
