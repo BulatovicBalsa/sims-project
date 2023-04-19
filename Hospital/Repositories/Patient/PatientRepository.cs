@@ -99,5 +99,11 @@ namespace Hospital.Repositories.Patient
 
             Serializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
         }
+
+        public static void DeleteAll()
+        {
+            var emptyPatientList = new List<Patient>();
+            Serializer<Patient>.ToCSV(emptyPatientList, FilePath);
+        }
     }
 }

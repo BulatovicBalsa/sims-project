@@ -38,7 +38,7 @@ namespace Hospital.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PatientViewModel(Patient patient,ExaminationRepository examinationRepository)
+        public PatientViewModel(ExaminationRepository examinationRepository)
         {
             _examinationRepository = examinationRepository;
         }

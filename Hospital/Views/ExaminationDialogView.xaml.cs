@@ -30,7 +30,8 @@ namespace Hospital.Views
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Window dialogWindow = Window.GetWindow(this);
+            dialogWindow.Close();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

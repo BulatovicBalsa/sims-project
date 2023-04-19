@@ -16,7 +16,7 @@
 
         <StackPanel Orientation="Horizontal">
             <Button Content="Save" Click="BtnSave_Click" Command="{Binding SaveCommand}" MinWidth="75" Margin="0 0 10 0"/>
-            <Button Content="Cancel" Click="BtnCancel_Click"  Command="{Binding CancelCommand}" MinWidth="75"/>
+            <!--<Button Content="Cancel" Click="BtnCancel_Click"  Command="{Binding CancelCommand}" MinWidth="75"/>-->
         </StackPanel>
     </StackPanel>
 </Window>
