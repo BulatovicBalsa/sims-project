@@ -25,5 +25,16 @@ namespace Hospital.Models.Patient
             MedicalRecord = new MedicalRecord();
         }
 
+        public Patient DeepCopy()
+        {
+            Patient copy = new Patient(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, MedicalRecord.DeepCopy())
+            {
+                Id = this.Id,
+                IsBlocked = this.IsBlocked
+            };
+
+            return copy;
+        }
+
     }
 }

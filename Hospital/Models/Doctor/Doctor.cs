@@ -29,5 +29,15 @@ namespace Hospital.Models.Doctor
         {
             return Id.GetHashCode();
         }
+
+        public Doctor DeepCopy()
+        {
+            Doctor copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password)
+            {
+                Id = this.Id
+            };
+
+            return copy;
+        }
     }
 }

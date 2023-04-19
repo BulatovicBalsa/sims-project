@@ -44,7 +44,8 @@ namespace Hospital
                     if(patient.IsBlocked)
                     {
                         MessageBox.Show("Your profile is blocked.");
-                        return;
+                        loginView.Close();
+                        //return;
                     }
                     var patientView = new PatientView(patient);
                     patientView.Show();

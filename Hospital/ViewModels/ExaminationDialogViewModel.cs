@@ -30,6 +30,19 @@ namespace Hospital.ViewModels
         private DateTime? _selectedDate;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public string SelectedTime
+        {
+            get { return Examination.Start.ToString("HH:mm"); }
+            set
+            {
+                TimeSpan time;
+                if (TimeSpan.TryParse(value, out time))
+                {
+                    Examination.Start = Examination.Start.Date + time;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public DateTime? SelectedDate
         {
             get { return _selectedDate; }
@@ -94,6 +107,7 @@ namespace Hospital.ViewModels
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
             Examination = new Examination();
+            SelectedDate = DateTime.Now;
             Examination.Patient = patient;
             SaveCommand = new RelayCommand(Save);
             Patient = patient;
@@ -104,7 +118,8 @@ namespace Hospital.ViewModels
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll(); 
-            Examination = examination;
+            Examination = examination.DeepCopy();
+            SelectedDate = Examination.Start;
             Patient = patient;
             IsUpdate = true;
             SaveCommand = new RelayCommand(Save);
@@ -144,9 +159,11 @@ namespace Hospital.ViewModels
                     _patientViewModel.RefreshExaminations(_patient);
                     return; 
                 }
+                _patientViewModel.RefreshExaminations(_patient);
 
-                Close();
+                
             }
+            Close();
         }
 
         private void Cancel()
