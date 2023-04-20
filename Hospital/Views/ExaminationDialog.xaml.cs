@@ -101,12 +101,12 @@ namespace Hospital.Views
                     _examinations.Add(examination);
                 }
             }
-            catch (BusyDoctorException ex)
+            catch (DoctorBusyException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
-            catch (BusyPatientException ex)
+            catch (PatientBusyException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;

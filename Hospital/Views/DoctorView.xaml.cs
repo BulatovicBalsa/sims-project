@@ -107,12 +107,13 @@ namespace Hospital.Views
             try
             {
                 examinationRepository.Delete(examination, false);
-            }catch(BusyDoctorException ex)
+            }
+            catch (DoctorNotBusyException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
-            catch (BusyPatientException ex)
+            catch (PatientNotBusyException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
