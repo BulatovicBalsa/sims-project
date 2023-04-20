@@ -30,15 +30,7 @@ namespace Hospital.Views
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
             _viewModel = new PatientViewModel(_examinationRepository);
-            try
-            {
-                _viewModel.LoadExaminations(patient);
-            }
-            catch(ObjectNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-                this.Close();
-            } 
+            _viewModel.LoadExaminations(patient);
 
             _patient = patient;
             this.DataContext = _viewModel;
