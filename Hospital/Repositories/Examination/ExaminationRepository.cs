@@ -25,7 +25,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Start).Index(2);
             Map(examination => examination.Doctor.Id).Index(3);
             Map(examination => examination.Patient.Id).Index(4);
-            
+            Map(examination => examination.Anamnesis).Index(5);
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -43,6 +43,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Start).Index(2);
             Map(examination => examination.Doctor.Id).Index(3);
             Map(examination => examination.Patient.Id).Index(4);
+            Map(examination => examination.Anamnesis).Index(5);
         }
     }
 
