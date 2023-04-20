@@ -190,8 +190,6 @@ namespace Hospital.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
-        }
-
-        
+        } 
     }
 }

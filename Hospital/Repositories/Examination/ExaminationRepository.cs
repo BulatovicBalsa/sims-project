@@ -36,9 +36,9 @@ namespace Hospital.Repositories.Examinaton
 
         public class DoctorTypeConverter : DefaultTypeConverter
         {
-            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
-                string doctorId = text.Trim();
+                string doctorId = inputText.Trim();
                 // Retrieve the Doctor object based on the ID
                 Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new Exception($"Doctor with ID {doctorId} not found");
                 return doctor;
@@ -47,9 +47,9 @@ namespace Hospital.Repositories.Examinaton
 
         public class PatientTypeConverter : DefaultTypeConverter
         {
-            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
-                string patientId = text.Trim();
+                string patientId = inputText.Trim();
                 // Retrieve the Patient object based on the ID
                 Patient patient = new PatientRepository().GetById(patientId) ?? throw new Exception($"Patient with ID {patientId} not found");
                 return patient;
@@ -156,7 +156,7 @@ namespace Hospital.Repositories.Examinaton
         public List<Examination> GetAll(Doctor doctor)
         {
             List<Examination> doctorExaminations = GetAll()
-                .Where(appointment => appointment.Doctor.Equals(doctor))
+                .Where(examination => examination.Doctor.Equals(doctor))
                 .ToList();
             return doctorExaminations;
         }
@@ -201,9 +201,9 @@ namespace Hospital.Repositories.Examinaton
 
         private void ValidateExaminationTiming(DateTime start)
         {
-            if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT))
+            if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION))
             {
-                throw new InvalidOperationException("It is not possible to schedule/delete an appointment less than 24 hours in advance.");
+                throw new InvalidOperationException($"It is not possible to update an examination less than {Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION * 24} hours in advance.");
             }
         }
 

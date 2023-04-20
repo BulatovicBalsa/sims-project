@@ -48,7 +48,7 @@ namespace Hospital.Models.Examination
 
         public Examination DeepCopy()
         {
-            Examination copy = new()
+            Examination copy = new Examination()
             {
                 Id = this.Id,
                 Doctor = this.Doctor.DeepCopy(), 
