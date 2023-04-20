@@ -41,7 +41,7 @@ namespace Hospital.Repositories.Examinaton
             {
                 string doctorId = inputText.Trim();
                 // Retrieve the Doctor object based on the ID
-                Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new Exception($"Doctor with ID {doctorId} not found");
+                Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new ObjectNotFoundException($"Doctor with ID {doctorId} not found");
                 return doctor;
             }
         }
@@ -52,7 +52,7 @@ namespace Hospital.Repositories.Examinaton
             {
                 string patientId = inputText.Trim();
                 // Retrieve the Patient object based on the ID
-                Patient patient = new PatientRepository().GetById(patientId) ?? throw new Exception($"Patient with ID {patientId} not found");
+                Patient patient = new PatientRepository().GetById(patientId) ?? throw new ObjectNotFoundException($"Patient with ID {patientId} not found");
                 return patient;
             }
         }
