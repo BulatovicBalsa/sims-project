@@ -17,6 +17,7 @@ namespace Hospital.Repositories.Examinaton
     using CsvHelper;
     using Hospital.Repositories.Doctor;
     using Hospital.Repositories.Patient;
+    using Hospital.Exceptions;
 
     public sealed class ExaminationReadMapper : ClassMap<Examination>
     {
@@ -94,8 +95,8 @@ namespace Hospital.Repositories.Examinaton
         {
             var allExamination = GetAll();
 
-            if (!IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is busy");
-            if (!IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is busy");
+            if (!IsFree(examination.Doctor, examination.Start)) throw new DoctorBusyException("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start)) throw new PatientBusyException("Patient is busy");
             if (isMadeByPatient)
             {
                 PatientExaminationLog log = new(examination.Patient, true);
@@ -114,8 +115,8 @@ namespace Hospital.Repositories.Examinaton
             var indexToUpdate = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-            if (!IsFree(examination.Doctor, examination.Start,examination.Id)) throw new Exception("Doctor is busy");
-            if (!IsFree(examination.Patient, examination.Start, examination.Id)) throw new Exception("Patient is busy");
+            if (!IsFree(examination.Doctor, examination.Start,examination.Id)) throw new DoctorBusyException("Doctor is busy");
+            if (!IsFree(examination.Patient, examination.Start, examination.Id)) throw new PatientBusyException("Patient is busy");
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
@@ -137,8 +138,8 @@ namespace Hospital.Repositories.Examinaton
             var indexToDelete = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToDelete == -1) throw new KeyNotFoundException();
 
-            if (IsFree(examination.Doctor, examination.Start)) throw new Exception("Doctor is not busy,although he should be");
-            if (IsFree(examination.Patient, examination.Start)) throw new Exception("Patient is not busy,although he should be");
+            if (IsFree(examination.Doctor, examination.Start)) throw new DoctorNotBusyException("Doctor is not busy,although he should be");
+            if (IsFree(examination.Patient, examination.Start)) throw new PatientNotBusyException("Patient is not busy,although he should be");
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
