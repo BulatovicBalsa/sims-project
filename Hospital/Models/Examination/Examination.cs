@@ -17,6 +17,7 @@ namespace Hospital.Models.Examination
         public DateTime Start { get; set; }
         public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
         public bool IsOperation { get; set; }
+        public string Anamnesis { get; set; }
 
         public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start)
         {
@@ -25,6 +26,7 @@ namespace Hospital.Models.Examination
             Start = start;
             IsOperation = isOperation;
             Id = Guid.NewGuid().ToString();
+            Anamnesis = "";
         }
 
         public Examination()
