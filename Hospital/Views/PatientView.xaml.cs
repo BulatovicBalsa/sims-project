@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Exceptions;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
@@ -29,7 +30,16 @@ namespace Hospital.Views
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
             _viewModel = new PatientViewModel(_examinationRepository);
-            _viewModel.LoadExaminations(patient);
+            try
+            {
+                _viewModel.LoadExaminations(patient);
+            }
+            catch(ObjectNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                this.Close();
+            } 
+
             _patient = patient;
             this.DataContext = _viewModel;
 
