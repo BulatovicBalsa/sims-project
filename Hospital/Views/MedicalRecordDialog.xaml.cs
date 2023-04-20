@@ -20,11 +20,31 @@ namespace Hospital.Views
     /// </summary>
     public partial class MedicalRecordDialog : Window
     {
-        public MedicalRecordDialog(Patient patient)
+        public MedicalRecordDialog(Patient patient, bool isEditable)
         {
             InitializeComponent();
             this.DataContext = patient.MedicalRecord;
             this.Title = $"{patient.FirstName} {patient.LastName}";
+
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            foreach (var obj in LogicalTreeHelper.GetChildren((Grid)FindName("MedicalRecordGrid")))
+            {
+                if (obj is StackPanel stackPanel)
+                {
+                    foreach (var stackPanelObj in LogicalTreeHelper.GetChildren(stackPanel))
+                    {                        
+                        if (stackPanelObj is Button button)
+                        {
+                            button.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
+                        }
+                    }
+                }
+                if (obj is TextBox textBox)
+                {
+                    textBox.IsReadOnly = !isEditable;
+                }
+            }
+
         }
     }
 }

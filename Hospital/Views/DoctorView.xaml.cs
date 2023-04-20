@@ -136,7 +136,7 @@ namespace Hospital.Views
                 return;
             }
 
-            var dialog = new MedicalRecordDialog(patient);
+            var dialog = new MedicalRecordDialog(patient, false);
             dialog.ShowDialog();
         }
 
