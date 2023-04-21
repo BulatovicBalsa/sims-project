@@ -17,15 +17,20 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
+using Hospital.ViewModels.Patient;
+using PatientModel = Hospital.Models.Patient.Patient;
+using PatientViewModel = Hospital.ViewModels.Patient.PatientViewModel;
+using ExaminationModel = Hospital.Models.Examination.Examination;
+using ExaminationViewModel = Hospital.ViewModels.Examination;
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels.Examination
 {
     public class ExaminationDialogViewModel : INotifyPropertyChanged
     {
-        private Examination _examination;
+        private ExaminationModel _examination;
         private PatientViewModel _patientViewModel;
-        private Patient _patient;
-        private IEnumerable<Hospital.Models.Doctor.Doctor> _recommendedDoctors;
+        private PatientModel _patient;
+        private IEnumerable<Models.Doctor.Doctor> _recommendedDoctors;
         private bool _isUpdate;
         private DateTime? _selectedDate;
 
@@ -57,18 +62,18 @@ namespace Hospital.ViewModels
                 }
             }
         }
-        public Patient Patient
+        public PatientModel Patient
         {
-            get { return _patient;}
+            get { return _patient; }
             set
             {
                 _patient = value;
                 OnPropertyChanged();
             }
         }
-        public Examination Examination
+        public ExaminationModel Examination
         {
-            get { return _examination;}
+            get { return _examination; }
             set
             {
                 _examination = value;
@@ -76,7 +81,7 @@ namespace Hospital.ViewModels
             }
         }
 
-        public IEnumerable<Hospital.Models.Doctor.Doctor> RecommendedDoctors
+        public IEnumerable<Models.Doctor.Doctor> RecommendedDoctors
         {
             get { return _recommendedDoctors; }
             set
@@ -102,11 +107,11 @@ namespace Hospital.ViewModels
         public ICommand CancelCommand { get; set; }
 
 
-        public ExaminationDialogViewModel(Patient patient,PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(PatientModel patient, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
-            Examination = new Examination();
+            Examination = new ExaminationModel();
             SelectedDate = DateTime.Now;
             Examination.Patient = patient;
             SaveCommand = new RelayCommand(Save);
@@ -114,10 +119,10 @@ namespace Hospital.ViewModels
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        public ExaminationDialogViewModel(Patient patient,Examination examination, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(PatientModel patient, ExaminationModel examination, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = new DoctorRepository().GetAll(); 
+            RecommendedDoctors = new DoctorRepository().GetAll();
             Examination = examination.DeepCopy();
             SelectedDate = Examination.Start;
             Patient = patient;
@@ -157,11 +162,11 @@ namespace Hospital.ViewModels
                     }
 
                     _patientViewModel.RefreshExaminations(_patient);
-                    return; 
+                    return;
                 }
                 _patientViewModel.RefreshExaminations(_patient);
 
-                
+
             }
             Close();
         }
@@ -190,6 +195,6 @@ namespace Hospital.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
-        } 
+        }
     }
 }
