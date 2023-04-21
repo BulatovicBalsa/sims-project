@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.VisualBasic;
 using Hospital.Coordinators;
+using System.Text.RegularExpressions;
 
 namespace Hospital.Views
 {
@@ -136,6 +137,89 @@ namespace Hospital.Views
 
             _doctorCoordinator.UpdatePatient(_patient);
             MedicalHistoryListBox.Items.Refresh();
+        }
+
+        private void DeleteMedicalConditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string? selectedCondition = (string)MedicalHistoryListBox.SelectedItem;
+            if (selectedCondition == null)
+            {
+                MessageBox.Show("You must select condition in order to delete it");
+                return;
+            }
+            try
+            {
+                _patient.MedicalRecord.DeleteCondition(selectedCondition);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            _doctorCoordinator.UpdatePatient(_patient);
+            MedicalHistoryListBox.Items.Refresh();
+        }
+
+        private void DeleteAllergyButton_Click(object sender, RoutedEventArgs e)
+        {
+            string? selectedAllergy = (string)AllergiesListBox.SelectedItem;
+            if (selectedAllergy == null)
+            {
+                MessageBox.Show("You must select allergy in order to delete it");
+                return;
+            }
+            try
+            {
+                _patient.MedicalRecord.DeleteAllergy(selectedAllergy);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            _doctorCoordinator.UpdatePatient(_patient);
+            AllergiesListBox.Items.Refresh();
+        }
+
+        private void ChangeWeightButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePhysicalCharacteristic(false);
+        }
+
+        private void ChangeHeightButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePhysicalCharacteristic(true);
+        }
+
+        private void ChangePhysicalCharacteristic(bool isHeight)
+        {
+            var textBox = isHeight ? HeightTextBox : WeightTextBox;
+            int newSize = Int32.Parse(textBox.Text);
+            try
+            {
+                if (isHeight)
+                    _patient.MedicalRecord.ChangeHeight(newSize);
+                else
+                    _patient.MedicalRecord.ChangeWeight(newSize);    
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            _doctorCoordinator.UpdatePatient(_patient);
+            MessageBox.Show("Succeed");
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private bool IsTextAllowed(string text)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            return !regex.IsMatch(text);
         }
     }
 }

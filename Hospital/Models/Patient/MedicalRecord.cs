@@ -8,8 +8,12 @@ namespace Hospital.Models.Patient
 {
     public class MedicalRecord
     {
-        public int Weight { get; set; }
+        private const int MIN_WEIGHT = 1;
+        private const int MAX_WEIGHT = 200;
+        private const int MIN_HEIGHT = 30;
+        private const int MAX_HEIGHT = 220;
         public int Height { get; set; }
+        public int Weight { get; set; }
         public List<string> Allergies { get; set; }
         public List<string> MedicalHistory { get; set; }
         //public List<Prescription> Prescriptions { get; set; }
@@ -83,5 +87,48 @@ namespace Hospital.Models.Patient
             }
             Allergies[indexToUpdate] = updatedAllergy;
         }
+
+        public void DeleteCondition(string selectedCondition)
+        {
+            if (!MedicalHistory.Contains(selectedCondition))
+            {
+                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
+            }
+            MedicalHistory.Remove(selectedCondition);
+        }
+
+        public void DeleteAllergy(string selectedAllergy)
+        {
+            if (!Allergies.Contains(selectedAllergy))
+            {
+                throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
+            }
+            Allergies.Remove(selectedAllergy);
+        }
+
+        public void ChangeWeight(int newWeight)
+        {
+            if (newWeight >= MIN_WEIGHT && newWeight <= MAX_WEIGHT)
+            {
+                Weight = newWeight;
+            }
+            else
+            {
+                throw new ArgumentException($"Weight must be between {MIN_WEIGHT} and {MAX_WEIGHT}");
+            }
+        }
+
+        public void ChangeHeight(int newHeight)
+        {
+            if (newHeight >= MIN_HEIGHT && newHeight <= MAX_HEIGHT)
+            {
+                Height = newHeight;
+            }
+            else
+            {
+                throw new ArgumentException($"Height must be between {MIN_HEIGHT} and {MAX_HEIGHT}");
+            }
+        }
+
     }
 }
