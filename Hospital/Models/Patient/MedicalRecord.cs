@@ -40,5 +40,13 @@ namespace Hospital.Models.Patient
             MedicalHistory = medicalHistory;
             //Prescriptions = prescriptions;
         }
+
+        public void AddAllergy(string allergy)
+        {
+            allergy = allergy.Trim();
+            if (string.IsNullOrEmpty(allergy)) throw new ArgumentException("Allergy name can't be empty");
+            if (Allergies.Contains(allergy)) throw new ArgumentException("Allergy already exists in medical record");
+            Allergies.Add(allergy);
+        }
     }
 }

@@ -16,10 +16,10 @@ namespace Hospital.Coordinators
         private readonly ExaminationRepository _examinationRepository;
         private readonly PatientRepository _patientRepository;
 
-        public DoctorCoordinator(ExaminationRepository examinationRepository, PatientRepository patientRepository)
+        public DoctorCoordinator()
         {
-            _examinationRepository = examinationRepository;
-            _patientRepository = patientRepository;
+            _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
+            _patientRepository = new PatientRepository();
         }
 
         public List<Patient> GetViewedPatients(Doctor doctor)
@@ -33,6 +33,11 @@ namespace Hospital.Coordinators
         public Patient GetPatient(Examination examination)
         {
             return _patientRepository.GetById(examination.Patient.Id);
+        }
+
+        public void UpdatePatient(Patient patient)
+        {
+            _patientRepository.Update(patient);
         }
     }
 }

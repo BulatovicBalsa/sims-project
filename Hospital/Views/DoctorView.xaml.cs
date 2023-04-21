@@ -45,7 +45,7 @@ namespace Hospital.Views
             this.Doctor = doctor;
             this.DataContext = this;
             
-            _coordinator = new DoctorCoordinator(examinationRepository, patientRepository);
+            _coordinator = new DoctorCoordinator();
             
             Examinations = new ObservableCollection<Examination>(examinationRepository.GetExaminationsForNextThreeDays(doctor));
             Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
