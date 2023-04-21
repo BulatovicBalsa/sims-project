@@ -32,7 +32,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2" Margin="5">
             <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddAllergyButton_Click"/>
-            <Button x:Name="UpdateAllergyButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="UpdateAllergyButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Click="UpdateAllergyButton_Click"/>
             <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
         </StackPanel>
 
@@ -41,7 +41,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
             <Button x:Name="AddMedicalConditionButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddMedicalConditionButton_Click"/>
-            <Button x:Name="UpdateMedicalConditionButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="UpdateMedicalConditionButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Click="UpdateMedicalConditionButton_Click"/>
             <Button x:Name="DeleteMedicalConditionButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
         </StackPanel>
     </Grid>

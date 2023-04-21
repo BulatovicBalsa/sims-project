@@ -91,5 +91,51 @@ namespace Hospital.Views
             _doctorCoordinator.UpdatePatient(_patient);
             MedicalHistoryListBox.Items.Refresh();
         }
+
+        private void UpdateAllergyButton_Click(object sender, RoutedEventArgs e)
+        {
+            string? selectedAllergy = (string)AllergiesListBox.SelectedItem;
+            if (selectedAllergy == null)
+            {
+                MessageBox.Show("You must select condition in order to update it");
+                return;
+            }
+            string updatedAllergy = Interaction.InputBox($"Update '{selectedAllergy}' name: ", "Update allergy", "");
+            try
+            {
+                _patient.MedicalRecord.UpdateAllergy(selectedAllergy, updatedAllergy);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            _doctorCoordinator.UpdatePatient(_patient);
+            AllergiesListBox.Items.Refresh();
+        }
+
+        private void UpdateMedicalConditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string? selectedCondition = (string)MedicalHistoryListBox.SelectedItem;
+            if (selectedCondition == null)
+            {
+                MessageBox.Show("You must select condition in order to update it");
+                return;
+            }
+            string updatedCondition = Interaction.InputBox($"Update '{selectedCondition}' name: ", "Update condition", "");
+            try
+            {
+                _patient.MedicalRecord.UpdateCondition(selectedCondition, updatedCondition);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            _doctorCoordinator.UpdatePatient(_patient);
+            MedicalHistoryListBox.Items.Refresh();
+        }
     }
 }
