@@ -150,13 +150,12 @@ namespace Hospital.Views
             SearchBox.Foreground = Brushes.Black;
             string searchText = SearchBox.Text.ToLower();
 
-            // Filter the patient list based on the search text
             List<Patient> filteredPatients = Patients.Where(patient =>
                 patient.FirstName.ToLower().Contains(searchText) ||
                 patient.LastName.ToLower().Contains(searchText) ||
                 patient.Jmbg.ToLower().ToLower().Contains(searchText) ||
                 patient.Id.ToLower().Contains(searchText)).ToList();
-            // Update the data context of the patient grid to show the filtered patients
+
             PatientsDataGrid.ItemsSource = filteredPatients;
         }
 
@@ -177,6 +176,33 @@ namespace Hospital.Views
                 SearchBox.Text = placeholder;
                 SearchBox.Foreground = Brushes.Gray;
             }
+        }
+
+        private void BtnPerformExamination_Click(object sender, RoutedEventArgs e)
+        {
+            Examination? examination = ExaminationsDataGrid.SelectedItem as Examination;
+            if (examination == null)
+            {
+                MessageBox.Show("Please select examination in order to perform it");
+                return;
+            }
+
+            try
+            {
+                examinationRepository.Delete(examination, false);
+            }
+            catch (DoctorNotBusyException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (PatientNotBusyException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            this.Examinations.Remove(examination);
+            MessageBox.Show("Succeed");
         }
     }
 }

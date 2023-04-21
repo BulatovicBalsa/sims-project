@@ -114,6 +114,9 @@
                     <Button x:Name="BtnDeleteExamination"
                             Content="Delete Examination"
                             Margin="5" Click="BtnDeleteExamination_Click"/>
+                    <Button x:Name="BtnPerformExamination"
+                            Content="Start Examination"
+                            Margin="5" Click="BtnPerformExamination_Click"/>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
