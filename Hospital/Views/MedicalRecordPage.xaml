@@ -37,12 +37,12 @@
         </StackPanel>
 
         <Label Content="Medical History:" Grid.Row="3" Grid.Column="0" Margin="5"/>
-        <ListBox x:Name="MedicalRecordsListBox" ItemsSource="{Binding MedicalHistory}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <ListBox x:Name="MedicalHistoryListBox" ItemsSource="{Binding MedicalHistory}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
-            <Button x:Name="AddMedicalRecordButton" Content="Add" Margin="10 0" Width="50" Height="25.96"/>
-            <Button x:Name="UpdateMedicalRecordButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
-            <Button x:Name="DeleteMedicalRecordButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="AddMedicalConditionButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddMedicalConditionButton_Click"/>
+            <Button x:Name="UpdateMedicalConditionButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="DeleteMedicalConditionButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
         </StackPanel>
     </Grid>
 </Page>

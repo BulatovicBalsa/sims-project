@@ -48,5 +48,13 @@ namespace Hospital.Models.Patient
             if (Allergies.Contains(allergy)) throw new ArgumentException("Allergy already exists in medical record");
             Allergies.Add(allergy);
         }
+
+        public void AddConidition(string conditionToAdd)
+        {
+            conditionToAdd = conditionToAdd.Trim();
+            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException("Medical condition name can't be empty");
+            if (MedicalHistory.Contains(conditionToAdd)) throw new ArgumentException("Medical condition already exists in medical record");
+            MedicalHistory.Add(conditionToAdd);
+        }
     }
 }

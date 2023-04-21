@@ -74,5 +74,22 @@ namespace Hospital.Views
             _doctorCoordinator.UpdatePatient(_patient);
             AllergiesListBox.Items.Refresh();
         }
+
+        private void AddMedicalConditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string conditionToAdd = Interaction.InputBox("Insert condition: ", "Add condition", "");
+            try
+            {
+                _patient.MedicalRecord.AddConidition(conditionToAdd);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            _doctorCoordinator.UpdatePatient(_patient);
+            MedicalHistoryListBox.Items.Refresh();
+        }
     }
 }
