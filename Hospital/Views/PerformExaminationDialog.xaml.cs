@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Examination;
+﻿using Hospital.Coordinators;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Hospital.Views
     {
         private Examination _examinationToPerform { get; set; }
         private Patient _patientOnExamination { get; set; }
+        private readonly DoctorCoordinator _doctorCoordinator = new DoctorCoordinator();
 
         public PerformExaminationDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
@@ -31,6 +33,7 @@ namespace Hospital.Views
 
             loadMedicalRecordFrame();
             ConfigDialog();
+            AnamnesisTextBox.DataContext = _examinationToPerform;
         }
 
         private void ConfigDialog()
@@ -49,7 +52,10 @@ namespace Hospital.Views
 
         private void CofirmAnamnesisButton_Click(object sender, RoutedEventArgs e)
         {
-
+            string anamnesisText = AnamnesisTextBox.Text.Trim();
+            _examinationToPerform.Anamnesis = anamnesisText;
+            _doctorCoordinator.UpdateExamination(_examinationToPerform);
+            MessageBox.Show("Succeed");
         }
     }
 }

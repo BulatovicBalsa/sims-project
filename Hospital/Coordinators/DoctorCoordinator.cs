@@ -39,5 +39,10 @@ namespace Hospital.Coordinators
         {
             _patientRepository.Update(patient);
         }
+
+        public void UpdateExamination(Examination examination)
+        {
+            _examinationRepository.Update(examination, false);
+        }
     }
 }

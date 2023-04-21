@@ -40,15 +40,19 @@ namespace Hospital.Views
                 {
                     foreach (var stackPanelObj in LogicalTreeHelper.GetChildren(stackPanel))
                     {
-                        if (stackPanelObj is Button button)
+                        if (stackPanelObj is Button spButton)
                         {
-                            button.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
+                            spButton.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
                         }
                     }
                 }
                 if (obj is TextBox textBox)
                 {
                     textBox.IsReadOnly = !isEditable;
+                }
+                if (obj is Button button)
+                {
+                    button.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
         }

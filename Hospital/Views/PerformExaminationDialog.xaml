@@ -48,7 +48,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox Text="" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Row="2" Grid.Column="1" Width="150"/>
+                <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Row="2" Grid.Column="1" Width="150"/>
                 <Button x:Name="CofirmAnamnesisButton" Content="Confirm" Grid.Column="2" Margin="5" Click="CofirmAnamnesisButton_Click" Height="25.96"/>
 
             </Grid>
