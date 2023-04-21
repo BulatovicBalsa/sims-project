@@ -133,6 +133,18 @@ namespace Hospital.ViewModels.Examination
 
         private void Save()
         {
+            if (Examination.Start < DateTime.Now)
+            {
+                MessageBox.Show("Examination can't be in the past", "Error");
+                return;
+            }
+
+            if (Examination.Doctor == null)
+            {
+                MessageBox.Show("Please select doctor", "Error");
+                return;
+            }
+            
             if (!IsUpdate)
             {
                 try
