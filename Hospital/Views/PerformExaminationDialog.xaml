@@ -25,13 +25,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="First Name: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding FirstName}" Margin="5" Grid.Row="0" Grid.Column="1"/>
+                <TextBox Text="{Binding FirstName}" Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Last Name: " Grid.Row="1" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Jmbg: " Grid.Row="2" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding Jmbg}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+                <TextBox Text="{Binding Jmbg}" Margin="5" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
 
             </Grid>
             
