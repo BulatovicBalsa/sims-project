@@ -62,7 +62,7 @@ namespace Hospital.Views
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ExaminationDialog(Doctor, Examinations);
-
+            
             dialog.WindowStyle = WindowStyle.ToolWindow;
 
             bool? result = dialog.ShowDialog();
@@ -136,7 +136,7 @@ namespace Hospital.Views
                 return;
             }
 
-            var dialog = new MedicalRecordDialog(patient, false);
+            var dialog = new PerformExaminationDialog(patient);//new MedicalRecordDialog(patient, false);
             dialog.ShowDialog();
         }
 
