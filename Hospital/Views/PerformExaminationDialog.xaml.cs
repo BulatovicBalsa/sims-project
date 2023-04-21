@@ -38,16 +38,13 @@ namespace Hospital.Views
             SizeToContent = SizeToContent.WidthAndHeight;
             DataContext = _patientOnExamination;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            Title = $"{_patientOnExamination.FirstName} {_patientOnExamination.LastName}'s Examination";
         }
 
         private void loadMedicalRecordFrame()
         {
-            var dialog = new MedicalRecordDialog(_patientOnExamination, true);
-            dialog.WindowStyle = WindowStyle.None;
-            dialog.Show();
-            dialog.Close();
-            var temp = dialog.Content;
-            MedicalRecordFrame.Content = new ContentControl() { Content = temp };
+            var dialog = new MedicalRecordPage(_patientOnExamination, true);
+            MedicalRecordFrame.Navigate(dialog);
         }
 
         private void CofirmAnamnesisButton_Click(object sender, RoutedEventArgs e)

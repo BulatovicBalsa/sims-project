@@ -1,0 +1,48 @@
+﻿<Page x:Class="Hospital.Views.MedicalRecordPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hospital.Views"
+        mc:Ignorable="d"
+        Title="MedicalRecordDialog" Height="Auto" Width="Auto">
+    <Grid x:Name="MedicalRecordGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Weight:" Grid.Row="0" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="WeightTextBox" Text="{Binding Weight}" Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+
+        <Label Content="Height:" Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="HeightTextBox" Text="{Binding Height}" Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+
+        <Label Content="Allergies:" Grid.Row="2" Grid.Column="0" Margin="5"/>
+        <ListBox x:Name="AllergiesListBox" ItemsSource="{Binding Allergies}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2" Margin="5">
+            <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddAllergyButton_Click"/>
+            <Button x:Name="UpdateAllergyButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
+        </StackPanel>
+
+        <Label Content="Medical History:" Grid.Row="3" Grid.Column="0" Margin="5"/>
+        <ListBox x:Name="MedicalRecordsListBox" ItemsSource="{Binding MedicalHistory}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
+            <Button x:Name="AddMedicalRecordButton" Content="Add" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="UpdateMedicalRecordButton" Content="Update" Margin="10 0" Width="50" Height="25.96"/>
+            <Button x:Name="DeleteMedicalRecordButton" Content="Delete" Margin="10 0" Width="50" Height="25.96"/>
+        </StackPanel>
+    </Grid>
+</Page>
