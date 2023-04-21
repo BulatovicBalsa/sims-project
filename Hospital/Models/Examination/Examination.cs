@@ -47,5 +47,11 @@ namespace Hospital.Models.Examination
 
             return startOverlap && endOverlap;
         }
+
+        public bool IsPerfomable()
+        {
+            var now = DateTime.Now;
+            return Start < now && End > now;
+        }
     }
 }
