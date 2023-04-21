@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Patient;
+﻿using Hospital.Models.Examination;
+using Hospital.Models.Patient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +17,32 @@ using System.Windows.Shapes;
 
 namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for PerformExaminationDialog.xaml
-    /// </summary>
     public partial class PerformExaminationDialog : Window
     {
-        public PerformExaminationDialog(Patient patient)
+        private Examination _examinationToPerform { get; set; }
+        private Patient _patientOnExamination { get; set; }
+
+        public PerformExaminationDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
             InitializeComponent();
-            loadMedicalRecordFrame(patient);
-            this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.DataContext = patient;
-            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            _examinationToPerform = examinationToPerform;
+            _patientOnExamination = patientOnExamination;
+
+            loadMedicalRecordFrame();
+            ConfigDialog();
         }
 
-        private void loadMedicalRecordFrame(Patient patient)
+        private void ConfigDialog()
         {
-            var dialog = new MedicalRecordDialog(patient, true);
+            SizeToContent = SizeToContent.WidthAndHeight;
+            DataContext = _patientOnExamination;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        private void loadMedicalRecordFrame()
+        {
+            var dialog = new MedicalRecordDialog(_patientOnExamination, true);
             dialog.WindowStyle = WindowStyle.None;
             dialog.Show();
             dialog.Close();

@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
@@ -27,6 +28,11 @@ namespace Hospital.Coordinators
             List<Patient> patientsWihoutFullData = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
             var patientsWithFullData = patientsWihoutFullData.Select(patient => _patientRepository.GetById(patient.Id)).Distinct().ToList();
             return patientsWithFullData;
+        }
+
+        public Patient GetPatient(Examination examination)
+        {
+            return _patientRepository.GetById(examination.Patient.Id);
         }
     }
 }

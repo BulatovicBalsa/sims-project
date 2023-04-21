@@ -180,29 +180,23 @@ namespace Hospital.Views
 
         private void BtnPerformExamination_Click(object sender, RoutedEventArgs e)
         {
-            Examination? examination = ExaminationsDataGrid.SelectedItem as Examination;
-            if (examination == null)
+            Examination? examinationToPerform = ExaminationsDataGrid.SelectedItem as Examination;
+            if (examinationToPerform == null)
             {
                 MessageBox.Show("Please select examination in order to perform it");
                 return;
             }
 
-            try
+            Patient patientOnExamination = _coordinator.GetPatient(examinationToPerform);
+
+            /*if (!examination.IsPerfomable())
             {
-                examinationRepository.Delete(examination, false);
-            }
-            catch (DoctorNotBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Chosen examination can't be performed right now");
                 return;
-            }
-            catch (PatientNotBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            this.Examinations.Remove(examination);
-            MessageBox.Show("Succeed");
+            }*/
+
+            var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
+            dialog.ShowDialog();
         }
     }
 }
