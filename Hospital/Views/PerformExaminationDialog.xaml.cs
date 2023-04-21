@@ -25,6 +25,9 @@ namespace Hospital.Views
         {
             InitializeComponent();
             loadMedicalRecordFrame(patient);
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.DataContext = patient;
+            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
 
         private void loadMedicalRecordFrame(Patient patient)

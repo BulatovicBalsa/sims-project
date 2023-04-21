@@ -5,39 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views"
         mc:Ignorable="d"
-        Title="PerformExaminationDialog" Height="450" Width="800">
+        Title="PerformExaminationDialog" Height="Auto" Width="Auto">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="10">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Name: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Name}" Margin="5"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Age: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Age}" Margin="5"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Gender: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Gender}" Margin="5"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Address: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Address}" Margin="5"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Phone Number: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding PhoneNumber}" Margin="5"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Email: " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Email}" Margin="5"/>
-                </StackPanel>
-            </StackPanel>
+            <Grid Grid.Row="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="First Name: " Grid.Row="0" Grid.Column="0" Margin="5"/>
+                <TextBox Text="{Binding FirstName}" Margin="5" Grid.Row="0" Grid.Column="1"/>
+
+                <Label Content="Last Name: " Grid.Row="1" Grid.Column="0" Margin="5"/>
+                <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Content="Jmbg: " Grid.Row="2" Grid.Column="0" Margin="5"/>
+                <TextBox Text="{Binding Jmbg}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+
+            </Grid>
             <Frame x:Name="MedicalRecordFrame" Grid.Row="1"/>
         </Grid>
     </Grid>
