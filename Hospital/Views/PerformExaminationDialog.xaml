@@ -10,9 +10,10 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="10">
+            <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -33,7 +34,24 @@
                 <TextBox Text="{Binding Jmbg}" Margin="5" Grid.Row="2" Grid.Column="1"/>
 
             </Grid>
+            
             <Frame x:Name="MedicalRecordFrame" Grid.Row="1"/>
+            
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
+                <TextBox Text="" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Row="2" Grid.Column="1" Width="150"/>
+                <Button x:Name="CofirmAnamnesisButton" Content="Confirm" Grid.Column="2" Margin="5" Click="CofirmAnamnesisButton_Click" Height="25.96"/>
+
+            </Grid>
         </Grid>
     </Grid>
 </Window>

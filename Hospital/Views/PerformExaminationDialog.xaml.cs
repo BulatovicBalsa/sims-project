@@ -49,5 +49,10 @@ namespace Hospital.Views
             var temp = dialog.Content;
             MedicalRecordFrame.Content = new ContentControl() { Content = temp };
         }
+
+        private void CofirmAnamnesisButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
