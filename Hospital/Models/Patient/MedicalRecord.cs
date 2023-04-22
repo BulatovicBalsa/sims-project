@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Patient
 {
+    public enum HealthConditionType
+    {
+        Allergy,
+        MedicalCondition
+    }
+
     public class MedicalRecord
     {
         private const int MIN_WEIGHT = 1;
@@ -47,18 +53,23 @@ namespace Hospital.Models.Patient
 
         public void AddAllergy(string allergyToAdd)
         {
-            allergyToAdd = allergyToAdd.Trim();
-            if (string.IsNullOrEmpty(allergyToAdd)) throw new ArgumentException("Allergy name can't be empty");
-            if (Allergies.Contains(allergyToAdd)) throw new ArgumentException($"{allergyToAdd} already exists in medical record");
-            Allergies.Add(allergyToAdd);
+            addHealthCondition(allergyToAdd, HealthConditionType.Allergy);
+
         }
 
         public void AddConidition(string conditionToAdd)
         {
+            addHealthCondition(conditionToAdd, HealthConditionType.MedicalCondition);
+        }
+
+        private void addHealthCondition(string conditionToAdd, HealthConditionType conditionType)
+        {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
             conditionToAdd = conditionToAdd.Trim();
-            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException("Medical condition name can't be empty");
-            if (MedicalHistory.Contains(conditionToAdd)) throw new ArgumentException($"{conditionToAdd} already exists in medical record");
-            MedicalHistory.Add(conditionToAdd);
+
+            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{conditionType} name can't be empty");
+            if (healthConditionList.Contains(conditionToAdd)) throw new ArgumentException($"{conditionToAdd} already exists in medical record");
+            healthConditionList.Add(conditionToAdd);
         }
 
         public void UpdateCondition(string selectedCondition, string updatedCondition)
