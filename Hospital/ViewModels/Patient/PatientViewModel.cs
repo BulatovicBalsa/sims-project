@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 using Hospital.Models.Patient;
 using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
-
+using PatientModel = Hospital.Models.Patient.Patient;
+using ExaminationModel = Hospital.Models.Examination.Examination;
+using ExammintionViewModel = Hospital.ViewModels.Examination;
 using Hospital.Repositories.Examinaton;
 
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels.Patient
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Examination> _examinations;
+        private ObservableCollection<ExaminationModel> _examinations;
         private readonly ExaminationRepository _examinationRepository;
 
-        public ObservableCollection<Examination> Examinations
+
+        public ObservableCollection<ExaminationModel> Examinations
         {
             get { return _examinations; }
             set
@@ -37,20 +40,20 @@ namespace Hospital.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PatientViewModel(Patient patient,ExaminationRepository examinationRepository)
+        public PatientViewModel(ExaminationRepository examinationRepository)
         {
             _examinationRepository = examinationRepository;
-            LoadExaminations(patient);
         }
 
         public PatientViewModel()
         {
         }
 
-        public void LoadExaminations(Patient patient)
+        public void LoadExaminations(PatientModel patient)
         {
             var examinations = _examinationRepository.GetAll(patient);
-            Examinations = new ObservableCollection<Examination>(examinations);
+
+            Examinations = new ObservableCollection<ExaminationModel>(examinations);
         }
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
@@ -60,21 +63,26 @@ namespace Hospital.ViewModels
             return true;
         }
 
-        public void AddExamination(Examination examination)
+        public void AddExamination(ExaminationModel examination)
         {
-            _examinationRepository.Add(examination,true);
+            _examinationRepository.Add(examination, true);
             Examinations.Add(examination);
         }
 
-        public void UpdateExamination(Examination examination)
+        public void UpdateExamination(ExaminationModel examination)
         {
-            _examinationRepository.Update(examination,true);
+            _examinationRepository.Update(examination, true);
         }
 
-        public void DeleteExamination(Examination examination)
+        public void DeleteExamination(ExaminationModel examination)
         {
-            _examinationRepository.Delete(examination,true);
+            _examinationRepository.Delete(examination, true);
             Examinations.Remove(examination);
+        }
+
+        public void RefreshExaminations(PatientModel patient)
+        {
+            Examinations = new ObservableCollection<ExaminationModel>(_examinationRepository.GetAll(patient));
         }
     }
 }

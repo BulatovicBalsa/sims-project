@@ -8,7 +8,7 @@ namespace Hospital.Models.Patient
 {
     public class Patient : Person
     {
-        public const int MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT = 1;
+        public const int MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION = 1;
         public const int MAX_CHANGES_OR_DELETES_LAST_30_DAYS = 4;
         public const int MAX_ALLOWED_APPOINTMENTS_LAST_30_DAYS = 8;
         public bool IsBlocked { get; set; }
@@ -23,6 +23,17 @@ namespace Hospital.Models.Patient
         public Patient() : base()
         {
             MedicalRecord = new MedicalRecord();
+        }
+
+        public Patient DeepCopy()
+        {
+            Patient copy = new Patient(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, MedicalRecord.DeepCopy())
+            {
+                Id = this.Id,
+                IsBlocked = this.IsBlocked
+            };
+
+            return copy;
         }
 
     }

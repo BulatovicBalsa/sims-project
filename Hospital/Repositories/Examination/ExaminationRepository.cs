@@ -14,6 +14,9 @@ namespace Hospital.Repositories.Examinaton
     using Hospital.Models.Doctor;
     using CsvHelper.Configuration;
     using CsvHelper.TypeConversion;
+    using CsvHelper;
+    using Hospital.Repositories.Doctor;
+    using Hospital.Repositories.Patient;
     using Hospital.Exceptions;
 
     public sealed class ExaminationReadMapper : ClassMap<Examination>
@@ -23,14 +26,35 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Id).Index(0);
             Map(examination => examination.IsOperation).Index(1);
             Map(examination => examination.Start).Index(2);
-            Map(examination => examination.Doctor.Id).Index(3);
-            Map(examination => examination.Patient.Id).Index(4);
-            
+            Map(examination => examination.Doctor).Index(3).TypeConverter<DoctorTypeConverter>();
+            Map(examination => examination.Patient).Index(4).TypeConverter<PatientTypeConverter>();
         }
 
         private List<string> SplitColumnValues(string? columnValue)
         {
             return columnValue?.Split("|").ToList() ?? new List<string>();
+        }
+
+        public class DoctorTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            {
+                string doctorId = inputText.Trim();
+                // Retrieve the Doctor object based on the ID
+                Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                return doctor;
+            }
+        }
+
+        public class PatientTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            {
+                string patientId = inputText.Trim();
+                // Retrieve the Patient object based on the ID
+                Patient patient = new PatientRepository().GetById(patientId) ?? throw new KeyNotFoundException($"Patient with ID {patientId} not found");
+                return patient;
+            }
         }
     }
 
@@ -132,16 +156,14 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetAll(Doctor doctor)
         {
-            var lista = GetAll();
             List<Examination> doctorExaminations = GetAll()
-                .Where(appointment => appointment.Doctor.Equals(doctor))
+                .Where(examination => examination.Doctor.Equals(doctor))
                 .ToList();
             return doctorExaminations;
         }
 
         public List<Examination> GetAll(Patient patient)
         {
-            var all =GetAll();
             List<Examination> patientExaminations = GetAll()
                 .Where(examination => examination.Patient.Equals(patient))
                 .ToList();
@@ -180,9 +202,9 @@ namespace Hospital.Repositories.Examinaton
 
         private void ValidateExaminationTiming(DateTime start)
         {
-            if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_APPOINTMENT))
+            if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION))
             {
-                throw new InvalidOperationException("It is not possible to schedule an appointment less than 24 hours in advance.");
+                throw new InvalidOperationException($"It is not possible to update an examination less than {Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION * 24} hours in advance.");
             }
         }
 

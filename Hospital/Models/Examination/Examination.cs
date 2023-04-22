@@ -45,5 +45,18 @@ namespace Hospital.Models.Examination
 
             return startOverlap && endOverlap;
         }
+
+        public Examination DeepCopy()
+        {
+            Examination copy = new Examination()
+            {
+                Id = this.Id,
+                Doctor = this.Doctor.DeepCopy(), 
+                Start = this.Start,
+                Patient = this.Patient.DeepCopy()
+            };
+
+            return copy;
+        }
     }
 }
