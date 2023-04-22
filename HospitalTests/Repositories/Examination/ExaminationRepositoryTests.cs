@@ -15,19 +15,25 @@ namespace HospitalTests.Repositories.Examination
     using Hospital.Models.Doctor;
     using Hospital.Models.Patient;
     using Hospital.Models.Examination;
+    using Hospital.Repositories.Doctor;
+
     [TestClass]
     public class ExaminationRepositoryTests
     {
         private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
         private ExaminationChangesTracker _examinationChangesTracker;
         private ExaminationRepository _examinationRepository;
+        private DoctorRepository _doctorRepository;
         private Examination _examination;
+        private PatientRepository _patientRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             ExaminationRepository.DeleteAll();
             ExaminationChangesTrackerRepository.DeleteAll();
+            DoctorRepository.DeleteAll();
+            PatientRepository.DeleteAll();
 
             CreateTestExaminationRepository();
             CreateTestExamination();
@@ -38,12 +44,19 @@ namespace HospitalTests.Repositories.Examination
             _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
             _examinationRepository = new ExaminationRepository(_examinationChangesTracker);
+            _doctorRepository = new DoctorRepository();
+            _patientRepository = new PatientRepository();
 
             var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1");
             var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2");
 
+            _doctorRepository.Add(doctor1);
+            _doctorRepository.Add(doctor2);
+
             var patient1 = new Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1", new MedicalRecord(80, 180));
             var patient2 = new Patient("Bob", "Johnson", "1234567890125", "bobjohnson", "password2", new MedicalRecord(80, 180));
+            _patientRepository.Add(patient1);
+            _patientRepository.Add(patient2);
 
             var examination1 = new Examination(doctor1, patient1, false, DateTime.Now.AddHours(30));
             var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40));
@@ -59,12 +72,16 @@ namespace HospitalTests.Repositories.Examination
             var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3");
             var patient = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3", new MedicalRecord(80, 180));
 
+            _doctorRepository.Add(doctor);
+            _patientRepository.Add(patient);   
+
             _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60));
         }
 
         [TestMethod]
         public void TestAdd()
         {
+            
             var addedExamination = _examinationRepository.GetById(_examination.Id);
             Assert.IsNotNull(addedExamination);
         }
@@ -72,7 +89,7 @@ namespace HospitalTests.Repositories.Examination
         [TestMethod]
         public void TestUpdate()
         {
-            _examination.Start = _examination.Start.AddHours(5);
+            _examination.Start = _examination.Start.AddMinutes(5);
             _examination.IsOperation = true;
                 
             _examinationRepository.Update(_examination, false);

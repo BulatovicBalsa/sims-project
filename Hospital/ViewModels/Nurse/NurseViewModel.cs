@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
+using PatientModel = Hospital.Models.Patient.Patient;
 
 namespace Hospital.ViewModels.Nurse
 {
     public class NurseViewModel : ViewModelBase
     {
-        private ObservableCollection<Patient> _patients;
+        private ObservableCollection<PatientModel> _patients;
         private PatientRepository _patientRepository;
-        private Patient _selectedPatient;
+        private PatientModel _selectedPatient;
         private string _errorMessage;
 
         public string ErrorMessage
@@ -27,7 +28,7 @@ namespace Hospital.ViewModels.Nurse
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public Patient SelectedPatient
+        public PatientModel SelectedPatient
         {
             get => _selectedPatient;
             set
@@ -36,7 +37,7 @@ namespace Hospital.ViewModels.Nurse
                 OnPropertyChanged(nameof(SelectedPatient));
             }
         }
-        public ObservableCollection<Patient> Patients
+        public ObservableCollection<PatientModel> Patients
         {
             get => _patients;
             set
@@ -49,7 +50,7 @@ namespace Hospital.ViewModels.Nurse
         public NurseViewModel()
         {
             _patientRepository = new PatientRepository();
-            _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
+            _patients = new ObservableCollection<PatientModel>(_patientRepository.GetAll());
             SelectedPatient = null;
 
             _patients.CollectionChanged += (sender, e) =>
@@ -60,7 +61,7 @@ namespace Hospital.ViewModels.Nurse
                     {
                         foreach (var item in e.NewItems)
                         {
-                            _patientRepository.Add((Patient) item);
+                            _patientRepository.Add((PatientModel) item);
                         }
                     }
                 }

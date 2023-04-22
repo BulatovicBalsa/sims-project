@@ -5,6 +5,8 @@ using Hospital.Serialization;
 namespace Hospital.Repositories.Doctor;
 
 using Hospital.Models.Doctor;
+using System;
+
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
@@ -55,5 +57,11 @@ public class DoctorRepository
         allDoctor.RemoveAt(indexToDelete);
 
         Serializer<Doctor>.ToCSV(allDoctor, FilePath);
+    }
+
+    public static void DeleteAll()
+    {
+        var emptyDoctorList = new List<Doctor>();
+        Serializer<Doctor>.ToCSV(emptyDoctorList, FilePath);
     }
 }
