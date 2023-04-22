@@ -57,9 +57,29 @@ namespace Hospital.Models.Patient
 
         }
 
-        public void AddConidition(string conditionToAdd)
+        public void AddMedicalConidition(string medicalConditionToAdd)
         {
-            addHealthCondition(conditionToAdd, HealthConditionType.MedicalCondition);
+            addHealthCondition(medicalConditionToAdd, HealthConditionType.MedicalCondition);
+        }
+
+        public void UpdateMedicalCondition(string selectedMedicalCondition, string updatedMedicalCondition)
+        {
+            updateHealthCondition(selectedMedicalCondition, updatedMedicalCondition, HealthConditionType.MedicalCondition);
+        }
+
+        public void UpdateAllergy(string selectedAllergy, string updatedAllergy)
+        {
+            updateHealthCondition(selectedAllergy, updatedAllergy, HealthConditionType.Allergy);
+        }
+
+        public void DeleteMedicalCondition(string selectedMedicalCondition)
+        {
+            deleteHealthCondition(selectedMedicalCondition, HealthConditionType.MedicalCondition);
+        }
+
+        public void DeleteAllergy(string selectedAllergy)
+        {
+            deleteHealthCondition(selectedAllergy, HealthConditionType.Allergy);
         }
 
         private void addHealthCondition(string conditionToAdd, HealthConditionType conditionType)
@@ -72,58 +92,36 @@ namespace Hospital.Models.Patient
             healthConditionList.Add(conditionToAdd);
         }
 
-        public void UpdateCondition(string selectedCondition, string updatedCondition)
+        private void deleteHealthCondition(string selectedCondition, HealthConditionType conditionType)
         {
-            int indexToUpdate = MedicalHistory.IndexOf(selectedCondition);
-            if (indexToUpdate == -1) {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
+
+            if (!healthConditionList.Contains(selectedCondition))
+            {
+                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
+            }
+            healthConditionList.Remove(selectedCondition);
+        }
+
+        private void updateHealthCondition(string selectedCondition, string updatedCondition, HealthConditionType conditionType)
+        {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
+
+            updatedCondition = updatedCondition.Trim();
+            int indexToUpdate = healthConditionList.IndexOf(selectedCondition);
+            if (indexToUpdate == -1)
+            {
                 throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
             }
             if (string.IsNullOrEmpty(updatedCondition))
             {
-                throw new ArgumentException($"Medical condition name can't be empty");
+                throw new ArgumentException($"{conditionType} name can't be empty");
             }
-            if (MedicalHistory.Contains(updatedCondition))
+            if (healthConditionList.Contains(updatedCondition))
             {
                 throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
             }
-            MedicalHistory[indexToUpdate] = updatedCondition;
-        }
-
-        public void UpdateAllergy(string selectedAllergy, string updatedAllergy)
-        {
-            updatedAllergy = updatedAllergy.Trim();
-            int indexToUpdate = Allergies.IndexOf(selectedAllergy);
-            if (indexToUpdate == -1)
-            {
-                throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
-            }
-            if (string.IsNullOrEmpty(updatedAllergy))
-            {
-                throw new ArgumentException($"Allergy name can't be empty");
-            }
-            if (MedicalHistory.Contains(updatedAllergy))
-            {
-                throw new ArgumentException($"{updatedAllergy} already exist in this patient's medical record");
-            }
-            Allergies[indexToUpdate] = updatedAllergy;
-        }
-
-        public void DeleteCondition(string selectedCondition)
-        {
-            if (!MedicalHistory.Contains(selectedCondition))
-            {
-                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            }
-            MedicalHistory.Remove(selectedCondition);
-        }
-
-        public void DeleteAllergy(string selectedAllergy)
-        {
-            if (!Allergies.Contains(selectedAllergy))
-            {
-                throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
-            }
-            Allergies.Remove(selectedAllergy);
+            healthConditionList[indexToUpdate] = updatedCondition;
         }
 
         public void ChangeWeight(int newWeight)

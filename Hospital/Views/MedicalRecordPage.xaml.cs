@@ -85,7 +85,7 @@ namespace Hospital.Views
             string conditionToAdd = Interaction.InputBox("Insert condition: ", "Add condition", "");
             try
             {
-                _patient.MedicalRecord.AddConidition(conditionToAdd);
+                _patient.MedicalRecord.AddMedicalConidition(conditionToAdd);
             }
             catch (ArgumentException ex)
             {
@@ -131,7 +131,7 @@ namespace Hospital.Views
             string updatedCondition = Interaction.InputBox($"Update '{selectedCondition}' name: ", "Update condition", "");
             try
             {
-                _patient.MedicalRecord.UpdateCondition(selectedCondition, updatedCondition);
+                _patient.MedicalRecord.UpdateMedicalCondition(selectedCondition, updatedCondition);
             }
             catch (ArgumentException ex)
             {
@@ -153,7 +153,7 @@ namespace Hospital.Views
             }
             try
             {
-                _patient.MedicalRecord.DeleteCondition(selectedCondition);
+                _patient.MedicalRecord.DeleteMedicalCondition(selectedCondition);
             }
             catch (ArgumentException ex)
             {
