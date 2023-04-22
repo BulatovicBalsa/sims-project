@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for MedicalRecordDialog.xaml
-    /// </summary>
     public partial class MedicalRecordDialog : Window
     {
         private Patient _patient;
@@ -25,6 +22,12 @@ namespace Hospital.Views
         {
             InitializeComponent();
             _patient = patient;
+
+            ConfigDialog(isEditable);
+        }
+
+        private void ConfigDialog(bool isEditable)
+        {
             var page = new MedicalRecordPage(_patient, isEditable);
             MedicalRecordFrame.Navigate(page);
             Title = page.Title + $"'s Medical Record";
