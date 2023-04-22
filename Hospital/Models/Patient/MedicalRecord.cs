@@ -23,7 +23,7 @@ namespace Hospital.Models.Patient
         public List<string> Allergies { get; set; }
         public List<string> MedicalHistory { get; set; }
         //public List<Prescription> Prescriptions { get; set; }
-
+        
         public MedicalRecord()
         {
             Weight = 0;
@@ -54,7 +54,6 @@ namespace Hospital.Models.Patient
         public void AddAllergy(string allergyToAdd)
         {
             addHealthCondition(allergyToAdd, HealthConditionType.Allergy);
-
         }
 
         public void AddMedicalConidition(string medicalConditionToAdd)

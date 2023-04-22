@@ -34,28 +34,33 @@ namespace Hospital.Views
 
         private void ConfigEditableGuiElements(bool isEditable)
         {
-            foreach (var obj in LogicalTreeHelper.GetChildren((Grid)FindName("MedicalRecordGrid")))
+
+            LogicalTreeHelper.GetChildren(MedicalRecordGrid)
+                .OfType<StackPanel>()
+                .ToList()
+                .ForEach(sp => updateStackPanelButtonsVisibility(sp, isEditable));
+
+            LogicalTreeHelper.GetChildren(MedicalRecordGrid)
+                .OfType<TextBox>()
+                .ToList()
+                .ForEach(tb => tb.IsReadOnly = !isEditable);
+
+            LogicalTreeHelper.GetChildren(MedicalRecordGrid)
+                .OfType<Button>()
+                .ToList()
+                .ForEach(btn => btn.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed);
+        }
+
+        private void updateStackPanelButtonsVisibility(StackPanel stackPanel, bool isEditable)
+        {
+            var buttons = stackPanel.Children.OfType<Button>();
+
+            foreach (var button in buttons)
             {
-                if (obj is StackPanel stackPanel)
-                {
-                    foreach (var stackPanelObj in LogicalTreeHelper.GetChildren(stackPanel))
-                    {
-                        if (stackPanelObj is Button spButton)
-                        {
-                            spButton.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
-                        }
-                    }
-                }
-                if (obj is TextBox textBox)
-                {
-                    textBox.IsReadOnly = !isEditable;
-                }
-                if (obj is Button button)
-                {
-                    button.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
-                }
+                button.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
             }
         }
+
 
         private void ConfigPage(Patient patient)
         {
