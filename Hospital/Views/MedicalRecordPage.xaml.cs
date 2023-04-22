@@ -70,73 +70,79 @@ namespace Hospital.Views
 
         private void AddAllergyButton_Click(object sender, RoutedEventArgs e)
         {
-            string allergyToAdd = Interaction.InputBox("Insert allergy: ", "Add Allergy", "");
-            try
-            {
-                _patient.MedicalRecord.AddAllergy(allergyToAdd);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            _doctorCoordinator.UpdatePatient(_patient);
-            AllergiesListBox.Items.Refresh();
+            addHealthCondition(HealthConditionType.Allergy);
         }
 
         private void AddMedicalConditionButton_Click(object sender, RoutedEventArgs e)
         {
-            string conditionToAdd = Interaction.InputBox("Insert condition: ", "Add condition", "");
-            try
-            {
-                _patient.MedicalRecord.AddMedicalConidition(conditionToAdd);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            _doctorCoordinator.UpdatePatient(_patient);
-            MedicalHistoryListBox.Items.Refresh();
+            addHealthCondition(HealthConditionType.MedicalCondition);
         }
 
         private void UpdateAllergyButton_Click(object sender, RoutedEventArgs e)
         {
-            string? selectedAllergy = (string)AllergiesListBox.SelectedItem;
-            if (selectedAllergy == null)
-            {
-                MessageBox.Show("You must select condition in order to update it");
-                return;
-            }
-            string updatedAllergy = Interaction.InputBox($"Update '{selectedAllergy}' name: ", "Update allergy", "");
-            try
-            {
-                _patient.MedicalRecord.UpdateAllergy(selectedAllergy, updatedAllergy);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            _doctorCoordinator.UpdatePatient(_patient);
-            AllergiesListBox.Items.Refresh();
+            updateHealthCondition(HealthConditionType.Allergy);
         }
 
         private void UpdateMedicalConditionButton_Click(object sender, RoutedEventArgs e)
         {
-            string? selectedCondition = (string)MedicalHistoryListBox.SelectedItem;
+            updateHealthCondition(HealthConditionType.MedicalCondition);
+        }
+
+        private void DeleteMedicalConditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            deleteHealthCondition(HealthConditionType.MedicalCondition);
+        }
+
+        private void DeleteAllergyButton_Click(object sender, RoutedEventArgs e)
+        {
+            deleteHealthCondition(HealthConditionType.Allergy);
+        }
+
+        private void ChangeWeightButton_Click(object sender, RoutedEventArgs e)
+        {
+            changePhysicalCharacteristic(false);
+        }
+
+        private void ChangeHeightButton_Click(object sender, RoutedEventArgs e)
+        {
+            changePhysicalCharacteristic(true);
+        }
+
+        private void addHealthCondition(HealthConditionType conditionType)
+        {
+            Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? _patient.MedicalRecord.AddAllergy : _patient.MedicalRecord.AddMedicalConidition;
+            var healthConditionListBox = conditionType == HealthConditionType.Allergy ? AllergiesListBox : MedicalHistoryListBox;
+
+            string conditionToAdd = Interaction.InputBox($"Insert {conditionType}: ", $"Add {conditionType}", "");
+            try
+            {
+                medicalRecordOperation(conditionToAdd);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            _doctorCoordinator.UpdatePatient(_patient);
+            healthConditionListBox.Items.Refresh();
+        }
+
+        private void updateHealthCondition(HealthConditionType conditionType)
+        {
+            Action<string, string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? _patient.MedicalRecord.UpdateAllergy : _patient.MedicalRecord.UpdateMedicalCondition;
+            var healthConditionListBox = conditionType == HealthConditionType.Allergy ? AllergiesListBox : MedicalHistoryListBox;
+
+            string? selectedCondition = (string)healthConditionListBox.SelectedItem;
             if (selectedCondition == null)
             {
                 MessageBox.Show("You must select condition in order to update it");
                 return;
             }
-            string updatedCondition = Interaction.InputBox($"Update '{selectedCondition}' name: ", "Update condition", "");
+            string updatedCondition = Interaction.InputBox($"Update '{selectedCondition}' name: ", $"Update {conditionType}", "");
             try
             {
-                _patient.MedicalRecord.UpdateMedicalCondition(selectedCondition, updatedCondition);
+                medicalRecordOperation(selectedCondition, updatedCondition);
             }
             catch (ArgumentException ex)
             {
@@ -145,20 +151,23 @@ namespace Hospital.Views
             }
 
             _doctorCoordinator.UpdatePatient(_patient);
-            MedicalHistoryListBox.Items.Refresh();
+            healthConditionListBox.Items.Refresh();
         }
 
-        private void DeleteMedicalConditionButton_Click(object sender, RoutedEventArgs e)
+        private void deleteHealthCondition(HealthConditionType conditionType)
         {
-            string? selectedCondition = (string)MedicalHistoryListBox.SelectedItem;
+            Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? _patient.MedicalRecord.DeleteAllergy : _patient.MedicalRecord.DeleteMedicalCondition;
+            var healthConditionListBox = conditionType == HealthConditionType.Allergy ? AllergiesListBox : MedicalHistoryListBox;
+
+            string? selectedCondition = (string)healthConditionListBox.SelectedItem;
             if (selectedCondition == null)
             {
-                MessageBox.Show("You must select condition in order to delete it");
+                MessageBox.Show($"You must select {conditionType} in order to delete it");
                 return;
             }
             try
             {
-                _patient.MedicalRecord.DeleteMedicalCondition(selectedCondition);
+                medicalRecordOperation(selectedCondition);
             }
             catch (ArgumentException ex)
             {
@@ -166,50 +175,18 @@ namespace Hospital.Views
                 return;
             }
             _doctorCoordinator.UpdatePatient(_patient);
-            MedicalHistoryListBox.Items.Refresh();
+            healthConditionListBox.Items.Refresh();
         }
 
-        private void DeleteAllergyButton_Click(object sender, RoutedEventArgs e)
+        private void changePhysicalCharacteristic(bool isHeight)
         {
-            string? selectedAllergy = (string)AllergiesListBox.SelectedItem;
-            if (selectedAllergy == null)
-            {
-                MessageBox.Show("You must select allergy in order to delete it");
-                return;
-            }
-            try
-            {
-                _patient.MedicalRecord.DeleteAllergy(selectedAllergy);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            _doctorCoordinator.UpdatePatient(_patient);
-            AllergiesListBox.Items.Refresh();
-        }
-
-        private void ChangeWeightButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePhysicalCharacteristic(false);
-        }
-
-        private void ChangeHeightButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePhysicalCharacteristic(true);
-        }
-
-        private void ChangePhysicalCharacteristic(bool isHeight)
-        {
+            Action<int> medicalRecordOperation = isHeight ? _patient.MedicalRecord.ChangeHeight : _patient.MedicalRecord.ChangeWeight;
             var textBox = isHeight ? HeightTextBox : WeightTextBox;
+
             int newSize = Int32.Parse(textBox.Text);
             try
             {
-                if (isHeight)
-                    _patient.MedicalRecord.ChangeHeight(newSize);
-                else
-                    _patient.MedicalRecord.ChangeWeight(newSize);    
+                medicalRecordOperation(newSize);
             }
             catch (ArgumentException ex)
             {
@@ -222,10 +199,10 @@ namespace Hospital.Views
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            e.Handled = !isTextAllowed(e.Text);
         }
 
-        private bool IsTextAllowed(string text)
+        private bool isTextAllowed(string text)
         {
             Regex regex = new Regex("[^0-9]+");
             return !regex.IsMatch(text);
