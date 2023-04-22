@@ -67,6 +67,10 @@ namespace Hospital.Models.Patient
             if (indexToUpdate == -1) {
                 throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
             }
+            if (string.IsNullOrEmpty(updatedCondition))
+            {
+                throw new ArgumentException($"Medical condition name can't be empty");
+            }
             if (MedicalHistory.Contains(updatedCondition))
             {
                 throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
@@ -76,10 +80,15 @@ namespace Hospital.Models.Patient
 
         public void UpdateAllergy(string selectedAllergy, string updatedAllergy)
         {
+            updatedAllergy = updatedAllergy.Trim();
             int indexToUpdate = Allergies.IndexOf(selectedAllergy);
             if (indexToUpdate == -1)
             {
                 throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
+            }
+            if (string.IsNullOrEmpty(updatedAllergy))
+            {
+                throw new ArgumentException($"Allergy name can't be empty");
             }
             if (MedicalHistory.Contains(updatedAllergy))
             {
