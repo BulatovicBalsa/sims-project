@@ -130,5 +130,16 @@ namespace Hospital.Models.Patient
             }
         }
 
+        public MedicalRecord DeepCopy()
+        {
+            MedicalRecord copy = new MedicalRecord(Height, Weight)
+            {
+                Allergies = new List<string>(Allergies),
+                MedicalHistory = new List<string>(MedicalHistory),
+                //Prescriptions = new List<Prescription>(Prescriptions.Select(p => p.DeepCopy()))
+            };
+
+            return copy;
+        }
     }
 }

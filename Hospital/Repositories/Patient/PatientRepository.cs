@@ -28,6 +28,8 @@ namespace Hospital.Repositories.Patient
             Map(patient => patient.MedicalRecord.Weight).Index(7);
             Map(patient => patient.MedicalRecord.Allergies).Convert(row => string.Join("|", row.Value.MedicalRecord.Allergies)).Index(8);
             Map(patient => patient.MedicalRecord.MedicalHistory).Convert(row => string.Join("|", row.Value.MedicalRecord.MedicalHistory)).Index(9);
+            Map(patient => patient.IsBlocked).Index(10);
+
         }
     }
 
@@ -49,6 +51,7 @@ namespace Hospital.Repositories.Patient
             Map(patient => patient.MedicalRecord.Weight).Index(7);
             Map(patient => patient.MedicalRecord.Allergies).Index(8).Convert(row => SplitColumnValues(row.Row.GetField<string>("Allergies")));
             Map(patient => patient.MedicalRecord.MedicalHistory).Index(9).Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
+            Map(patient => patient.IsBlocked).Index(10);
         }
     }
     public class PatientRepository
@@ -98,6 +101,12 @@ namespace Hospital.Repositories.Patient
 
 
             Serializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
+        }
+
+        public static void DeleteAll()
+        {
+            var emptyPatientList = new List<Patient>();
+            Serializer<Patient>.ToCSV(emptyPatientList, FilePath);
         }
     }
 }

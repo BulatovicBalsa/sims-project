@@ -53,5 +53,18 @@ namespace Hospital.Models.Examination
             var now = DateTime.Now;
             return Start < now && End > now;
         }
+
+        public Examination DeepCopy()
+        {
+            Examination copy = new Examination()
+            {
+                Id = this.Id,
+                Doctor = this.Doctor.DeepCopy(), 
+                Start = this.Start,
+                Patient = this.Patient.DeepCopy()
+            };
+
+            return copy;
+        }
     }
 }

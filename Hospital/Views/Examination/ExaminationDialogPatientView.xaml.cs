@@ -7,7 +7,8 @@ using System.Windows;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.ViewModels;
+using Hospital.ViewModels.Examination;
+using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
 
 namespace Hospital.Views
 {
@@ -15,7 +16,7 @@ namespace Hospital.Views
     {
         private readonly ExaminationDialogViewModel _viewModel;
 
-        public ExaminationDialogView(Patient patient,PatientViewModel patientViewModel, bool isUpdate, 
+        public ExaminationDialogView(Patient patient,PatientViewModels patientViewModel, bool isUpdate, 
              Examination examination = null, IEnumerable<Doctor> recommendedDoctors = null)
         {
             InitializeComponent();
@@ -30,7 +31,8 @@ namespace Hospital.Views
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Window dialogWindow = Window.GetWindow(this);
+            dialogWindow.Close();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
