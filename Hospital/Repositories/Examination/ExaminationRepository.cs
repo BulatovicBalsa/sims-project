@@ -170,6 +170,13 @@ namespace Hospital.Repositories.Examinaton
             return patientExaminations;
         }
 
+        public List<Examination> GetFinishedExaminations(Doctor doctor)
+        {
+            var currentTime = DateTime.Now;
+            List<Examination> finishedExaminations = GetAll().Where(examination => examination.Doctor.Equals(doctor) && examination.Start < currentTime).ToList();
+            return finishedExaminations;
+        }
+
         public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime requestedDate)
         {
             return GetAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
@@ -181,7 +188,7 @@ namespace Hospital.Repositories.Examinaton
 
         public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
         {
-            return GetAll(doctor).Where(examination => examination.Start.Date >= DateTime.Now.Date && examination.End.Date <= DateTime.Now.Date.AddDays(2)).ToList();
+            return GetAll(doctor).Where(examination => examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)).ToList();
         }
 
         public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)

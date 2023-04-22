@@ -1,6 +1,8 @@
-﻿using Hospital.Exceptions;
+﻿using Hospital.Coordinators;
+using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
@@ -27,22 +29,34 @@ namespace Hospital.Views
     public partial class DoctorView : Window
     {
         ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>();
+        ObservableCollection<Patient> Patients = new ObservableCollection<Patient>();
 
+        private readonly DoctorCoordinator _coordinator;
         private PatientRepository patientRepository = new PatientRepository();
         private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
         private Doctor Doctor;
+
+        private bool isUserInput = true;
+        private string placeholder = "Search...";
 
         public DoctorView(Doctor doctor)
         {
             InitializeComponent();
             this.Doctor = doctor;
             this.DataContext = this;
+            
+            _coordinator = new DoctorCoordinator(examinationRepository, patientRepository);
+            
+            Examinations = new ObservableCollection<Examination>(examinationRepository.GetExaminationsForNextThreeDays(doctor));
+            Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
+            
             ExaminationsDataGrid.ItemsSource = Examinations;
+            PatientsDataGrid.ItemsSource = Patients;
+            
+            isUserInput = false;
+            SearchBox.Text = placeholder;
 
-            foreach (var examination in examinationRepository.GetExaminationsForNextThreeDays(doctor))
-            {
-                Examinations.Add(examination);
-            }
+            this.SizeToContent = SizeToContent.Height;
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
@@ -111,6 +125,58 @@ namespace Hospital.Views
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void BtnViewMedicalRecord_Click(object sender, RoutedEventArgs e)
+        {
+            Patient? patient = PatientsDataGrid.SelectedItem as Patient;
+            if (patient == null)
+            {
+                MessageBox.Show("Please select examination in order to delete it");
+                return;
+            }
+
+            var dialog = new MedicalRecordDialog(patient, false);
+            dialog.ShowDialog();
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!isUserInput)
+            {
+                isUserInput = true;
+                return;
+            }
+            SearchBox.Foreground = Brushes.Black;
+            string searchText = SearchBox.Text.ToLower();
+
+            // Filter the patient list based on the search text
+            List<Patient> filteredPatients = Patients.Where(patient =>
+                patient.FirstName.ToLower().Contains(searchText) ||
+                patient.LastName.ToLower().Contains(searchText) ||
+                patient.Jmbg.ToLower().ToLower().Contains(searchText) ||
+                patient.Id.ToLower().Contains(searchText)).ToList();
+            // Update the data context of the patient grid to show the filtered patients
+            PatientsDataGrid.ItemsSource = filteredPatients;
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SearchBox.Text == placeholder)
+            {
+                isUserInput = false;
+                SearchBox.Text = "";
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchBox.Text))
+            {
+                isUserInput = false;
+                SearchBox.Text = placeholder;
+                SearchBox.Foreground = Brushes.Gray;
+            }
         }
     }
 }
