@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Examination
+namespace Hospital.Views
 {
     /// <summary>
     /// Interaction logic for ExaminationRecommenderDialogPatientView.xaml
@@ -27,6 +27,21 @@ namespace Hospital.Views.Examination
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void BtnSelect_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnFind_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
