@@ -1,4 +1,5 @@
-﻿using Hospital.Exceptions;
+﻿using Hospital.Coordinators;
+using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
@@ -7,6 +8,7 @@ using Hospital.Repositories.Patient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -22,35 +24,39 @@ using System.Windows.Shapes;
 
 namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for ExaminationDialog.xaml
-    /// </summary>
     public partial class ExaminationDialog : Window
     {
         private Doctor _doctor;
-        private ObservableCollection<Examination> _examinations;
+        private ObservableCollection<Examination> _examinationCollection;
         private bool _isUpdate = false;
-        private Examination? examinationToChange = null;
+        private Examination? _examinationToChange = null;
 
-        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinations)
+        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
+
+        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection)
         {
             InitializeComponent();
 
-            this._doctor = doctor;
-            this.PatientComboBox.ItemsSource = GetPatients();
-            this._examinations = examinations;
+            _doctor = doctor;
+            PatientComboBox.ItemsSource = GetPatients();
+            _examinationCollection = examinationCollection;
         }
 
-        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinations, Examination examinationToChange)
+        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange)
         {
             InitializeComponent();
 
-            this._isUpdate = true;
-            this._doctor = doctor;
-            this.PatientComboBox.ItemsSource = GetPatients();
-            this._examinations = examinations;
-            this.examinationToChange = examinationToChange;
+            _isUpdate = true;
+            _doctor = doctor;
+            PatientComboBox.ItemsSource = GetPatients();
+            _examinationCollection = examinationCollection;
+            _examinationToChange = examinationToChange;
+            
+            fillForm(examinationToChange);
+        }
 
+        private void fillForm(Examination examinationToChange)
+        {
             ExaminationDatePicker.SelectedDate = examinationToChange.Start;
             IsOperation.IsChecked = examinationToChange.IsOperation;
             PatientComboBox.SelectedItem = examinationToChange.Patient;
@@ -59,60 +65,70 @@ namespace Hospital.Views
 
         private List<Patient> GetPatients()
         {
-            return new PatientRepository().GetAll();
+            return _coordinator.GetAllPatients();
         }
 
         private void AddExamination_Click(object sender, RoutedEventArgs e)
+        {
+
+            var createdExamination = createExaminationFromForm();
+            if (createdExamination is null) return;
+            
+            try
+            {
+                if (_isUpdate)
+                {
+                    updateExamination(createdExamination);
+                }
+                else
+                {
+                    _coordinator.AddExamination(createdExamination);
+                    _examinationCollection.Add(createdExamination);
+                }
+            }
+            catch (Exception ex)
+            {
+                if(ex is DoctorBusyException || ex is PatientBusyException)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+
+            DialogResult = true;
+        }
+
+        private Examination? createExaminationFromForm()
         {
             Patient? patient = PatientComboBox.SelectedItem as Patient;
             if (patient == null)
             {
                 MessageBox.Show("You must select patient");
-                return;
+                return null;
             }
 
             DateTime? startDate = ExaminationDatePicker.SelectedDate;
             if (startDate == null)
             {
                 MessageBox.Show("You must select date and time");
-                return;
+                return null;
             }
 
             bool? isOperationNullable = IsOperation.IsChecked;
 
 
-            Examination examination = new Examination(_doctor, patient, isOperationNullable.GetValueOrDefault(), startDate.GetValueOrDefault());
+            return new Examination(_doctor, patient, isOperationNullable.GetValueOrDefault(), startDate.GetValueOrDefault());
+        }
 
-            
-            try
+        private void updateExamination(Examination examination)
+        {
+            examination.Id = _examinationToChange.Id;
+            _coordinator.UpdateExamination(examination);
+            _examinationCollection.Clear();
+            foreach (var examinationToAdd in _coordinator.GetExaminationsForNextThreeDays(_doctor))
             {
-                if (this._isUpdate)
-                {
-                    new ExaminationRepository(new ExaminationChangesTracker()).Update(examination, false);
-                    _examinations.Clear();
-                    foreach (var examinationToAdd in new ExaminationRepository(new ExaminationChangesTracker()).GetAll())
-                    {
-                        _examinations.Add(examinationToAdd);
-                    }
-                }
-                else
-                {
-                    new ExaminationRepository(new ExaminationChangesTracker()).Add(examination, false);
-                    _examinations.Add(examination);
-                }
+                _examinationCollection.Add(examinationToAdd);
             }
-            catch (DoctorBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            catch (PatientBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            DialogResult = true;
         }
     }
 }

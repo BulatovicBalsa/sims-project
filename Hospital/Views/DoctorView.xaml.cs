@@ -23,31 +23,24 @@ using System.Windows.Shapes;
 
 namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for DoctorView.xaml
-    /// </summary>
     public partial class DoctorView : Window
     {
-        ObservableCollection<Examination> Examinations = new ObservableCollection<Examination>();
-        ObservableCollection<Patient> Patients = new ObservableCollection<Patient>();
+        private ObservableCollection<Examination> Examinations;
+        private ObservableCollection<Patient> Patients;
 
-        private readonly DoctorCoordinator _coordinator;
-        private PatientRepository patientRepository = new PatientRepository();
-        private ExaminationRepository examinationRepository = new ExaminationRepository(new Models.Patient.ExaminationChangesTracker());
         private Doctor Doctor;
-
         private bool isUserInput = true;
-        private string placeholder = "Search...";
+
+        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
+        private readonly string placeholder = "Search...";
 
         public DoctorView(Doctor doctor)
         {
             InitializeComponent();
-            this.Doctor = doctor;
-            this.DataContext = this;
+            Doctor = doctor;
+            DataContext = this;
             
-            _coordinator = new DoctorCoordinator();
-            
-            Examinations = new ObservableCollection<Examination>(examinationRepository.GetExaminationsForNextThreeDays(doctor));
+            Examinations = new ObservableCollection<Examination>(_coordinator.GetExaminationsForNextThreeDays(doctor));
             Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
             
             ExaminationsDataGrid.ItemsSource = Examinations;
@@ -56,18 +49,15 @@ namespace Hospital.Views
             isUserInput = false;
             SearchBox.Text = placeholder;
 
-            this.SizeToContent = SizeToContent.Height;
+            SizeToContent = SizeToContent.Height;
         }
 
         private void BtnAddExamination_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ExaminationDialog(Doctor, Examinations);
-            
             dialog.WindowStyle = WindowStyle.ToolWindow;
 
             bool? result = dialog.ShowDialog();
-
-            // Handle the result of the dialog
             if (result == true)
             {
                 MessageBox.Show("Succeed");
@@ -89,7 +79,6 @@ namespace Hospital.Views
 
             bool? result = dialog.ShowDialog();
 
-            // Handle the result of the dialog
             if (result == true)
             {
                 MessageBox.Show("Succeed");
@@ -106,7 +95,7 @@ namespace Hospital.Views
 
             try
             {
-                examinationRepository.Delete(examination, false);
+                _coordinator.DeleteExamination(examination);
             }
             catch (DoctorNotBusyException ex)
             {
@@ -118,13 +107,13 @@ namespace Hospital.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
-            this.Examinations.Remove(examination);
+            Examinations.Remove(examination);
             MessageBox.Show("Succeed");
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void BtnViewMedicalRecord_Click(object sender, RoutedEventArgs e)
