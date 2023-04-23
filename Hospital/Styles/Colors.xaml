@@ -7,4 +7,5 @@
     <!--Font Colors-->
     <SolidColorBrush x:Key="PrimaryFont" Color="White"/>
     <SolidColorBrush x:Key="SecondaryFont" Color="Black"/>
+    <SolidColorBrush x:Key="ErrorFont" Color="Red"/>
 </ResourceDictionary>
