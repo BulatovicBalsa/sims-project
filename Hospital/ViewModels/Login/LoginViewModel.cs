@@ -13,7 +13,7 @@ using Hospital.Models.Manager;
 using Hospital.Models.Nurse;
 using Hospital.Models.Patient;
 using Hospital.Services;
-using PatientModel = Hospital.Models.Patient.Patient;
+
 namespace Hospital.ViewModels.Login
 {
     using Hospital.Models.Doctor;
@@ -103,7 +103,7 @@ namespace Hospital.ViewModels.Login
 
             var userId = _loginService.LoggedUser.Id;
 
-            if (_loginService.LoggedUser.GetType() == typeof(PatientModel))
+            if (_loginService.LoggedUser.GetType() == typeof(Patient))
             {
                 return userId + "|" + "PATIENT";
             }

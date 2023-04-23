@@ -12,14 +12,13 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
-using PatientViewModels = Hospital.ViewModels.PatientViewModel;
-
+using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
     public partial class PatientView : Window
     {
-        private PatientViewModels _viewModel;
+        private PatientViewModel _viewModel;
         private ExaminationRepository _examinationRepository;
         private Patient _patient;
 
@@ -30,7 +29,7 @@ namespace Hospital.Views
 
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
-            _viewModel = new PatientViewModels(_examinationRepository);
+            _viewModel = new PatientViewModel(_examinationRepository);
             _viewModel.LoadExaminations(patient);
 
             _patient = patient;

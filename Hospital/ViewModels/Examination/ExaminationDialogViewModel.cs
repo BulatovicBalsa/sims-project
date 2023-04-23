@@ -17,16 +17,14 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
-using PatientModel = Hospital.Models.Patient.Patient;
-using ExaminationModel = Hospital.Models.Examination.Examination;
 
 namespace Hospital.ViewModels
 {
     public class ExaminationDialogViewModel : INotifyPropertyChanged
     {
-        private ExaminationModel _examination;
+        private Examination _examination;
         private PatientViewModel _patientViewModel;
-        private PatientModel _patient;
+        private Patient _patient;
         private IEnumerable<Models.Doctor.Doctor> _recommendedDoctors;
         private bool _isUpdate;
         private DateTime? _selectedDate;
@@ -59,7 +57,7 @@ namespace Hospital.ViewModels
                 }
             }
         }
-        public PatientModel Patient
+        public Patient Patient
         {
             get { return _patient; }
             set
@@ -68,7 +66,7 @@ namespace Hospital.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ExaminationModel Examination
+        public Examination Examination
         {
             get { return _examination; }
             set
@@ -104,11 +102,11 @@ namespace Hospital.ViewModels
         public ICommand CancelCommand { get; set; }
 
 
-        public ExaminationDialogViewModel(PatientModel patient, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
-            Examination = new ExaminationModel();
+            Examination = new Examination();
             SelectedDate = DateTime.Now;
             Examination.Patient = patient;
             SaveCommand = new RelayCommand(Save);
@@ -116,7 +114,7 @@ namespace Hospital.ViewModels
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        public ExaminationDialogViewModel(PatientModel patient, ExaminationModel examination, PatientViewModel patientViewModel)
+        public ExaminationDialogViewModel(Patient patient, Examination examination, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
