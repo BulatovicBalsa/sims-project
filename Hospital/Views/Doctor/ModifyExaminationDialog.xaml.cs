@@ -37,6 +37,8 @@ namespace Hospital.Views
         {
             InitializeComponent();
 
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            SizeToContent = SizeToContent.WidthAndHeight;
             _doctor = doctor;
             PatientComboBox.ItemsSource = GetPatients();
             _examinationCollection = examinationCollection;
@@ -46,6 +48,8 @@ namespace Hospital.Views
         {
             InitializeComponent();
 
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            SizeToContent = SizeToContent.WidthAndHeight;
             _isUpdate = true;
             _doctor = doctor;
             PatientComboBox.ItemsSource = GetPatients();
