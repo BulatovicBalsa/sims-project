@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Hospital"
              Startup="ApplicationStart">
     <Application.Resources>
-         <ResourceDictionary Source="/Styles/Buttons.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
