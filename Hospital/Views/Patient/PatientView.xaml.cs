@@ -12,15 +12,13 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
-using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
-using ExaminationModel = Hospital.Models.Examination.Examination;
-
+using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
     public partial class PatientView : Window
     {
-        private PatientViewModels _viewModel;
+        private PatientViewModel _viewModel;
         private ExaminationRepository _examinationRepository;
         private Patient _patient;
 
@@ -31,7 +29,7 @@ namespace Hospital.Views
 
             _examinationRepository =
                 new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
-            _viewModel = new PatientViewModels(_examinationRepository);
+            _viewModel = new PatientViewModel(_examinationRepository);
             _viewModel.LoadExaminations(patient);
 
             _patient = patient;
@@ -58,7 +56,7 @@ namespace Hospital.Views
 
         private void BtnUpdateExamination_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationModel examination = ExaminationsDataGrid.SelectedItem as ExaminationModel;
+            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
 
             if (examination != null)
             {
@@ -69,7 +67,7 @@ namespace Hospital.Views
 
         private void BtnDeleteExamination_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationModel examination = ExaminationsDataGrid.SelectedItem as ExaminationModel;
+            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
 
             if (examination != null)
             {
