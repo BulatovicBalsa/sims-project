@@ -13,6 +13,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
 using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
+using ExaminationModel = Hospital.Models.Examination.Examination;
 
 
 namespace Hospital.Views
@@ -57,7 +58,7 @@ namespace Hospital.Views
 
         private void BtnUpdateExamination_Click(object sender, RoutedEventArgs e)
         {
-            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
+            ExaminationModel examination = ExaminationsDataGrid.SelectedItem as ExaminationModel;
 
             if (examination != null)
             {
@@ -68,7 +69,7 @@ namespace Hospital.Views
 
         private void BtnDeleteExamination_Click(object sender, RoutedEventArgs e)
         {
-            Examination examination = ExaminationsDataGrid.SelectedItem as Examination;
+            ExaminationModel examination = ExaminationsDataGrid.SelectedItem as ExaminationModel;
 
             if (examination != null)
             {

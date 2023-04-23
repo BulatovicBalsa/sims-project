@@ -9,6 +9,7 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.ViewModels.Examination;
 using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
+using ExaminationModel = Hospital.Models.Examination.Examination;
 
 namespace Hospital.Views
 {
@@ -17,7 +18,7 @@ namespace Hospital.Views
         private readonly ExaminationDialogViewModel _viewModel;
 
         public ExaminationDialogView(Patient patient,PatientViewModels patientViewModel, bool isUpdate, 
-             Examination examination = null, IEnumerable<Doctor> recommendedDoctors = null)
+             ExaminationModel examination = null, IEnumerable<Doctor> recommendedDoctors = null)
         {
             InitializeComponent();
 
