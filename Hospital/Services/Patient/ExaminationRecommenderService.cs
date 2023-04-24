@@ -38,27 +38,30 @@ namespace Hospital.Services
             foreach(var doctor in searchOrder)
             {
                 for(DateTime date = DateTime.Today; date<=options.LatestDate;date = date.AddDays(1))
-                {
-                    for(TimeSpan time = options.StartTime; time<=options.EndTime; time = time.Add(new TimeSpan(0, Examination.DURATION, 0)))
-                    {
-                        DateTime examinationTime = date.Add(time);
+                {                    
+                    var doctorAllExaminations = _examinationRepository.GetAll(doctor)
+                        .Where(exam => exam.Start.Date == date)
+                        .OrderBy(exam => exam.Start)
+                        .ToList();
 
-                        if(_examinationRepository.IsFree(doctor, examinationTime) && 
+                    TimeSpan lastEndTime = TimeSpan.Zero;
+
+                    foreach(var currentExamination in doctorAllExaminations)
+                    {
+                        DateTime examinationTime = date.Add(lastEndTime);
+                        if (_examinationRepository.IsFree(doctor, examinationTime) &&
                             _examinationRepository.IsFree(patient, examinationTime))
                         {
                             Examination examination = new Examination(doctor, patient, false, examinationTime);
 
-                            if (IsPreferredExamination(doctor,time,options))
+                            if(IsPreferredExamination(doctor,examinationTime.TimeOfDay,options))
                             {
                                 recommendedExaminations.Add(examination);
-
                                 if (recommendedExaminations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return recommendedExaminations;
                             }
-                            else
-                            {
-                                closestExaminations.Add(examination);
-                            }
+                            else closestExaminations.Add(examination);
                         }
+                        lastEndTime = currentExamination.End.TimeOfDay;
                     }
                 }
             }
