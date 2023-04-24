@@ -65,7 +65,7 @@ namespace Hospital.ViewModels
         }
 
 
-        public ICommand ModifyExamination { get; set; }
+        public ICommand ModifyExaminationCommand { get; set; }
 
         public ModifyExaminationDialogViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange = null)
         {
@@ -86,10 +86,10 @@ namespace Hospital.ViewModels
             SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
             ButtonContent = _examinationToChange is null ? "Create" : "Update";
 
-            ModifyExamination = new RelayCommand<Window>(AddExamination_Click);
+            ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         }
 
-        private void AddExamination_Click(Window window)
+        private void ModifyExamination(Window window)
         {
             var createdExamination = createExaminationFromForm();
             if (createdExamination is null) return;

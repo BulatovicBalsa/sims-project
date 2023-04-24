@@ -103,7 +103,7 @@ namespace Hospital.ViewModels
 
         private void AddExamination()
         {
-            var dialog = new ExaminationDialog(Doctor, Examinations);
+            var dialog = new ModifyExaminationDialog(Doctor, Examinations);
             dialog.WindowStyle = WindowStyle.ToolWindow;
 
             bool? result = dialog.ShowDialog();
@@ -122,7 +122,7 @@ namespace Hospital.ViewModels
                 return;
             }
 
-            var dialog = new ExaminationDialog(Doctor, Examinations, examinationToChange);
+            var dialog = new ModifyExaminationDialog(Doctor, Examinations, examinationToChange);
 
             dialog.WindowStyle = WindowStyle.ToolWindow;
 

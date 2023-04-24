@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hospital.Views.ExaminationDialog"
+﻿<Window x:Class="Hospital.Views.ModifyExaminationDialog"
         x:Name="ModifyExaminationDialogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -29,7 +29,7 @@
         <Label Grid.Row="2" Grid.Column="0" Content="Is Operation:" />
         <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
 
-        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="{Binding ButtonContent}" Command="{Binding ModifyExamination}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
+        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
 
     </Grid>
 </Window>
