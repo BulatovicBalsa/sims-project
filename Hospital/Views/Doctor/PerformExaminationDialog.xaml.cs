@@ -24,11 +24,11 @@ namespace Hospital.Views
         public PerformExaminationDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
             InitializeComponent();
-            ConfigDialog(examinationToPerform, patientOnExamination);
+            ConfigWindow(examinationToPerform, patientOnExamination);
             loadMedicalRecordFrame(patientOnExamination);
         }
 
-        private void ConfigDialog(Examination examinationToPerform, Patient patientOnExamination)
+        private void ConfigWindow(Examination examinationToPerform, Patient patientOnExamination)
         {
             SizeToContent = SizeToContent.WidthAndHeight;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;

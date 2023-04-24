@@ -33,10 +33,10 @@ namespace Hospital.Views
         {
             DataContext = new ModifyExaminationDialogViewModel(doctor, examinationCollection, examinationToChange); ;
             InitializeComponent();
-            ConfigDialog();
+            ConfigWindow();
         }
 
-        private void ConfigDialog()
+        private void ConfigWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             SizeToContent = SizeToContent.WidthAndHeight;
