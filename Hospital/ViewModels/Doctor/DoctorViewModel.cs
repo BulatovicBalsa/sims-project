@@ -68,6 +68,7 @@ namespace Hospital.ViewModels
             set { _selectedExamination = value; }
         }
 
+        public string DoctorName { get => $"Doctor {Doctor.FirstName} {Doctor.LastName}"; }
 
         public ICommand BtnViewMedicalRecord_Command { get; set; }
         public ICommand BtnAddExamination_Command { get; set; }

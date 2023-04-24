@@ -37,8 +37,7 @@ namespace Hospital.Views
 
             InitializeComponent();
 
-            _viewModel = new DoctorViewModel(doctor);
-            DataContext = _viewModel;
+            DataContext = new DoctorViewModel(doctor);
         }
 
         private void ConfigWindow()

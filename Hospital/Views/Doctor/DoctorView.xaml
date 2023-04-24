@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="PATIENT"
+                <TextBlock Text="{Binding DoctorName}"
                            Foreground="DarkGray"
                            FontSize="16"
                            FontWeight="Bold"
