@@ -26,9 +26,14 @@ namespace Hospital.Views
         {
             InitializeComponent();
             _viewModel = new ExaminationRecommenderDialogPatientViewModel(patient);
+            _viewModel.RequestClose += CloseWindow;
             DataContext = _viewModel;
         }
 
+        private void CloseWindow()
+        {
+            Close();
+        }
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
