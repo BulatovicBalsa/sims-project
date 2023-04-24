@@ -36,7 +36,7 @@ namespace Hospital.Views
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            //_viewModel.SaveCommand.Execute(null);
+            _viewModel.SaveCommand.Execute(null);
         }
     }
 }

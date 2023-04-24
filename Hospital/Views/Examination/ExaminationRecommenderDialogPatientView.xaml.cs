@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Models.Patient;
+using Hospital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,12 @@ namespace Hospital.Views
     /// </summary>
     public partial class ExaminationRecommenderDialogPatientView : Window
     {
-        public ExaminationRecommenderDialogPatientView()
+        private readonly ExaminationRecommenderDialogPatientViewModel _viewModel;
+        public ExaminationRecommenderDialogPatientView(Patient patient)
         {
             InitializeComponent();
+            _viewModel = new ExaminationRecommenderDialogPatientViewModel(patient);
+            DataContext = _viewModel;
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -31,17 +36,19 @@ namespace Hospital.Views
 
         private void BtnSelect_Click(object sender, RoutedEventArgs e)
         {
-
+            _viewModel.SelectCommand.Execute(null);
+            Close();
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            _viewModel.CancelCommand.Execute(null);
+            Close();
         }
 
         private void BtnFind_Click(object sender, RoutedEventArgs e)
         {
-
+            _viewModel.FindCommand.Execute(null);
         }
     }
 }

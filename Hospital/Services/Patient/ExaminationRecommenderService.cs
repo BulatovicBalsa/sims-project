@@ -27,6 +27,11 @@ namespace Hospital.Services
             _doctorRepository = new DoctorRepository();
             _examinationRepository = new ExaminationRepository();
         }
+
+        public List<Doctor> GetAllDoctors()
+        {
+            return _doctorRepository.GetAll();
+        }
         public List<Examination> FindAvailableExaminations(Patient patient,ExaminationSearchOptions options)
         {
             var recommendedExaminations = new List<Examination>();
