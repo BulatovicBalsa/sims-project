@@ -19,7 +19,7 @@ namespace Hospital.ViewModels
     public class DoctorViewModel: ViewModelBase
     {
         private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
-
+        private readonly string _placeholder = "Search...";
         private ObservableCollection<Examination> _examinations;
 
         public ObservableCollection<Examination> Examinations
@@ -79,6 +79,7 @@ namespace Hospital.ViewModels
             _doctor = doctor;
             Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
             Examinations = new ObservableCollection<Examination>(_coordinator.GetExaminationsForNextThreeDays(doctor));
+            SearchBoxText = _placeholder;
 
             BtnViewMedicalRecord_Command = new RelayCommand(ViewMedicalRecord);
             BtnAddExamination_Command = new RelayCommand(AddExamination);

@@ -77,7 +77,7 @@
                     <Button x:Name="BtnViewMedicalRecord"
                             Content="View Medical Record"
                             Margin="5" Command="{Binding BtnViewMedicalRecord_Command}"/>
-                    <TextBox x:Name="SearchBox" Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
+                    <TextBox x:Name="SearchBox" Text="Search..." Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
                     </TextBox>
                 </StackPanel>
 
