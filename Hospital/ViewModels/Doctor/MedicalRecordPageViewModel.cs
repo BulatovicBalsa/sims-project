@@ -163,7 +163,7 @@ namespace Hospital.ViewModels
             }
 
             _doctorCoordinator.UpdatePatient(Patient);
-            refresh(conditionType);
+            refreshHealthConditionCollection(conditionType);
         }
 
         private void updateHealthCondition(HealthConditionType conditionType)
@@ -190,7 +190,7 @@ namespace Hospital.ViewModels
             }
 
             _doctorCoordinator.UpdatePatient(Patient);
-            refresh(conditionType);
+            refreshHealthConditionCollection(conditionType);
             
         }
 
@@ -217,7 +217,7 @@ namespace Hospital.ViewModels
             }
 
             _doctorCoordinator.UpdatePatient(Patient);
-            refresh(conditionType);
+            refreshHealthConditionCollection(conditionType);
         }
 
         private void changePhysicalCharacteristic(bool isHeight)
@@ -239,7 +239,7 @@ namespace Hospital.ViewModels
             MessageBox.Show("Succeed");
         }
 
-        private void refresh(HealthConditionType conditionType)
+        private void refreshHealthConditionCollection(HealthConditionType conditionType)
         {
             if (conditionType == HealthConditionType.Allergy)
             {
