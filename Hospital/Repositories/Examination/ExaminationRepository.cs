@@ -83,6 +83,10 @@ namespace Hospital.Repositories.Examinaton
             _examinationChangesTracker = examinationChangesTracker;
         }
 
+        public ExaminationRepository()
+        {
+            _examinationChangesTracker = new ExaminationChangesTracker();
+        }
 
         public List<Examination> GetAll()
         {
