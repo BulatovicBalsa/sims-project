@@ -49,13 +49,5 @@ namespace Hospital.Views
             var dialog = new MedicalRecordPage(_patientOnExamination, true);
             MedicalRecordFrame.Navigate(dialog);
         }
-
-        private void CofirmAnamnesisButton_Click(object sender, RoutedEventArgs e)
-        {
-            string anamnesisText = AnamnesisTextBox.Text.Trim();
-            _examinationToPerform.Anamnesis = anamnesisText;
-            _doctorCoordinator.UpdateExamination(_examinationToPerform);
-            MessageBox.Show("Succeed");
-        }
     }
 }
