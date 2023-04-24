@@ -1,6 +1,7 @@
 ﻿using Hospital.Coordinators;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
+using Hospital.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +24,16 @@ namespace Hospital.Views
         public PerformExaminationDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
             InitializeComponent();
-
+            ConfigDialog(examinationToPerform, patientOnExamination);
             loadMedicalRecordFrame(patientOnExamination);
-            ConfigDialog(patientOnExamination);
         }
 
-        private void ConfigDialog(Patient patientOnExamination)
+        private void ConfigDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
             SizeToContent = SizeToContent.WidthAndHeight;
-            DataContext = patientOnExamination;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Title = $"{patientOnExamination.FirstName} {patientOnExamination.LastName}'s Examination";
+            DataContext = new PerformExaminationDialogViewModel(examinationToPerform, patientOnExamination);
         }
 
         private void loadMedicalRecordFrame(Patient patientOnExamination)

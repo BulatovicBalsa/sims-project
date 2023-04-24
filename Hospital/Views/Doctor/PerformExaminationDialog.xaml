@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="" Height="Auto" Width="Auto">
     <Grid>
@@ -25,13 +24,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="First Name: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding FirstName}" Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding FirstName, Mode=OneTime}" Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Last Name: " Grid.Row="1" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding LastName, Mode=OneTime}" Margin="5" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Jmbg: " Grid.Row="2" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding Jmbg}" Margin="5" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding Jmbg, Mode=OneTime}" Margin="5" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
 
             </Grid>
             
