@@ -4,28 +4,30 @@ using Hospital.Models.Patient;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Hospital.ViewModels
 {
-    public class MedicalRecordDialogViewModel : ViewModelBase
+    public class MedicalRecordPageViewModel : ViewModelBase
     {
 
         private readonly DoctorCoordinator _doctorCoordinator = new DoctorCoordinator();
-
-        private string _height;
 
         private Patient _patient;
 
         public Patient Patient
         {
             get { return _patient; }
-            set { _patient = value; OnPropertyChanged(nameof(Patient)); }
+            set { _patient = value; OnPropertyChanged(nameof(Patient));}
         }
+
+        private string _height;
 
         public string Height //Maybe rename it
         {
@@ -46,7 +48,7 @@ namespace Hospital.ViewModels
         public string SelectedAllergy
         {
             get { return _selectedAllergy; }
-            set { _selectedAllergy = value; }
+            set { _selectedAllergy = value; OnPropertyChanged(nameof(SelectedAllergy)); }
         }
 
         private string _selectedMedicalCondition;
@@ -54,8 +56,25 @@ namespace Hospital.ViewModels
         public string SelectedMedicalCondition
         {
             get { return _selectedMedicalCondition; }
-            set { _selectedMedicalCondition = value; }
+            set { _selectedMedicalCondition = value; OnPropertyChanged(nameof(SelectedMedicalCondition)); }
         }
+
+        private ObservableCollection<string> _medicalHistory;
+
+        public ObservableCollection<string> MedicalHistory
+        {
+            get { return _medicalHistory; }
+            set { _medicalHistory = value; OnPropertyChanged(nameof(MedicalHistory)); }
+        }
+
+        private ObservableCollection<string> _allergies;
+
+        public ObservableCollection<string> Allergies
+        {
+            get { return _allergies; }
+            set { _allergies = value; OnPropertyChanged(nameof(Allergies)); }
+        }
+
 
         public ICommand AddAllergyCommand { get; set; }
         public ICommand DeleteAllergyCommand { get; set; }
@@ -67,9 +86,13 @@ namespace Hospital.ViewModels
         public ICommand ChangeWeightCommand { get; set; }
 
 
-        public MedicalRecordDialogViewModel(Patient patient)
+        public MedicalRecordPageViewModel(Patient patient)
         {
             Patient = patient;
+            Weight = Patient.MedicalRecord.Weight.ToString();
+            Height = Patient.MedicalRecord.Height.ToString();
+            Allergies = new ObservableCollection<string>(patient.MedicalRecord.Allergies);
+            MedicalHistory = new ObservableCollection<string>(patient.MedicalRecord.MedicalHistory);
 
             AddAllergyCommand = new RelayCommand(AddAllergyButton_Click);
             DeleteAllergyCommand = new RelayCommand(DeleteAllergyButton_Click);
@@ -126,6 +149,7 @@ namespace Hospital.ViewModels
         private void addHealthCondition(HealthConditionType conditionType)
         {
             Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? Patient.MedicalRecord.AddAllergy : Patient.MedicalRecord.AddMedicalConidition;
+            var healthConditionCollection = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
 
             string conditionToAdd = Interaction.InputBox($"Insert {conditionType}: ", $"Add {conditionType}", "");
             try
@@ -139,13 +163,14 @@ namespace Hospital.ViewModels
             }
 
             _doctorCoordinator.UpdatePatient(Patient);
-            //healthConditionListBox.Items.Refresh();
+            refresh(conditionType);
         }
 
         private void updateHealthCondition(HealthConditionType conditionType)
         {
             Action<string, string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? Patient.MedicalRecord.UpdateAllergy : Patient.MedicalRecord.UpdateMedicalCondition;
             var selectedHealthCondition = conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
+            var healthConditionCollection = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
 
             string? selectedCondition = (string)selectedHealthCondition;
             if (selectedCondition == null)
@@ -165,13 +190,15 @@ namespace Hospital.ViewModels
             }
 
             _doctorCoordinator.UpdatePatient(Patient);
-            //healthConditionListBox.Items.Refresh();
+            refresh(conditionType);
+            
         }
 
         private void deleteHealthCondition(HealthConditionType conditionType)
         {
             Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy ? Patient.MedicalRecord.DeleteAllergy : Patient.MedicalRecord.DeleteMedicalCondition;
             var selectedHealthCondition = conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
+            var healthConditionCollection = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
 
             string? selectedCondition = (string)selectedHealthCondition;
             if (selectedCondition == null)
@@ -188,8 +215,9 @@ namespace Hospital.ViewModels
                 MessageBox.Show(ex.Message);
                 return;
             }
+
             _doctorCoordinator.UpdatePatient(Patient);
-            //healthConditionListBox.Items.Refresh();
+            refresh(conditionType);
         }
 
         private void changePhysicalCharacteristic(bool isHeight)
@@ -209,6 +237,18 @@ namespace Hospital.ViewModels
             }
             _doctorCoordinator.UpdatePatient(Patient);
             MessageBox.Show("Succeed");
+        }
+
+        private void refresh(HealthConditionType conditionType)
+        {
+            if (conditionType == HealthConditionType.Allergy)
+            {
+                Allergies = new ObservableCollection<string>(Patient.MedicalRecord.Allergies);
+            }
+            else
+            {
+                MedicalHistory = new ObservableCollection<string>(Patient.MedicalRecord.MedicalHistory);
+            }
         }
     }
 }

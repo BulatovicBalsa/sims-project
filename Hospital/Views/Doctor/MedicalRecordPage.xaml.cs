@@ -21,11 +21,11 @@ namespace Hospital.Views
 {
     public partial class MedicalRecordPage : Page
     {
-        private MedicalRecordDialogViewModel _viewModel;
+        private MedicalRecordPageViewModel _viewModel;
 
         public MedicalRecordPage(Patient patient, bool isEditable)
         {
-            _viewModel = new MedicalRecordDialogViewModel(patient);
+            _viewModel = new MedicalRecordPageViewModel(patient);
             DataContext = _viewModel;
 
             InitializeComponent();
@@ -66,7 +66,6 @@ namespace Hospital.Views
 
         private void ConfigPage(Patient patient)
         {
-            DataContext = patient.MedicalRecord;
             Title = $"{patient.FirstName} {patient.LastName}";
         }
 
