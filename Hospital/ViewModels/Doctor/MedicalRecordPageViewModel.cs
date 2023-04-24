@@ -242,13 +242,9 @@ namespace Hospital.ViewModels
         private void refreshHealthConditionCollection(HealthConditionType conditionType)
         {
             if (conditionType == HealthConditionType.Allergy)
-            {
                 Allergies = new ObservableCollection<string>(Patient.MedicalRecord.Allergies);
-            }
             else
-            {
                 MedicalHistory = new ObservableCollection<string>(Patient.MedicalRecord.MedicalHistory);
-            }
         }
     }
 }
