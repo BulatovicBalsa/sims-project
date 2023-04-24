@@ -29,6 +29,7 @@ namespace Hospital.ViewModels
         public string StartTimeRange { get; set; }
         public string EndTimeRange { get; set;}
         public int SelectedPriorityIndex { get; set; }
+        public List<string> Priorities { get; set; }
         public Examination SelectedExamination { get; set; }
 
         public ICommand FindCommand { get; set; }
@@ -43,6 +44,7 @@ namespace Hospital.ViewModels
 
             Doctors = new ObservableCollection<Doctor>(_examinationService.GetAllDoctors());
             RecommendedExaminations = new ObservableCollection<Examination>();
+            Priorities = new List<string> { "Doctor", "Time Range" };
 
             FindCommand = new RelayCommand(Find);
             SelectCommand = new RelayCommand(Select);
@@ -70,7 +72,12 @@ namespace Hospital.ViewModels
 
         private void Find()
         {
-            if (IsInputValid()) return;
+            string validationError = ValidateInput();
+            if (!string.IsNullOrEmpty(validationError))
+            {
+                MessageBox.Show(validationError, "Error");
+                return;
+            }
 
             TimeSpan startTime, endTime;
 
@@ -84,9 +91,18 @@ namespace Hospital.ViewModels
         }
 
 
-        private bool IsInputValid()
+        private string ValidateInput()
         {
-            return SelectedDoctor != null && LatestDate != null && StartTimeRange != null && EndTimeRange != null;
-        }
+                if (SelectedDoctor == null)
+                    return "Please select a doctor.";
+                if (LatestDate == null)
+                    return "Please select the latest date.";
+                if (StartTimeRange == null)
+                    return "Please enter a start time range.";
+                if (EndTimeRange == null)
+                    return "Please enter an end time range.";
+
+                return string.Empty;
+            }
     }
 }

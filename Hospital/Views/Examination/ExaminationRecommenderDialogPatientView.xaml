@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:local="clr-namespace:Hospital.Views" xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ExaminationRecommenderDialogPatientViewModel}"
         mc:Ignorable="d"
         Title="Recommended Appointments" Height="450" Width="800"
          WindowStyle="None"
@@ -83,35 +83,33 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Doctor" Grid.Column="0" VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1" Name="DoctorComboBox" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" Name="DoctorComboBox" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor}" DisplayMemberPath="FirstName" VerticalAlignment="Center"/>
 
                 <Label Content="Latest Date" Grid.Column="2" VerticalAlignment="Center"/>
-                <DatePicker Grid.Column="3" Name="LatestDatePicker" VerticalAlignment="Center"/>
+                <DatePicker Grid.Column="3" Name="LatestDatePicker"  SelectedDate="{Binding LatestDate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
 
                 <Label Content="Start Time Range" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Name="StartTimeRangeTextBox" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Name="StartTimeRangeTextBox" Text="{Binding StartTimeRange, StringFormat='HH:mm'}"  VerticalAlignment="Center"/>
 
                 <Label Content="End Time Range" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="3" Grid.Row="1" Name="EndTimeRangeTextBox" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="3" Grid.Row="1" Name="EndTimeRangeTextBox" Text="{Binding EndTimeRange, StringFormat='HH:mm'}" VerticalAlignment="Center"/>
 
                 <Label Content="Priority" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1" Grid.Row="2" Name="PriorityComboBox" VerticalAlignment="Center">
-                    <ComboBoxItem>Doctor</ComboBoxItem>
-                    <ComboBoxItem>TimeRange</ComboBoxItem>
+                <ComboBox Grid.Column="1" Grid.Row="2" Name="PriorityComboBox" VerticalAlignment="Center"
+                  ItemsSource="{Binding Priorities}" 
+                  SelectedIndex="{Binding SelectedPriorityIndex}">
                 </ComboBox>
             </Grid>
 
             <Button Name="BtnFind" Content="Find" Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,10" Click="BtnFind_Click" Width="80"/>
 
-            <ListView Grid.Row="3" Name="RecommendedAppointmentsListView" Margin="10">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Doctor" DisplayMemberBinding="{Binding Doctor.Name}" Width="150"/>
-                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Start, StringFormat={}{0:MM/dd/yyyy}}" Width="100"/>
-                        <GridViewColumn Header="Start Time" DisplayMemberBinding="{Binding Start, StringFormat={}{0:HH:mm}}" Width="100"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid Grid.Row="3" Name="RecommendedAppointmentsDataGrid" ItemsSource="{Binding RecommendedExaminations}" SelectedItem="{Binding SelectedExamination}" Margin="10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Start, StringFormat={}{0:MM/dd/yyyy}}" Width="*"/>
+                    <DataGridTextColumn Header="Start Time" Binding="{Binding Start, StringFormat={}{0:HH:mm}}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
                 <Button Name="BtnSelect" Content="Select" Margin="5" Click="BtnSelect_Click" Width="80"/>
