@@ -10,6 +10,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
@@ -28,6 +29,7 @@ namespace Hospital.ViewModels
         public string StartTimeRange { get; set; }
         public string EndTimeRange { get; set;}
         public int SelectedPriorityIndex { get; set; }
+        public Examination SelectedExamination { get; set; }
 
         public ICommand FindCommand { get; set; }
         public ICommand SelectCommand { get; set; }
@@ -54,7 +56,16 @@ namespace Hospital.ViewModels
 
         private void Select()
         {
-            throw new NotImplementedException();
+            if(SelectedExamination == null)
+            {
+                MessageBox.Show("Please select an examination from the list.", "Error");
+                return;
+            }
+
+            _examinationService.AddExamination(SelectedExamination);
+
+            MessageBox.Show("Examination has been successfully added to the patient's examinations.", "Success");
+            RequestClose?.Invoke();
         }
 
         private void Find()
