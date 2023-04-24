@@ -20,33 +20,25 @@ namespace Hospital.Views
 {
     public partial class PerformExaminationDialog : Window
     {
-        private Examination _examinationToPerform { get; set; }
-        private Patient _patientOnExamination { get; set; }
-        private readonly DoctorCoordinator _doctorCoordinator = new DoctorCoordinator();
-
         public PerformExaminationDialog(Examination examinationToPerform, Patient patientOnExamination)
         {
             InitializeComponent();
 
-            _examinationToPerform = examinationToPerform;
-            _patientOnExamination = patientOnExamination;
-
-            loadMedicalRecordFrame();
-            ConfigDialog();
-            AnamnesisTextBox.DataContext = _examinationToPerform;
+            loadMedicalRecordFrame(patientOnExamination);
+            ConfigDialog(patientOnExamination);
         }
 
-        private void ConfigDialog()
+        private void ConfigDialog(Patient patientOnExamination)
         {
             SizeToContent = SizeToContent.WidthAndHeight;
-            DataContext = _patientOnExamination;
+            DataContext = patientOnExamination;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Title = $"{_patientOnExamination.FirstName} {_patientOnExamination.LastName}'s Examination";
+            Title = $"{patientOnExamination.FirstName} {patientOnExamination.LastName}'s Examination";
         }
 
-        private void loadMedicalRecordFrame()
+        private void loadMedicalRecordFrame(Patient patientOnExamination)
         {
-            var dialog = new MedicalRecordPage(_patientOnExamination, true);
+            var dialog = new MedicalRecordPage(patientOnExamination, true);
             MedicalRecordFrame.Navigate(dialog);
         }
     }
