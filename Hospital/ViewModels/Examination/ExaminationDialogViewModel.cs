@@ -17,13 +17,10 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
-using Hospital.ViewModels.Patient;
 using PatientModel = Hospital.Models.Patient.Patient;
-using PatientViewModel = Hospital.ViewModels.Patient.PatientViewModel;
 using ExaminationModel = Hospital.Models.Examination.Examination;
-using ExaminationViewModel = Hospital.ViewModels.Examination;
 
-namespace Hospital.ViewModels.Examination
+namespace Hospital.ViewModels
 {
     public class ExaminationDialogViewModel : INotifyPropertyChanged
     {

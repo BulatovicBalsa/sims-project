@@ -30,9 +30,19 @@ namespace Hospital.Coordinators
             return patientsWithFullData;
         }
 
+        public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
+        {
+            return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
+        }
+
         public Patient GetPatient(Examination examination)
         {
             return _patientRepository.GetById(examination.Patient.Id);
+        }
+
+        public List<Patient> GetAllPatients()
+        {
+            return _patientRepository.GetAll();
         }
 
         public void UpdatePatient(Patient patient)
@@ -40,9 +50,19 @@ namespace Hospital.Coordinators
             _patientRepository.Update(patient);
         }
 
+        public void AddExamination(Examination examination)
+        {
+            _examinationRepository.Add(examination, false);
+        }
+
         public void UpdateExamination(Examination examination)
         {
             _examinationRepository.Update(examination, false);
+        }
+
+        public void DeleteExamination(Examination examination)
+        {
+            _examinationRepository.Delete(examination, false);
         }
     }
 }

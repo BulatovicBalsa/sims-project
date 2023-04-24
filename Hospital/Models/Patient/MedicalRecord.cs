@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Patient
 {
+    public enum HealthConditionType
+    {
+        Allergy,
+        MedicalCondition
+    }
+
     public class MedicalRecord
     {
         private const int MIN_WEIGHT = 1;
@@ -17,7 +23,7 @@ namespace Hospital.Models.Patient
         public List<string> Allergies { get; set; }
         public List<string> MedicalHistory { get; set; }
         //public List<Prescription> Prescriptions { get; set; }
-
+        
         public MedicalRecord()
         {
             Weight = 0;
@@ -47,72 +53,75 @@ namespace Hospital.Models.Patient
 
         public void AddAllergy(string allergyToAdd)
         {
-            allergyToAdd = allergyToAdd.Trim();
-            if (string.IsNullOrEmpty(allergyToAdd)) throw new ArgumentException("Allergy name can't be empty");
-            if (Allergies.Contains(allergyToAdd)) throw new ArgumentException($"{allergyToAdd} already exists in medical record");
-            Allergies.Add(allergyToAdd);
+            addHealthCondition(allergyToAdd, HealthConditionType.Allergy);
         }
 
-        public void AddConidition(string conditionToAdd)
+        public void AddMedicalConidition(string medicalConditionToAdd)
         {
-            conditionToAdd = conditionToAdd.Trim();
-            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException("Medical condition name can't be empty");
-            if (MedicalHistory.Contains(conditionToAdd)) throw new ArgumentException($"{conditionToAdd} already exists in medical record");
-            MedicalHistory.Add(conditionToAdd);
+            addHealthCondition(medicalConditionToAdd, HealthConditionType.MedicalCondition);
         }
 
-        public void UpdateCondition(string selectedCondition, string updatedCondition)
+        public void UpdateMedicalCondition(string selectedMedicalCondition, string updatedMedicalCondition)
         {
-            int indexToUpdate = MedicalHistory.IndexOf(selectedCondition);
-            if (indexToUpdate == -1) {
-                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            }
-            if (string.IsNullOrEmpty(updatedCondition))
-            {
-                throw new ArgumentException($"Medical condition name can't be empty");
-            }
-            if (MedicalHistory.Contains(updatedCondition))
-            {
-                throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
-            }
-            MedicalHistory[indexToUpdate] = updatedCondition;
+            updateHealthCondition(selectedMedicalCondition, updatedMedicalCondition, HealthConditionType.MedicalCondition);
         }
 
         public void UpdateAllergy(string selectedAllergy, string updatedAllergy)
         {
-            updatedAllergy = updatedAllergy.Trim();
-            int indexToUpdate = Allergies.IndexOf(selectedAllergy);
-            if (indexToUpdate == -1)
-            {
-                throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
-            }
-            if (string.IsNullOrEmpty(updatedAllergy))
-            {
-                throw new ArgumentException($"Allergy name can't be empty");
-            }
-            if (MedicalHistory.Contains(updatedAllergy))
-            {
-                throw new ArgumentException($"{updatedAllergy} already exist in this patient's medical record");
-            }
-            Allergies[indexToUpdate] = updatedAllergy;
+            updateHealthCondition(selectedAllergy, updatedAllergy, HealthConditionType.Allergy);
         }
 
-        public void DeleteCondition(string selectedCondition)
+        public void DeleteMedicalCondition(string selectedMedicalCondition)
         {
-            if (!MedicalHistory.Contains(selectedCondition))
-            {
-                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            }
-            MedicalHistory.Remove(selectedCondition);
+            deleteHealthCondition(selectedMedicalCondition, HealthConditionType.MedicalCondition);
         }
 
         public void DeleteAllergy(string selectedAllergy)
         {
-            if (!Allergies.Contains(selectedAllergy))
+            deleteHealthCondition(selectedAllergy, HealthConditionType.Allergy);
+        }
+
+        private void addHealthCondition(string conditionToAdd, HealthConditionType conditionType)
+        {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
+            conditionToAdd = conditionToAdd.Trim();
+
+            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{conditionType} name can't be empty");
+            if (healthConditionList.Contains(conditionToAdd)) throw new ArgumentException($"{conditionToAdd} already exists in medical record");
+            healthConditionList.Add(conditionToAdd);
+            
+        }
+
+        private void deleteHealthCondition(string selectedCondition, HealthConditionType conditionType)
+        {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
+
+            if (!healthConditionList.Contains(selectedCondition))
             {
-                throw new ArgumentException($"{selectedAllergy} doesn't exist in this patient's medical record");
+                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
             }
-            Allergies.Remove(selectedAllergy);
+            healthConditionList.Remove(selectedCondition);
+        }
+
+        private void updateHealthCondition(string selectedCondition, string updatedCondition, HealthConditionType conditionType)
+        {
+            var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
+
+            updatedCondition = updatedCondition.Trim();
+            int indexToUpdate = healthConditionList.IndexOf(selectedCondition);
+            if (indexToUpdate == -1)
+            {
+                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
+            }
+            if (string.IsNullOrEmpty(updatedCondition))
+            {
+                throw new ArgumentException($"{conditionType} name can't be empty");
+            }
+            if (healthConditionList.Contains(updatedCondition))
+            {
+                throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
+            }
+            healthConditionList[indexToUpdate] = updatedCondition;
         }
 
         public void ChangeWeight(int newWeight)

@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views"
-        xmlns:viewModel="clr-namespace:Hospital.ViewModels.Doctor"
-        
+        xmlns:local="clr-namespace:Hospital.Views"        
         mc:Ignorable="d"
         Title="PatientView" Height="Auto" Width="800"
         WindowStyle="None"
@@ -37,7 +35,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="PATIENT"
+                <TextBlock Text="{Binding DoctorName}"
                            Foreground="DarkGray"
                            FontSize="16"
                            FontWeight="Bold"
@@ -78,12 +76,12 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Button x:Name="BtnViewMedicalRecord"
                             Content="View Medical Record"
-                            Margin="5" Click="BtnViewMedicalRecord_Click"/>
-                    <TextBox x:Name="SearchBox" Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
+                            Margin="5" Command="{Binding BtnViewMedicalRecord_Command}"/>
+                    <TextBox x:Name="SearchBox" Text="Search..." Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
                     </TextBox>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" Width="*"/>
@@ -107,19 +105,19 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Button x:Name="BtnAddExamination"
                             Content="Add Examination"
-                            Margin="5" Click="BtnAddExamination_Click"/>
+                            Margin="5" Command="{Binding BtnAddExamination_Command}"/>
                     <Button x:Name="BtnUpdateExamination"
                             Content="Update Examination"
-                            Margin="5" Click="BtnUpdateExamination_Click"/>
+                            Margin="5" Command="{Binding BtnUpdateExamination_Command}"/>
                     <Button x:Name="BtnDeleteExamination"
                             Content="Delete Examination"
-                            Margin="5" Click="BtnDeleteExamination_Click"/>
+                            Margin="5" Command="{Binding BtnDeleteExamination_Command}"/>
                     <Button x:Name="BtnPerformExamination"
                             Content="Start Examination"
-                            Margin="5" Click="BtnPerformExamination_Click"/>
+                            Margin="5" Command="{Binding BtnPerformExamination_Command}"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" SelectedItem="{Binding SelectedExamination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="Patient" Binding="{Binding Patient.Id}" Width="*"/>

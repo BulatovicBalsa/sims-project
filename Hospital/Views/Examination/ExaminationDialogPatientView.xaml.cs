@@ -7,8 +7,8 @@ using System.Windows;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.ViewModels.Examination;
-using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
+using Hospital.ViewModels;
+using PatientViewModels = Hospital.ViewModels.PatientViewModel;
 
 namespace Hospital.Views
 {
