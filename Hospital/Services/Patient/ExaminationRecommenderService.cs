@@ -48,9 +48,9 @@ namespace Hospital.Services
 
                     foreach(var currentExamination in doctorAllExaminations)
                     {
-                        DateTime examinationTime = date.Add(lastEndTime);
-                        if (_examinationRepository.IsFree(doctor, examinationTime) &&
-                            _examinationRepository.IsFree(patient, examinationTime))
+                        DateTime examinationTime = FindNextAvailableTime(date, lastEndTime);
+
+                        if (IsExaminationTimeFree(doctor, patient, examinationTime))
                         {
                             Examination examination = new Examination(doctor, patient, false, examinationTime);
 
@@ -104,5 +104,14 @@ namespace Hospital.Services
             return recommendedExaminations;
         }
 
+        private DateTime FindNextAvailableTime(DateTime date, TimeSpan lastEndTime)
+        {
+            return date.Add(lastEndTime);
+        }
+
+        private bool IsExaminationTimeFree(Doctor doctor, Patient patient, DateTime examinationTime)
+        {
+            return _examinationRepository.IsFree(doctor, examinationTime) && _examinationRepository.IsFree(patient, examinationTime);
+        }
     }
 }
