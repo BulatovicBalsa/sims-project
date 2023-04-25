@@ -132,7 +132,7 @@ namespace Hospital.Services
                             examinations.Add(examination);
                             if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                         }
-                        currentDate = currentTime.AddMinutes(1);
+                        currentTime = currentTime.AddMinutes(1);
                     }
                     currentDate = currentDate.AddDays(1);
                     currentTime = currentDate + options.StartTime;

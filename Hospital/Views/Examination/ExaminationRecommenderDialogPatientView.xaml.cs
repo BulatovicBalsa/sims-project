@@ -22,12 +22,16 @@ namespace Hospital.Views
     public partial class ExaminationRecommenderDialogPatientView : Window
     {
         private readonly ExaminationRecommenderDialogPatientViewModel _viewModel;
-        public ExaminationRecommenderDialogPatientView(Patient patient)
+        private readonly PatientViewModel _patientViewModel;
+        private readonly Patient _patient;
+        public ExaminationRecommenderDialogPatientView(Patient patient, PatientViewModel patientViewModel)
         {
             InitializeComponent();
             _viewModel = new ExaminationRecommenderDialogPatientViewModel(patient);
             _viewModel.RequestClose += CloseWindow;
             DataContext = _viewModel;
+            _patientViewModel = patientViewModel;
+            _patient = patient;
         }
 
         private void CloseWindow()
@@ -42,6 +46,7 @@ namespace Hospital.Views
         private void BtnSelect_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SelectCommand.Execute(null);
+            _patientViewModel.RefreshExaminations(_patient);
             Close();
         }
 

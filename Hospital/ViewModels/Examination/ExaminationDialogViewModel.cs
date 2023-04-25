@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
@@ -36,7 +37,7 @@ namespace Hospital.ViewModels
             set
             {
                 TimeSpan time;
-                if (TimeSpan.TryParse(value, out time))
+                if (TimeSpan.TryParse(value, out time) && IsValidDateTime(SelectedDate, time))
                 {
                     Examination.Start = Examination.Start.Date + time;
                     OnPropertyChanged();
@@ -48,12 +49,16 @@ namespace Hospital.ViewModels
             get { return _selectedDate; }
             set
             {
-                _selectedDate = value;
-                OnPropertyChanged();
-
-                if (_selectedDate.HasValue)
+                if(IsValidDateTime(value, Examination.Start.TimeOfDay))
                 {
-                    Examination.Start = _selectedDate.Value.Date.Add(Examination.Start.TimeOfDay);
+                    _selectedDate = value;
+                    OnPropertyChanged();
+
+                    if (_selectedDate.HasValue)
+                    {
+                        Examination.Start = _selectedDate.Value.Date.Add(Examination.Start.TimeOfDay);
+                    }
+
                 }
             }
         }
@@ -139,7 +144,13 @@ namespace Hospital.ViewModels
                 MessageBox.Show("Please select doctor", "Error");
                 return;
             }
-            
+
+            if (!IsValidDateTime(SelectedDate, Examination.Start.TimeOfDay))
+            {
+                MessageBox.Show("Invalid time input", "Error");
+                return;
+            }
+
             if (!IsUpdate)
             {
                 try
@@ -202,6 +213,15 @@ namespace Hospital.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        private bool IsValidDateTime(DateTime? date, TimeSpan time)
+        {
+            if (!date.HasValue)
+                return false;
+
+            DateTime dateTime = date.Value.Date + time;
+            return dateTime >= DateTime.Now;
         }
     }
 }

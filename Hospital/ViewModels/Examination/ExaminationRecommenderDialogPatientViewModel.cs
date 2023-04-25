@@ -46,6 +46,10 @@ namespace Hospital.ViewModels
             RecommendedExaminations = new ObservableCollection<Examination>();
             Priorities = new List<string> { "Doctor", "Time Range" };
 
+            StartTimeRange = "00:00";
+            EndTimeRange = "23:59";
+            LatestDate    = DateTime.Now.AddDays(1);
+
             FindCommand = new RelayCommand(Find);
             SelectCommand = new RelayCommand(Select);
             CancelCommand = new RelayCommand(Cancel);
@@ -88,6 +92,10 @@ namespace Hospital.ViewModels
 
             RecommendedExaminations.Clear();
             foreach (var examination in foundExaminations) RecommendedExaminations.Add(examination);
+
+            if (foundExaminations.Any()) MessageBox.Show("Examinations found successfully.", "Success");
+            else MessageBox.Show("No examinations found.", ":(");
+
         }
 
 

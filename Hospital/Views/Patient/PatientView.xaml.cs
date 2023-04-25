@@ -90,7 +90,7 @@ namespace Hospital.Views
 
         private void BtnFindExaminations_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationRecommenderDialogPatientView examinationRecommenderView = new ExaminationRecommenderDialogPatientView(_patient);
+            ExaminationRecommenderDialogPatientView examinationRecommenderView = new ExaminationRecommenderDialogPatientView(_patient,_viewModel);
             examinationRecommenderView.ShowDialog();
         }
     }
