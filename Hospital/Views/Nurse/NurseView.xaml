@@ -79,84 +79,29 @@
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
                                 Background="Transparent"
+                                Margin="0,0,5,0"
                                 MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown"
                                 MouseEnter="ControlBar_OnMouseEnter">
 
-                    </StackPanel>
+                        <Button x:Name="BtnClose" 
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnClose_OnClick"
+                                Content="X"
+                                Margin="3,0,3,0"/>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="5"/>
-                        </Grid.ColumnDefinitions>
+                        <Button x:Name="BtnMaximize"
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnMaximize_OnClick"
+                                Content="O"
+                                Margin="3,0,3,0"/>
 
                         <Button x:Name="BtnMinimize" 
-                                BorderThickness="0"
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnMinimize_OnClick"
                                 Content="-"
-                                Foreground="Black"
-                                FontSize="16"
-                                FontFamily="Montserrat"
-                                Cursor="Hand"
-                                Grid.Column="1"
-                                Click="BtnMinimize_OnClick">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="LightSlateGray"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
+                                Margin="3,0,3,0"/>
 
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="18" Height="18"
-                                    CornerRadius="9"
-                                    Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-                        <Button x:Name="BtnClose" 
-                        BorderThickness="0"
-                        Content="X"
-                        Foreground="Black"
-                        FontSize="12"
-                        FontFamily="Montserrat"
-                        Cursor="Hand"
-                        Grid.Column="2"
-                        Click="BtnClose_OnClick">
-
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="LightSlateGray"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="18" Height="18"
-                                    CornerRadius="9"
-                                    Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </Grid>
+                    </StackPanel>
 
                     <DataGrid Grid.Row="2" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
                               SelectedItem="{Binding Path=SelectedPatient}"
