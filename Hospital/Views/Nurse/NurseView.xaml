@@ -19,8 +19,8 @@
     <Border CornerRadius="15">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#a1ffce" Offset="0"></GradientStop>
-                <GradientStop Color="#faffd1" Offset="1"></GradientStop>
+                <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0"></GradientStop>
+                <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1"></GradientStop>
             </LinearGradientBrush>
         </Border.Background>
 
@@ -45,10 +45,20 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
                                Opacity="1"/>
-                    
+
                     <RadioButton Style="{StaticResource MenuButton}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}">
+                        <StackPanel>
+                            <TextBlock Text="Patient admission" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}">
+                        <StackPanel>
+                            <TextBlock Text="Urgent examinations" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>
@@ -69,7 +79,8 @@
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
                                 Background="Transparent"
-                                MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
+                                MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown"
+                                MouseEnter="ControlBar_OnMouseEnter">
 
                     </StackPanel>
 
