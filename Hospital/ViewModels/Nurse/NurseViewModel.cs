@@ -17,6 +17,7 @@ namespace Hospital.ViewModels.Nurse
         private readonly PatientRepository _patientRepository;
         private Patient? _selectedPatient;
         private string _errorMessage;
+        private ViewModelBase _currentChildView;
 
         public string ErrorMessage
         {
@@ -46,6 +47,16 @@ namespace Hospital.ViewModels.Nurse
             }
         }
 
+        public ViewModelBase CurrentChildView
+        {
+            get => _currentChildView;
+            set
+            {
+                _currentChildView = value;
+                OnPropertyChanged(nameof(CurrentChildView));
+            }
+        }
+
         public NurseViewModel()
         {
             _patientRepository = new PatientRepository();
@@ -64,10 +75,14 @@ namespace Hospital.ViewModels.Nurse
 
             DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand, CanExecuteDeletePatientCommand);
             UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteUpdatePatientCommand);
+            ShowPatientsView = new ViewModelCommand(ExecuteShowPatientsViewCommand);
+
+            ExecuteShowPatientsViewCommand(null);
         }
 
         public ICommand DeletePatientCommand { get; }
         public ICommand UpdatePatientCommand { get; }
+        public ICommand ShowPatientsView { get; }
 
         private bool CanExecuteDeletePatientCommand(object obj)
         {
@@ -130,6 +145,9 @@ namespace Hospital.ViewModels.Nurse
             }
         }
 
-
+        private void ExecuteShowPatientsViewCommand(object obj)
+        {
+            CurrentChildView = new PatientGridViewModel();
+        }
     }
 }
