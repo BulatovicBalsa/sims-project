@@ -14,8 +14,8 @@ namespace Hospital.ViewModels.Nurse
     public class NurseViewModel : ViewModelBase
     {
         private ObservableCollection<Patient> _patients;
-        private PatientRepository _patientRepository;
-        private Patient _selectedPatient;
+        private readonly PatientRepository _patientRepository;
+        private Patient? _selectedPatient;
         private string _errorMessage;
 
         public string ErrorMessage
@@ -27,7 +27,7 @@ namespace Hospital.ViewModels.Nurse
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public Patient SelectedPatient
+        public Patient? SelectedPatient
         {
             get => _selectedPatient;
             set
@@ -54,15 +54,11 @@ namespace Hospital.ViewModels.Nurse
 
             _patients.CollectionChanged += (sender, e) =>
             {
-                if (e.Action == NotifyCollectionChangedAction.Add)
+                if (e.Action != NotifyCollectionChangedAction.Add) return;
+                if (e.NewItems == null) return;
+                foreach (var item in e.NewItems)
                 {
-                    if (e.NewItems != null)
-                    {
-                        foreach (var item in e.NewItems)
-                        {
-                            _patientRepository.Add((Patient) item);
-                        }
-                    }
+                    _patientRepository.Add((Patient) item);
                 }
             };
 
@@ -91,7 +87,7 @@ namespace Hospital.ViewModels.Nurse
 
         private void ExecuteUpdatePatientCommand(object obj)
         {
-            if (string.IsNullOrEmpty(SelectedPatient.FirstName))
+            if (string.IsNullOrEmpty(SelectedPatient?.FirstName))
             {
                 ErrorMessage = "FirstName field can't be empty";
             }
