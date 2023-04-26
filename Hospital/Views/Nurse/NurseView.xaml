@@ -16,6 +16,12 @@
         <viewModel:NurseViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:PatientGridViewModel}">
+            <local:PatientGridView/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Border CornerRadius="15">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -46,7 +52,9 @@
                                HorizontalAlignment="Left"
                                Opacity="1"/>
 
-                    <RadioButton Style="{StaticResource MenuButton}">
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientsView}"
+                                 IsChecked="True">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
@@ -101,7 +109,7 @@
 
                     </StackPanel>
 
-                    <ContentControl Content=""
+                    <ContentControl Content="{Binding CurrentChildView}"
                                     Grid.Row="1"
                                     Margin="25"/>
 
