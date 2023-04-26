@@ -69,9 +69,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
-                        <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel x:Name="ControlBar"
@@ -103,7 +101,11 @@
 
                     </StackPanel>
 
-                    <DataGrid Grid.Row="2" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
+                    <ContentControl Content=""
+                                    Grid.Row="1"
+                                    Margin="25"/>
+
+                    <!--<DataGrid Grid.Row="1" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
                               SelectedItem="{Binding Path=SelectedPatient}"
                               SelectionMode="Single">
                         <DataGrid.Columns>
@@ -141,7 +143,7 @@
                     </DataGrid>
 
                     <StackPanel Orientation="Horizontal"
-                                Grid.Row="3">
+                                Grid.Row="2">
                         <Button Content="Update"
                                 Command="{Binding Path=UpdatePatientCommand}"></Button>
                         <Button Content="Delete"
@@ -149,7 +151,7 @@
                         <TextBlock Text="{Binding Path=ErrorMessage}" 
                                    Foreground="Red"
                                    FontSize="25"/>
-                    </StackPanel>
+                    </StackPanel>-->
 
                 </Grid>
             </Border>
