@@ -12,7 +12,7 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
-using PatientViewModels = Hospital.ViewModels.Patient.PatientViewModel;
+using PatientViewModels = Hospital.ViewModels.PatientViewModel;
 
 
 namespace Hospital.Views

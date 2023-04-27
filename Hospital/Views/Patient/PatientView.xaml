@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="Hospital.ViewModels"
-        xmlns:local="clr-namespace:Hospital.Views" xmlns:viewmodels="clr-namespace:Hospital.ViewModels.Patient" d:DataContext="{d:DesignInstance Type=viewmodels:PatientViewModel}"
+        xmlns:local="clr-namespace:Hospital.Views" xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PatientViewModel}"
         mc:Ignorable="d"
         Title="PatientView" Height="450" Width="800"
         WindowStyle="None"

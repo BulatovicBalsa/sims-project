@@ -11,11 +11,10 @@ using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
 using PatientModel = Hospital.Models.Patient.Patient;
 using ExaminationModel = Hospital.Models.Examination.Examination;
-using ExammintionViewModel = Hospital.ViewModels.Examination;
 using Hospital.Repositories.Examinaton;
 
 
-namespace Hospital.ViewModels.Patient
+namespace Hospital.ViewModels
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
