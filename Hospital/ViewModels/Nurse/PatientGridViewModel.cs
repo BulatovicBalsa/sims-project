@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 
@@ -40,5 +41,10 @@ namespace Hospital.ViewModels.Nurse
                 OnPropertyChanged(nameof(Patients));
             }
         }
+
+        public ICommand AddPatientCommand { get; }
+        public ICommand UpdatePatientCommand { get; }
+        public ICommand DeletePatientCommand { get; }
+        public ICommand ShowMedicalRecordCommand { get; }
     }
 }

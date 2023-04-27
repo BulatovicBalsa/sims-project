@@ -32,9 +32,21 @@
 
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
-            <Button Content="Add"/>
-            <Button Content="Update"/>
-            <Button Content="Delete"/>
+            <Button Content="Add" Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding AddPatientCommand}"/>
+            <Button Content="Update" 
+                    Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding UpdatePatientCommand}"/>
+            <Button Content="Delete" 
+                    Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding DeletePatientCommand}"/>
+            <Button Content="Medical record"
+                    Style="{StaticResource ActionButton}"
+                    Margin="0,0,10,0"
+                    Command="{Binding ShowMedicalRecordCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
