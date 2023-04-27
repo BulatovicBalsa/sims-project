@@ -13,7 +13,7 @@
         AllowsTransparency="True">
     
     <Window.DataContext>
-        <viewModel:NurseViewModel/>
+        <viewModel:NurseMainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
