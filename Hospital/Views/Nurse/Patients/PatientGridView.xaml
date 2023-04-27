@@ -19,7 +19,14 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Path=Patients}" x:Name="PatientsDataGrid" Style="{DynamicResource DataGridStyle}" CellStyle="{DynamicResource DataGridCellStyle}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" RowStyle="{DynamicResource DataGridRowStyle}">
+        <DataGrid Grid.Row="0" 
+                  ItemsSource="{Binding Path=Patients}" 
+                  x:Name="PatientsDataGrid" 
+                  Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{DynamicResource DataGridCellStyle}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{DynamicResource DataGridRowStyle}"
+                  SelectedItem="{Binding SelectedPatient}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True"  Width="SizeToCells" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
