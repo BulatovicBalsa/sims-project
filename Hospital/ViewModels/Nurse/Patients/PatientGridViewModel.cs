@@ -18,6 +18,7 @@ public class PatientGridViewModel : ViewModelBase
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
 
         AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
+        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand);
         DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand);
     }
 
@@ -50,6 +51,12 @@ public class PatientGridViewModel : ViewModelBase
     {
         var addPatientDialog = new AddPatientView();
         addPatientDialog.ShowDialog();
+    }
+
+    private void ExecuteUpdatePatientCommand(object obj)
+    {
+        var updatePatientDialog = new UpdatePatientView();
+        updatePatientDialog.ShowDialog();
     }
 
     private void ExecuteDeletePatientCommand(object obj)
