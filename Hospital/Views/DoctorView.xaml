@@ -7,13 +7,13 @@
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Doctor"
         
         mc:Ignorable="d"
-        Title="PatientView" Height="450" Width="800"
+        Title="PatientView" Height="Auto" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border CornerRadius="15">
+    <Border CornerRadius="15" Margin="0,0,0,0">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#a1ffce" Offset="0"></GradientStop>
@@ -25,13 +25,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Window Header -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="99*"/>
+                    <ColumnDefinition Width="151*"/>
                     <ColumnDefinition Width="25"/>
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
@@ -42,7 +43,7 @@
                            FontWeight="Bold"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Margin="10,0,0,0"/>
+                           Margin="10,0,0,0" Grid.ColumnSpan="2"/>
 
                 <Button x:Name="BtnMinimize"
                         BorderThickness="0"
@@ -51,7 +52,7 @@
                         FontSize="16"
                         FontFamily="Segoe UI"
                         Cursor="Hand"
-                        Grid.Column="1">
+                        Grid.Column="2">
                 </Button>
 
                 <Button x:Name="BtnClose"
@@ -61,24 +62,44 @@
                         FontSize="12"
                         FontFamily="Segoe UI"
                         Cursor="Hand"
-                        Grid.Column="2" HorizontalAlignment="Right" Width="25" Click="BtnClose_Click"/>
+                        Grid.Column="3" HorizontalAlignment="Center" Width="25" Click="BtnClose_Click"/>
             </Grid>
-
-            <!-- Profile Image and Name -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-                <Image Source="../Images/UsernameIcon.png" Width="100" Height="100" Stretch="UniformToFill" Margin="0,10,10,0"/>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding FirstName}" FontSize="20" FontWeight="Bold" />
-                    <TextBlock Text="{Binding LastName}" FontSize="20" FontWeight="Bold" />
-                </StackPanel>
-            </StackPanel>
-
-            <!-- Examinations -->
-            <Grid Grid.Row="2">
+            
+            <!--Patients-->
+            <Grid Grid.Row="1" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Your patients" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                    <Button x:Name="BtnViewMedicalRecord"
+                            Content="View Medical Record"
+                            Margin="5" Click="BtnViewMedicalRecord_Click"/>
+                    <TextBox x:Name="SearchBox" Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
+                    </TextBox>
+                </StackPanel>
+
+                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                        <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" Width="*"/>
+                        <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" Width="*"/>
+                        <DataGridTextColumn Header="Jmbg" Binding="{Binding Jmbg}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            
+
+            <!-- Examinations -->
+            <Grid Grid.Row="2" Margin="0,0,0, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
