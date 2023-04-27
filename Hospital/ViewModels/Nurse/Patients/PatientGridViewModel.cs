@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
+using Hospital.Views.Nurse.Patients;
 
 namespace Hospital.ViewModels.Nurse.Patients;
 
@@ -15,6 +16,9 @@ public class PatientGridViewModel : ViewModelBase
     {
         _patientRepository = new PatientRepository();
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
+
+        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
+        DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand);
     }
 
     public Patient? SelectedPatient
@@ -41,4 +45,17 @@ public class PatientGridViewModel : ViewModelBase
     public ICommand UpdatePatientCommand { get; }
     public ICommand DeletePatientCommand { get; }
     public ICommand ShowMedicalRecordCommand { get; }
+
+    private void ExecuteAddPatientCommand (object obj)
+    {
+        var addPatientDialog = new AddPatientView();
+        addPatientDialog.ShowDialog();
+    }
+
+    private void ExecuteDeletePatientCommand(object obj)
+    {
+        _patientRepository.Delete(SelectedPatient);
+        _patients.Remove(SelectedPatient);
+        SelectedPatient = null;
+    }
 }
