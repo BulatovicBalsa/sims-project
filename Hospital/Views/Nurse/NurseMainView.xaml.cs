@@ -7,11 +7,11 @@ using System.Windows.Interop;
 namespace Hospital.Views.Nurse;
 
 /// <summary>
-///     Interaction logic for NurseView.xaml
+///     Interaction logic for NurseMainView.xaml
 /// </summary>
-public partial class NurseView : Window
+public partial class NurseMainView : Window
 {
-    public NurseView()
+    public NurseMainView()
     {
         InitializeComponent();
     }

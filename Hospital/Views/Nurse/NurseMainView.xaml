@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hospital.Views.Nurse.NurseView"
+﻿<Window x:Class="Hospital.Views.Nurse.NurseMainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hospital.Views.Nurse"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse"
         mc:Ignorable="d"
-        Title="NurseView" Height="480" Width="1000"
+        Title="NurseMainView" Height="480" Width="1000"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
@@ -112,55 +112,6 @@
                     <ContentControl Content="{Binding CurrentChildView}"
                                     Grid.Row="1"
                                     Margin="25"/>
-
-                    <!--<DataGrid Grid.Row="1" ItemsSource="{Binding Patients}" AutoGenerateColumns="False"
-                              SelectedItem="{Binding Path=SelectedPatient}"
-                              SelectionMode="Single">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="*" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName}"/>
-                            <DataGridTextColumn Header="LastName" Width="*" Binding="{Binding LastName}"/>
-                            <DataGridTextColumn Header="JMBG" Width="*" Binding="{Binding Path=Jmbg}"/>
-                            <DataGridTextColumn Header="Username" Width="*" Binding="{Binding Path=Profile.Username}"/>
-                            <DataGridTextColumn Header="Password" Width="*" Binding="{Binding Path=Profile.Password}"/>
-                            <DataGridTextColumn Header="Height" Width="*" Binding="{Binding Path=MedicalRecord.Height}"/>
-                            <DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Path=MedicalRecord.Weight}"/>
-                            <DataGridTemplateColumn Header="MedicalHistory" Width="*">
-
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ListBox  
-                                            Name="list"  
-                                            Margin="4,4,4,4"  
-                                            ItemsSource="{Binding MedicalRecord.MedicalHistory}"  
-                                            SelectionMode="Extended">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBox BorderThickness="0" Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged}" />
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-
-
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <StackPanel Orientation="Horizontal"
-                                Grid.Row="2">
-                        <Button Content="Update"
-                                Command="{Binding Path=UpdatePatientCommand}"></Button>
-                        <Button Content="Delete"
-                                Command="{Binding Path=DeletePatientCommand}"></Button>
-                        <TextBlock Text="{Binding Path=ErrorMessage}" 
-                                   Foreground="Red"
-                                   FontSize="25"/>
-                    </StackPanel>-->
-
                 </Grid>
             </Border>
         </Grid>
