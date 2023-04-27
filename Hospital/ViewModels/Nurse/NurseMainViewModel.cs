@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
+using Hospital.ViewModels.Nurse.Patients;
 
 namespace Hospital.ViewModels.Nurse;
 

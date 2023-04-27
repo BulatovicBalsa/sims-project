@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Nurse"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse"
+        xmlns:patients="clr-namespace:Hospital.ViewModels.Nurse.Patients"
         mc:Ignorable="d"
         Title="NurseMainView" Height="480" Width="1000"
         WindowStyle="None"
@@ -17,7 +18,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:PatientGridViewModel}">
+        <DataTemplate DataType="{x:Type patients:PatientGridViewModel}">
             <local:PatientGridView/>
         </DataTemplate>
     </Window.Resources>
