@@ -22,7 +22,7 @@ namespace Hospital.ViewModels
         private bool _isUpdate = false;
         private ObservableCollection<Examination> _examinationCollection;
         private Examination? _examinationToChange = null;
-        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
+        private readonly DoctorService _doctorService = new DoctorService();
 
         private bool _isOperation;
 
@@ -89,7 +89,7 @@ namespace Hospital.ViewModels
             _examinationCollection = examinationCollection;
             _examinationToChange = examinationToChange;
 
-            Patients = new ObservableCollection<Patient>(_coordinator.GetAllPatients());
+            Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
             PossibleTimes = new ObservableCollection<TimeOnly>(getPossibleTimes());
             fillForm();
         }
@@ -120,7 +120,7 @@ namespace Hospital.ViewModels
                 }
                 else
                 {
-                    _coordinator.AddExamination(createdExamination);
+                    _doctorService.AddExamination(createdExamination);
                     _examinationCollection.Add(createdExamination);
                 }
             }
@@ -166,9 +166,9 @@ namespace Hospital.ViewModels
         private void updateExamination(Examination examination)
         {
             examination.Id = _examinationToChange.Id;
-            _coordinator.UpdateExamination(examination);
+            _doctorService.UpdateExamination(examination);
             _examinationCollection.Clear();
-            _coordinator.GetExaminationsForNextThreeDays(_doctor).ForEach(examination => _examinationCollection.Add(examination));
+            _doctorService.GetExaminationsForNextThreeDays(_doctor).ForEach(examination => _examinationCollection.Add(examination));
         }
 
         private List<TimeOnly> getPossibleTimes()

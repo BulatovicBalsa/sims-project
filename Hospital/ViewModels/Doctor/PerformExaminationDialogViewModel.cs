@@ -16,7 +16,7 @@ namespace Hospital.ViewModels
     {
         private Examination _examinationToPerform { get; set; }
         private Patient _patientOnExamination { get; set; }
-        private readonly DoctorCoordinator _doctorCoordinator = new DoctorCoordinator();
+        private readonly DoctorService _doctorService = new DoctorService();
 
         private string _anamnesis;
         public string Anamnesis
@@ -43,7 +43,7 @@ namespace Hospital.ViewModels
         private void UpdateExamination()
         {
             _examinationToPerform.Anamnesis = Anamnesis;
-            _doctorCoordinator.UpdateExamination(_examinationToPerform);
+            _doctorService.UpdateExamination(_examinationToPerform);
             MessageBox.Show("Succeed");
         }
     }

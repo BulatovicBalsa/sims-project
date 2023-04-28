@@ -30,4 +30,8 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Coordinators\" />
+  </ItemGroup>
+
 </Project>

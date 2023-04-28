@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Hospital.Coordinators
 {
-    public class DoctorCoordinator
+    public class DoctorService
     {
         private readonly ExaminationRepository _examinationRepository;
         private readonly PatientRepository _patientRepository;
 
-        public DoctorCoordinator()
+        public DoctorService()
         {
             _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
             _patientRepository = new PatientRepository();
