@@ -160,7 +160,7 @@ namespace Hospital.ViewModels
             DateTime startDate = SelectedDate.GetValueOrDefault();
             startDate = startDate.Add(startTime.ToTimeSpan());
 
-            return new Examination(_doctor, SelectedPatient, IsOperation, startDate);
+            return new Examination(_doctor, SelectedPatient, IsOperation, startDate, null);
         }
 
         private void updateExamination(Examination examination)
