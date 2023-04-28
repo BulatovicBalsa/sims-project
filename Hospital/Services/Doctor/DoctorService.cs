@@ -70,7 +70,8 @@ namespace Hospital.Coordinators
 
         public List<Room> GetAllRooms()
         {
-            return _roomRepository.GetAll();
+            var allRooms = _roomRepository.GetAll();
+            return allRooms.Where(room => room.Type == Room.RoomType.OperatingRoom || room.Type == Room.RoomType.ExaminationRoom).ToList();
         }
     }
 }
