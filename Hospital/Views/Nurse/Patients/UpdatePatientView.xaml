@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Hospital.Views.Nurse.Patients"
              xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse.Patients"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="350"
-             Height="550"
+             d:DesignHeight="650" d:DesignWidth="350"
+             Height="650"
              Width="350"
              Background="Transparent"
              AllowsTransparency="True"
@@ -15,7 +15,7 @@
              ResizeMode="NoResize"
              WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <viewModel:UpdatePatientViewModel/>
+        <viewModel:AddUpdatePatientViewModel/>
     </Window.DataContext>
 
     <Border CornerRadius="15">
@@ -69,21 +69,35 @@
             <StackPanel Grid.Row="2"
                         Margin="20, 0, 20, 0">
                 <TextBlock Style="{StaticResource MainTextBlock}">First name</TextBlock>
-                <TextBox Text="{Binding FirstName}"/>
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Last name</TextBlock>
-                <TextBox Text="{Binding LastName}"/>
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">JMBG</TextBlock>
-                <TextBox Text="{Binding Jmbg}"/>
+                <TextBox Text="{Binding Jmbg, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding JmbgError, Mode=OneWay}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Username</TextBlock>
-                <TextBox Text="{Binding Username}"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding UsernameError, Mode=OneWay}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Password</TextBlock>
-                <TextBox Text="{Binding Password}"/>
+                <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding PasswordError, Mode=OneWay}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Height</TextBlock>
-                <TextBox Text="{Binding Height}"/>
+                <TextBox Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding HeightError, Mode=OneWay}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Weight</TextBlock>
-                <TextBox Text="{Binding Weight}"/>
+                <TextBox Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding WeightError, Mode=OneWay}"/>
+
                 <TextBlock Style="{StaticResource MainTextBlock}">Medical history</TextBlock>
-                <TextBox Text="{Binding MedicalHistory}" Height="40" TextWrapping="Wrap"/>
+                <TextBox Height="40" TextWrapping="Wrap" Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}"/>
+
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0,20,0,0">

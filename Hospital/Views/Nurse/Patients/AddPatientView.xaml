@@ -16,7 +16,7 @@
              WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        <viewModel:AddPatientViewModel/>
+        <viewModel:AddUpdatePatientViewModel/>
     </Window.DataContext>
 
     <Border CornerRadius="15">

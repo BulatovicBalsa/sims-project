@@ -6,9 +6,10 @@ using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels.Nurse.Patients;
 
-public class AddPatientViewModel : ViewModelBase
+public class AddUpdatePatientViewModel : ViewModelBase
 {
     private readonly PatientRepository _patientRepository;
+    private Patient _patientToUpdate;
     private string _firstName;
     private string _height;
     private string _heightError;
@@ -24,16 +25,34 @@ public class AddPatientViewModel : ViewModelBase
     private string _weight;
     private string _weightError;
 
-    public AddPatientViewModel()
+    public AddUpdatePatientViewModel()
     {
         // dummy constructor
     }
 
-    public AddPatientViewModel(PatientRepository patientRepository)
+    public AddUpdatePatientViewModel(PatientRepository patientRepository)
     {
         _patientRepository = patientRepository;
 
-        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand, CanExecuteAddPatientCommand);
+        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand, CanExecuteAddUpdatePatientCommand);
+        CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
+    }
+
+    public AddUpdatePatientViewModel(PatientRepository patientRepository, Patient selectedPatient)
+    {
+        _patientToUpdate = selectedPatient;
+        _patientRepository = patientRepository;
+
+        _firstName = selectedPatient.FirstName;
+        _lastName = selectedPatient.LastName;
+        _jmbg = selectedPatient.Jmbg;
+        _username = selectedPatient.Profile.Username;
+        _password = selectedPatient.Profile.Password;
+        _height = selectedPatient.MedicalRecord.Height.ToString();
+        _weight = selectedPatient.MedicalRecord.Weight.ToString();
+        _medicalHistory = selectedPatient.MedicalRecord.GetMedicalHistoryString();
+
+        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteAddUpdatePatientCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
     }
 
@@ -178,6 +197,7 @@ public class AddPatientViewModel : ViewModelBase
     }
 
     public ICommand AddPatientCommand { get; }
+    public ICommand UpdatePatientCommand { get; }
     public ICommand CancelCommand { get; }
 
     private void ExecuteAddPatientCommand(object obj)
@@ -224,18 +244,33 @@ public class AddPatientViewModel : ViewModelBase
         Application.Current.Windows[1]?.Close();
     }
 
-    private bool CanExecuteAddPatientCommand(object obj)
+    private void ExecuteUpdatePatientCommand(object obj)
     {
-        var check = (!string.IsNullOrEmpty(FirstName) &&
+        _patientToUpdate.FirstName = _firstName;
+        _patientToUpdate.LastName = _lastName;
+        _patientToUpdate.Jmbg = _jmbg;
+        _patientToUpdate.Profile.Username = _username;
+        _patientToUpdate.Profile.Password = _password;
+        _patientToUpdate.MedicalRecord.Height = int.Parse(_height);
+        _patientToUpdate.MedicalRecord.Weight = int.Parse(_weight);
+        _patientToUpdate.MedicalRecord.MedicalHistory = _medicalHistory.Split(", ").ToList();
+
+        _patientRepository.Update(_patientToUpdate);
+
+        Application.Current.Windows[1]?.Close();
+    }
+
+    private bool CanExecuteAddUpdatePatientCommand(object obj)
+    {
+        var isAnyFieldNullOrEmpty = (!string.IsNullOrEmpty(FirstName) &&
                      !string.IsNullOrEmpty(LastName) &&
                      !string.IsNullOrEmpty(Jmbg) &&
                      !string.IsNullOrEmpty(Username) &&
                      !string.IsNullOrEmpty(Password) &&
                      !string.IsNullOrEmpty(Height) &&
-                     !string.IsNullOrEmpty(Weight) &&
-                     !string.IsNullOrEmpty(MedicalHistory));
+                     !string.IsNullOrEmpty(Weight));
 
-        return check;
+        return isAnyFieldNullOrEmpty;
     }
 
     private void ExecuteCancelCommand(object obj)
