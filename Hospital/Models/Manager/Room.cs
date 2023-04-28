@@ -63,7 +63,10 @@ public class Room
     public List<Equipment> GetEquipment()
     {
         return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
+    }
 
-
+    public override string ToString()
+    {
+        return $"{Name}, {Type}";
     }
 }
