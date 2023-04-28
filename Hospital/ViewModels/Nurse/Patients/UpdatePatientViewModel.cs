@@ -124,7 +124,7 @@ namespace Hospital.ViewModels.Nurse.Patients
             _patientToUpdate = selectedPatient;
             _patientRepository = patientRepository;
 
-            UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand);
+            UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteUpdatePatientCommand);
             CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
         }
 
@@ -142,6 +142,18 @@ namespace Hospital.ViewModels.Nurse.Patients
             _patientRepository.Update(_patientToUpdate);
 
             Application.Current.Windows[1]?.Close();
+        }
+
+        private bool CanExecuteUpdatePatientCommand(object obj)
+        {
+            return !string.IsNullOrEmpty(_firstName) &&
+                   !string.IsNullOrEmpty(_lastName) &&
+                   !string.IsNullOrEmpty(_jmbg) &&
+                   !string.IsNullOrEmpty(_username) &&
+                   !string.IsNullOrEmpty(_password) &&
+                   !string.IsNullOrEmpty(_height) &&
+                   !string.IsNullOrEmpty(_weight) &&
+                   !string.IsNullOrEmpty(_medicalHistory);
         }
 
         private void ExecuteCancelCommand(object obj)

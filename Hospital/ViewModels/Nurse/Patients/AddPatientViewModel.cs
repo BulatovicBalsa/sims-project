@@ -18,6 +18,15 @@ public class AddPatientViewModel : ViewModelBase
     private string _username;
     private string _weight;
 
+    private string _firstNameError;
+    private string _lastNameError;
+    private string _jmbgError;
+    private string _usernameError;
+    private string _passwordError;
+    private string _heightError;
+    private string _weightError;
+    private string _medicalHistoryError;
+
     public string FirstName
     {
         get => _firstName;
@@ -98,6 +107,86 @@ public class AddPatientViewModel : ViewModelBase
         }
     }
 
+    public string FirstNameError    
+    {
+        get => _firstNameError;
+        set
+        {
+            _firstNameError = value;
+            OnPropertyChanged(nameof(FirstNameError));
+        }
+    }
+
+    public string LastNameError
+    {
+        get => _lastNameError;
+        set
+        {
+            _lastNameError = value;
+            OnPropertyChanged(nameof(LastNameError));
+        }
+    }
+
+    public string JmbgError
+    {
+        get => _jmbgError;
+        set
+        {
+            _jmbgError = value;
+            OnPropertyChanged(nameof(JmbgError));
+        }
+    }
+
+    public string UsernameError
+    {
+        get => _usernameError;
+        set
+        {
+            _usernameError = value;
+            OnPropertyChanged(nameof(UsernameError));
+        }
+    }
+
+    public string PasswordError
+    {
+        get => _passwordError;
+        set
+        {
+            _passwordError = value;
+            OnPropertyChanged(nameof(PasswordError));
+        }
+    }
+
+    public string HeightError
+    {
+        get => _heightError;
+        set
+        {
+            _heightError = value;
+            OnPropertyChanged(nameof(HeightError));
+        }
+    }
+
+    public string WeightError
+    {
+        get => _weightError;
+        set
+        {
+            _weightError = value;
+            OnPropertyChanged(nameof(WeightError));
+        }
+    }
+
+    public string MedicalHistoryError
+    {
+        get => _medicalHistoryError;
+        set
+        {
+            _medicalHistoryError = value;
+            OnPropertyChanged(nameof(MedicalHistoryError));
+        }
+    }
+
     public ICommand AddPatientCommand { get; }
     public ICommand CancelCommand { get; }
 
@@ -110,7 +199,7 @@ public class AddPatientViewModel : ViewModelBase
     {
         _patientRepository = patientRepository;
 
-        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
+        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand, CanExecuteAddPatientCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
     }
 
@@ -119,6 +208,18 @@ public class AddPatientViewModel : ViewModelBase
         _patientRepository.Add(new Patient(_firstName, _lastName, _jmbg, _username, _password, new MedicalRecord(int.Parse(_height), int.Parse(_weight))));
        
         Application.Current.Windows[1]?.Close();
+    }
+
+    private bool CanExecuteAddPatientCommand(object obj)
+    {
+        return !string.IsNullOrEmpty(_firstName) &&
+               !string.IsNullOrEmpty(_lastName) &&
+               !string.IsNullOrEmpty(_jmbg) &&
+               !string.IsNullOrEmpty(_username) &&
+               !string.IsNullOrEmpty(_password) &&
+               !string.IsNullOrEmpty(_height) &&
+               !string.IsNullOrEmpty(_weight) &&
+               !string.IsNullOrEmpty(_medicalHistory);
     }
 
     private void ExecuteCancelCommand(object obj)
