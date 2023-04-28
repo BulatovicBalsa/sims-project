@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Doctor;
+using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace Hospital.Models.Examination
         public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
         public bool IsOperation { get; set; }
         public string Anamnesis { get; set; }
-
-        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start)
+        public Room Room { get; set; }
+        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room)
         {
             Doctor = doctor;
             Patient = patient;
@@ -27,6 +28,7 @@ namespace Hospital.Models.Examination
             IsOperation = isOperation;
             Id = Guid.NewGuid().ToString();
             Anamnesis = "";
+            Room = room;
         }
 
         public Examination()

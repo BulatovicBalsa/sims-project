@@ -18,6 +18,7 @@ namespace Hospital.Repositories.Examinaton
     using Hospital.Repositories.Doctor;
     using Hospital.Repositories.Patient;
     using Hospital.Exceptions;
+    using Hospital.Repositories.Manager;
 
     public sealed class ExaminationReadMapper : ClassMap<Examination>
     {
@@ -56,6 +57,17 @@ namespace Hospital.Repositories.Examinaton
                 // Retrieve the Patient object based on the ID
                 Patient patient = new PatientRepository().GetById(patientId) ?? throw new KeyNotFoundException($"Patient with ID {patientId} not found");
                 return patient;
+            }
+        }
+
+        public class RoomTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            {
+                string roomId = inputText.Trim();
+                // Retrieve the Room object based on the ID
+                Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Patient with ID {roomId} not found");
+                return room;
             }
         }
     }
