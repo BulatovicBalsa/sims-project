@@ -31,6 +31,8 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Doctor).Index(3).TypeConverter<DoctorTypeConverter>();
             Map(examination => examination.Patient).Index(4).TypeConverter<PatientTypeConverter>();
             Map(examination => examination.Anamnesis).Index(5);
+            
+            Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -66,7 +68,7 @@ namespace Hospital.Repositories.Examinaton
             {
                 string roomId = inputText.Trim();
                 // Retrieve the Room object based on the ID
-                Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Patient with ID {roomId} not found");
+                Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
                 return room;
             }
         }
@@ -82,6 +84,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Doctor.Id).Index(3);
             Map(examination => examination.Patient.Id).Index(4);
             Map(examination => examination.Anamnesis).Index(5);
+            Map(examination => examination.Room.Id).Index(6);
         }
     }
 
