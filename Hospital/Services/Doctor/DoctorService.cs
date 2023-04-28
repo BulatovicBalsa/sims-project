@@ -1,7 +1,9 @@
 ﻿using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,12 @@ namespace Hospital.Coordinators
     {
         private readonly ExaminationRepository _examinationRepository;
         private readonly PatientRepository _patientRepository;
-
+        private readonly RoomRepository _roomRepository;
         public DoctorService()
         {
             _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
             _patientRepository = new PatientRepository();
+            _roomRepository = new RoomRepository();
         }
 
         public List<Patient> GetViewedPatients(Doctor doctor)
@@ -63,6 +66,11 @@ namespace Hospital.Coordinators
         public void DeleteExamination(Examination examination)
         {
             _examinationRepository.Delete(examination, false);
+        }
+
+        public List<Room> GetAllRooms()
+        {
+            return _roomRepository.GetAll();
         }
     }
 }
