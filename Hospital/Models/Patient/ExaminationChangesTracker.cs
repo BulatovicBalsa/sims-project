@@ -17,7 +17,10 @@ namespace Hospital.Models.Patient
             _examinationChangesTrackerRepository = examinationChangesTrackerRepository;
         }
 
-        public ExaminationChangesTracker() { }
+        public ExaminationChangesTracker() 
+        {
+            _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
+        }
 
         public void Add(PatientExaminationLog log)
         {

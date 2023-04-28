@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="Hospital.ViewModels"
-        xmlns:local="clr-namespace:Hospital.Views" xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PatientViewModel}"
         mc:Ignorable="d"
         Title="PatientView" Height="450" Width="800"
         WindowStyle="None"
@@ -92,6 +90,12 @@
                     <Button x:Name="BtnDeleteExamination"
                             Content="Delete Examination"
                             Margin="5" Click="BtnDeleteExamination_Click"/>
+                    <Button x:Name="BtnFindExaminations"
+                    Content="Find Examinations"
+                    Margin="10,5,5,5"
+                    Padding="10,0"
+                    FontWeight="Bold"
+                    Click="BtnFindExaminations_Click"/>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
