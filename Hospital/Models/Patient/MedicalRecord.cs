@@ -159,5 +159,10 @@ namespace Hospital.Models.Patient
 
             return copy;
         }
+
+        public string GetMedicalHistoryString()
+        {
+            return string.Join(", ", MedicalHistory);
+        }
     }
 }
