@@ -23,28 +23,28 @@
 
         <Label Content="Weight:" Grid.Row="0" Grid.Column="0" Margin="5"/>
         <TextBox x:Name="WeightTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding Weight}" Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
-        <Button x:Name="ChangeWeightButton" Content="Change" Margin="10 0" Width="50" Height="25.96" Click="ChangeWeightButton_Click" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"/>
+        <Button x:Name="ChangeWeightButton" Content="Change" Margin="10 0" Width="50" Height="25.96" Command="{Binding ChangeWeightCommand}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"/>
 
         <Label Content="Height:" Grid.Row="1" Grid.Column="0" Margin="5"/>
         <TextBox x:Name="HeightTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding Height}" Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"/>
-        <Button x:Name="ChangeHeightButton" Content="Change" Margin="10 0" Width="50" Height="25.96" Click="ChangeHeightButton_Click" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"/>
+        <Button x:Name="ChangeHeightButton" Content="Change" Margin="10 0" Width="50" Height="25.96" Command="{Binding ChangeHeightCommand}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"/>
 
         <Label Content="Allergies:" Grid.Row="2" Grid.Column="0" Margin="5"/>
-        <ListBox x:Name="AllergiesListBox" ItemsSource="{Binding Allergies}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <ListBox x:Name="AllergiesListBox" ItemsSource="{Binding Allergies, Mode=TwoWay}" SelectedItem="{Binding SelectedAllergy}" Grid.Row="2" Grid.Column="1" Margin="5"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2" Margin="5">
-            <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddAllergyButton_Click"/>
-            <Button x:Name="UpdateAllergyButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Click="UpdateAllergyButton_Click"/>
-            <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Click="DeleteAllergyButton_Click"/>
+            <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddAllergyCommand}"/>
+            <Button x:Name="UpdateAllergyButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Command="{Binding UpdateAllergyCommand}"/>
+            <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Command="{Binding DeleteAllergyCommand}"/>
         </StackPanel>
 
         <Label Content="Medical History:" Grid.Row="3" Grid.Column="0" Margin="5"/>
-        <ListBox x:Name="MedicalHistoryListBox" ItemsSource="{Binding MedicalHistory}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <ListBox x:Name="MedicalHistoryListBox" ItemsSource="{Binding MedicalHistory, Mode=TwoWay}" SelectedItem="{Binding SelectedMedicalCondition}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
-            <Button x:Name="AddMedicalConditionButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Click="AddMedicalConditionButton_Click"/>
-            <Button x:Name="UpdateMedicalConditionButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Click="UpdateMedicalConditionButton_Click"/>
-            <Button x:Name="DeleteMedicalConditionButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Click="DeleteMedicalConditionButton_Click"/>
+            <Button x:Name="AddMedicalConditionButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddMedicalConditionCommand}"/>
+            <Button x:Name="UpdateMedicalConditionButton" Content="Update" Margin="10 0" Width="50" Height="25.96" Command="{Binding UpdateMedicalConditionCommand}"/>
+            <Button x:Name="DeleteMedicalConditionButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Command="{Binding DeleteMedicalConditionCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

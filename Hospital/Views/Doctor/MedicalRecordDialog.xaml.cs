@@ -23,10 +23,10 @@ namespace Hospital.Views
             InitializeComponent();
             _patient = patient;
 
-            ConfigDialog(isEditable);
+            ConfigWindow(isEditable);
         }
 
-        private void ConfigDialog(bool isEditable)
+        private void ConfigWindow(bool isEditable)
         {
             var page = new MedicalRecordPage(_patient, isEditable);
             MedicalRecordFrame.Navigate(page);

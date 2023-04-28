@@ -1,4 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <!--Background Colors-->
+    <Color x:Key="PrimaryBackground1">#a1ffce</Color>
+    <Color x:Key="PrimaryBackground2">#faffd1</Color>
+
+    <!--Font Colors-->
+    <SolidColorBrush x:Key="PrimaryFont" Color="White"/>
+    <SolidColorBrush x:Key="SecondaryFont" Color="Black"/>
+    <SolidColorBrush x:Key="ErrorFont" Color="Red"/>
 </ResourceDictionary>
