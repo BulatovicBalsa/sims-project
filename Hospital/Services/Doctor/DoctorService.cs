@@ -68,7 +68,7 @@ namespace Hospital.Coordinators
             _examinationRepository.Delete(examination, false);
         }
 
-        public List<Room> GetAllRooms()
+        public List<Room> GetRoomsForExamination()
         {
             var allRooms = _roomRepository.GetAll();
             return allRooms.Where(room => room.Type == Room.RoomType.OperatingRoom || room.Type == Room.RoomType.ExaminationRoom).ToList();

@@ -23,7 +23,7 @@ namespace Hospital.ViewModels
         private bool _isUpdate = false;
         private ObservableCollection<Examination> _examinationCollection;
         private Examination? _examinationToChange = null;
-        private readonly DoctorService _doctorService = new DoctorService();
+        private readonly DoctorService _doctorService = new();
 
         private bool _isOperation;
 
@@ -94,7 +94,7 @@ namespace Hospital.ViewModels
         public Room? SelectedRoom
         {
             get { return _selectedRoom; }
-            set { _selectedRoom = value; }
+            set { _selectedRoom = value; OnPropertyChanged(nameof(SelectedRoom)); }
         }
 
 
@@ -109,7 +109,7 @@ namespace Hospital.ViewModels
 
             Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
             PossibleTimes = new ObservableCollection<TimeOnly>(getPossibleTimes());
-            Rooms = new ObservableCollection<Room>(_doctorService.GetAllRooms());
+            Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
             fillForm();
         }
 
@@ -118,8 +118,9 @@ namespace Hospital.ViewModels
         {
             SelectedDate = _examinationToChange is null ? DateTime.Now : _examinationToChange.Start;
             IsOperation = _examinationToChange is null ? false : _examinationToChange.IsOperation;
-            SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
             SelectedTime = _examinationToChange is null ? null : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
+            SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
+            SelectedRoom = _examinationToChange is null ? null : _examinationToChange.Room;
 
             ButtonContent = _examinationToChange is null ? "Create" : "Update";
 
