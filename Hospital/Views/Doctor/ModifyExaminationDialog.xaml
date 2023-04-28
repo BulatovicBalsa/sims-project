@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -25,11 +26,14 @@
         
         <Label Grid.Row="1" Grid.Column="0" Content="Examinaiton Date:" />
         <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
+        
+        <Label Grid.Row="2" Grid.Column="0" Content="Examination Time:"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" ></ComboBox>
+        
+        <Label Grid.Row="3" Grid.Column="0" Content="Is Operation:" />
+        <CheckBox Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Is Operation:" />
-        <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
-
-        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
+        <Button x:Name="ConfirmButton" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
 
     </Grid>
 </Window>
