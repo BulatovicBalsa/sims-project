@@ -13,6 +13,7 @@ namespace Hospital.ViewModels.Nurse.Patients
     public class UpdatePatientViewModel : ViewModelBase
     {
         private readonly PatientRepository _patientRepository;
+        private Patient _patientToUpdate;
         private string _firstName;
         private string _height;
         private string _jmbg;
@@ -107,7 +108,21 @@ namespace Hospital.ViewModels.Nurse.Patients
 
         public UpdatePatientViewModel()
         {
-            _patientRepository = new PatientRepository();
+            // dummy constructor
+        }
+        public UpdatePatientViewModel(PatientRepository patientRepository, Patient selectedPatient)
+        {
+            _firstName = selectedPatient.FirstName;
+            _lastName = selectedPatient.LastName;
+            _jmbg = selectedPatient.Jmbg;
+            _username = selectedPatient.Profile.Username;
+            _password = selectedPatient.Profile.Password;
+            _height = selectedPatient.MedicalRecord.Height.ToString();
+            _weight = selectedPatient.MedicalRecord.Weight.ToString();
+            _medicalHistory = selectedPatient.MedicalRecord.GetMedicalHistoryString();
+
+            _patientToUpdate = selectedPatient;
+            _patientRepository = patientRepository;
 
             UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand);
             CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
@@ -115,7 +130,16 @@ namespace Hospital.ViewModels.Nurse.Patients
 
         private void ExecuteUpdatePatientCommand(object obj)
         {
-            //_patientRepository.Update();
+            _patientToUpdate.FirstName = _firstName;
+            _patientToUpdate.LastName = _lastName;
+            _patientToUpdate.Jmbg = _jmbg;
+            _patientToUpdate.Profile.Username = _username;
+            _patientToUpdate.Profile.Password = _password;
+            _patientToUpdate.MedicalRecord.Height = int.Parse(_height);
+            _patientToUpdate.MedicalRecord.Weight = int.Parse(_weight);
+            _patientToUpdate.MedicalRecord.MedicalHistory = _medicalHistory.Split(", ").ToList();
+
+            _patientRepository.Update(_patientToUpdate);
 
             Application.Current.Windows[1]?.Close();
         }

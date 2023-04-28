@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
@@ -25,9 +24,8 @@ public class PatientGridViewModel : ViewModelBase
 
         _patientRepository.PatientUpdated += (patient) =>
         {
-            var indexOfPatientToUpdate = _patients.IndexOf(patient);
-
-            _patients[indexOfPatientToUpdate] = patient;
+            _patients.Remove(patient);
+            _patients.Add(patient);
         };
 
         AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
@@ -70,7 +68,7 @@ public class PatientGridViewModel : ViewModelBase
     private void ExecuteUpdatePatientCommand(object obj)
     {
         var updatePatientDialog = new UpdatePatientView();
-        updatePatientDialog.DataContext = new UpdatePatientViewModel(_patientRepository);
+        updatePatientDialog.DataContext = new UpdatePatientViewModel(_patientRepository, _selectedPatient);
         updatePatientDialog.ShowDialog();
     }
 
