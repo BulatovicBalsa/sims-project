@@ -40,9 +40,9 @@ namespace Hospital.ViewModels
             set { _selectedDate = value; OnPropertyChanged(nameof(SelectedDate)); }
         }
 
-        private Patient _selectedPatient;
+        private Patient? _selectedPatient;
 
-        public Patient SelectedPatient
+        public Patient? SelectedPatient
         {
             get { return _selectedPatient; }
             set { _selectedPatient = value; OnPropertyChanged(nameof(SelectedPatient)); }
@@ -100,6 +100,8 @@ namespace Hospital.ViewModels
             SelectedDate = _examinationToChange is null ? DateTime.Now : _examinationToChange.Start;
             IsOperation = _examinationToChange is null ? false : _examinationToChange.IsOperation;
             SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
+            SelectedTime = _examinationToChange is null ? null : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
+
             ButtonContent = _examinationToChange is null ? "Create" : "Update";
 
             ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
@@ -136,8 +138,7 @@ namespace Hospital.ViewModels
 
         private Examination? createExaminationFromForm()
         {
-            Patient? patient = SelectedPatient as Patient;
-            if (patient == null)
+            if (SelectedPatient is null)
             {
                 MessageBox.Show("You must select patient");
                 return null;
@@ -159,7 +160,7 @@ namespace Hospital.ViewModels
             DateTime startDate = SelectedDate.GetValueOrDefault();
             startDate = startDate.Add(startTime.ToTimeSpan());
 
-            return new Examination(_doctor, patient, IsOperation, startDate);
+            return new Examination(_doctor, SelectedPatient, IsOperation, startDate);
         }
 
         private void updateExamination(Examination examination)
