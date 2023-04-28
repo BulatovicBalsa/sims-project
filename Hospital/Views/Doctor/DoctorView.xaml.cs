@@ -33,16 +33,17 @@ namespace Hospital.Views
 
         public DoctorView(Doctor doctor)
         {
+            isUserInput = false;
+            _viewModel = new DoctorViewModel(doctor);
+
             ConfigWindow();
 
             InitializeComponent();
-
-            DataContext = new DoctorViewModel(doctor);
         }
 
         private void ConfigWindow()
         {
-            isUserInput = false;
+            DataContext = _viewModel;
             SizeToContent = SizeToContent.Height;
         }
 
