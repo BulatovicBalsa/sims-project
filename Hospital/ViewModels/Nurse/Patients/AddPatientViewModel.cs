@@ -103,7 +103,12 @@ public class AddPatientViewModel : ViewModelBase
 
     public AddPatientViewModel()
     {
-        _patientRepository = new PatientRepository();
+        // dummy constructor
+    }
+
+    public AddPatientViewModel(PatientRepository patientRepository)
+    {
+        _patientRepository = patientRepository;
 
         AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
