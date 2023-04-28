@@ -10,23 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse
+namespace Hospital.Views.Nurse.Patients
 {
     /// <summary>
-    /// Interaction logic for NurseView.xaml
+    /// Interaction logic for UpdatePatientView.xaml
     /// </summary>
-    public partial class NurseView : Window
+    public partial class UpdatePatientView : Window
     {
-        public NurseView()
+        public UpdatePatientView()
         {
             InitializeComponent();
         }
 
-        private void ControlBar_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnClose_OnClick(object sender, RoutedEventArgs e)
         {
-            DragMove();
+            Close();
         }
 
         private void BtnMinimize_OnClick(object sender, RoutedEventArgs e)
@@ -34,9 +35,9 @@ namespace Hospital.Views.Nurse
             WindowState = WindowState.Minimized;
         }
 
-        private void BtnClose_OnClick(object sender, RoutedEventArgs e)
+        private void ControlBar_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.Shutdown();
+            DragMove();
         }
     }
 }

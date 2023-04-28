@@ -89,6 +89,7 @@ namespace Hospital.Models.Patient
             if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{conditionType} name can't be empty");
             if (healthConditionList.Contains(conditionToAdd)) throw new ArgumentException($"{conditionToAdd} already exists in medical record");
             healthConditionList.Add(conditionToAdd);
+            
         }
 
         private void deleteHealthCondition(string selectedCondition, HealthConditionType conditionType)

@@ -1,0 +1,121 @@
+﻿<Window x:Class="Hospital.Views.Nurse.NurseMainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hospital.Views.Nurse"
+        xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse"
+        xmlns:patients="clr-namespace:Hospital.ViewModels.Nurse.Patients"
+        mc:Ignorable="d"
+        Title="NurseMainView" Height="480" Width="1000"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+    
+    <Window.DataContext>
+        <viewModel:NurseMainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type patients:PatientGridViewModel}">
+            <local:PatientGridView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border CornerRadius="15">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0"></GradientStop>
+                <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1"></GradientStop>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="15,0,0,15"
+                    Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="#4d000000"/>
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock Height="35"
+                               Margin="15,25,0,40"
+                               Text="Nurse panel"
+                               Foreground="White"
+                               FontSize="25"
+                               FontWeight="Bold"
+                               FontFamily="Montserrat"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               Opacity="1"/>
+
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientsView}"
+                                 IsChecked="True">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}">
+                        <StackPanel>
+                            <TextBlock Text="Patient admission" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}">
+                        <StackPanel>
+                            <TextBlock Text="Urgent examinations" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+            </Border>
+
+            <Border CornerRadius="0,15,15,0"
+                    Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel x:Name="ControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown"
+                                MouseEnter="ControlBar_OnMouseEnter">
+
+                        <Button x:Name="BtnClose" 
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnClose_OnClick"
+                                Content="X"
+                                Margin="3,0,3,0"/>
+
+                        <Button x:Name="BtnMaximize"
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnMaximize_OnClick"
+                                Content="O"
+                                Margin="3,0,3,0"/>
+
+                        <Button x:Name="BtnMinimize" 
+                                Style="{StaticResource ControlButton}"
+                                Click="BtnMinimize_OnClick"
+                                Content="-"
+                                Margin="3,0,3,0"/>
+
+                    </StackPanel>
+
+                    <ContentControl Content="{Binding CurrentChildView}"
+                                    Grid.Row="1"
+                                    Margin="25"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Border>
+</Window>

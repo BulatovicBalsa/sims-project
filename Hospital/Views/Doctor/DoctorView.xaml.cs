@@ -33,16 +33,19 @@ namespace Hospital.Views
 
         public DoctorView(Doctor doctor)
         {
-            isUserInput= false;
+            ConfigWindow();
 
             InitializeComponent();
 
-            _viewModel = new DoctorViewModel(doctor);
-            DataContext = _viewModel;
+            DataContext = new DoctorViewModel(doctor);
+        }
+
+        private void ConfigWindow()
+        {
+            isUserInput = false;
             SizeToContent = SizeToContent.Height;
         }
 
-        
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();

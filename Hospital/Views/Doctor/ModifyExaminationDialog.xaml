@@ -1,4 +1,5 @@
-﻿<Window x:Class="Hospital.Views.ExaminationDialog"
+﻿<Window x:Class="Hospital.Views.ModifyExaminationDialog"
+        x:Name="ModifyExaminationDialogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -20,15 +21,15 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Choose Patient:" />
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="PatientComboBox" />
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="PatientComboBox" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" />
         
         <Label Grid.Row="1" Grid.Column="0" Content="Examinaiton Date:" />
-        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker" />
+        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Is Operation:" />
-        <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" />
+        <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
 
-        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="Create" Click="AddExamination_Click" />
+        <Button x:Name="ConfirmButton" Grid.Row="3" Grid.Column="1" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
 
     </Grid>
 </Window>

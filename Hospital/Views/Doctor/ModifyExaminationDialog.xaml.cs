@@ -5,6 +5,7 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
+using Hospital.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,115 +25,21 @@ using System.Windows.Shapes;
 
 namespace Hospital.Views
 {
-    public partial class ExaminationDialog : Window
+    public partial class ModifyExaminationDialog : Window
     {
-        private Doctor _doctor;
-        private ObservableCollection<Examination> _examinationCollection;
-        private bool _isUpdate = false;
-        private Examination? _examinationToChange = null;
-
         private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
 
-        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection)
+        public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null)
         {
+            DataContext = new ModifyExaminationDialogViewModel(doctor, examinationCollection, examinationToChange); ;
             InitializeComponent();
+            ConfigWindow();
+        }
 
+        private void ConfigWindow()
+        {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             SizeToContent = SizeToContent.WidthAndHeight;
-            _doctor = doctor;
-            PatientComboBox.ItemsSource = GetPatients();
-            _examinationCollection = examinationCollection;
-        }
-
-        public ExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange)
-        {
-            InitializeComponent();
-
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            SizeToContent = SizeToContent.WidthAndHeight;
-            _isUpdate = true;
-            _doctor = doctor;
-            PatientComboBox.ItemsSource = GetPatients();
-            _examinationCollection = examinationCollection;
-            _examinationToChange = examinationToChange;
-            
-            fillForm(examinationToChange);
-        }
-
-        private void fillForm(Examination examinationToChange)
-        {
-            ExaminationDatePicker.SelectedDate = examinationToChange.Start;
-            IsOperation.IsChecked = examinationToChange.IsOperation;
-            PatientComboBox.SelectedItem = examinationToChange.Patient;
-            ConfirmButton.Content = "Update";
-        }
-
-        private List<Patient> GetPatients()
-        {
-            return _coordinator.GetAllPatients();
-        }
-
-        private void AddExamination_Click(object sender, RoutedEventArgs e)
-        {
-
-            var createdExamination = createExaminationFromForm();
-            if (createdExamination is null) return;
-            
-            try
-            {
-                if (_isUpdate)
-                {
-                    updateExamination(createdExamination);
-                }
-                else
-                {
-                    _coordinator.AddExamination(createdExamination);
-                    _examinationCollection.Add(createdExamination);
-                }
-            }
-            catch (Exception ex)
-            {
-                if(ex is DoctorBusyException || ex is PatientBusyException)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
-            }
-
-            DialogResult = true;
-        }
-
-        private Examination? createExaminationFromForm()
-        {
-            Patient? patient = PatientComboBox.SelectedItem as Patient;
-            if (patient == null)
-            {
-                MessageBox.Show("You must select patient");
-                return null;
-            }
-
-            DateTime? startDate = ExaminationDatePicker.SelectedDate;
-            if (startDate == null)
-            {
-                MessageBox.Show("You must select date and time");
-                return null;
-            }
-
-            bool? isOperationNullable = IsOperation.IsChecked;
-
-
-            return new Examination(_doctor, patient, isOperationNullable.GetValueOrDefault(), startDate.GetValueOrDefault());
-        }
-
-        private void updateExamination(Examination examination)
-        {
-            examination.Id = _examinationToChange.Id;
-            _coordinator.UpdateExamination(examination);
-            _examinationCollection.Clear();
-            foreach (var examinationToAdd in _coordinator.GetExaminationsForNextThreeDays(_doctor))
-            {
-                _examinationCollection.Add(examinationToAdd);
-            }
         }
     }
 }
