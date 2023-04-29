@@ -96,7 +96,6 @@
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Medical history</TextBlock>
                 <TextBox Height="40" TextWrapping="Wrap" Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Style="{StaticResource ErrorTextBlock}"/>
 
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
