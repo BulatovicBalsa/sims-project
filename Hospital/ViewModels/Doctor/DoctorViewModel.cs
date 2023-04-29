@@ -18,7 +18,7 @@ namespace Hospital.ViewModels
 {
     public class DoctorViewModel: ViewModelBase
     {
-        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
+        private readonly DoctorService _doctorService = new DoctorService();
         private readonly string _placeholder = "Search...";
         private ObservableCollection<Examination> _examinations;
 
@@ -78,8 +78,8 @@ namespace Hospital.ViewModels
 
         public DoctorViewModel(Doctor doctor) {
             _doctor = doctor;
-            Patients = new ObservableCollection<Patient>(_coordinator.GetViewedPatients(doctor));
-            Examinations = new ObservableCollection<Examination>(_coordinator.GetExaminationsForNextThreeDays(doctor));
+            Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
+            Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
             SearchBoxText = _placeholder;
 
             BtnViewMedicalRecord_Command = new RelayCommand(ViewMedicalRecord);
@@ -146,7 +146,7 @@ namespace Hospital.ViewModels
 
             try
             {
-                _coordinator.DeleteExamination(examination);
+                _doctorService.DeleteExamination(examination);
             }
             catch (DoctorNotBusyException ex)
             {
@@ -171,7 +171,7 @@ namespace Hospital.ViewModels
                 return;
             }
 
-            Patient patientOnExamination = _coordinator.GetPatient(examinationToPerform);
+            Patient patientOnExamination = _doctorService.GetPatient(examinationToPerform);
 
             /*if (!examination.IsPerfomable())
             {

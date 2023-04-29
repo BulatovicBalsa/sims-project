@@ -17,7 +17,7 @@ namespace Hospital.ViewModels
     public class MedicalRecordPageViewModel : ViewModelBase
     {
 
-        private readonly DoctorCoordinator _doctorCoordinator = new DoctorCoordinator();
+        private readonly DoctorService _doctorService = new DoctorService();
 
         private Patient _patient;
 
@@ -162,7 +162,7 @@ namespace Hospital.ViewModels
                 return;
             }
 
-            _doctorCoordinator.UpdatePatient(Patient);
+            _doctorService.UpdatePatient(Patient);
             refreshHealthConditionCollection(conditionType);
         }
 
@@ -189,7 +189,7 @@ namespace Hospital.ViewModels
                 return;
             }
 
-            _doctorCoordinator.UpdatePatient(Patient);
+            _doctorService.UpdatePatient(Patient);
             refreshHealthConditionCollection(conditionType);
             
         }
@@ -216,7 +216,7 @@ namespace Hospital.ViewModels
                 return;
             }
 
-            _doctorCoordinator.UpdatePatient(Patient);
+            _doctorService.UpdatePatient(Patient);
             refreshHealthConditionCollection(conditionType);
         }
 
@@ -235,7 +235,7 @@ namespace Hospital.ViewModels
                 MessageBox.Show(ex.Message);
                 return;
             }
-            _doctorCoordinator.UpdatePatient(Patient);
+            _doctorService.UpdatePatient(Patient);
             MessageBox.Show("Succeed");
         }
 

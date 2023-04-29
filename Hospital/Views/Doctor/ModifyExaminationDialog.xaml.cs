@@ -27,8 +27,6 @@ namespace Hospital.Views
 {
     public partial class ModifyExaminationDialog : Window
     {
-        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
-
         public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null)
         {
             DataContext = new ModifyExaminationDialogViewModel(doctor, examinationCollection, examinationToChange); ;

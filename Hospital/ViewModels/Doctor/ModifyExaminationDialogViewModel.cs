@@ -22,7 +22,7 @@ namespace Hospital.ViewModels
         private bool _isUpdate = false;
         private ObservableCollection<Examination> _examinationCollection;
         private Examination? _examinationToChange = null;
-        private readonly DoctorCoordinator _coordinator = new DoctorCoordinator();
+        private readonly DoctorService _doctorService = new DoctorService();
 
         private bool _isOperation;
 
@@ -32,17 +32,17 @@ namespace Hospital.ViewModels
             set { _isOperation = value; OnPropertyChanged(nameof(IsOperation)); }
         }
 
-        private DateTime _selectedDate;
+        private DateTime? _selectedDate;
 
-        public DateTime SelectedDate
+        public DateTime? SelectedDate
         {
             get { return _selectedDate; }
             set { _selectedDate = value; OnPropertyChanged(nameof(SelectedDate)); }
         }
 
-        private Patient _selectedPatient;
+        private Patient? _selectedPatient;
 
-        public Patient SelectedPatient
+        public Patient? SelectedPatient
         {
             get { return _selectedPatient; }
             set { _selectedPatient = value; OnPropertyChanged(nameof(SelectedPatient)); }
@@ -64,6 +64,21 @@ namespace Hospital.ViewModels
             set { _buttonContent = value; OnPropertyChanged(nameof(ButtonContent)); }
         }
 
+        private TimeOnly? _selectedTime;
+
+        public TimeOnly? SelectedTime
+        {
+            get { return _selectedTime; }
+            set { _selectedTime = value; OnPropertyChanged(nameof(SelectedTime)); }
+        }
+
+        private ObservableCollection<TimeOnly> _possibleTimes;
+
+        public ObservableCollection<TimeOnly> PossibleTimes
+        {
+            get { return _possibleTimes; }
+            set { _possibleTimes = value; OnPropertyChanged(nameof(PossibleTimes)); }
+        }
 
         public ICommand ModifyExaminationCommand { get; set; }
 
@@ -74,7 +89,8 @@ namespace Hospital.ViewModels
             _examinationCollection = examinationCollection;
             _examinationToChange = examinationToChange;
 
-            Patients = new ObservableCollection<Patient>(_coordinator.GetAllPatients());
+            Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
+            PossibleTimes = new ObservableCollection<TimeOnly>(getPossibleTimes());
             fillForm();
         }
 
@@ -84,6 +100,8 @@ namespace Hospital.ViewModels
             SelectedDate = _examinationToChange is null ? DateTime.Now : _examinationToChange.Start;
             IsOperation = _examinationToChange is null ? false : _examinationToChange.IsOperation;
             SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
+            SelectedTime = _examinationToChange is null ? null : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
+
             ButtonContent = _examinationToChange is null ? "Create" : "Update";
 
             ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
@@ -102,7 +120,7 @@ namespace Hospital.ViewModels
                 }
                 else
                 {
-                    _coordinator.AddExamination(createdExamination);
+                    _doctorService.AddExamination(createdExamination);
                     _examinationCollection.Add(createdExamination);
                 }
             }
@@ -120,29 +138,51 @@ namespace Hospital.ViewModels
 
         private Examination? createExaminationFromForm()
         {
-            Patient? patient = SelectedPatient as Patient;
-            if (patient == null)
+            if (SelectedPatient is null)
             {
                 MessageBox.Show("You must select patient");
                 return null;
             }
 
-            DateTime? startDate = SelectedDate;
-            if (startDate == null)
+            if (SelectedDate is null)
             {
-                MessageBox.Show("You must select date and time");
+                MessageBox.Show("You must select date");
                 return null;
             }
 
-            return new Examination(_doctor, patient, IsOperation, startDate.GetValueOrDefault());
+            if (SelectedTime is null)
+            {
+                MessageBox.Show("You must select time");
+                return null;
+            }
+
+            TimeOnly startTime = SelectedTime.GetValueOrDefault();
+            DateTime startDate = SelectedDate.GetValueOrDefault();
+            startDate = startDate.Add(startTime.ToTimeSpan());
+
+            return new Examination(_doctor, SelectedPatient, IsOperation, startDate);
         }
 
         private void updateExamination(Examination examination)
         {
             examination.Id = _examinationToChange.Id;
-            _coordinator.UpdateExamination(examination);
+            _doctorService.UpdateExamination(examination);
             _examinationCollection.Clear();
-            _coordinator.GetExaminationsForNextThreeDays(_doctor).ForEach(examination => _examinationCollection.Add(examination));
+            _doctorService.GetExaminationsForNextThreeDays(_doctor).ForEach(examination => _examinationCollection.Add(examination));
+        }
+
+        private List<TimeOnly> getPossibleTimes()
+        {
+            List<TimeOnly> possibleTimes = new List<TimeOnly>();
+
+            for (int hour = 0; hour <= 23; hour++)
+            {
+                for (int minute = 0; minute < 60; minute += 15)
+                {
+                    possibleTimes.Add(new TimeOnly(hour, minute));
+                }
+            }
+            return possibleTimes;
         }
     }
 }
