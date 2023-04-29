@@ -94,7 +94,7 @@
                 <TextBox Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding WeightError, Mode=OneWay}"/>
 
-                <TextBlock Style="{StaticResource MainTextBlock}">Medical history</TextBlock>
+                <TextBlock Style="{StaticResource MainTextBlock}">Medical history (format: str1, str2,...)</TextBlock>
                 <TextBox Height="40" TextWrapping="Wrap" Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <StackPanel Orientation="Horizontal"
