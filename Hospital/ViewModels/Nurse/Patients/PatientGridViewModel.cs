@@ -60,15 +60,21 @@ public class PatientGridViewModel : ViewModelBase
 
     private void ExecuteAddPatientCommand (object obj)
     {
-        var addPatientDialog = new AddPatientView();
-        addPatientDialog.DataContext = new AddUpdatePatientViewModel(_patientRepository);
+        var addPatientDialog = new AddPatientView
+        {
+            DataContext = new AddUpdatePatientViewModel(_patientRepository)
+        };
+
         addPatientDialog.ShowDialog();
     }
 
     private void ExecuteUpdatePatientCommand(object obj)
     {
-        var updatePatientDialog = new UpdatePatientView();
-        updatePatientDialog.DataContext = new AddUpdatePatientViewModel(_patientRepository, _selectedPatient);
+        var updatePatientDialog = new UpdatePatientView
+        {
+            DataContext = new AddUpdatePatientViewModel(_patientRepository, _selectedPatient)
+        };
+
         updatePatientDialog.ShowDialog();
     }
 
