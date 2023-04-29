@@ -78,19 +78,20 @@ namespace Hospital.ViewModels
 
         private void SortByDate()
         {
-            Examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Start));
+            _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Start));
         }
         private void SortByDoctor()
         {
-            Examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.LastName));
+            _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.LastName));
         }
         private void SortBySpecialization()
         {
-            Examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.Specialization));
+            _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.Specialization));
         }
         private void FilterExaminations()
         {
-            Examinations = new ObservableCollection<Examination>(_examinations.Where(examinations => examinations.Anamnesis.Contains(SearchText)));
+            _examinations = new ObservableCollection<Examination>(_patientMedicalRecordService.GetPatientExaminations(_patient));
+            _examinations = new ObservableCollection<Examination>(_examinations.Where(examinations => examinations.Anamnesis.Contains(SearchText)));
         }
     }
 }
