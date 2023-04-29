@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Patient;
@@ -9,17 +10,16 @@ namespace Hospital.ViewModels.Nurse.Patients;
 public class AddUpdatePatientViewModel : ViewModelBase
 {
     private readonly PatientRepository _patientRepository;
-    private Patient _patientToUpdate;
     private string _firstName;
     private string _height;
     private string _heightError;
     private string _jmbg;
     private string _jmbgError;
     private string _lastName;
-    private string _medicalHistory;
-    private string _medicalHistoryError;
+    private string _medicalHistory = "";
     private string _password;
     private string _passwordError;
+    private readonly Patient? _patientToUpdate;
     private string _username;
     private string _usernameError;
     private string _weight;
@@ -43,14 +43,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
         _patientToUpdate = selectedPatient;
         _patientRepository = patientRepository;
 
-        _firstName = selectedPatient.FirstName;
-        _lastName = selectedPatient.LastName;
-        _jmbg = selectedPatient.Jmbg;
-        _username = selectedPatient.Profile.Username;
-        _password = selectedPatient.Profile.Password;
-        _height = selectedPatient.MedicalRecord.Height.ToString();
-        _weight = selectedPatient.MedicalRecord.Weight.ToString();
-        _medicalHistory = selectedPatient.MedicalRecord.GetMedicalHistoryString();
+        SetViewModelProperties(selectedPatient);
 
         UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteAddUpdatePatientCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
@@ -186,65 +179,51 @@ public class AddUpdatePatientViewModel : ViewModelBase
         }
     }
 
-    public string MedicalHistoryError
-    {
-        get => _medicalHistoryError;
-        set
-        {
-            _medicalHistoryError = value;
-            OnPropertyChanged(nameof(MedicalHistoryError));
-        }
-    }
-
     public ICommand AddPatientCommand { get; }
     public ICommand UpdatePatientCommand { get; }
     public ICommand CancelCommand { get; }
 
+    private void SetViewModelProperties(Patient selectedPatient)
+    {
+        FirstName = selectedPatient.FirstName;
+        LastName = selectedPatient.LastName;
+        Jmbg = selectedPatient.Jmbg;
+        Username = selectedPatient.Profile.Username;
+        Password = selectedPatient.Profile.Password;
+        Height = selectedPatient.MedicalRecord.Height.ToString();
+        Weight = selectedPatient.MedicalRecord.Weight.ToString();
+        MedicalHistory = selectedPatient.MedicalRecord.GetMedicalHistoryString();
+    }
+
     private void ExecuteAddPatientCommand(object obj)
     {
-        if (Jmbg.Length != 13)
-            JmbgError = "* JMBG needs to have exactly 13 digits";
-        else if (!_jmbg.All(char.IsDigit))
-            JmbgError = "* JMBG can contain only digits";
-        else
-            JmbgError = "";
+        CheckInputErrors();
 
-        if (Username.Length < 4)
-            UsernameError = "* Username needs to have at least 4 characters";
-        else
-            UsernameError = "";
-
-        if (Password.Length < 4)
-            PasswordError = "* Username needs to have at least 4 characters";
-        else
-            PasswordError = "";
-
-        if (!int.TryParse(Height, out _))
-            HeightError = "* Height needs to be a numeric value";
-        else if (int.Parse(Height) < 30 || int.Parse(Height) > 250)
-            HeightError = "* Invalid height";
-        else
-            HeightError = "";
-
-        if (!int.TryParse(Weight, out _))
-            WeightError = "* Weight needs to be a numeric value";
-        else if (int.Parse(Weight) < 1 || int.Parse(Weight) > 200)
-            WeightError = "* Invalid weight";
-        else
-            WeightError = "";
-
-        if (!string.IsNullOrEmpty(JmbgError) || !string.IsNullOrEmpty(UsernameError) ||
-            !string.IsNullOrEmpty(PasswordError) || !string.IsNullOrEmpty(HeightError) ||
-            !string.IsNullOrEmpty(WeightError))
+        if (ErrorHappened())
             return;
 
         _patientRepository.Add(new Patient(FirstName, LastName, Jmbg, Username, Password,
-            new MedicalRecord(int.Parse(Height), int.Parse(Weight))));
+            new MedicalRecord(int.Parse(Height), int.Parse(Weight), new List<string>(),
+                MedicalHistory.Split(", ").ToList())));
 
-        Application.Current.Windows[1]?.Close();
+        CloseDialog();
     }
 
     private void ExecuteUpdatePatientCommand(object obj)
+    {
+        CheckInputErrors();
+
+        if (ErrorHappened())
+            return;
+
+        SetPatientFromProperties();
+
+        _patientRepository.Update(_patientToUpdate);
+
+        CloseDialog();
+    }
+
+    private void SetPatientFromProperties()
     {
         _patientToUpdate.FirstName = _firstName;
         _patientToUpdate.LastName = _lastName;
@@ -254,27 +233,100 @@ public class AddUpdatePatientViewModel : ViewModelBase
         _patientToUpdate.MedicalRecord.Height = int.Parse(_height);
         _patientToUpdate.MedicalRecord.Weight = int.Parse(_weight);
         _patientToUpdate.MedicalRecord.MedicalHistory = _medicalHistory.Split(", ").ToList();
+    }
 
-        _patientRepository.Update(_patientToUpdate);
-
+    private void CloseDialog()
+    {
         Application.Current.Windows[1]?.Close();
+    }
+
+    private bool ErrorHappened()
+    {
+        return !string.IsNullOrEmpty(JmbgError) || !string.IsNullOrEmpty(UsernameError) ||
+               !string.IsNullOrEmpty(PasswordError) || !string.IsNullOrEmpty(HeightError) ||
+               !string.IsNullOrEmpty(WeightError);
+    }
+
+    private void CheckInputErrors()
+    {
+        CheckJmbgErrors();
+        CheckUsernameErrors();
+        CheckPasswordErrors();
+        CheckHeightErrors();
+        CheckWeightErrors();
+    }
+
+    private void CheckWeightErrors()
+    {
+        if (!int.TryParse(Weight, out _))
+            WeightError = "* Weight needs to be a numeric value";
+        else if (int.Parse(Weight) < 1 || int.Parse(Weight) > 200)
+            WeightError = "* Invalid weight";
+        else
+            WeightError = "";
+    }
+
+    private void CheckHeightErrors()
+    {
+        if (!int.TryParse(Height, out _))
+            HeightError = "* Height needs to be a numeric value";
+        else if (int.Parse(Height) < 30 || int.Parse(Height) > 250)
+            HeightError = "* Invalid height";
+        else
+            HeightError = "";
+    }
+
+    private void CheckPasswordErrors()
+    {
+        if (Password.Length < 4)
+            PasswordError = "* Username needs to have at least 4 characters";
+        else
+            PasswordError = "";
+    }
+
+    private void CheckUsernameErrors()
+    {
+        if (Username.Length < 4)
+            UsernameError = "* Username needs to have at least 4 characters";
+        else if (IsUsernameTaken())
+            UsernameError = "* Username already taken";
+        else
+            UsernameError = "";
+    }
+
+    private bool IsUsernameTaken()
+    {
+        if (_patientToUpdate != null && Username == _patientToUpdate.Profile.Username)
+            return false;
+
+        return _patientRepository.GetByUsername(Username) != null;
+    }
+
+    private void CheckJmbgErrors()
+    {
+        if (Jmbg.Length != 13)
+            JmbgError = "* JMBG needs to have exactly 13 digits";
+        else if (!_jmbg.All(char.IsDigit))
+            JmbgError = "* JMBG can contain only digits";
+        else
+            JmbgError = "";
     }
 
     private bool CanExecuteAddUpdatePatientCommand(object obj)
     {
-        var isAnyFieldNullOrEmpty = (!string.IsNullOrEmpty(FirstName) &&
-                     !string.IsNullOrEmpty(LastName) &&
-                     !string.IsNullOrEmpty(Jmbg) &&
-                     !string.IsNullOrEmpty(Username) &&
-                     !string.IsNullOrEmpty(Password) &&
-                     !string.IsNullOrEmpty(Height) &&
-                     !string.IsNullOrEmpty(Weight));
+        var isAnyFieldNullOrEmpty = !string.IsNullOrEmpty(FirstName) &&
+                                    !string.IsNullOrEmpty(LastName) &&
+                                    !string.IsNullOrEmpty(Jmbg) &&
+                                    !string.IsNullOrEmpty(Username) &&
+                                    !string.IsNullOrEmpty(Password) &&
+                                    !string.IsNullOrEmpty(Height) &&
+                                    !string.IsNullOrEmpty(Weight);
 
         return isAnyFieldNullOrEmpty;
     }
 
     private void ExecuteCancelCommand(object obj)
     {
-        Application.Current.Windows[1]?.Close();
+        CloseDialog();
     }
 }
