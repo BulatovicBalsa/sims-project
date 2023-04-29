@@ -10,6 +10,8 @@ namespace Hospital.ViewModels.Nurse.Patients;
 public class AddUpdatePatientViewModel : ViewModelBase
 {
     private readonly PatientRepository _patientRepository;
+    private readonly Patient? _patientToUpdate;
+    private string _allergies = "";
     private string _firstName;
     private string _height;
     private string _heightError;
@@ -19,7 +21,6 @@ public class AddUpdatePatientViewModel : ViewModelBase
     private string _medicalHistory = "";
     private string _password;
     private string _passwordError;
-    private readonly Patient? _patientToUpdate;
     private string _username;
     private string _usernameError;
     private string _weight;
@@ -47,6 +48,16 @@ public class AddUpdatePatientViewModel : ViewModelBase
 
         UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteAddUpdatePatientCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
+    }
+
+    public string Allergies
+    {
+        get => _allergies;
+        set
+        {
+            _allergies = value;
+            OnPropertyChanged(nameof(Allergies));
+        }
     }
 
     public string FirstName
@@ -192,7 +203,13 @@ public class AddUpdatePatientViewModel : ViewModelBase
         Password = selectedPatient.Profile.Password;
         Height = selectedPatient.MedicalRecord.Height.ToString();
         Weight = selectedPatient.MedicalRecord.Weight.ToString();
-        MedicalHistory = selectedPatient.MedicalRecord.GetMedicalHistoryString();
+        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory);
+        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies);
+    }
+
+    private string GetCommaSeparatedString(IEnumerable<string> words)
+    {
+        return string.Join(", ", words);
     }
 
     private void ExecuteAddPatientCommand(object obj)
@@ -203,7 +220,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
             return;
 
         _patientRepository.Add(new Patient(FirstName, LastName, Jmbg, Username, Password,
-            new MedicalRecord(int.Parse(Height), int.Parse(Weight), new List<string>(),
+            new MedicalRecord(int.Parse(Height), int.Parse(Weight), Allergies.Split(", ").ToList(),
                 MedicalHistory.Split(", ").ToList())));
 
         CloseDialog();
@@ -225,14 +242,15 @@ public class AddUpdatePatientViewModel : ViewModelBase
 
     private void SetPatientFromProperties()
     {
-        _patientToUpdate.FirstName = _firstName;
-        _patientToUpdate.LastName = _lastName;
-        _patientToUpdate.Jmbg = _jmbg;
-        _patientToUpdate.Profile.Username = _username;
-        _patientToUpdate.Profile.Password = _password;
-        _patientToUpdate.MedicalRecord.Height = int.Parse(_height);
-        _patientToUpdate.MedicalRecord.Weight = int.Parse(_weight);
-        _patientToUpdate.MedicalRecord.MedicalHistory = _medicalHistory.Split(", ").ToList();
+        _patientToUpdate.FirstName = FirstName;
+        _patientToUpdate.LastName = LastName;
+        _patientToUpdate.Jmbg = Jmbg;
+        _patientToUpdate.Profile.Username = Username;
+        _patientToUpdate.Profile.Password = Password;
+        _patientToUpdate.MedicalRecord.Height = int.Parse(Height);
+        _patientToUpdate.MedicalRecord.Weight = int.Parse(Weight);
+        _patientToUpdate.MedicalRecord.MedicalHistory = MedicalHistory.Split(", ").ToList();
+        _patientToUpdate.MedicalRecord.Allergies = Allergies.Split(", ").ToList();
     }
 
     private void CloseDialog()
