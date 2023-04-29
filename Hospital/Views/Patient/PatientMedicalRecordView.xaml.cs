@@ -17,5 +17,16 @@ namespace Hospital.Views
 
             DataContext = new PatientMedicalRecordViewModel(patient);
         }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Window dialogWindow = Window.GetWindow(this);
+            dialogWindow.Close();
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
     }
 }
