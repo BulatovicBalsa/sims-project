@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views"
         mc:Ignorable="d"
-       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ChangeDynamicalRoomEquipmentViewModel}"
+        x:Name="ChangeDynamicalRoomEquipmentWindow"
         Title="Room Equipment" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -17,13 +19,13 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" Margin="5" />
-                        <xctk:IntegerUpDown Value="{Binding Quantity}" Minimum="0" Maximum="10" />
+                        <TextBlock Text="{Binding Equipment.Name}" Margin="5" />
+                        <xctk:IntegerUpDown Value="0" Minimum="0" Maximum="{Binding Amount}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Content="Save" Grid.Row="1" Margin="5" />
+        <Button Content="Save" Grid.Row="1" Margin="5" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=ChangeDynamicalRoomEquipmentWindow}"/>
     </Grid>
 </Window>

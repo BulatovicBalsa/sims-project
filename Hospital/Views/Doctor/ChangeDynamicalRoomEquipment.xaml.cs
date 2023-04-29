@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Models.Manager;
+using Hospital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +21,9 @@ namespace Hospital.Views
     /// </summary>
     public partial class ChangeDynamicalRoomEquipment : Window
     {
-        public ChangeDynamicalRoomEquipment()
+        public ChangeDynamicalRoomEquipment(Room room)
         {
+            DataContext = new ChangeDynamicalRoomEquipmentViewModel(room);
             InitializeComponent();
         }
     }

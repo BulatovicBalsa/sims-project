@@ -2,6 +2,7 @@
 using Hospital.Coordinators;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
+using Hospital.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,8 @@ namespace Hospital.ViewModels
         private void FinishExamination(Window window)
         {
             window.Close();
+            var dialog = new ChangeDynamicalRoomEquipment(_examinationToPerform.Room);
+            dialog.ShowDialog();
         }
     }
 }

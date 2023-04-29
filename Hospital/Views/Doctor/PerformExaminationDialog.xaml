@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PerformExaminationDialogViewModel}"
         mc:Ignorable="d"
+        x:Name="PerformExaminationDialogWindow"
         Title="" Height="Auto" Width="Auto">
     <Grid>
         <Grid>
@@ -54,7 +55,7 @@
             </Grid>
 
             <Grid Grid.Row="3">
-                <Button Content="Finish" Margin="5" Command="{Binding FinishExaminationCommand}"/>
+                <Button Content="Finish" Margin="5" Command="{Binding FinishExaminationCommand}" CommandParameter="{Binding ElementName=PerformExaminationDialogWindow}"/>
             </Grid>
         </Grid>
     </Grid>
