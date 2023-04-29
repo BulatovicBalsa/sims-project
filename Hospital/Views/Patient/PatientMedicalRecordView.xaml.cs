@@ -1,4 +1,5 @@
-﻿using Hospital.ViewModels;
+﻿using Hospital.Models.Patient;
+using Hospital.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace Hospital.Views
 {
     public partial class PatientMedicalRecordView : Window
     {
-        public PatientMedicalRecordView() 
+        public PatientMedicalRecordView(Patient patient) 
         {
             InitializeComponent();
 
-            DataContext = new PatientMedicalRecordViewModel();
+            DataContext = new PatientMedicalRecordViewModel(patient);
         }
     }
 }
