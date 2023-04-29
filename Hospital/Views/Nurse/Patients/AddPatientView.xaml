@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Hospital.Views.Nurse.Patients"
              xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse.Patients"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="350"
-             Height="650"
+             d:DesignHeight="675" d:DesignWidth="350"
+             Height="675"
              Width="350"
              Background="Transparent"
              AllowsTransparency="True"
@@ -97,6 +97,9 @@
                 
                 <TextBlock Style="{StaticResource MainTextBlock}">Medical history (format: str1, str2,...)</TextBlock>
                 <TextBox Height="40" TextWrapping="Wrap" Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Allergies (format: str1, str2,...)</TextBlock>
+                <TextBox Height="40" TextWrapping="Wrap" Text="{Binding Allergies, UpdateSourceTrigger=PropertyChanged}"/>
                 
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
