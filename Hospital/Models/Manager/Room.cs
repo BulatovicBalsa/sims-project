@@ -69,4 +69,15 @@ public class Room
     {
         return $"{Name}, {Type}";
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Room objAsRoom) return false;
+        return Id == objAsRoom.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 }
