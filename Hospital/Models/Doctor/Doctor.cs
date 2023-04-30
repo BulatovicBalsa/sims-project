@@ -10,8 +10,15 @@ namespace Hospital.Models.Doctor
     {
         private const int DAYS_TO_CHECK = 3;
 
-        public Doctor(string firstName, string lastName, string jmbg, string username, string password) : base(firstName, lastName, jmbg, username, password) { }
-        public Doctor() : base() { }
+        public string Specialization { get; set; }
+        public Doctor(string firstName, string lastName, string jmbg, string username, string password,string specialization) : base(firstName, lastName, jmbg, username, password) 
+        {
+            Specialization = specialization;
+        }
+        public Doctor() : base()
+        {
+            Specialization = "Unknown";
+        }
 
         public override bool Equals(object? obj)
         {
@@ -32,7 +39,7 @@ namespace Hospital.Models.Doctor
 
         public Doctor DeepCopy()
         {
-            Doctor copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password)
+            Doctor copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password,Specialization)
             {
                 Id = this.Id
             };
