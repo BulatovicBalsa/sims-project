@@ -15,7 +15,10 @@ namespace Hospital.Models.Doctor
         {
             Specialization = specialization;
         }
-        public Doctor() : base() { }
+        public Doctor() : base()
+        {
+            Specialization = "Unknown";
+        }
 
         public override bool Equals(object? obj)
         {

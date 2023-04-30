@@ -26,7 +26,7 @@ namespace Hospital.ViewModels
             set
             {
                 _patient.MedicalRecord.Height = value;
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
         }
         public int Weight
@@ -35,7 +35,7 @@ namespace Hospital.ViewModels
             set
             {
                 _patient.MedicalRecord.Weight = value;
-                OnPropertyChanged("Weight");
+                OnPropertyChanged(nameof(Weight));
             }
         }
         public ObservableCollection<string> Allergies => new ObservableCollection<string>(_patient.MedicalRecord.Allergies);
@@ -46,7 +46,7 @@ namespace Hospital.ViewModels
             set
             {
                 _examinations = value;
-                OnPropertyChanged("Examintions");
+                OnPropertyChanged(nameof(Examinations));
             }
         }
         public string SearchText
@@ -55,7 +55,7 @@ namespace Hospital.ViewModels
             set
             {
                 _searchText = value;
-                OnPropertyChanged("SearchText");
+                OnPropertyChanged(nameof(SearchText));
                 FilterExaminations();
             }
         }
@@ -79,23 +79,23 @@ namespace Hospital.ViewModels
         private void SortByDate()
         {
             _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Start));
-            OnPropertyChanged("Examinations");
+            OnPropertyChanged(nameof(Examinations));
         }
         private void SortByDoctor()
         {
             _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.LastName));
-            OnPropertyChanged("Examinations");
+            OnPropertyChanged(nameof(Examinations));
         }
         private void SortBySpecialization()
         {
             _examinations = new ObservableCollection<Examination>(Examinations.OrderBy(examination => examination.Doctor.Specialization));
-            OnPropertyChanged("Examinations");
+            OnPropertyChanged(nameof(Examinations));
         }
         private void FilterExaminations()
         {
             _examinations = new ObservableCollection<Examination>(_patientMedicalRecordService.GetPatientExaminations(_patient));
             _examinations = new ObservableCollection<Examination>(_examinations.Where(examinations => examinations.Anamnesis.Contains(SearchText)));
-            OnPropertyChanged("Examinations");
+            OnPropertyChanged(nameof(Examinations));
         }
     }
 }
