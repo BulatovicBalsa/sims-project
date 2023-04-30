@@ -93,5 +93,11 @@ namespace Hospital.Views
             ExaminationRecommenderDialogPatientView examinationRecommenderView = new ExaminationRecommenderDialogPatientView(_patient,_viewModel);
             examinationRecommenderView.ShowDialog();
         }
+
+        private void BtnMedicalRecord_Click(object sender, RoutedEventArgs e)
+        {
+            PatientMedicalRecordView patientMedicalRecordView = new PatientMedicalRecordView(_patient);
+            patientMedicalRecordView.ShowDialog();
+        }
     }
 }

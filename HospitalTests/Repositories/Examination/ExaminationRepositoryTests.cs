@@ -47,8 +47,8 @@ namespace HospitalTests.Repositories.Examination
             _doctorRepository = new DoctorRepository();
             _patientRepository = new PatientRepository();
 
-            var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1");
-            var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2");
+            var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1","Chirurgy");
+            var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2","Microbiology");
 
             _doctorRepository.Add(doctor1);
             _doctorRepository.Add(doctor2);
@@ -69,7 +69,7 @@ namespace HospitalTests.Repositories.Examination
 
         private void CreateTestExamination()
         {
-            var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3");
+            var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3", "Microbiology");
             var patient = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3", new MedicalRecord(80, 180));
 
             _doctorRepository.Add(doctor);
