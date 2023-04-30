@@ -34,7 +34,7 @@ public partial class App : Application
                     MessageBox.Show("Login was not successful.");
                     return;
                 }
-                if(patient.IsBlocked)
+                if (patient.IsBlocked)
                 {
                     MessageBox.Show("Your profile is blocked.");
                     return;

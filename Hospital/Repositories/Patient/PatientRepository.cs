@@ -58,6 +58,9 @@ namespace Hospital.Repositories.Patient
     {
         private const string FilePath = "../../../Data/patients.csv";
 
+        public event Action<Patient> PatientAdded;
+        public event Action<Patient> PatientUpdated;
+
         public List<Patient> GetAll()
         {
             return Serializer<Patient>.FromCSV(FilePath, new PatientReadMapper());
@@ -78,6 +81,8 @@ namespace Hospital.Repositories.Patient
             var allPatients = GetAll();
             allPatients.Add(patient);
             Serializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
+
+            PatientAdded.Invoke(patient);
         }
 
         public void Update(Patient patient)
@@ -90,6 +95,8 @@ namespace Hospital.Repositories.Patient
             allPatients[indexToUpdate] = patient;
 
             Serializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
+
+            PatientUpdated.Invoke(patient);
         }
 
         public void Delete(Patient patient)
