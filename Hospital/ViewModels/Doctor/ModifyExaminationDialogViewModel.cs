@@ -17,7 +17,7 @@ using System.Windows.Input;
 
 namespace Hospital.ViewModels
 {
-    public class ModifyExaminationDialogViewModel : ViewModelDialogBase
+    public class ModifyExaminationDialogViewModel : ViewModelBase
     {
         private Doctor _doctor;
         private bool _isUpdate = false;

@@ -54,7 +54,7 @@ namespace Hospital.ViewModels
         private void FinishExamination(Window window)
         {
             window.Close();
-            var dialog = new ChangeDynamicalRoomEquipment(_examinationToPerform.Room);
+            var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room);
             dialog.ShowDialog();
         }
     }

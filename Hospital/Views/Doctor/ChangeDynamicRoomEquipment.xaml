@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hospital.Views.ChangeDynamicalRoomEquipment"
+﻿<Window x:Class="Hospital.Views.ChangeDynamicRoomEquipment"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Hospital.Views"
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ChangeDynamicalRoomEquipmentViewModel}"
-        x:Name="ChangeDynamicalRoomEquipmentWindow"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:ChangeDynamicRoomEquipmentViewModel}"
+        x:Name="ChangeDynamicRoomEquipmentWindow"
         Title="Room Equipment" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -26,6 +27,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Content="Save" Grid.Row="1" Margin="5" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=ChangeDynamicalRoomEquipmentWindow}"/>
+        <Button Content="Save" Grid.Row="1" Margin="5" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=ChangeDynamicRoomEquipmentWindow}"/>
     </Grid>
 </Window>

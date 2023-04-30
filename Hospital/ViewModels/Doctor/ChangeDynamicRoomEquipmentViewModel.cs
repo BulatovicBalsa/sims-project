@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Hospital.ViewModels
 {
-    public class ChangeDynamicalRoomEquipmentViewModel : ViewModelBase
+    public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
     {
         private ObservableCollection<EquipmentPlacement> _roomEquipments = new();
 
@@ -24,9 +24,9 @@ namespace Hospital.ViewModels
 
         public ICommand SaveCommand { get; set; }
 
-        public ChangeDynamicalRoomEquipmentViewModel(Room room)
+        public ChangeDynamicRoomEquipmentViewModel(Room room)
         {
-            RoomEquipments = new ObservableCollection<EquipmentPlacement>(room.Equipment); //room.GetDynamicalEquipment
+            RoomEquipments = new ObservableCollection<EquipmentPlacement>(room.Equipment); //room.GetDynamicEquipment
             SaveCommand = new RelayCommand<Window>(Save);
         }
 

@@ -19,11 +19,11 @@ namespace Hospital.Views
     /// <summary>
     /// Interaction logic for ChangeDynamicalRoomEquipment.xaml
     /// </summary>
-    public partial class ChangeDynamicalRoomEquipment : Window
+    public partial class ChangeDynamicRoomEquipment : Window
     {
-        public ChangeDynamicalRoomEquipment(Room room)
+        public ChangeDynamicRoomEquipment(Room room)
         {
-            DataContext = new ChangeDynamicalRoomEquipmentViewModel(room);
+            DataContext = new ChangeDynamicRoomEquipmentViewModel(room);
             InitializeComponent();
         }
     }
