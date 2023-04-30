@@ -17,7 +17,7 @@ namespace Hospital.Services
 {
     public class ExaminationRecommenderService
     {
-        private const int NUMBER_OF_SUGGESTED_EXAMINATIONS = 5;
+        private const int NUMBER_OF_SUGGESTED_EXAMINATIONS = 3;
 
         private DoctorRepository _doctorRepository;
         private ExaminationRepository _examinationRepository;
@@ -144,20 +144,44 @@ namespace Hospital.Services
         
         private List<Examination> SearchWithoutPriority(Patient patient,ExaminationSearchOptions options)
         {
+            List<Examination> examinations = GetAllPossibleExaminations(patient,options);
+            List<Examination> closestExaminations = GetClosestExaminations(examinations, options.StartTime);
+            return closestExaminations;
+        }
+
+        private List<Examination> GetClosestExaminations(List<Examination> examinations, TimeSpan desiredStartTime)
+        {
+            var differences = examinations
+           .Select(examination => new
+           {
+               Examination = examination,
+               Difference = Math.Abs((examination.Start.TimeOfDay - desiredStartTime).TotalMinutes)
+           });
+
+            List<Examination> closestExaminations = differences
+            .OrderBy(item => item.Difference)
+            .Take(NUMBER_OF_SUGGESTED_EXAMINATIONS)
+            .Select(item => item.Examination)
+            .ToList();
+
+            return closestExaminations;
+        }
+
+        private List<Examination> GetAllPossibleExaminations(Patient patient, ExaminationSearchOptions options)
+        {
             List<Examination> examinations = new List<Examination>();
             List<Doctor> doctors = GetAllDoctors();
 
             DateTime currentDate = DateTime.Now.Date.AddDays(1);
 
-            while(currentDate <= options.LatestDate)
+            while (currentDate <= options.LatestDate)
             {
-                foreach(Doctor doctor in doctors)
+                foreach (Doctor doctor in doctors)
                 {
                     if (IsExaminationTimeFree(doctor, patient, currentDate))
                     {
                         Examination examination = new Examination(doctor, patient, false, currentDate);
                         examinations.Add(examination);
-                        if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                     }
                 }
                 currentDate = currentDate.AddMinutes(1);
