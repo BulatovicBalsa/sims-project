@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
@@ -74,6 +75,9 @@ namespace HospitalTests.Repositories.Patient
         public void TestUpdate()
         {
             var patientRepository = new PatientRepository();
+            patientRepository.PatientAdded += _ => { };
+            patientRepository.PatientUpdated += _ => { };
+
             var loadedPatients = patientRepository.GetAll();
             
             var testPatient = loadedPatients[1];
@@ -87,6 +91,11 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual("TestLastName", patientRepository.GetById(testPatient.Id)?.LastName);
             Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
             Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
+        }
+
+        private void PatientRepository_PatientUpdated(Patient obj)
+        {
+            throw new NotImplementedException();
         }
 
         [TestMethod]
@@ -109,7 +118,9 @@ namespace HospitalTests.Repositories.Patient
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
             var patientRepository = new PatientRepository();
-            
+            patientRepository.PatientAdded += _ => { };
+            patientRepository.PatientUpdated += _ => { };
+
             patientRepository.Add(newPatient);
             var loadedPatients = patientRepository.GetAll();
 

@@ -8,6 +8,7 @@ using System.Xaml;
 using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 
 namespace HospitalTests.Repositories.Examination
@@ -47,8 +48,11 @@ namespace HospitalTests.Repositories.Examination
             _doctorRepository = new DoctorRepository();
             _patientRepository = new PatientRepository();
 
-            var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1","Chirurgy");
-            var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2","Microbiology");
+            _patientRepository.PatientAdded += _ => { };
+            _patientRepository.PatientUpdated += _ => { };
+
+            var doctor1 = new Doctor("Dr. Emily", "Brown", "1234567890121", "dremilybrown", "docpassword1", "Cardiologist");
+            var doctor2 = new Doctor("Dr. Jake", "Wilson", "1234567890122", "drjakewilson", "docpassword2", "Cardiologist");
 
             _doctorRepository.Add(doctor1);
             _doctorRepository.Add(doctor2);
@@ -58,30 +62,30 @@ namespace HospitalTests.Repositories.Examination
             _patientRepository.Add(patient1);
             _patientRepository.Add(patient2);
 
-            var examination1 = new Examination(doctor1, patient1, false, DateTime.Now.AddHours(30));
-            var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40));
-            var examination3 = new Examination(doctor2, patient1, true, DateTime.Now.AddHours(50));
+            var examination1 = new Examination(doctor1, patient1, false, DateTime.Now.AddHours(30), new RoomRepository().GetAll()[0]);
+            var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40), new RoomRepository().GetAll()[0]);
+            var examination3 = new Examination(doctor2, patient1, true, DateTime.Now.AddHours(50), new RoomRepository().GetAll()[0]);
 
-            _examinationRepository.Add(examination1,true);
+            _examinationRepository.Add(examination1, true);
             _examinationRepository.Add(examination2, true);
             _examinationRepository.Add(examination3, false);
         }
 
         private void CreateTestExamination()
         {
-            var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3", "Microbiology");
+            var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3", "Cardiologist");
             var patient = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3", new MedicalRecord(80, 180));
 
             _doctorRepository.Add(doctor);
-            _patientRepository.Add(patient);   
+            _patientRepository.Add(patient);
 
-            _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60));
+            _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60), new RoomRepository().GetAll()[0]);
         }
 
         [TestMethod]
         public void TestAdd()
         {
-            
+
             var addedExamination = _examinationRepository.GetById(_examination.Id);
             Assert.IsNotNull(addedExamination);
         }
@@ -91,7 +95,7 @@ namespace HospitalTests.Repositories.Examination
         {
             _examination.Start = _examination.Start.AddMinutes(5);
             _examination.IsOperation = true;
-                
+
             _examinationRepository.Update(_examination, false);
 
             var updatedExamination = _examinationRepository.GetById(_examination.Id);
@@ -102,7 +106,7 @@ namespace HospitalTests.Repositories.Examination
             Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
             Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
 
-            
+
             const double tolerance = 1; // 1 second
             var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
             Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
