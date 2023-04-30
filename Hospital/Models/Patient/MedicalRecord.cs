@@ -14,7 +14,6 @@ public class MedicalRecord
     private const int MIN_WEIGHT = 1;
     private const int MAX_WEIGHT = 200;
     private const int MIN_HEIGHT = 30;
-
     private const int MAX_HEIGHT = 220;
     //public List<Prescription> Prescriptions { get; set; }
 
