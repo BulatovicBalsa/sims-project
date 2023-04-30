@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PerformExaminationDialogViewModel}"
         mc:Ignorable="d"
+        x:Name="PerformExaminationDialogWindow"
         Title="" Height="Auto" Width="Auto">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -49,7 +52,10 @@
                 <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
                 <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Row="2" Grid.Column="1" Width="150"/>
                 <Button x:Name="CofirmAnamnesisButton" Content="Confirm" Grid.Column="2" Margin="5" Command="{Binding UpdateExaminationCommand}" Height="25.96"/>
+            </Grid>
 
+            <Grid Grid.Row="3">
+                <Button Content="Finish" Margin="5" Command="{Binding FinishExaminationCommand}" CommandParameter="{Binding ElementName=PerformExaminationDialogWindow}"/>
             </Grid>
         </Grid>
     </Grid>

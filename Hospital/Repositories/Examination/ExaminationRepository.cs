@@ -18,6 +18,7 @@ namespace Hospital.Repositories.Examinaton
     using Hospital.Repositories.Doctor;
     using Hospital.Repositories.Patient;
     using Hospital.Exceptions;
+    using Hospital.Repositories.Manager;
 
     public sealed class ExaminationReadMapper : ClassMap<Examination>
     {
@@ -30,6 +31,8 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Doctor).Index(3).TypeConverter<DoctorTypeConverter>();
             Map(examination => examination.Patient).Index(4).TypeConverter<PatientTypeConverter>();
             Map(examination => examination.Anamnesis).Index(5);
+            
+            Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -58,6 +61,17 @@ namespace Hospital.Repositories.Examinaton
                 return patient;
             }
         }
+
+        public class RoomTypeConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            {
+                string roomId = inputText.Trim();
+                // Retrieve the Room object based on the ID
+                Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
+                return room;
+            }
+        }
     }
 
     public sealed class ExaminationWriteMapper : ClassMap<Examination>
@@ -70,6 +84,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Doctor.Id).Index(3);
             Map(examination => examination.Patient.Id).Index(4);
             Map(examination => examination.Anamnesis).Index(5);
+            Map(examination => examination.Room.Id).Index(6);
         }
     }
 

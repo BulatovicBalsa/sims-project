@@ -119,11 +119,11 @@
 
                 <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" SelectedItem="{Binding SelectedExamination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient.Id}" Width="*"/>
-                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" Width="*"/>
-                        <DataGridTextColumn Header="End" Binding="{Binding End}" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}" Width="*"/>
+                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Room"  Binding="{Binding Room}" IsReadOnly="True" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

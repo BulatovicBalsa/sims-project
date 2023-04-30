@@ -3,6 +3,7 @@ using Hospital.Coordinators;
 using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Views;
 using System;
@@ -16,13 +17,13 @@ using System.Windows.Input;
 
 namespace Hospital.ViewModels
 {
-    public class ModifyExaminationDialogViewModel : ViewModelDialogBase
+    public class ModifyExaminationDialogViewModel : ViewModelBase
     {
         private Doctor _doctor;
         private bool _isUpdate = false;
         private ObservableCollection<Examination> _examinationCollection;
         private Examination? _examinationToChange = null;
-        private readonly DoctorService _doctorService = new DoctorService();
+        private readonly DoctorService _doctorService = new();
 
         private bool _isOperation;
 
@@ -80,6 +81,23 @@ namespace Hospital.ViewModels
             set { _possibleTimes = value; OnPropertyChanged(nameof(PossibleTimes)); }
         }
 
+        private ObservableCollection<Room> _rooms;
+
+        public ObservableCollection<Room> Rooms
+        {
+            get { return _rooms; }
+            set { _rooms = value; }
+        }
+
+        private Room? _selectedRoom;
+
+        public Room? SelectedRoom
+        {
+            get { return _selectedRoom; }
+            set { _selectedRoom = value; OnPropertyChanged(nameof(SelectedRoom)); }
+        }
+
+
         public ICommand ModifyExaminationCommand { get; set; }
 
         public ModifyExaminationDialogViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange = null)
@@ -91,6 +109,7 @@ namespace Hospital.ViewModels
 
             Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
             PossibleTimes = new ObservableCollection<TimeOnly>(getPossibleTimes());
+            Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
             fillForm();
         }
 
@@ -99,8 +118,9 @@ namespace Hospital.ViewModels
         {
             SelectedDate = _examinationToChange is null ? DateTime.Now : _examinationToChange.Start;
             IsOperation = _examinationToChange is null ? false : _examinationToChange.IsOperation;
-            SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
             SelectedTime = _examinationToChange is null ? null : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
+            SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
+            SelectedRoom = _examinationToChange is null ? null : _examinationToChange.Room;
 
             ButtonContent = _examinationToChange is null ? "Create" : "Update";
 
@@ -138,21 +158,12 @@ namespace Hospital.ViewModels
 
         private Examination? createExaminationFromForm()
         {
-            if (SelectedPatient is null)
+            if (SelectedPatient == null
+                || SelectedDate == null
+                || SelectedTime == null
+                || SelectedRoom == null)
             {
-                MessageBox.Show("You must select patient");
-                return null;
-            }
-
-            if (SelectedDate is null)
-            {
-                MessageBox.Show("You must select date");
-                return null;
-            }
-
-            if (SelectedTime is null)
-            {
-                MessageBox.Show("You must select time");
+                MessageBox.Show("You must select patient, date, time, and room");
                 return null;
             }
 
@@ -160,7 +171,7 @@ namespace Hospital.ViewModels
             DateTime startDate = SelectedDate.GetValueOrDefault();
             startDate = startDate.Add(startTime.ToTimeSpan());
 
-            return new Examination(_doctor, SelectedPatient, IsOperation, startDate);
+            return new Examination(_doctor, SelectedPatient, IsOperation, startDate, SelectedRoom);
         }
 
         private void updateExamination(Examination examination)

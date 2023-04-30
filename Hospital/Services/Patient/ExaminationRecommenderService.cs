@@ -76,7 +76,7 @@ namespace Hospital.Services
                 {
                     if(IsExaminationTimeFree(options.PreferredDoctor,patient,currentTime))
                     {
-                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime);
+                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime, null);
                         examinations.Add(examination);
                         if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                         
@@ -101,7 +101,7 @@ namespace Hospital.Services
                 {
                     if (IsExaminationTimeFree(options.PreferredDoctor, patient, currentTime))
                     {
-                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime);
+                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime, null);
                         examinations.Add(examination);
                         if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                     }
@@ -128,7 +128,7 @@ namespace Hospital.Services
                     {
                         if (IsExaminationTimeFree(doctor, patient, currentTime))
                         {
-                            Examination examination = new Examination(doctor, patient, false, currentTime);
+                            Examination examination = new Examination(doctor, patient, false, currentTime, null);
                             examinations.Add(examination);
                             if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                         }
@@ -155,7 +155,7 @@ namespace Hospital.Services
                 {
                     if (IsExaminationTimeFree(doctor, patient, currentDate))
                     {
-                        Examination examination = new Examination(doctor, patient, false, currentDate);
+                        Examination examination = new Examination(doctor, patient, false, currentDate, null);
                         examinations.Add(examination);
                         if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                     }

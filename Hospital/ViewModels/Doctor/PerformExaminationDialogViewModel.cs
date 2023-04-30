@@ -2,6 +2,7 @@
 using Hospital.Coordinators;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
+using Hospital.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,15 @@ namespace Hospital.ViewModels
         public string Jmbg { get => _patientOnExamination.Jmbg; }
 
         public ICommand UpdateExaminationCommand { get; set; }
+        public ICommand FinishExaminationCommand { get; set; }
         public PerformExaminationDialogViewModel(Examination examinationToPerform, Patient patientOnExamination)
         {
             _examinationToPerform = examinationToPerform;
             _patientOnExamination = patientOnExamination;
             Anamnesis = _examinationToPerform.Anamnesis;
+
             UpdateExaminationCommand = new RelayCommand(UpdateExamination);
+            FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
         }
 
         private void UpdateExamination()
@@ -45,6 +49,13 @@ namespace Hospital.ViewModels
             _examinationToPerform.Anamnesis = Anamnesis;
             _doctorService.UpdateExamination(_examinationToPerform);
             MessageBox.Show("Succeed");
+        }
+
+        private void FinishExamination(Window window)
+        {
+            window.Close();
+            var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room);
+            dialog.ShowDialog();
         }
     }
 }
