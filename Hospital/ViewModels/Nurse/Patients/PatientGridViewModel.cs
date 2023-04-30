@@ -29,8 +29,9 @@ public class PatientGridViewModel : ViewModelBase
         };
 
         AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
-        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteUpdatePatientCommand);
-        DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand, CanExecuteDeletePatientCommand);
+        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, IsPatientSelected);
+        DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand, IsPatientSelected);
+        ShowMedicalRecordCommand = new ViewModelCommand(ExecuteShowMedicalRecordCommand, IsPatientSelected);
     }
 
     public Patient? SelectedPatient
@@ -78,11 +79,6 @@ public class PatientGridViewModel : ViewModelBase
         updatePatientDialog.ShowDialog();
     }
 
-    private bool CanExecuteUpdatePatientCommand(object obj)
-    {
-        return _selectedPatient != null;
-    }
-
     private void ExecuteDeletePatientCommand(object obj)
     {
         _patientRepository.Delete(SelectedPatient);
@@ -90,7 +86,17 @@ public class PatientGridViewModel : ViewModelBase
         SelectedPatient = null;
     }
 
-    private bool CanExecuteDeletePatientCommand(object obj)
+    private void ExecuteShowMedicalRecordCommand(object obj)
+    {
+        var medicalRecordDialog = new MedicalRecordView
+        {
+            DataContext = new MedicalRecordViewModel(_selectedPatient.MedicalRecord)
+        };
+
+        medicalRecordDialog.ShowDialog();
+    }
+
+    private bool IsPatientSelected(object obj)
     {
         return _selectedPatient != null;
     }
