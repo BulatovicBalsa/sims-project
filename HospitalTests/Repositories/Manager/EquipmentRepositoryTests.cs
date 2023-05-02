@@ -108,4 +108,40 @@ public class EquipmentRepositoryTests
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment("0", "Nonexistent",
             Equipment.EquipmentType.Furniture)));
     }
+
+
+    public void AddDynamicEquipmentToCsv()
+    {
+        var equipment = new List<Equipment>
+        {
+            new("1", "Chair", Equipment.EquipmentType.Furniture),
+            new("2", "Operating Table",
+                Equipment.EquipmentType.OperationEquipment),
+            new("3", "Stethoscope", Equipment.EquipmentType.ExaminationEquipment),
+            new("4", "Wheelchair", Equipment.EquipmentType.HallwayEquipment),
+            new("5", "Pencil", Equipment.EquipmentType.DynamicEquipment),
+            new("6", "Paper", Equipment.EquipmentType.DynamicEquipment),
+            new("7", "Band-Aid", Equipment.EquipmentType.DynamicEquipment),
+            new("8", "Bandage", Equipment.EquipmentType.DynamicEquipment),
+            new("9", "Buckle", Equipment.EquipmentType.DynamicEquipment)
+        };
+
+        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+    }
+
+    [TestMethod]
+    public void TestGetNonDynamic()
+    {
+        AddDynamicEquipmentToCsv();
+        EquipmentRepository equipmentRepository = new EquipmentRepository();
+        Assert.AreEqual(4, equipmentRepository.GetNonDynamic().Count);
+    }
+
+    [TestMethod]
+    public void TestGetDynamic()
+    {
+        AddDynamicEquipmentToCsv();
+        EquipmentRepository equipmentRepository = new EquipmentRepository();
+        Assert.AreEqual(5, equipmentRepository.GetDynamic().Count);
+    }
 }
