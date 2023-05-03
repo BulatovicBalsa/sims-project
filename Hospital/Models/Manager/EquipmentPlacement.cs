@@ -23,6 +23,17 @@ public class EquipmentPlacement
         Equipment = equipment;
     }
 
+    public override bool Equals(object? obj)
+    {
+        if (obj == null || obj.GetType() != typeof(EquipmentPlacement))
+        {
+            return false;
+        }
+
+        var otherPlacement = (EquipmentPlacement)obj;
+        return EquipmentId == otherPlacement.EquipmentId && RoomId == otherPlacement.RoomId;
+    }
+
     public string EquipmentId { get; set; }
     public string RoomId { get; set; }
 

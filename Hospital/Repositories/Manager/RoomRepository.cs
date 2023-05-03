@@ -47,6 +47,11 @@ public class RoomRepository
         rooms.Add(room);
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+
+        foreach (var equipmentPlacement in room.Equipment)
+        {
+            EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+        }
     }
 
     public void Update(Room room)
@@ -59,6 +64,19 @@ public class RoomRepository
         rooms[indexToUpdate] = room;
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+
+        foreach (var equipmentPlacement in room.Equipment)
+        {
+            if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
+                    equipmentPlacement.EquipmentId) == null)
+            {
+                EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+            }
+            else
+            {
+                EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
+            }
+        }
     }
 
     public void Delete(Room room)

@@ -53,6 +53,11 @@ public class EquipmentPlacementRepository
         return _equipmentPlacements;
     }
 
+    public EquipmentPlacement? GetByKey(string roomId, string equipmentId)
+    {
+        return GetAll().Find(e => e.RoomId == roomId && e.EquipmentId == equipmentId);
+    }
+
     public void Add(EquipmentPlacement equipmentPlacement)
     {
         var equipmentPlacements = GetAll();
