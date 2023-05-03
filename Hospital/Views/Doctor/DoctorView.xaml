@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views"        
+        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DoctorViewModel}"
         mc:Ignorable="d"
         Title="PatientView" Height="Auto" Width="800"
         WindowStyle="None"
@@ -74,19 +75,25 @@
                 <TextBlock Grid.Row="0" Text="Your patients" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-                    <Button x:Name="BtnViewMedicalRecord"
-                            Content="View Medical Record"
-                            Margin="5" Command="{Binding BtnViewMedicalRecord_Command}"/>
+                    <TextBlock x:Name="BtnViewMedicalRecord"
+                            Text="Search patients:"
+                            Margin="5"/>
                     <TextBox x:Name="SearchBox" Text="Search..." Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
                     </TextBox>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" Width="*"/>
                         <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" Width="*"/>
                         <DataGridTextColumn Header="Jmbg" Binding="{Binding Jmbg}" Width="*"/>
+                        <DataGridTemplateColumn Header="Medical Record">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" Margin="3" Command="{Binding DataContext.BtnViewMedicalRecord_Command , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

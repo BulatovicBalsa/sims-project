@@ -82,16 +82,16 @@ namespace Hospital.ViewModels
             Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
             SearchBoxText = _placeholder;
 
-            BtnViewMedicalRecord_Command = new RelayCommand(ViewMedicalRecord);
+            BtnViewMedicalRecord_Command = new RelayCommand<string>(ViewMedicalRecord);
             BtnAddExamination_Command = new RelayCommand(AddExamination);
             BtnUpdateExamination_Command = new RelayCommand(UpdateExamination);
             BtnDeleteExamination_Command = new RelayCommand(DeleteExamination);
             BtnPerformExamination_Command = new RelayCommand(PerformExamination);
         }
 
-        private void ViewMedicalRecord()
+        private void ViewMedicalRecord(string patientId)
         {
-            Patient? patient = SelectedPatient as Patient;
+            Patient? patient = _doctorService.GetPatientById(patientId);
             if (patient == null)
             {
                 MessageBox.Show("Please select examination in order to delete it");
