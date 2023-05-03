@@ -94,7 +94,7 @@ namespace Hospital.ViewModels
         private void FilterExaminations()
         {
             _examinations = new ObservableCollection<Examination>(_patientMedicalRecordService.GetPatientExaminations(_patient));
-            _examinations = new ObservableCollection<Examination>(_examinations.Where(examinations => examinations.Anamnesis.Contains(SearchText)));
+            _examinations = new ObservableCollection<Examination>(_examinations.Where(examinations => examinations.Anamnesis.ToLower().Contains(SearchText.ToLower())));
             OnPropertyChanged(nameof(Examinations));
         }
     }
