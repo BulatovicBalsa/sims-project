@@ -28,7 +28,7 @@ namespace Hospital.Views
             InitializeComponent();
 
             _examinationRepository =
-                new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
+                new ExaminationRepository();
             _viewModel = new PatientViewModel(_examinationRepository);
             _viewModel.LoadExaminations(patient);
 

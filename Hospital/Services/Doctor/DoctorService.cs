@@ -18,7 +18,7 @@ namespace Hospital.Coordinators
 
         public DoctorService()
         {
-            _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
+            _examinationRepository = new ExaminationRepository();
             _patientRepository = new PatientRepository();
         }
 

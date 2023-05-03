@@ -78,11 +78,6 @@ namespace Hospital.Repositories.Examinaton
         private const string FilePath = "../../../Data/examination.csv";
         private readonly ExaminationChangesTracker _examinationChangesTracker;
 
-        public ExaminationRepository(ExaminationChangesTracker examinationChangesTracker)
-        { 
-            _examinationChangesTracker = examinationChangesTracker;
-        }
-
         public ExaminationRepository()
         {
             _examinationChangesTracker = new ExaminationChangesTracker();
