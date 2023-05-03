@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Serialization;
 using Hospital.Services.Manager;
 
 namespace HospitalTests.Services.Manager;
@@ -13,6 +14,7 @@ public class EquipmentFilterServiceTests
     public void SetUp()
     {
         EquipmentRepository.Instance.DeleteAll();
+        EquipmentPlacementRepository.Instance.DeleteAll();
         var filesUsed = new List<string>()
         {
             "../../../Data/equipment.csv",
@@ -127,12 +129,9 @@ public class EquipmentFilterServiceTests
 
         //equipmentPlacements.Add(new EquipmentPlacement("1010", "3004", 3));
 
-
-        var equipmentPlacementRepository = new EquipmentPlacementRepository();
-        foreach (var equipmentPlacement in equipmentPlacements)
-        {
-            equipmentPlacementRepository.Add(equipmentPlacement);
-        }
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        EquipmentPlacementRepository.Instance.GetAll();
     }
 
     [TestMethod]

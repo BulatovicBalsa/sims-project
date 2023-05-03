@@ -8,31 +8,43 @@ namespace HospitalTests.Repositories.Manager;
 [TestClass]
 public class EquipmentPlacementRepositoryTests
 {
-    [TestMethod]
-    public void TestGetAll()
+    [TestInitialize]
+    public void SetUp()
     {
-        EquipmentRepository.Instance.DeleteAll();
-        var equipmentItems = new List<EquipmentPlacement>
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        EquipmentRepository.Instance.DeleteAll(); 
+        var equipment = new List<Equipment>
+        {
+            new("1", "Chair", Equipment.EquipmentType.Furniture),
+            new("2", "Operating table",
+                Equipment.EquipmentType.OperationEquipment),
+        };
+
+        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+        
+        var equipmentPlacements = new List<EquipmentPlacement>
         {
             new("1", "1", 1),
             new("2", "2", 2)
         };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
+        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        
 
-        Assert.AreEqual(2, new EquipmentPlacementRepository().GetAll().Count);
+    }
+
+
+    [TestMethod]
+    public void TestGetAll()
+    {
+
+
+        Assert.AreEqual(2, EquipmentPlacementRepository.Instance.GetAll().Count);
     }
 
     [TestMethod]
     public void TestAdd()
     {
-        var equipmentItems = new List<EquipmentPlacement>
-        {
-            new("1", "1", 1),
-            new("2", "2", 2)
-        };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
-
-        var equipmentItemRepository = new EquipmentPlacementRepository();
+        var equipmentItemRepository = EquipmentPlacementRepository.Instance;
         equipmentItemRepository.Add(new EquipmentPlacement("3", "3", 3));
 
         Assert.AreEqual(3, equipmentItemRepository.GetAll().Count);
@@ -41,14 +53,7 @@ public class EquipmentPlacementRepositoryTests
     [TestMethod]
     public void TestUpdate()
     {
-        var equipmentItems = new List<EquipmentPlacement>
-        {
-            new("2", "1", 1),
-            new("2", "2", 2)
-        };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
-
-        var equipmentItemRepository = new EquipmentPlacementRepository();
+        var equipmentItemRepository = EquipmentPlacementRepository.Instance;
         equipmentItemRepository.Update(new EquipmentPlacement("2", "2", 3));
 
         Assert.AreEqual(3, equipmentItemRepository.GetAll()[1].Amount);
@@ -57,15 +62,18 @@ public class EquipmentPlacementRepositoryTests
     [TestMethod]
     public void TestDelete()
     {
-        var equipmentItems = new List<EquipmentPlacement>
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        var equipmentPlacements = new List<EquipmentPlacement>
         {
             new("2", "1", 1),
             new("2", "2", 2)
         };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
+        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        
 
-        var equipmentItemRepository = new EquipmentPlacementRepository();
-        equipmentItemRepository.Delete(equipmentItems[1]);
+
+        var equipmentItemRepository = EquipmentPlacementRepository.Instance;
+        equipmentItemRepository.Delete(equipmentPlacements[1]);
 
         Assert.AreEqual(1, equipmentItemRepository.GetAll().Count);
         Assert.AreEqual(1, equipmentItemRepository.GetAll()[0].Amount);
@@ -75,23 +83,7 @@ public class EquipmentPlacementRepositoryTests
     [TestMethod]
     public void TestGetAllJoinWithEquipment()
     {
-        var equipmentItems = new List<EquipmentPlacement>
-        {
-            new("1", "1", 1),
-            new("2", "2", 2)
-        };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
-
-        EquipmentRepository.Instance.DeleteAll();
-        var equipment = new List<Equipment>
-        {
-            new("1", "Chair", Equipment.EquipmentType.Furniture),
-            new("2", "Operating table",
-                Equipment.EquipmentType.OperationEquipment),
-        };
-
-        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
-        var loadedEquipmentPlacements = new EquipmentPlacementRepository().GetAll();
+        var loadedEquipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
 
         Assert.AreEqual(2, loadedEquipmentPlacements.Count);
         Assert.IsNotNull(loadedEquipmentPlacements[0].Equipment);

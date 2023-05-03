@@ -19,7 +19,7 @@ public class RoomRepository
 
     private static void PlaceEquipment(List<Room> rooms)
     {
-        var equipmentPlacements = new EquipmentPlacementRepository().GetAll();
+        var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
 
         var equipmentPlacementsByRoom =
             from equipmentPlacement in equipmentPlacements

@@ -9,6 +9,28 @@ public class EquipmentPlacementRepository
 {
     private const string FilePath = "../../../Data/equipmentItems.csv";
 
+    private static EquipmentPlacementRepository? _instance = null;
+
+    private List<EquipmentPlacement>? _equipmentPlacements = null;
+
+    private EquipmentPlacementRepository()
+    {
+
+    }
+
+    public static EquipmentPlacementRepository Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new EquipmentPlacementRepository();
+            }
+
+            return _instance;
+        }
+    }
+
     private static void JoinWithEquipment(List<EquipmentPlacement> equipmentItems)
     { 
         var allEquipment = EquipmentRepository.Instance.GetAll();
@@ -22,9 +44,13 @@ public class EquipmentPlacementRepository
 
     public List<EquipmentPlacement> GetAll()
     {
-        var equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
-        JoinWithEquipment(equipmentPlacements);
-        return equipmentPlacements;
+        if (_equipmentPlacements == null)
+        {
+            _equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
+            JoinWithEquipment(_equipmentPlacements);
+        }
+
+        return _equipmentPlacements;
     }
 
     public void Add(EquipmentPlacement equipmentPlacement)
@@ -60,5 +86,13 @@ public class EquipmentPlacementRepository
         equipmentPlacements.RemoveAt(indexToDelete);
 
         Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, FilePath);
+    }
+
+    public void DeleteAll()
+    {
+        GetAll();
+        _equipmentPlacements.Clear();
+        Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
+        _equipmentPlacements = null;
     }
 }

@@ -15,6 +15,13 @@ public class EquipmentPlacement
         RoomId = roomId;
         Amount = amount;
     }
+    public EquipmentPlacement(string equipmentId, string roomId, int amount, Equipment equipment)
+    {
+        EquipmentId = equipmentId;
+        RoomId = roomId;
+        Amount = amount;
+        Equipment = equipment;
+    }
 
     public string EquipmentId { get; set; }
     public string RoomId { get; set; }

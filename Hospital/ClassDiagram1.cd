@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Hospital.Services.Manager.EquipmentFilterService" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAQAAAAgAQAAAACAAAAAAEAAAAAQBAAAAA=</HashCode>
+      <FileName>Services\Manager\EquipmentFilterService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Models.Manager.Equipment" Collapsed="true">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Manager\Equipment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Models.Manager.EquipmentPlacement" Collapsed="true">
+    <Position X="13" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAASAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Manager\EquipmentPlacement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Models.Manager.Manager" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Manager\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Models.Manager.Room" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEgAQACASAAAAAAIAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Manager\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Repositories.Manager.EquipmentPlacementRepository" Collapsed="true">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAgAAAAAAAAAAAAAAAAAEAAAAAAgBAAAAAAAA=</HashCode>
+      <FileName>Repositories\Manager\EquipmentPlacementRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Repositories.Manager.EquipmentRepository" Collapsed="true">
+    <Position X="5.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAgBAAAAAAoA=</HashCode>
+      <FileName>Repositories\Manager\EquipmentRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Repositories.Manager.RoomRepository" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgBAAgAAAIA=</HashCode>
+      <FileName>Repositories\Manager\RoomRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hospital.Models.Manager.EquipmentOrderItem" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAASAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Manager\EquipmentOrderItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

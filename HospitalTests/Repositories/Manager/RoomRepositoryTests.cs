@@ -10,6 +10,9 @@ public class RoomRepositoryTests
     [TestMethod]
     public void TestGetAll()
     {
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        EquipmentRepository.Instance.DeleteAll();
+
         var rooms = new List<Room>
         {
             new("0", "Warehouse", Room.RoomType.Warehouse),
@@ -142,6 +145,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
+        EquipmentPlacementRepository.Instance.DeleteAll();
         var equipmentInRooms = new List<EquipmentPlacement>()
         {
             new("1", "0", 1),
@@ -149,7 +153,7 @@ public class RoomRepositoryTests
             new("1", "1", 3)
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
-
+         
         var loadedRooms = new RoomRepository().GetAll();
 
         Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
