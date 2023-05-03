@@ -7,10 +7,28 @@ namespace Hospital.Repositories.Manager;
 public class EquipmentRepository
 {
     private const string FilePath = "../../../Data/equipment.csv";
+    private static EquipmentRepository? _instance;
+
+    private List<Equipment>? _equipment;
+
+    private EquipmentRepository()
+    {
+    }
+
+    public static EquipmentRepository Instance
+    {
+        get
+        {
+            if (_instance == null) _instance = new EquipmentRepository();
+
+            return _instance;
+        }
+    }
 
     public List<Equipment> GetAll()
     {
-        return Serializer<Equipment>.FromCSV(FilePath);
+        _equipment ??= Serializer<Equipment>.FromCSV(FilePath);
+        return _equipment;
     }
 
     public List<Equipment> GetNonDynamic()
@@ -59,5 +77,13 @@ public class EquipmentRepository
         allEquipment.RemoveAt(indexToDelete);
 
         Serializer<Equipment>.ToCSV(allEquipment, FilePath);
+    }
+
+    public void DeleteAll()
+    {
+        GetAll();
+        _equipment.Clear();
+        Serializer<Equipment>.ToCSV(_equipment, FilePath);
+        _equipment = null;
     }
 }

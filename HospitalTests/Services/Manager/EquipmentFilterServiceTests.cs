@@ -12,6 +12,7 @@ public class EquipmentFilterServiceTests
     [TestInitialize]
     public void SetUp()
     {
+        EquipmentRepository.Instance.DeleteAll();
         var filesUsed = new List<string>()
         {
             "../../../Data/equipment.csv",
@@ -21,7 +22,7 @@ public class EquipmentFilterServiceTests
         foreach (var file in filesUsed) if (File.Exists(file)) File.Delete(file);
 
 
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
         var equipment = new List<Equipment>
         {
             new("1001", "Examination Table", Equipment.EquipmentType.ExaminationEquipment),
@@ -190,7 +191,7 @@ public class EquipmentFilterServiceTests
     [TestMethod]
     public void TestSelectByStringTypeOnly()
     {
-        var allEquipment = new EquipmentRepository().GetAll();
+        var allEquipment = EquipmentRepository.Instance.GetAll();
         var equipmentFilterService = new EquipmentFilterService();
         var furniture = equipmentFilterService.Select(allEquipment, "fUrNiture");
         
@@ -201,7 +202,7 @@ public class EquipmentFilterServiceTests
     [TestMethod]
     public void TestSelectByStringBothTypeAndName()
     {
-        var allEquipment = new EquipmentRepository().GetAll();
+        var allEquipment = EquipmentRepository.Instance.GetAll();
         var equipmentFilterService = new EquipmentFilterService();
         var equipmentWithF = equipmentFilterService.Select(allEquipment, "f");
 

@@ -79,7 +79,7 @@ namespace Hospital.Views.Manager
             Equipment = new ObservableCollection<Models.Manager.Equipment>();
             this.DataContext = this;
             
-            foreach (var e in new EquipmentRepository().GetAll())
+            foreach (var e in EquipmentRepository.Instance.GetAll())
             {
                 Equipment.Add(e);
             }
@@ -104,7 +104,7 @@ namespace Hospital.Views.Manager
         public void UpdateEquipmentList()
         {
             Equipment.Clear();
-            foreach (var e in new EquipmentRepository().GetAll())
+            foreach (var e in EquipmentRepository.Instance.GetAll())
             {
                 Equipment.Add(e);
             }
@@ -137,7 +137,7 @@ namespace Hospital.Views.Manager
                 }
 
                 Equipment.Clear();
-                foreach (var e in new EquipmentRepository().GetAll())
+                foreach (var e in EquipmentRepository.Instance.GetAll())
                 {
                     if (includedTypes.Contains(e.Type)) Equipment.Add(e);
                 }

@@ -11,6 +11,7 @@ public class EquipmentPlacementRepositoryTests
     [TestMethod]
     public void TestGetAll()
     {
+        EquipmentRepository.Instance.DeleteAll();
         var equipmentItems = new List<EquipmentPlacement>
         {
             new("1", "1", 1),
@@ -81,6 +82,7 @@ public class EquipmentPlacementRepositoryTests
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentItems, "../../../Data/equipmentItems.csv");
 
+        EquipmentRepository.Instance.DeleteAll();
         var equipment = new List<Equipment>
         {
             new("1", "Chair", Equipment.EquipmentType.Furniture),
@@ -89,7 +91,6 @@ public class EquipmentPlacementRepositoryTests
         };
 
         Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
-
         var loadedEquipmentPlacements = new EquipmentPlacementRepository().GetAll();
 
         Assert.AreEqual(2, loadedEquipmentPlacements.Count);

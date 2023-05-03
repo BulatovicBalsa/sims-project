@@ -11,7 +11,7 @@ public class EquipmentPlacementRepository
 
     private static void JoinWithEquipment(List<EquipmentPlacement> equipmentItems)
     { 
-        var allEquipment = new EquipmentRepository().GetAll();
+        var allEquipment = EquipmentRepository.Instance.GetAll();
 
         foreach (var equipmentPlacement in equipmentItems)
         {

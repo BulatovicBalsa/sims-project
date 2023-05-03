@@ -18,7 +18,7 @@ namespace Hospital.Services.Manager
         {
             _roomRepository = new RoomRepository();
             _equipmentPlacementRepository = new EquipmentPlacementRepository();
-            _equipmentRepository = new EquipmentRepository();
+            _equipmentRepository = EquipmentRepository.Instance;
         }
 
         public List<Equipment> GetEquipment(Room.RoomType type)

@@ -11,6 +11,7 @@ public class EquipmentRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
+        EquipmentRepository.Instance.DeleteAll();
         var equipment = new List<Equipment>
         {
             new("1", "Chair", Equipment.EquipmentType.Furniture),
@@ -26,7 +27,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestGetAll()
     {
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         var loadedEquipment = equipmentRepository.GetAll();
         Assert.AreEqual(4, loadedEquipment.Count);
@@ -39,13 +40,13 @@ public class EquipmentRepositoryTests
     {
         if (File.Exists("../../../Data/equipment.csv")) File.Delete("../../../Data/equipment.csv");
 
-        Assert.AreEqual(0, new EquipmentRepository().GetAll().Count);
+        Assert.AreEqual(0, EquipmentRepository.Instance.GetAll().Count);
     }
 
     [TestMethod]
     public void TestGetById()
     {
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.AreEqual("Stethoscope", equipmentRepository.GetById("3").Name);
         Assert.AreEqual(Equipment.EquipmentType.Furniture, equipmentRepository.GetById("1").Type);
@@ -55,7 +56,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestUpdate()
     {
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         equipmentRepository.Update(new Equipment("1", "Table", Equipment.EquipmentType.Furniture));
 
@@ -68,7 +69,7 @@ public class EquipmentRepositoryTests
     {
         var equipmentToDelete = new Equipment("2", "Operating table", Equipment.EquipmentType.OperationEquipment);
 
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         equipmentRepository.Delete(equipmentToDelete);
 
@@ -81,7 +82,7 @@ public class EquipmentRepositoryTests
     {
         var newEquipment = new Equipment("5", "C-Arm", Equipment.EquipmentType.OperationEquipment);
 
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         equipmentRepository.Add(newEquipment);
         var loadedNewEquipment = equipmentRepository.GetById("5");
@@ -94,7 +95,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestUpdateNonExistentEquipment()
     {
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Update(new Equipment("0", "Nonexistent",
             Equipment.EquipmentType.Furniture)));
@@ -103,7 +104,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestDeleteNonExistentEquipment()
     {
-        var equipmentRepository = new EquipmentRepository();
+        var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment("0", "Nonexistent",
             Equipment.EquipmentType.Furniture)));
@@ -133,7 +134,7 @@ public class EquipmentRepositoryTests
     public void TestGetNonDynamic()
     {
         AddDynamicEquipmentToCsv();
-        EquipmentRepository equipmentRepository = new EquipmentRepository();
+        EquipmentRepository equipmentRepository = EquipmentRepository.Instance;
         Assert.AreEqual(4, equipmentRepository.GetNonDynamic().Count);
     }
 
@@ -141,7 +142,7 @@ public class EquipmentRepositoryTests
     public void TestGetDynamic()
     {
         AddDynamicEquipmentToCsv();
-        EquipmentRepository equipmentRepository = new EquipmentRepository();
+        EquipmentRepository equipmentRepository = EquipmentRepository.Instance;
         Assert.AreEqual(5, equipmentRepository.GetDynamic().Count);
     }
 }
