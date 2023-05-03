@@ -2,18 +2,30 @@
 
 public class EquipmentOrderItem
 {
-    public uint Amount { get; set; }
+    public int Amount { get; set; }
     public string EquipmentId { get; set; }
 
     public string OrderId { get; set; }
 
-    public Equipment Equipment { get; set; }
+    public Equipment? Equipment { get; set; }
 
-    public EquipmentOrderItem(uint amount, string equipmentId, Equipment equipment)
+    public EquipmentOrderItem()
+    {
+        Amount = 0;
+        EquipmentId = "";
+        OrderId = "";
+    }
+
+    public EquipmentOrderItem(string orderId, int amount, string equipmentId)
     {
         Amount = amount;
         EquipmentId = equipmentId;
-        OrderId = System.Guid.NewGuid().ToString();
-        Equipment = equipment;
+        OrderId = orderId;
+    }
+
+    public EquipmentOrderItem(int amount, string equipmentId)
+    {
+        Amount = amount;
+        EquipmentId = equipmentId;
     }
 }
