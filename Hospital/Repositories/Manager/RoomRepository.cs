@@ -8,13 +8,36 @@ namespace Hospital.Repositories.Manager;
 public class RoomRepository
 {
     public const string FilePath = "../../../Data/rooms.csv";
+    private static RoomRepository? _instance;
+    private List<Room>? _rooms = null;
+
+    public static RoomRepository Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new RoomRepository();
+            }
+
+            return _instance;
+        }
+    }
+
+    private RoomRepository()
+    {
+
+    }
 
     public List<Room> GetAll()
     {
-        var rooms = Serializer<Room>.FromCSV(FilePath);
-        PlaceEquipment(rooms);
+        if (_rooms == null)
+        {
+            _rooms = Serializer<Room>.FromCSV(FilePath);
+            PlaceEquipment(_rooms);
+        }
 
-        return rooms;
+        return _rooms;
     }
 
     private static void PlaceEquipment(List<Room> rooms)
@@ -89,5 +112,13 @@ public class RoomRepository
         rooms.RemoveAt(indexToDelete);
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+    }
+
+    public void DeleteAll()
+    {
+        GetAll();
+        _rooms.Clear();
+        Serializer<Room>.ToCSV(_rooms, FilePath);
+        _rooms = null;
     }
 }

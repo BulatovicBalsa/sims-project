@@ -16,7 +16,7 @@ namespace Hospital.Services.Manager
         private EquipmentRepository _equipmentRepository;
         public EquipmentFilterService()
         {
-            _roomRepository = new RoomRepository();
+            _roomRepository = RoomRepository.Instance;
             _equipmentPlacementRepository = EquipmentPlacementRepository.Instance;
             _equipmentRepository = EquipmentRepository.Instance;
         }

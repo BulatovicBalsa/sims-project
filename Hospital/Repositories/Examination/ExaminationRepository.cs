@@ -68,7 +68,7 @@ namespace Hospital.Repositories.Examinaton
             {
                 string roomId = inputText.Trim();
                 // Retrieve the Room object based on the ID
-                Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
+                Room room = RoomRepository.Instance.GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
                 return room;
             }
         }

@@ -15,6 +15,7 @@ public class EquipmentFilterServiceTests
     {
         EquipmentRepository.Instance.DeleteAll();
         EquipmentPlacementRepository.Instance.DeleteAll();
+        RoomRepository.Instance.DeleteAll();
         var filesUsed = new List<string>()
         {
             "../../../Data/equipment.csv",
@@ -55,39 +56,7 @@ public class EquipmentFilterServiceTests
 
         foreach (var e in equipment) equipmentRepository.Add(e);
 
-        var roomRepository = new RoomRepository();
-
-        var rooms = new List<Room>()
-        {
-
-            new Room("5000","Warehouse Room", Room.RoomType.Warehouse),
-            new Room("0001","Operating Room 1", Room.RoomType.OperatingRoom),
-            new Room("0002","Operating Room 2", Room.RoomType.OperatingRoom),
-
-            new Room("1001","Examination Room 1", Room.RoomType.ExaminationRoom),
-
-            new Room("1002", "Examination Room 2", Room.RoomType.ExaminationRoom),
-
-            new Room("1003","Examination Room 3", Room.RoomType.ExaminationRoom),
-
-            new Room("1004", "Examination Room 4", Room.RoomType.ExaminationRoom),
-            new Room("2001","Waiting Room 1", Room.RoomType.WaitingRoom),
-
-
-            new Room("2002","Waiting Room 2", Room.RoomType.WaitingRoom),
-            new Room("3001","Ward Room 101", Room.RoomType.Ward),
-
-            new Room("3002","Ward Room 102", Room.RoomType.Ward),
-
-            new Room("3003", "Ward Room 103", Room.RoomType.Ward),
-
-            new Room("3004","Ward Room 104", Room.RoomType.Ward)
-        };
-
-        foreach (var room in rooms)
-        {
-            roomRepository.Add(room);
-        }
+        
 
         var equipmentPlacements = new List<EquipmentPlacement>()
         {
@@ -120,6 +89,35 @@ public class EquipmentFilterServiceTests
 
 
         };
+        
+        var rooms = new List<Room>()
+        {
+
+            new Room("5000","Warehouse Room", Room.RoomType.Warehouse),
+            new Room("0001","Operating Room 1", Room.RoomType.OperatingRoom),
+            new Room("0002","Operating Room 2", Room.RoomType.OperatingRoom),
+
+            new Room("1001","Examination Room 1", Room.RoomType.ExaminationRoom),
+
+            new Room("1002", "Examination Room 2", Room.RoomType.ExaminationRoom),
+
+            new Room("1003","Examination Room 3", Room.RoomType.ExaminationRoom),
+
+            new Room("1004", "Examination Room 4", Room.RoomType.ExaminationRoom),
+            new Room("2001","Waiting Room 1", Room.RoomType.WaitingRoom),
+
+
+            new Room("2002","Waiting Room 2", Room.RoomType.WaitingRoom),
+            new Room("3001","Ward Room 101", Room.RoomType.Ward),
+
+            new Room("3002","Ward Room 102", Room.RoomType.Ward),
+
+            new Room("3003", "Ward Room 103", Room.RoomType.Ward),
+
+            new Room("3004","Ward Room 104", Room.RoomType.Ward)
+        };
+    
+        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         // 3 beds in every ward
         foreach (var ward in rooms.Where(room => room.Type == Room.RoomType.Ward))
@@ -132,6 +130,8 @@ public class EquipmentFilterServiceTests
         EquipmentPlacementRepository.Instance.DeleteAll();
         Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
         EquipmentPlacementRepository.Instance.GetAll();
+        
+        
     }
 
     [TestMethod]
@@ -169,7 +169,7 @@ public class EquipmentFilterServiceTests
     public void TestSelectEquipment()
     {
         var equipmentFilterService = new EquipmentFilterService();
-        var roomRepository = new RoomRepository();
+        var roomRepository = RoomRepository.Instance;
 
         var warehouse = roomRepository.GetById("5000");
 
