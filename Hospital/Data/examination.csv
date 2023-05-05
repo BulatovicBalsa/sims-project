@@ -2,4 +2,3 @@ Id,IsOperation,Start,Id,Id,Anamnesis,Id,Admissioned
 7ae5b4e8-2831-4862-8bdf-9056a69ee3db,True,04/29/2023 03:45:00,96479d8b-a993-4cfe-a987-2e08dfb66269,b9be3d6a-0c58-4502-a724-db6476203324,,1002,False
 34913e3b-ce66-4fbb-bacf-e254b8b377f3,False,05/05/2023 18:30:00,96479d8b-a993-4cfe-a987-2e08dfb66269,74849bff-e9a8-4fd6-8d47-151718cec5a2,stuffed nose,1001,True
 f0efb658-5d7c-489b-aad0-9864ca92df3a,False,05/05/2023 18:45:00,96479d8b-a993-4cfe-a987-2e08dfb66269,74849bff-e9a8-4fd6-8d47-151718cec5a2,test symptom examination,1003,True
-b3d051c5-b6aa-4506-bfed-c4efcc43e665,False,01/01/0001 00:00:00,,1bef488a-83cc-4dc3-b824-948b4a178fe5,test symptoms,,True
