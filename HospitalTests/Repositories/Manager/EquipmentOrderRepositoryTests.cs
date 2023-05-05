@@ -17,6 +17,7 @@ namespace HospitalTests.Services.Manager
         [TestInitialize]
         public void SetUp()
         {
+            EquipmentOrderRepository.Instance.DeleteAll();
             var orders = new List<EquipmentOrder>()
             {
                 new("1", new DateTime(), false),
@@ -39,7 +40,7 @@ namespace HospitalTests.Services.Manager
         [TestMethod()]
         public void TestGetAll()
         {
-            EquipmentOrderRepository equipmentOrderRepository = new EquipmentOrderRepository();
+            EquipmentOrderRepository equipmentOrderRepository = EquipmentOrderRepository.Instance;
             var orders = equipmentOrderRepository.GetAll();
             Assert.AreEqual(2, orders.Count);
             Assert.AreEqual(2, orders[0].Items.Count);
@@ -48,7 +49,7 @@ namespace HospitalTests.Services.Manager
         [TestMethod()]
         public void TestAdd()
         {
-            EquipmentOrderRepository equipmentOrderRepository = new EquipmentOrderRepository();
+            EquipmentOrderRepository equipmentOrderRepository = EquipmentOrderRepository.Instance;
             var newOrder = new EquipmentOrder(DateTime.Now);
             newOrder.AddOrUpdateItem("1", 4);
             equipmentOrderRepository.Add(newOrder);
@@ -61,7 +62,7 @@ namespace HospitalTests.Services.Manager
         [TestMethod]
         public void TestUpdate()
         {
-            EquipmentOrderRepository equipmentOrderRepository = new EquipmentOrderRepository();
+            EquipmentOrderRepository equipmentOrderRepository = EquipmentOrderRepository.Instance;
             var orderToChange = equipmentOrderRepository.GetAll()[0];
             orderToChange.AddOrUpdateItem("4", 1);
             equipmentOrderRepository.Update(orderToChange);

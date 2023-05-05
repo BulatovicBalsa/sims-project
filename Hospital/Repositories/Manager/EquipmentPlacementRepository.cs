@@ -96,7 +96,7 @@ public class EquipmentPlacementRepository
     public void DeleteAll()
     {
         GetAll();
-        _equipmentPlacements.Clear();
+        _equipmentPlacements.Clear(); // TODO: Remove this warning and other similar ones
         Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
         _equipmentPlacements = null;
     }

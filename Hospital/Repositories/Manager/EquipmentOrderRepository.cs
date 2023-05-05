@@ -14,6 +14,19 @@ namespace Hospital.Repositories.Manager
         private const string FilePath = "../../../Data/equipmentOrders.csv";
         private const string OrderItemFilePath = "../../../Data/equipmentOrderItems.csv";
 
+        private static EquipmentOrderRepository? _instance;
+        private List<EquipmentOrder>? _orders = null;
+
+        private EquipmentOrderRepository()
+        {
+            
+        }
+
+        public static EquipmentOrderRepository Instance
+        {
+            get { return _instance ??= new EquipmentOrderRepository(); }
+        }
+
         public void AddItemsFromCsv(List<EquipmentOrder> orders)
         {
             List<EquipmentOrderItem> allEquipmentOrderItems = Serializer<EquipmentOrderItem>.FromCSV(OrderItemFilePath);
@@ -30,9 +43,13 @@ namespace Hospital.Repositories.Manager
 
         public List<EquipmentOrder> GetAll()
         {
-            var orders = Serializer<EquipmentOrder>.FromCSV(FilePath);
-            AddItemsFromCsv(orders);
-            return orders;
+            if (_orders == null)
+            {
+                _orders = Serializer<EquipmentOrder>.FromCSV(FilePath);
+                AddItemsFromCsv(_orders);
+
+            }
+            return _orders;
         }
 
         public void Add(EquipmentOrder order)
@@ -70,6 +87,15 @@ namespace Hospital.Repositories.Manager
             WriteOrderItemsFromOrdersToCSV(orders);
         }
 
+        public void DeleteAll()
+        {
+            GetAll();
+            _orders.Clear();
+            Serializer<EquipmentOrder>.ToCSV(_orders, FilePath);
+            WriteOrderItemsFromOrdersToCSV(_orders);
+            _orders = null;
+
+        }
         
     }
 }
