@@ -33,6 +33,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Anamnesis).Index(5);
             
             Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
+            Map(examination => examination.Admissioned).Index(7);
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -42,9 +43,11 @@ namespace Hospital.Repositories.Examinaton
 
         public class DoctorTypeConverter : DefaultTypeConverter
         {
-            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            public override object? ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
                 string doctorId = inputText.Trim();
+                if (string.IsNullOrEmpty(doctorId))
+                    return null;
                 // Retrieve the Doctor object based on the ID
                 Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
                 return doctor;
@@ -67,7 +70,9 @@ namespace Hospital.Repositories.Examinaton
             public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
                 string roomId = inputText.Trim();
-                // Retrieve the Room object based on the ID
+                if (string.IsNullOrEmpty(roomId))
+                    return null;
+                    // Retrieve the Room object based on the ID
                 Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
                 return room;
             }
@@ -85,6 +90,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Patient.Id).Index(4);
             Map(examination => examination.Anamnesis).Index(5);
             Map(examination => examination.Room.Id).Index(6);
+            Map(examination => examination.Admissioned).Index(7);
         }
     }
 
@@ -160,8 +166,14 @@ namespace Hospital.Repositories.Examinaton
             var indexToDelete = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToDelete == -1) throw new KeyNotFoundException();
 
-            if (IsFree(examination.Doctor, examination.Start)) throw new DoctorNotBusyException("Doctor is not busy,although he should be");
-            if (IsFree(examination.Patient, examination.Start)) throw new PatientNotBusyException("Patient is not busy,although he should be");
+            if (examination.Start != DateTime.MinValue)
+            {
+                if (IsFree(examination.Doctor, examination.Start))
+                    throw new DoctorNotBusyException("Doctor is not busy,although he should be");
+                if (IsFree(examination.Patient, examination.Start))
+                    throw new PatientNotBusyException("Patient is not busy,although he should be");
+            }
+
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
@@ -213,8 +225,11 @@ namespace Hospital.Repositories.Examinaton
             return GetAll(doctor).Where(examination => examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)).ToList();
         }
 
-        public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)
+        public bool IsFree(Doctor? doctor, DateTime start, string examinationId = null)
         {
+            if (doctor == null)
+                return true;
+
             var allExaminations = GetAll(doctor);
             bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
