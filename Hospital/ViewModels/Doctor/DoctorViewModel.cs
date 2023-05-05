@@ -14,173 +14,185 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels;
+
+public class DoctorViewModel : ViewModelBase
 {
-    public class DoctorViewModel: ViewModelBase
+    private readonly DoctorService _doctorService = new();
+    private const string Placeholder = "Search...";
+
+    private Doctor _doctor;
+    private ObservableCollection<Examination> _examinations;
+
+    private ObservableCollection<Patient> _patients;
+
+    private string _searchBoxText;
+
+    private object _selectedPatient;
+
+    public DoctorViewModel(Doctor doctor)
     {
-        private readonly DoctorService _doctorService = new DoctorService();
-        private readonly string _placeholder = "Search...";
-        private ObservableCollection<Examination> _examinations;
+        _doctor = doctor;
+        Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
+        Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
+        SearchBoxText = Placeholder;
 
-        public ObservableCollection<Examination> Examinations
+        ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
+        AddExaminationCommand = new RelayCommand(AddExamination);
+        UpdateExaminationCommand = new RelayCommand(UpdateExamination);
+        DeleteExaminationCommand = new RelayCommand(DeleteExamination);
+        PerformExaminationCommand = new RelayCommand(PerformExamination);
+    }
+
+    public ObservableCollection<Examination> Examinations
+    {
+        get => _examinations;
+        set
         {
-            get { return _examinations; }
-            set { _examinations = value; OnPropertyChanged(nameof(Examinations)); }
+            _examinations = value;
+            OnPropertyChanged(nameof(Examinations));
         }
+    }
 
-        private ObservableCollection<Patient> _patients;
-
-        public ObservableCollection<Patient> Patients
+    public ObservableCollection<Patient> Patients
+    {
+        get => _patients;
+        set
         {
-            get { return _patients; }
-            set { _patients = value; OnPropertyChanged(nameof(Patients)); }
+            _patients = value;
+            OnPropertyChanged(nameof(Patients));
         }
+    }
 
-        private Doctor _doctor;
-
-        public Doctor Doctor
+    public Doctor Doctor
+    {
+        get => _doctor;
+        set
         {
-            get { return _doctor; }
-            set { _doctor = value; OnPropertyChanged(nameof(Doctor)); }
+            _doctor = value;
+            OnPropertyChanged(nameof(Doctor));
         }
+    }
 
-        private string _searchBoxText;
-
-        public string SearchBoxText
+    public string SearchBoxText
+    {
+        get => _searchBoxText;
+        set
         {
-            get { return _searchBoxText; }
-            set { _searchBoxText = value; OnPropertyChanged(SearchBoxText); }
+            _searchBoxText = value;
+            OnPropertyChanged(SearchBoxText);
         }
+    }
 
-        private object _selectedPatient;
-
-        public object SelectedPatient
+    public object SelectedPatient
+    {
+        get => _selectedPatient;
+        set
         {
-            get { return _selectedPatient; }
-            set { _selectedPatient = value; OnPropertyChanged(nameof(SelectedPatient)); }
+            _selectedPatient = value;
+            OnPropertyChanged(nameof(SelectedPatient));
         }
+    }
 
-        private object _selectedExamination;
+    public object SelectedExamination { get; set; }
 
-        public object SelectedExamination
+    public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
+
+    public ICommand ViewMedicalRecordCommand { get; set; }
+    public ICommand AddExaminationCommand { get; set; }
+    public ICommand PerformExaminationCommand { get; set; }
+    public ICommand UpdateExaminationCommand { get; set; }
+    public ICommand DeleteExaminationCommand { get; set; }
+
+    private void ViewMedicalRecord(string patientId)
+    {
+        var patient = _doctorService.GetPatientById(patientId);
+        if (patient == null)
         {
-            get { return _selectedExamination; }
-            set { _selectedExamination = value; }
+            MessageBox.Show("Please select examination in order to delete it");
+            return;
         }
 
-        public string DoctorName { get => $"Doctor {Doctor.FirstName} {Doctor.LastName}"; }
+        var dialog = new MedicalRecordDialog(patient, false);
+        dialog.ShowDialog();
+    }
 
-        public ICommand BtnViewMedicalRecord_Command { get; set; }
-        public ICommand BtnAddExamination_Command { get; set; }
-        public ICommand BtnPerformExamination_Command { get; set; }
-        public ICommand BtnUpdateExamination_Command { get; set; }
-        public ICommand BtnDeleteExamination_Command { get; set; }
-
-        public DoctorViewModel(Doctor doctor) {
-            _doctor = doctor;
-            Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
-            Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
-            SearchBoxText = _placeholder;
-
-            BtnViewMedicalRecord_Command = new RelayCommand<string>(ViewMedicalRecord);
-            BtnAddExamination_Command = new RelayCommand(AddExamination);
-            BtnUpdateExamination_Command = new RelayCommand(UpdateExamination);
-            BtnDeleteExamination_Command = new RelayCommand(DeleteExamination);
-            BtnPerformExamination_Command = new RelayCommand(PerformExamination);
-        }
-
-        private void ViewMedicalRecord(string patientId)
+    private void AddExamination()
+    {
+        var dialog = new ModifyExaminationDialog(Doctor, Examinations)
         {
-            Patient? patient = _doctorService.GetPatientById(patientId);
-            if (patient == null)
-            {
-                MessageBox.Show("Please select examination in order to delete it");
-                return;
-            }
+            WindowStyle = WindowStyle.ToolWindow
+        };
 
-            var dialog = new MedicalRecordDialog(patient, false);
-            dialog.ShowDialog();
-        }
+        var result = dialog.ShowDialog();
+        if (result == true) MessageBox.Show("Succeed");
+    }
 
-        private void AddExamination()
+    private void UpdateExamination()
+    {
+        var examinationToChange = SelectedExamination as Examination;
+        if (examinationToChange == null)
         {
-            var dialog = new ModifyExaminationDialog(Doctor, Examinations);
-            dialog.WindowStyle = WindowStyle.ToolWindow;
-
-            bool? result = dialog.ShowDialog();
-            if (result == true)
-            {
-                MessageBox.Show("Succeed");
-            }
+            MessageBox.Show("Please select examination in order to delete it");
+            return;
         }
 
-        private void UpdateExamination()
+        var dialog = new ModifyExaminationDialog(Doctor, Examinations, examinationToChange)
         {
-            Examination? examinationToChange = SelectedExamination as Examination;
-            if (examinationToChange == null)
-            {
-                MessageBox.Show("Please select examination in order to delete it");
-                return;
-            }
+            WindowStyle = WindowStyle.ToolWindow
+        };
 
-            var dialog = new ModifyExaminationDialog(Doctor, Examinations, examinationToChange);
+        var result = dialog.ShowDialog();
 
-            dialog.WindowStyle = WindowStyle.ToolWindow;
+        if (result == true) MessageBox.Show("Succeed");
+    }
 
-            bool? result = dialog.ShowDialog();
-
-            if (result == true)
-            {
-                MessageBox.Show("Succeed");
-            }
-        }
-
-        private void DeleteExamination()
+    private void DeleteExamination()
+    {
+        var examination = SelectedExamination as Examination;
+        if (examination == null)
         {
-            Examination? examination = SelectedExamination as Examination;
-            if (examination == null)
-            {
-                MessageBox.Show("Please select examination in order to delete it");
-                return;
-            }
-
-            try
-            {
-                _doctorService.DeleteExamination(examination);
-            }
-            catch (DoctorNotBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            catch (PatientNotBusyException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            Examinations.Remove(examination);
-            MessageBox.Show("Succeed");
+            MessageBox.Show("Please select examination in order to delete it");
+            return;
         }
 
-        private void PerformExamination()
+        try
         {
-            Examination? examinationToPerform = SelectedExamination as Examination;
-            if (examinationToPerform == null)
-            {
-                MessageBox.Show("Please select examination in order to perform it");
-                return;
-            }
-
-            Patient patientOnExamination = _doctorService.GetPatient(examinationToPerform);
-
-            /*if (!examination.IsPerfomable())
-            {
-                MessageBox.Show("Chosen examination can't be performed right now");
-                return;
-            }*/
-
-            var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
-            dialog.ShowDialog();
+            _doctorService.DeleteExamination(examination);
         }
+        catch (DoctorNotBusyException ex)
+        {
+            MessageBox.Show(ex.Message);
+            return;
+        }
+        catch (PatientNotBusyException ex)
+        {
+            MessageBox.Show(ex.Message);
+            return;
+        }
+
+        Examinations.Remove(examination);
+        MessageBox.Show("Succeed");
+    }
+
+    private void PerformExamination()
+    {
+        var examinationToPerform = SelectedExamination as Examination;
+        if (examinationToPerform == null)
+        {
+            MessageBox.Show("Please select examination in order to perform it");
+            return;
+        }
+
+        var patientOnExamination = _doctorService.GetPatient(examinationToPerform);
+
+        /*if (!examination.IsPerfomable())
+        {
+            MessageBox.Show("Chosen examination can't be performed right now");
+            return;
+        }*/
+
+        var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
+        dialog.ShowDialog();
     }
 }
