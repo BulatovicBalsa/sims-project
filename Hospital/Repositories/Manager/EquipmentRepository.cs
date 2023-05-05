@@ -13,6 +13,16 @@ public class EquipmentRepository
         return Serializer<Equipment>.FromCSV(FilePath);
     }
 
+    public List<Equipment> GetNonDynamic()
+    {
+        return GetAll().FindAll(e => e.Type != Equipment.EquipmentType.DynamicEquipment);
+    }
+
+    public List<Equipment> GetDynamic()
+    {
+        return GetAll().FindAll(e => e.Type == Equipment.EquipmentType.DynamicEquipment);
+    }
+
     public Equipment? GetById(string id)
     {
         return GetAll().Find(equipment => equipment.Id == id);
