@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -80,7 +81,15 @@ public class AdmissionDialogViewModel : ViewModelBase
 
         _examination.Anamnesis = Symptoms;
         _examination.Admissioned = true;
-        _examinationRepository.Update(_examination, false);
+
+        if (_examination.Start == DateTime.MinValue)
+        {
+            _examinationRepository.Add(_examination, false);
+        }
+        else
+        {
+            _examinationRepository.Update(_examination, false);
+        }
 
         CloseDialog();
     }
