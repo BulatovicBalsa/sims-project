@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
@@ -16,6 +19,7 @@ public class PatientAdmissionViewModel : ViewModelBase
     private readonly PatientRepository _patientRepository;
     private ObservableCollection<Patient> _patients;
     private Patient? _selectedPatient;
+    private bool _patientCreated = false;
 
     public PatientAdmissionViewModel()
     {
@@ -23,7 +27,13 @@ public class PatientAdmissionViewModel : ViewModelBase
         _patientRepository = new PatientRepository();
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
 
-        _patientRepository.PatientAdded += patient => { _patients.Add(patient); };
+        _patientRepository.PatientAdded += patient =>
+        {
+            _patients.Add(patient);
+            _selectedPatient = patient;
+            _patientCreated = true;
+        };
+
         _patientRepository.PatientUpdated += patient =>
         {
             _patients.Remove(patient);
@@ -59,24 +69,40 @@ public class PatientAdmissionViewModel : ViewModelBase
 
     private void ExecuteAddPatientCommand(object obj)
     {
+        var viewModel = new AddUpdatePatientViewModel(_patientRepository);
+        viewModel.DialogClosed += () =>
+        {
+            if (_patientCreated)
+            {
+                ExecuteStartAdmissionCommand(new Examination(null, SelectedPatient, false, DateTime.MinValue, null));
+            }
+        };
+
         var addPatientDialog = new AddPatientView
         {
-            DataContext = new AddUpdatePatientViewModel(_patientRepository)
+            DataContext = viewModel
         };
 
         addPatientDialog.ShowDialog();
-
-        //ExecuteStartAdmissionCommand();
     }
 
-    private void ExecuteStartAdmissionCommand(object obj)
+    private void ExecuteStartAdmissionCommand(object? obj)
     {
-        var admissibleExamination = _examinationService.GetAdmissibleExamination(SelectedPatient);
+        Examination admissibleExamination;
 
-        if (admissibleExamination == null)
+        if (obj == null)
         {
-            MessageBox.Show("Selected patient does not have an examination in the next 15 minutes", "Error");
-            return;
+            admissibleExamination = _examinationService.GetAdmissibleExamination(SelectedPatient);
+
+            if (admissibleExamination == null)
+            {
+                MessageBox.Show("Selected patient does not have an examination in the next 15 minutes", "Error");
+                return;
+            }
+        }
+        else
+        {
+            admissibleExamination = obj as Examination;
         }
 
         var patientAdmissionDialog = new AdmissionDialogView
