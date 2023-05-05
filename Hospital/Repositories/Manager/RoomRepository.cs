@@ -116,7 +116,7 @@ public class RoomRepository
 
     public void DeleteAll()
     {
-        GetAll();
+        if (_rooms == null) return;
         _rooms.Clear();
         Serializer<Room>.ToCSV(_rooms, FilePath);
         _rooms = null;

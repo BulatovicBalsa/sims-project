@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -9,37 +8,31 @@ public class EquipmentPlacementRepository
 {
     private const string FilePath = "../../../Data/equipmentItems.csv";
 
-    private static EquipmentPlacementRepository? _instance = null;
+    private static EquipmentPlacementRepository? _instance;
 
-    private List<EquipmentPlacement>? _equipmentPlacements = null;
+    private List<EquipmentPlacement>? _equipmentPlacements;
 
     private EquipmentPlacementRepository()
     {
-
     }
 
     public static EquipmentPlacementRepository Instance
     {
         get
         {
-            if (_instance == null)
-            {
-                _instance = new EquipmentPlacementRepository();
-            }
+            if (_instance == null) _instance = new EquipmentPlacementRepository();
 
             return _instance;
         }
     }
 
     private static void JoinWithEquipment(List<EquipmentPlacement> equipmentItems)
-    { 
+    {
         var allEquipment = EquipmentRepository.Instance.GetAll();
 
         foreach (var equipmentPlacement in equipmentItems)
-        {
-            equipmentPlacement.Equipment = allEquipment.Find(equipment => equipment.Id == equipmentPlacement.EquipmentId);
-        }
-
+            equipmentPlacement.Equipment =
+                allEquipment.Find(equipment => equipment.Id == equipmentPlacement.EquipmentId);
     }
 
     public List<EquipmentPlacement> GetAll()
@@ -95,7 +88,7 @@ public class EquipmentPlacementRepository
 
     public void DeleteAll()
     {
-        GetAll();
+        if (_equipmentPlacements == null) return;
         _equipmentPlacements.Clear(); // TODO: Remove this warning and other similar ones
         Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
         _equipmentPlacements = null;

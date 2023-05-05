@@ -89,12 +89,11 @@ namespace Hospital.Repositories.Manager
 
         public void DeleteAll()
         {
-            GetAll();
+            if (_orders == null) return;
             _orders.Clear();
             Serializer<EquipmentOrder>.ToCSV(_orders, FilePath);
             WriteOrderItemsFromOrdersToCSV(_orders);
             _orders = null;
-
         }
         
     }
