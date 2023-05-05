@@ -73,7 +73,7 @@ public class PatientGridViewModel : ViewModelBase
     {
         var updatePatientDialog = new UpdatePatientView
         {
-            DataContext = new AddUpdatePatientViewModel(_patientRepository, _selectedPatient)
+            DataContext = new AddUpdatePatientViewModel(_patientRepository, SelectedPatient)
         };
 
         updatePatientDialog.ShowDialog();
@@ -90,7 +90,7 @@ public class PatientGridViewModel : ViewModelBase
     {
         var medicalRecordDialog = new MedicalRecordView
         {
-            DataContext = new MedicalRecordViewModel(_selectedPatient.MedicalRecord)
+            DataContext = new MedicalRecordViewModel(SelectedPatient.MedicalRecord)
         };
 
         medicalRecordDialog.ShowDialog();

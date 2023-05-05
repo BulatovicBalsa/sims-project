@@ -54,7 +54,7 @@
                                Opacity="1"/>
 
                     <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientsView}"
+                                 Command="{Binding ShowPatientsViewCommand}"
                                  IsChecked="True">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
