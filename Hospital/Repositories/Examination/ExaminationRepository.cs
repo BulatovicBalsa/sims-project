@@ -43,9 +43,11 @@ namespace Hospital.Repositories.Examinaton
 
         public class DoctorTypeConverter : DefaultTypeConverter
         {
-            public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+            public override object? ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
                 string doctorId = inputText.Trim();
+                if (string.IsNullOrEmpty(doctorId))
+                    return null;
                 // Retrieve the Doctor object based on the ID
                 Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
                 return doctor;
@@ -68,7 +70,9 @@ namespace Hospital.Repositories.Examinaton
             public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
             {
                 string roomId = inputText.Trim();
-                // Retrieve the Room object based on the ID
+                if (string.IsNullOrEmpty(roomId))
+                    return null;
+                    // Retrieve the Room object based on the ID
                 Room room = new RoomRepository().GetById(roomId) ?? throw new KeyNotFoundException($"Room with ID {roomId} not found");
                 return room;
             }
