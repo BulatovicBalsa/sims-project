@@ -14,13 +14,16 @@
 
     <StackPanel Margin="200,0,200,0">
         <TextBlock Style="{StaticResource MainTextBlock}">Patient</TextBlock>
-        <ComboBox Height="30"/>
+        <ComboBox Height="30" ItemsSource="{Binding AllPatients}"
+                  SelectedItem="{Binding SelectedPatient}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Doctor specialization</TextBlock>
-        <ComboBox Height="30"/>
+        <ComboBox Height="30" ItemsSource="{Binding AllSpecializations}"
+                  SelectedItem="{Binding SelectedSpecialization}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Operation</TextBlock>
-        <CheckBox/>
+        <CheckBox IsChecked="{Binding IsOperation}"/>
         <Button Style="{StaticResource ActionButton}" 
                 Content="Create urgent examination"
-                Margin="0,20,0,0"/>
+                Margin="0,20,0,0"
+                Command="{Binding CreateUrgentExaminationCommand}"/>
     </StackPanel>
 </UserControl>
