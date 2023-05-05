@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.Repositories.Examinaton;
 using Hospital.Serialization;
 using Hospital.Serialization.Mappers.Patient;
 
@@ -10,6 +11,7 @@ using Hospital.Models.Patient;
 public class PatientRepository
 {
     private const string FilePath = "../../../Data/patients.csv";
+    private readonly ExaminationRepository _examinationRepository = new ExaminationRepository();
 
     public event Action<Patient>? PatientAdded;
     public event Action<Patient>? PatientUpdated;
@@ -58,6 +60,9 @@ public class PatientRepository
 
         if (!patientRecords.Remove(patient))
             throw new KeyNotFoundException($"Patient with id {patient.Id} was not found.");
+
+        var patientExaminations = _examinationRepository.GetAll(patient);
+        patientExaminations.ForEach(examination => _examinationRepository.Delete(examination, false));
 
 
         Serializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
