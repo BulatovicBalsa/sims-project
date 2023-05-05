@@ -3,59 +3,60 @@ using Hospital.Coordinators;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels;
+
+public class PerformExaminationDialogViewModel : ViewModelBase
 {
-    public class PerformExaminationDialogViewModel : ViewModelBase
+    private readonly DoctorService _doctorService = new();
+
+    private string _anamnesis;
+
+    public PerformExaminationDialogViewModel(Examination examinationToPerform, Patient patientOnExamination)
     {
-        private Examination _examinationToPerform { get; set; }
-        private Patient _patientOnExamination { get; set; }
-        private readonly DoctorService _doctorService = new DoctorService();
+        _examinationToPerform = examinationToPerform;
+        _patientOnExamination = patientOnExamination;
+        Anamnesis = _examinationToPerform.Anamnesis;
 
-        private string _anamnesis;
-        public string Anamnesis
+        UpdateExaminationCommand = new RelayCommand(UpdateExamination);
+        FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
+    }
+
+    private Examination _examinationToPerform { get; }
+    private Patient _patientOnExamination { get; }
+
+    public string Anamnesis
+    {
+        get => _anamnesis;
+        set
         {
-            get { return _anamnesis; }
-            set { _anamnesis = value; OnPropertyChanged(nameof(Anamnesis)); }
+            _anamnesis = value;
+            OnPropertyChanged(nameof(Anamnesis));
         }
+    }
 
-        public string FirstName { get => _patientOnExamination.FirstName; }
+    public string FirstName => _patientOnExamination.FirstName;
 
-        public string LastName { get => _patientOnExamination.LastName; }
+    public string LastName => _patientOnExamination.LastName;
 
-        public string Jmbg { get => _patientOnExamination.Jmbg; }
+    public string Jmbg => _patientOnExamination.Jmbg;
 
-        public ICommand UpdateExaminationCommand { get; set; }
-        public ICommand FinishExaminationCommand { get; set; }
-        public PerformExaminationDialogViewModel(Examination examinationToPerform, Patient patientOnExamination)
-        {
-            _examinationToPerform = examinationToPerform;
-            _patientOnExamination = patientOnExamination;
-            Anamnesis = _examinationToPerform.Anamnesis;
+    public ICommand UpdateExaminationCommand { get; set; }
+    public ICommand FinishExaminationCommand { get; set; }
 
-            UpdateExaminationCommand = new RelayCommand(UpdateExamination);
-            FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
-        }
+    private void UpdateExamination()
+    {
+        _examinationToPerform.Anamnesis = Anamnesis;
+        _doctorService.UpdateExamination(_examinationToPerform);
+        MessageBox.Show("Succeed");
+    }
 
-        private void UpdateExamination()
-        {
-            _examinationToPerform.Anamnesis = Anamnesis;
-            _doctorService.UpdateExamination(_examinationToPerform);
-            MessageBox.Show("Succeed");
-        }
-
-        private void FinishExamination(Window window)
-        {
-            window.Close();
-            var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room);
-            dialog.ShowDialog();
-        }
+    private void FinishExamination(Window window)
+    {
+        window.Close();
+        var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room);
+        dialog.ShowDialog();
     }
 }
