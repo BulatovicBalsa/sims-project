@@ -23,6 +23,14 @@ public class EquipmentOrderItem
         OrderId = orderId;
     }
 
+    public EquipmentOrderItem(string orderId, int amount, Equipment equipment)
+    {
+        Amount = amount;
+        EquipmentId = equipment.Id;
+        Equipment = equipment;
+        OrderId = orderId;
+    }
+
     public EquipmentOrderItem(int amount, string equipmentId)
     {
         Amount = amount;

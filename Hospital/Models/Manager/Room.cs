@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Hospital.Models.Manager;
@@ -57,7 +58,7 @@ public class Room
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentPlacement(equipment.Id, Id, amount));
+            Equipment.Add(new EquipmentPlacement(equipment, Id, amount));
     }
 
     public List<Equipment> GetEquipment()

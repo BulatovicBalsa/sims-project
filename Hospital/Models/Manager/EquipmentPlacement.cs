@@ -15,9 +15,9 @@ public class EquipmentPlacement
         RoomId = roomId;
         Amount = amount;
     }
-    public EquipmentPlacement(string equipmentId, string roomId, int amount, Equipment equipment)
+    public EquipmentPlacement(Equipment equipment, string roomId, int amount)
     {
-        EquipmentId = equipmentId;
+        EquipmentId = equipment.Id;
         RoomId = roomId;
         Amount = amount;
         Equipment = equipment;
