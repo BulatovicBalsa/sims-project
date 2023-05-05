@@ -85,6 +85,6 @@ public class DoctorService
     {
         var allDoctors = _doctorRepository.GetAll();
 
-        return allDoctors.Select(doctor => doctor.Specialization).ToList();
+        return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
     }
 }
