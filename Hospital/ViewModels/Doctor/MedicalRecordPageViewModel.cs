@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Hospital.Coordinators;
 using Hospital.Models.Patient;
+using Hospital.Repositories.Patient;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ public class MedicalRecordPageViewModel : ViewModelBase
         Weight = Patient.MedicalRecord.Weight.ToString();
         Height = Patient.MedicalRecord.Height.ToString();
         Allergies = new ObservableCollection<string>(patient.MedicalRecord.Allergies);
+
+       
+
         MedicalHistory = new ObservableCollection<string>(patient.MedicalRecord.MedicalHistory);
 
         AddAllergyCommand = new RelayCommand(AddAllergy);

@@ -8,6 +8,7 @@ using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers.Patient;
 
 namespace HospitalTests.Repositories.Patient
 {

@@ -14,6 +14,12 @@ public class PatientRepository
     public event Action<Patient> PatientAdded;
     public event Action<Patient> PatientUpdated;
 
+    public PatientRepository()
+    {
+        PatientAdded += _ => { };
+        PatientUpdated += _ => { };
+    }
+
     public List<Patient> GetAll()
     {
         return Serializer<Patient>.FromCSV(FilePath, new PatientReadMapper());
