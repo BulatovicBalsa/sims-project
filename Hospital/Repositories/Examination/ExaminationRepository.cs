@@ -33,6 +33,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Anamnesis).Index(5);
             
             Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
+            Map(examination => examination.Admissioned).Index(7);
         }
 
         private List<string> SplitColumnValues(string? columnValue)
@@ -85,6 +86,7 @@ namespace Hospital.Repositories.Examinaton
             Map(examination => examination.Patient.Id).Index(4);
             Map(examination => examination.Anamnesis).Index(5);
             Map(examination => examination.Room.Id).Index(6);
+            Map(examination => examination.Admissioned).Index(7);
         }
     }
 

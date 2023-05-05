@@ -20,6 +20,7 @@ namespace Hospital.Models.Examination
         public bool IsOperation { get; set; }
         public string Anamnesis { get; set; }
         public Room Room { get; set; }
+        public bool Admissioned { get; set; }
         public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room)
         {
             Doctor = doctor;
@@ -29,6 +30,7 @@ namespace Hospital.Models.Examination
             Id = Guid.NewGuid().ToString();
             Anamnesis = "";
             Room = room;
+            Admissioned = false;
         }
 
         public Examination()
