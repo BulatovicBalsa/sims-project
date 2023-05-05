@@ -6,7 +6,9 @@ using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Hospital.Repositories.Doctor;
 
 namespace Hospital.Coordinators;
 
@@ -15,12 +17,14 @@ public class DoctorService
     private readonly ExaminationRepository _examinationRepository;
     private readonly PatientRepository _patientRepository;
     private readonly RoomRepository _roomRepository;
+    private readonly DoctorRepository _doctorRepository;
 
     public DoctorService()
     {
         _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
         _patientRepository = new PatientRepository();
         _roomRepository = new RoomRepository();
+        _doctorRepository = new DoctorRepository();
     }
 
     public List<Patient> GetViewedPatients(Doctor doctor)
@@ -75,5 +79,12 @@ public class DoctorService
     public Patient? GetPatientById(string patientId)
     {
         return _patientRepository.GetById(patientId);
+    }
+
+    public List<string> GetAllSpecializations()
+    {
+        var allDoctors = _doctorRepository.GetAll();
+
+        return allDoctors.Select(doctor => doctor.Specialization).ToList();
     }
 }
