@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hospital.Repositories.Manager;
 
 namespace Hospital.Models.Manager;
 
