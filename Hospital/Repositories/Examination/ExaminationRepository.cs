@@ -166,8 +166,14 @@ namespace Hospital.Repositories.Examinaton
             var indexToDelete = allExamination.FindIndex(e => e.Id == examination.Id);
             if (indexToDelete == -1) throw new KeyNotFoundException();
 
-            if (IsFree(examination.Doctor, examination.Start)) throw new DoctorNotBusyException("Doctor is not busy,although he should be");
-            if (IsFree(examination.Patient, examination.Start)) throw new PatientNotBusyException("Patient is not busy,although he should be");
+            if (examination.Start != DateTime.MinValue)
+            {
+                if (IsFree(examination.Doctor, examination.Start))
+                    throw new DoctorNotBusyException("Doctor is not busy,although he should be");
+                if (IsFree(examination.Patient, examination.Start))
+                    throw new PatientNotBusyException("Patient is not busy,although he should be");
+            }
+
             if (isMadeByPatient)
             {
                 ValidateExaminationTiming(examination.Start);
@@ -219,8 +225,11 @@ namespace Hospital.Repositories.Examinaton
             return GetAll(doctor).Where(examination => examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)).ToList();
         }
 
-        public bool IsFree(Doctor doctor, DateTime start, string examinationId = null)
+        public bool IsFree(Doctor? doctor, DateTime start, string examinationId = null)
         {
+            if (doctor == null)
+                return true;
+
             var allExaminations = GetAll(doctor);
             bool isAvailable = !allExaminations.Any(examination => examination.Id != examinationId && examination.DoesInterfereWith(start));
 
