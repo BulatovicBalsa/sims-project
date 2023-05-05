@@ -13,13 +13,13 @@ namespace Hospital.Models.Examination
     {
         public const int DURATION = 15;
         public string Id { get; set; }
-        public Doctor.Doctor Doctor { get; set; }
+        public Doctor.Doctor? Doctor { get; set; }
         public Patient.Patient Patient { get; set; }
         public DateTime Start { get; set; }
         public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
         public bool IsOperation { get; set; }
         public string Anamnesis { get; set; }
-        public Room Room { get; set; }
+        public Room? Room { get; set; }
         public bool Admissioned { get; set; }
         public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room)
         {
