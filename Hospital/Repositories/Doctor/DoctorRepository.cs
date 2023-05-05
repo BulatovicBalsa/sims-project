@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using Hospital.Models.Manager;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
-using Hospital.Models.Doctor;
-using System;
+using Models.Doctor;
 
 public class DoctorRepository
 {
