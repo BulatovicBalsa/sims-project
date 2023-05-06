@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Models.Manager;
 
 public class EquipmentOrder
 {
-    private const double DeliveryTimeInDays = 1;
+    private const double _deliveryTimeInDays = 1;
 
     public EquipmentOrder()
     {
@@ -39,7 +40,7 @@ public class EquipmentOrder
 
     public static EquipmentOrder CreateBlankOrder()
     {
-        return new EquipmentOrder(DateTime.Now.AddDays(DeliveryTimeInDays));
+        return new EquipmentOrder(DateTime.Now.AddDays(_deliveryTimeInDays));
     }
 
 
@@ -77,7 +78,10 @@ public class EquipmentOrder
         if (PickedUp) return;
 
         foreach (var item in Items)
-            destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
+        {
+            if (item.Equipment != null)
+                destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
+        }
 
         PickedUp = true;
     }
