@@ -1,0 +1,5 @@
+Amount,EquipmentId,OrderId,Id,Name,Type
+2,1,1,1,Something,DynamicEquipment
+2,1,1,1,Something,DynamicEquipment
+3,1,33c273f3-8c8a-4746-bdcc-ae05141533b2,1,Something,DynamicEquipment
+3,1,19e5684c-1dd9-43b8-acc5-8b4fcd8f0c1f,1,Something,DynamicEquipment

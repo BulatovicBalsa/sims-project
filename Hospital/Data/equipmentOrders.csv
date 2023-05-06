@@ -1,0 +1,5 @@
+PickedUp,Id,DeliveryDateTime,Delivered
+False,ffab7e9c-022c-4d0c-8822-7d99401d8d57,05/07/2023 01:15:57,False
+False,4c29d4fb-461d-4405-a08d-9931e9d60445,05/07/2023 01:15:57,False
+True,33c273f3-8c8a-4746-bdcc-ae05141533b2,05/05/2023 01:15:57,True
+True,19e5684c-1dd9-43b8-acc5-8b4fcd8f0c1f,05/06/2023 01:15:58,True

@@ -118,7 +118,7 @@ namespace Hospital.ViewModels.Login
                 return userId + "|" + "NURSE";
             }
 
-            if (_loginService.LoggedUser.GetType() == typeof(Manager))
+            if (_loginService.LoggedUser.GetType() == typeof(Models.Manager.Manager))
             {
                 return userId + "|" + "MANAGER";
             }
