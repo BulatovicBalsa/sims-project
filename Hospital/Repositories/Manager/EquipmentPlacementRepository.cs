@@ -54,8 +54,7 @@ public class EquipmentPlacementRepository
     {
         var equipmentPlacements = GetAll();
 
-        var indexToUpdate = equipmentPlacements.FindIndex(e =>
-            e.EquipmentId == equipmentPlacement.EquipmentId && e.RoomId == equipmentPlacement.RoomId);
+        var indexToUpdate = equipmentPlacements.FindIndex(e => e.Equals(equipmentPlacement));
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
         equipmentPlacements[indexToUpdate] = equipmentPlacement;
@@ -67,8 +66,7 @@ public class EquipmentPlacementRepository
     {
         var equipmentPlacements = GetAll();
 
-        var indexToDelete = equipmentPlacements.FindIndex(e =>
-            e.EquipmentId == equipmentPlacement.EquipmentId && e.RoomId == equipmentPlacement.RoomId);
+        var indexToDelete = equipmentPlacements.FindIndex(e => e.Equals(equipmentPlacement));
         if (indexToDelete == -1) throw new KeyNotFoundException();
 
         equipmentPlacements.RemoveAt(indexToDelete);
@@ -79,7 +77,7 @@ public class EquipmentPlacementRepository
     public void DeleteAll()
     {
         if (_equipmentPlacements == null) return;
-        _equipmentPlacements.Clear(); 
+        _equipmentPlacements.Clear();
         Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
         _equipmentPlacements = null;
     }
