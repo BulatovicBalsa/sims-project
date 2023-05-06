@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hospital.ViewModels.Manager
 {
-    internal class EquipmentTabViewModel
+    public class EquipmentTabViewModel
     {
+        //TODO: Add EquipmentTabViewModel
     }
 }

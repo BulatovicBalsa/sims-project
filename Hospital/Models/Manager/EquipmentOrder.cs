@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
 
-public class EquipmentOrder
+public class EquipmentOrder: INotifyPropertyChanged
 {
+    private bool _pickedUp;
+    private List<EquipmentOrderItem> _items;
+    private string _id;
+    private DateTime _deliveryDateTime;
     private const double _deliveryTimeInDays = 1;
 
     public EquipmentOrder()
@@ -30,13 +36,64 @@ public class EquipmentOrder
         PickedUp = pickedUp;
     }
 
-    public bool PickedUp { get; set; }
+    public bool PickedUp
+    {
+        get => _pickedUp;
+        set
+        {
+            if (value == _pickedUp) return;
+            _pickedUp = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public List<EquipmentOrderItem> Items { get; set; }
-    public string Id { get; set; }
-    public DateTime DeliveryDateTime { get; set; }
+    public List<EquipmentOrderItem> Items
+    {
+        get => _items;
+        set
+        {
+            if (Equals(value, _items)) return;
+            _items = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public bool Delivered => DeliveryDateTime <= DateTime.Now;
+    public string Id
+    {
+        get => _id;
+        set
+        {
+            if (value == _id) return;
+            _id = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public DateTime DeliveryDateTime
+    {
+        get => _deliveryDateTime;
+        set
+        {
+            if (value.Equals(_deliveryDateTime)) return;
+            _deliveryDateTime = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Delivered));
+        }
+    }
+
+    private bool _delivered = false;
+    public bool Delivered
+    {
+        get
+        {
+            var deliveryDatePassed = (DeliveryDateTime <= DateTime.Now);
+            if (_delivered == deliveryDatePassed) return _delivered;
+            _delivered = deliveryDatePassed;
+            OnPropertyChanged();
+
+            return _delivered;
+        }
+    }
 
     public static EquipmentOrder CreateBlankOrder()
     {
@@ -84,5 +141,21 @@ public class EquipmentOrder
         }
 
         PickedUp = true;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        if (PropertyChanged != null)
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
     }
 }

@@ -1,17 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels.Manager
 {
     public class OrderTabViewModel: ViewModelBase
     {
-        public ObservableCollection<EquipmentOrder> Orders { get; }
+        private BindingList<EquipmentOrder> _orders;
+        public BindingList<EquipmentOrder> Orders
+        {
+            get => _orders;
+            set
+            {
+                if (_orders == value) return;
+                _orders = value;
+                OnPropertyChanged(nameof(Orders));
+            }
+        }
 
         private EquipmentOrder _selectedOrder;
         private ObservableCollection<EquipmentOrderItem> _selectedOrderItems;
@@ -46,7 +58,10 @@ namespace Hospital.ViewModels.Manager
 
         public OrderTabViewModel()
         { 
-            Orders = new ObservableCollection<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
+            EquipmentOrderService.AttemptPickUpOfAllOrders();
+            Console.WriteLine("Constructed OrderTabViewModel");
+            Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
+            Orders.ListChanged += (sender, _) => OnPropertyChanged(nameof(Orders));
             SelectedOrderItems = new ObservableCollection<EquipmentOrderItem>();
         }
     }

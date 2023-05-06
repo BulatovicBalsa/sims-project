@@ -30,8 +30,12 @@
                         </ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}" CanUserAddRows="False" AutoGenerateColumns="False">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                            <DataGridTextColumn Header="Delivery Time" Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*" IsReadOnly="False"/>
+                            <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}" Width="*" IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"/>
