@@ -24,12 +24,6 @@ public class EquipmentOrderItem
         OrderId = orderId;
     }
 
-    public EquipmentOrderItem(int amount, string equipmentId)
-    {
-        Amount = amount;
-        EquipmentId = equipmentId;
-    }
-
     public int Amount { get; set; }
     public string EquipmentId { get; set; }
 
