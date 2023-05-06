@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
+using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;
@@ -14,8 +15,15 @@ namespace Hospital;
 /// </summary>
 public partial class App : Application
 {
+    private void ProcessEventsThatOccurredBeforeAppStart()
+    {
+        EquipmentOrderService.AttemptPickUpOfAllOrders();
+    }
+
     protected void ApplicationStart(object sender, EventArgs e)
     {
+        ProcessEventsThatOccurredBeforeAppStart();
+
         var loginView = new LoginView();
         loginView.Show();
         loginView.IsVisibleChanged += (s, ev) =>

@@ -21,3 +21,9 @@ Id,Name,Type
 1020,Oxygen Tank,HallwayEquipment
 1021,Chair,Furniture
 1022,Magazine stand,Furniture
+1023,Bandage,DynamicEquipment
+1,Something,DynamicEquipment
+1024,Pencil,DynamicEquipment
+1025,Paper,DynamicEquipment
+1026,Injection,DynamicEquipment
+1027,Band-Aid,DynamicEquipment

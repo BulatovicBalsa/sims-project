@@ -5,9 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
+using Hospital.Views.Manager;
 
 namespace Hospital.ViewModels.Manager
 {
@@ -58,11 +61,22 @@ namespace Hospital.ViewModels.Manager
 
         public OrderTabViewModel()
         { 
-            EquipmentOrderService.AttemptPickUpOfAllOrders();
-            Console.WriteLine("Constructed OrderTabViewModel");
             Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
             Orders.ListChanged += (sender, _) => OnPropertyChanged(nameof(Orders));
             SelectedOrderItems = new ObservableCollection<EquipmentOrderItem>();
+            OpenAddOrderFormCommand = new RelayCommand(OpenAddOrderForm);
+        }
+
+
+        public ICommand OpenAddOrderFormCommand
+        {
+            get;
+            set;
+        }
+
+        public void OpenAddOrderForm()
+        {
+            new AddOrderForm().Show();
         }
     }
 }

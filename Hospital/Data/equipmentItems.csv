@@ -1,25 +1,2 @@
 EquipmentId,RoomId,Amount,Id,Name,Type
-1021,5000,15,1021,Chair,Furniture
-1021,2001,3,1021,Chair,Furniture
-1022,2001,1,1022,Magazine stand,Furniture
-1021,2002,2,1021,Chair,Furniture
-1021,1001,2,1021,Chair,Furniture
-1021,1002,2,1021,Chair,Furniture
-1021,1003,2,1021,Chair,Furniture
-1021,1004,2,1021,Chair,Furniture
-1008,1001,1,1008,EKG Machine,ExaminationEquipment
-1006,1002,1,1006,X-ray Machine,ExaminationEquipment
-1011,1003,2,1011,Blood Pressure Monitor,ExaminationEquipment
-1011,1003,1,1011,Blood Pressure Monitor,ExaminationEquipment
-1004,1004,1,1004,Surgery Table,OperationEquipment
-1009,0001,1,1009,Operating Room Lights,OperationEquipment
-1004,0001,1,1004,Surgery Table,OperationEquipment
-1018,0001,1,1018,Crash Cart,OperationEquipment
-1005,5000,3,1005,Wheelchair,HallwayEquipment
-1011,5000,7,1011,Blood Pressure Monitor,ExaminationEquipment
-1007,5000,2,1007,Oxygen Concentrator,Furniture
-1010,5000,11,1010,Hospital Bed,Furniture
-1010,3001,3,1010,Hospital Bed,Furniture
-1010,3002,3,1010,Hospital Bed,Furniture
-1010,3003,3,1010,Hospital Bed,Furniture
-1010,3004,3,,,Furniture
+1,5000,6,1,Something,DynamicEquipment
