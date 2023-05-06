@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
@@ -9,6 +10,7 @@ public class EquipmentFilterService
 {
     private readonly EquipmentRepository _equipmentRepository;
     private readonly RoomRepository _roomRepository;
+    private const int RunningLowThreshold = 5;
 
     public EquipmentFilterService()
     {
@@ -24,6 +26,17 @@ public class EquipmentFilterService
         foreach (var room in rooms.Where(room => room.Type == type)) result.UnionWith(room.GetEquipment());
 
         return result.ToList();
+    }
+
+    public List<Equipment> GetDynamicEquipmentLowInWarehouse()
+    {
+        var warehouse = RoomRepository.Instance.GetWarehouse();
+        var dynamicEquipment = EquipmentRepository.Instance.GetDynamic();
+        return (from equipment in dynamicEquipment
+                where equipment != null && warehouse.GetAmount(equipment) < RunningLowThreshold
+                select equipment
+            ).ToList();
+
     }
 
     public List<Equipment> GetEquipment(Equipment.EquipmentType type)
