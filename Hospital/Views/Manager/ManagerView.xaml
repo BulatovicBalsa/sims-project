@@ -47,7 +47,12 @@
                                 <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}" Width="*" IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"/>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True" Width="*"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </DockPanel>
             </TabItem>
