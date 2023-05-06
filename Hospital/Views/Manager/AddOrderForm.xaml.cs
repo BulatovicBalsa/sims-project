@@ -11,26 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Hospital.ViewModels.Manager;
 
 namespace Hospital.Views.Manager
 {
     /// <summary>
-    /// Interaction logic for ManagerView.xaml
+    /// Interaction logic for AddOrderForm.xaml
     /// </summary>
-    public partial class ManagerView : Window
+    public partial class AddOrderForm : Window
     {
-        public ManagerView()
+        public AddOrderForm()
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var equipmentView = new EquipmentView();
-            equipmentView.Show();
-            
-        }
-
     }
 }

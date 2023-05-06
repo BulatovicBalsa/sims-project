@@ -14,7 +14,7 @@ using Hospital.Views.Manager;
 
 namespace Hospital.ViewModels.Manager
 {
-    public class OrderTabViewModel: ViewModelBase
+    public class OrderTabViewModel : ViewModelBase
     {
         private BindingList<EquipmentOrder> _orders;
         public BindingList<EquipmentOrder> Orders
@@ -60,7 +60,7 @@ namespace Hospital.ViewModels.Manager
         }
 
         public OrderTabViewModel()
-        { 
+        {
             Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
             Orders.ListChanged += (sender, _) => OnPropertyChanged(nameof(Orders));
             SelectedOrderItems = new ObservableCollection<EquipmentOrderItem>();
@@ -74,9 +74,15 @@ namespace Hospital.ViewModels.Manager
             set;
         }
 
+        private void RefreshOrdersOnFormClose(object? sender, EventArgs eventArgs)
+        {
+            Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
+        }
         public void OpenAddOrderForm()
         {
-            new AddOrderForm().Show();
+            var addOrderForm = new AddOrderForm();
+            addOrderForm.Closed += RefreshOrdersOnFormClose;
+            addOrderForm.Show();
         }
     }
 }

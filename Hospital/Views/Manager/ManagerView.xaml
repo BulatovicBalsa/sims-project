@@ -10,36 +10,46 @@
     <Window.DataContext>
         <viewModel:ManagerViewModel />
     </Window.DataContext>
+
     <Grid>
         <TabControl>
             <TabItem Header="Equipment">
                 <DockPanel LastChildFill="False">
                     <ToolBar DockPanel.Dock="Top">
                         <Button x:Name="EquipmentButton" Content="Equipment" Width="NaN" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-                        <Button Content="Equipment orders" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </ToolBar>
                 </DockPanel>
             </TabItem>
             <TabItem DataContext = "{Binding Children[1]}" Header="Orders" Margin="-2,0,-2,0" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition>
-                        </ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}" CanUserAddRows="False" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
-                            <DataGridTextColumn Header="Delivery Time" Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*" IsReadOnly="False"/>
-                            <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}" Width="*" IsReadOnly="True" />
-                            <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}" Width="*" IsReadOnly="True" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"/>
-                </Grid>
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Command="{Binding OpenAddOrderFormCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center"  Source="../../Images/PlusIcon.png"/>
+                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition>
+                            </ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Delivery Time" Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*" IsReadOnly="False"/>
+                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}" Width="*" IsReadOnly="True" />
+                                <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}" Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"/>
+                    </Grid>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Transfers" />
         </TabControl>
