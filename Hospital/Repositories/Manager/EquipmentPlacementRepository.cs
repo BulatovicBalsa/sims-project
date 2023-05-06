@@ -16,15 +16,7 @@ public class EquipmentPlacementRepository
     {
     }
 
-    public static EquipmentPlacementRepository Instance
-    {
-        get
-        {
-            if (_instance == null) _instance = new EquipmentPlacementRepository();
-
-            return _instance;
-        }
-    }
+    public static EquipmentPlacementRepository Instance => _instance ??= new EquipmentPlacementRepository();
 
     private static void JoinWithEquipment(List<EquipmentPlacement> equipmentItems)
     {
@@ -37,11 +29,9 @@ public class EquipmentPlacementRepository
 
     public List<EquipmentPlacement> GetAll()
     {
-        if (_equipmentPlacements == null)
-        {
-            _equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
-            JoinWithEquipment(_equipmentPlacements);
-        }
+        if (_equipmentPlacements != null) return _equipmentPlacements;
+        _equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
+        JoinWithEquipment(_equipmentPlacements);
 
         return _equipmentPlacements;
     }
@@ -89,7 +79,7 @@ public class EquipmentPlacementRepository
     public void DeleteAll()
     {
         if (_equipmentPlacements == null) return;
-        _equipmentPlacements.Clear(); // TODO: Remove this warning and other similar ones
+        _equipmentPlacements.Clear(); 
         Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
         _equipmentPlacements = null;
     }

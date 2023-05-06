@@ -134,7 +134,7 @@ public class EquipmentRepositoryTests
     public void TestGetNonDynamic()
     {
         AddDynamicEquipmentToCsv();
-        EquipmentRepository equipmentRepository = EquipmentRepository.Instance;
+        var equipmentRepository = EquipmentRepository.Instance;
         Assert.AreEqual(4, equipmentRepository.GetNonDynamic().Count);
     }
 
@@ -142,7 +142,7 @@ public class EquipmentRepositoryTests
     public void TestGetDynamic()
     {
         AddDynamicEquipmentToCsv();
-        EquipmentRepository equipmentRepository = EquipmentRepository.Instance;
+        var equipmentRepository = EquipmentRepository.Instance;
         Assert.AreEqual(5, equipmentRepository.GetDynamic().Count);
     }
 }

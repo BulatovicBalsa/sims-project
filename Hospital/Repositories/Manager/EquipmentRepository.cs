@@ -15,15 +15,7 @@ public class EquipmentRepository
     {
     }
 
-    public static EquipmentRepository Instance
-    {
-        get
-        {
-            if (_instance == null) _instance = new EquipmentRepository();
-
-            return _instance;
-        }
-    }
+    public static EquipmentRepository Instance => _instance ??= new EquipmentRepository();
 
     public List<Equipment> GetAll()
     {

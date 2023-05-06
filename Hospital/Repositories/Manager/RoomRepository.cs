@@ -1,139 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Hospital.Exceptions;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
+namespace Hospital.Repositories.Manager;
 
-namespace Hospital.Repositories.Manager
+public class RoomRepository
 {
-    public class RoomRepository
+    public const string FilePath = "../../../Data/rooms.csv";
+    private static RoomRepository? _instance;
+    private List<Room>? _rooms;
+
+    private RoomRepository()
     {
-        public const string FilePath = "../../../Data/rooms.csv";
-        private static RoomRepository? _instance;
-        private List<Room>? _rooms = null;
+    }
 
-        public static RoomRepository Instance
+    public static RoomRepository Instance => _instance ??= new RoomRepository();
+
+    public List<Room> GetAll()
+    {
+        if (_rooms == null)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new RoomRepository();
-                }
-
-                return _instance;
-            }
+            _rooms = Serializer<Room>.FromCSV(FilePath);
+            PlaceEquipment(_rooms);
         }
 
-        private RoomRepository()
-        {
+        return _rooms;
+    }
 
+    private static void PlaceEquipment(List<Room> rooms)
+    {
+        var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
+
+        var equipmentPlacementsByRoom =
+            from equipmentPlacement in equipmentPlacements
+            group equipmentPlacement by equipmentPlacement.RoomId
+            into equipmentInRoom
+            select equipmentInRoom;
+
+        foreach (var roomGroup in equipmentPlacementsByRoom)
+        {
+            var room = rooms.Find(room => room.Id == roomGroup.Key);
+            if (room == null) continue;
+            room.Equipment = roomGroup.ToList();
         }
+    }
 
-        public List<Room> GetAll()
-        {
-            if (_rooms == null)
-            {
-                _rooms = Serializer<Room>.FromCSV(FilePath);
-                PlaceEquipment(_rooms);
-            }
+    public Room? GetById(string id)
+    {
+        return GetAll().Find(equipment => equipment.Id == id);
+    }
 
-            return _rooms;
-        }
+    public void Add(Room room)
+    {
+        var rooms = GetAll();
 
-        private static void PlaceEquipment(List<Room> rooms)
-        {
-            var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
+        rooms.Add(room);
 
-            var equipmentPlacementsByRoom =
-                from equipmentPlacement in equipmentPlacements
-                group equipmentPlacement by equipmentPlacement.RoomId
-                into equipmentInRoom
-                select equipmentInRoom;
+        Serializer<Room>.ToCSV(rooms, FilePath);
 
-            foreach (var roomGroup in equipmentPlacementsByRoom)
-            {
-                var room = rooms.Find(room => room.Id == roomGroup.Key);
-                if (room == null) continue;
-                room.Equipment = roomGroup.ToList();
-            }
-        }
+        foreach (var equipmentPlacement in room.Equipment)
+            EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+    }
 
-        public Room? GetById(string id)
-        {
-            return GetAll().Find(equipment => equipment.Id == id);
-        }
+    public void Update(Room room)
+    {
+        var rooms = GetAll();
 
-        public void Add(Room room)
-        {
-            var rooms = GetAll();
+        var indexToUpdate = rooms.FindIndex(e => e.Id == room.Id);
+        if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-            rooms.Add(room);
+        rooms[indexToUpdate] = room;
 
-            Serializer<Room>.ToCSV(rooms, FilePath);
+        Serializer<Room>.ToCSV(rooms, FilePath);
 
-            foreach (var equipmentPlacement in room.Equipment)
-            {
+        foreach (var equipmentPlacement in room.Equipment)
+            if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
+                    equipmentPlacement.EquipmentId) == null)
                 EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
-            }
-        }
+            else
+                EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
+    }
 
-        public void Update(Room room)
-        {
-            var rooms = GetAll();
+    public void Delete(Room room)
+    {
+        var rooms = GetAll();
 
-            var indexToUpdate = rooms.FindIndex(e => e.Id == room.Id);
-            if (indexToUpdate == -1) throw new KeyNotFoundException();
+        var indexToDelete = rooms.FindIndex(e => e.Id == room.Id);
+        if (indexToDelete == -1) throw new KeyNotFoundException();
 
-            rooms[indexToUpdate] = room;
+        rooms.RemoveAt(indexToDelete);
 
-            Serializer<Room>.ToCSV(rooms, FilePath);
+        Serializer<Room>.ToCSV(rooms, FilePath);
+    }
 
-            foreach (var equipmentPlacement in room.Equipment)
-            {
-                if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
-                        equipmentPlacement.EquipmentId) == null)
-                {
-                    EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
-                }
-                else
-                {
-                    EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
-                }
-            }
-        }
+    public void DeleteAll()
+    {
+        if (_rooms == null) return;
+        _rooms.Clear();
+        Serializer<Room>.ToCSV(_rooms, FilePath);
+        _rooms = null;
+    }
 
-        public void Delete(Room room)
-        {
-            var rooms = GetAll();
-
-            var indexToDelete = rooms.FindIndex(e => e.Id == room.Id);
-            if (indexToDelete == -1) throw new KeyNotFoundException();
-
-            rooms.RemoveAt(indexToDelete);
-
-            Serializer<Room>.ToCSV(rooms, FilePath);
-        }
-
-        public void DeleteAll()
-        {
-            if (_rooms == null) return;
-            _rooms.Clear();
-            Serializer<Room>.ToCSV(_rooms, FilePath);
-            _rooms = null;
-        }
-
-        public Room GetWarehouse()
-        {
-            var warehouse = GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
-            if (warehouse == null)
-            {
-                throw new NoWarehouseException();
-            }
-
-            return warehouse;
-        }
+    public Room GetWarehouse()
+    {
+        var warehouse = GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
+        return warehouse ?? throw new NoWarehouseException();
     }
 }

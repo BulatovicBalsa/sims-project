@@ -1,7 +1,6 @@
 ﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Serialization;
-using NuGet.Frameworks;
 
 namespace HospitalTests.Repositories.Manager;
 
@@ -12,32 +11,28 @@ public class EquipmentPlacementRepositoryTests
     public void SetUp()
     {
         EquipmentPlacementRepository.Instance.DeleteAll();
-        EquipmentRepository.Instance.DeleteAll(); 
+        EquipmentRepository.Instance.DeleteAll();
         var equipment = new List<Equipment>
         {
             new("1", "Chair", Equipment.EquipmentType.Furniture),
             new("2", "Operating table",
-                Equipment.EquipmentType.OperationEquipment),
+                Equipment.EquipmentType.OperationEquipment)
         };
 
         Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
-        
+
         var equipmentPlacements = new List<EquipmentPlacement>
         {
             new("1", "1", 1),
             new("2", "2", 2)
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
-        
-
     }
 
 
     [TestMethod]
     public void TestGetAll()
     {
-
-
         Assert.AreEqual(2, EquipmentPlacementRepository.Instance.GetAll().Count);
     }
 
@@ -69,7 +64,6 @@ public class EquipmentPlacementRepositoryTests
             new("2", "2", 2)
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
-        
 
 
         var equipmentItemRepository = EquipmentPlacementRepository.Instance;
@@ -90,7 +84,5 @@ public class EquipmentPlacementRepositoryTests
         Assert.IsNotNull(loadedEquipmentPlacements[1].Equipment);
         Assert.AreEqual("Chair", loadedEquipmentPlacements[0].Equipment?.Name);
         Assert.AreEqual("Operating table", loadedEquipmentPlacements[1].Equipment?.Name);
-
-
     }
 }

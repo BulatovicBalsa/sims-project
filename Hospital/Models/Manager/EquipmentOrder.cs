@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hospital.Repositories.Manager;
 
 namespace Hospital.Models.Manager;
 
 public class EquipmentOrder
 {
-    private const double _deliveryTimeInDays = 1;
-    public bool PickedUp
-    {
-        get;
-        set;
-    }
+    private const double DeliveryTimeInDays = 1;
 
     public EquipmentOrder()
     {
@@ -35,6 +29,8 @@ public class EquipmentOrder
         PickedUp = pickedUp;
     }
 
+    public bool PickedUp { get; set; }
+
     public List<EquipmentOrderItem> Items { get; set; }
     public string Id { get; set; }
     public DateTime DeliveryDateTime { get; set; }
@@ -43,8 +39,7 @@ public class EquipmentOrder
 
     public static EquipmentOrder CreateBlankOrder()
     {
-
-        return new EquipmentOrder(DateTime.Now.AddDays(_deliveryTimeInDays));
+        return new EquipmentOrder(DateTime.Now.AddDays(DeliveryTimeInDays));
     }
 
 
@@ -86,6 +81,4 @@ public class EquipmentOrder
 
         PickedUp = true;
     }
-
-
 }

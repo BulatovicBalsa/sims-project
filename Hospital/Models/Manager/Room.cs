@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace Hospital.Models.Manager;
@@ -75,10 +74,5 @@ public class Room
     {
         if (obj is not Room objAsRoom) return false;
         return Id == objAsRoom.Id;
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
     }
 }

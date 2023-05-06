@@ -2,13 +2,6 @@
 
 public class EquipmentOrderItem
 {
-    public int Amount { get; set; }
-    public string EquipmentId { get; set; }
-
-    public string OrderId { get; set; }
-
-    public Equipment? Equipment { get; set; }
-
     public EquipmentOrderItem()
     {
         Amount = 0;
@@ -36,4 +29,11 @@ public class EquipmentOrderItem
         Amount = amount;
         EquipmentId = equipmentId;
     }
+
+    public int Amount { get; set; }
+    public string EquipmentId { get; set; }
+
+    public string OrderId { get; set; }
+
+    public Equipment? Equipment { get; set; }
 }

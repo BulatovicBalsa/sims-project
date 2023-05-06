@@ -10,7 +10,13 @@ public class RoomRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
+        const string roomFilePath = "../../../Data/rooms.csv";
+        if(File.Exists(roomFilePath))
+            File.Delete(roomFilePath);
+
         RoomRepository.Instance.DeleteAll();
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        EquipmentRepository.Instance.DeleteAll();
     }
 
     [TestMethod]
