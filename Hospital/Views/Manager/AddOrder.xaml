@@ -5,11 +5,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Hospital.ViewModels.Manager"
+        xmlns:valRule="clr-namespace:Hospital.ValidationRules"
         mc:Ignorable="d"
         Title="AddOrder" Height="450" Width="800">
     <Window.DataContext>
         <viewModels:AddOrderViewModel />
     </Window.DataContext>
+
+
 
     <DockPanel LastChildFill="True">
         <Grid>
@@ -30,10 +33,19 @@
             <Button Grid.Row="0" Grid.Column="3" Content="Submit" Command="{Binding SendOrderCommand}"
                     CommandParameter="{Binding ElementName=AddOrderFormWindow}" Width="50" HorizontalAlignment="Right" />
             <DataGrid ItemsSource="{Binding Items, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
-                      AutoGenerateColumns="False" CanUserAddRows="False">
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*" />
+                    <DataGridTextColumn Header="Amount" Width="*" >
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <valRule:IntRangeRule Min="1" Max="1000" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
