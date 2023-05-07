@@ -14,10 +14,10 @@ using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels.Manager
 {
-    public class AddOrderFormViewModel : ViewModelBase
+    public class AddOrderViewModel : ViewModelBase
     {
         private BindingList<Equipment> _dynamicEquipmentRunningOut;
-        public AddOrderFormViewModel()
+        public AddOrderViewModel()
         {
             var filterService = new EquipmentFilterService();
             DynamicEquipmentRunningOut = new BindingList<Equipment>(filterService.GetDynamicEquipmentLowInWarehouse());

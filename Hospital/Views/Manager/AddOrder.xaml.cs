@@ -16,11 +16,11 @@ using Hospital.ViewModels;
 namespace Hospital.Views.Manager
 {
     /// <summary>
-    /// Interaction logic for AddOrderForm.xaml
+    /// Interaction logic for AddOrder.xaml
     /// </summary>
-    public partial class AddOrderForm : Window, IClosable
+    public partial class AddOrder : Window, IClosable
     {
-        public AddOrderForm()
+        public AddOrder()
         {
             InitializeComponent();
         }
