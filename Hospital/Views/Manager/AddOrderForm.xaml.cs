@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.ViewModels;
 
 namespace Hospital.Views.Manager
 {
     /// <summary>
     /// Interaction logic for AddOrderForm.xaml
     /// </summary>
-    public partial class AddOrderForm : Window
+    public partial class AddOrderForm : Window, IClosable
     {
         public AddOrderForm()
         {

@@ -23,7 +23,7 @@ namespace Hospital.ViewModels.Manager
             DynamicEquipmentRunningOut = new BindingList<Equipment>(filterService.GetDynamicEquipmentLowInWarehouse());
             Items = new BindingList<EquipmentOrderItem>();
             AddItemCommand = new RelayCommand(AddItem);
-            SendOrderCommand = new RelayCommand<Window>(SendOrder);
+            SendOrderCommand = new RelayCommand<IClosable>(SendOrder);
         }
 
         public BindingList<Equipment> DynamicEquipmentRunningOut
@@ -71,7 +71,7 @@ namespace Hospital.ViewModels.Manager
             }
         }
 
-        public void SendOrder(Window window)
+        public void SendOrder(IClosable window)
         {
             if (ValidateOrder())
             {
