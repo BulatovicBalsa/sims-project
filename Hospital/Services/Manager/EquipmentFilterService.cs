@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
@@ -8,9 +7,9 @@ namespace Hospital.Services.Manager;
 
 public class EquipmentFilterService
 {
+    private const int RunningLowThreshold = 5;
     private readonly EquipmentRepository _equipmentRepository;
     private readonly RoomRepository _roomRepository;
-    private const int RunningLowThreshold = 5;
 
     public EquipmentFilterService()
     {
@@ -36,7 +35,6 @@ public class EquipmentFilterService
                 where equipment != null && warehouse.GetAmount(equipment) < RunningLowThreshold
                 select equipment
             ).ToList();
-
     }
 
     public List<Equipment> GetEquipment(Equipment.EquipmentType type)

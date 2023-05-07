@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views.Manager"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Manager"
         mc:Ignorable="d"
         Title="ManagerView" Height="450" Width="800">
@@ -16,41 +15,47 @@
             <TabItem Header="Equipment">
                 <DockPanel LastChildFill="False">
                     <ToolBar DockPanel.Dock="Top">
-                        <Button x:Name="EquipmentButton" Content="Equipment" Width="NaN" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
+                        <Button x:Name="EquipmentButton" Content="Equipment" Width="NaN" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" Click="Button_Click" />
                     </ToolBar>
                 </DockPanel>
             </TabItem>
-            <TabItem DataContext = "{Binding Children[1]}" Header="Orders" Margin="-2,0,-2,0" >
+            <TabItem DataContext="{Binding Children[1]}" Header="Orders" Margin="-2,0,-2,0">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
-                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Command="{Binding OpenAddOrderFormCommand}">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddOrderFormCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <Image VerticalAlignment="Center"  Source="../../Images/PlusIcon.png"/>
-                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0" />
                             </StackPanel>
                         </Button>
                     </ToolBar>
                     <Grid DockPanel.Dock="Bottom">
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition>
-                            </ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
-                                <DataGridTextColumn Header="Delivery Time" Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*" IsReadOnly="False"/>
-                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}" Width="*" IsReadOnly="True" />
-                                <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Delivery Time"
+                                                    Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" IsReadOnly="False" />
+                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}" IsReadOnly="True" Width="*"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

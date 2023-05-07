@@ -1,88 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
-using Hospital.Services.Manager;
 using Hospital.Views.Manager;
 
-namespace Hospital.ViewModels.Manager
+namespace Hospital.ViewModels.Manager;
+
+public class OrderTabViewModel : ViewModelBase
 {
-    public class OrderTabViewModel : ViewModelBase
+    private BindingList<EquipmentOrder> _orders;
+
+    private EquipmentOrder _selectedOrder;
+    private ObservableCollection<EquipmentOrderItem> _selectedOrderItems;
+
+    public OrderTabViewModel()
     {
-        private BindingList<EquipmentOrder> _orders;
-        public BindingList<EquipmentOrder> Orders
+        Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
+        Orders.ListChanged += (sender, _) => OnPropertyChanged(nameof(Orders));
+        SelectedOrderItems = new ObservableCollection<EquipmentOrderItem>();
+        OpenAddOrderFormCommand = new RelayCommand(OpenAddOrderForm);
+    }
+
+    public BindingList<EquipmentOrder> Orders
+    {
+        get => _orders;
+        set
         {
-            get => _orders;
-            set
+            if (_orders == value) return;
+            _orders = value;
+            OnPropertyChanged(nameof(Orders));
+        }
+    }
+
+    public EquipmentOrder SelectedOrder
+    {
+        get => _selectedOrder;
+        set
+        {
+            if (_selectedOrder != value)
             {
-                if (_orders == value) return;
-                _orders = value;
-                OnPropertyChanged(nameof(Orders));
+                _selectedOrder = value;
+                SelectedOrderItems = value != null
+                    ? new ObservableCollection<EquipmentOrderItem>(SelectedOrder.Items)
+                    : new ObservableCollection<EquipmentOrderItem>();
+                OnPropertyChanged(nameof(SelectedOrder));
             }
         }
+    }
 
-        private EquipmentOrder _selectedOrder;
-        private ObservableCollection<EquipmentOrderItem> _selectedOrderItems;
-
-        public EquipmentOrder SelectedOrder
+    public ObservableCollection<EquipmentOrderItem> SelectedOrderItems
+    {
+        get => _selectedOrderItems;
+        set
         {
-            get => _selectedOrder;
-            set
+            if (_selectedOrderItems != value)
             {
-                if (_selectedOrder != value)
-                {
-                    _selectedOrder = value;
-                    SelectedOrderItems = value != null ? new ObservableCollection<EquipmentOrderItem>(SelectedOrder.Items) : new ObservableCollection<EquipmentOrderItem>();
-                    OnPropertyChanged(nameof(SelectedOrder));
-                }
+                _selectedOrderItems = value;
+                OnPropertyChanged(nameof(SelectedOrderItems));
             }
         }
-
-        public ObservableCollection<EquipmentOrderItem> SelectedOrderItems
-        {
-            get => _selectedOrderItems;
-            set
-            {
-                if (_selectedOrderItems != value)
-                {
-                    _selectedOrderItems = value;
-                    OnPropertyChanged(nameof(SelectedOrderItems));
-                }
-
-            }
-        }
-
-        public OrderTabViewModel()
-        {
-            Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
-            Orders.ListChanged += (sender, _) => OnPropertyChanged(nameof(Orders));
-            SelectedOrderItems = new ObservableCollection<EquipmentOrderItem>();
-            OpenAddOrderFormCommand = new RelayCommand(OpenAddOrderForm);
-        }
+    }
 
 
-        public ICommand OpenAddOrderFormCommand
-        {
-            get;
-            set;
-        }
+    public ICommand OpenAddOrderFormCommand { get; set; }
 
-        private void RefreshOrdersOnFormClose(object? sender, EventArgs eventArgs)
-        {
-            Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
-        }
-        public void OpenAddOrderForm()
-        {
-            var addOrderForm = new AddOrderForm();
-            addOrderForm.Closed += RefreshOrdersOnFormClose;
-            addOrderForm.Show();
-        }
+    private void RefreshOrdersOnFormClose(object? sender, EventArgs eventArgs)
+    {
+        Orders = new BindingList<EquipmentOrder>(EquipmentOrderRepository.Instance.GetAll());
+    }
+
+    public void OpenAddOrderForm()
+    {
+        var addOrderForm = new AddOrder();
+        addOrderForm.Closed += RefreshOrdersOnFormClose;
+        addOrderForm.Show();
     }
 }

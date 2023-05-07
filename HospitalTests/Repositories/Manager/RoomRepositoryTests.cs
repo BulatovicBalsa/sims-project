@@ -11,7 +11,7 @@ public class RoomRepositoryTests
     public void SetUp()
     {
         const string roomFilePath = "../../../Data/rooms.csv";
-        if(File.Exists(roomFilePath))
+        if (File.Exists(roomFilePath))
             File.Delete(roomFilePath);
 
         RoomRepository.Instance.DeleteAll();
@@ -158,21 +158,21 @@ public class RoomRepositoryTests
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         EquipmentPlacementRepository.Instance.DeleteAll();
-        var equipmentInRooms = new List<EquipmentPlacement>()
+        var equipmentInRooms = new List<EquipmentPlacement>
         {
             new("1", "0", 1),
             new("2", "0", 2),
             new("1", "1", 3)
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
-         
+
         var loadedRooms = RoomRepository.Instance.GetAll();
 
         Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
         Assert.AreEqual(1, loadedRooms[1].Equipment.Count);
-        Assert.AreEqual(1, loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
-        Assert.AreEqual(3, loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
-        
-
+        Assert.AreEqual(1,
+            loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
+        Assert.AreEqual(3,
+            loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
     }
 }

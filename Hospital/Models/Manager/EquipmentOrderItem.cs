@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
 
-public class EquipmentOrderItem: INotifyPropertyChanged
+public class EquipmentOrderItem : INotifyPropertyChanged
 {
     private int _amount;
 

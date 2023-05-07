@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Timers;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
@@ -24,7 +23,6 @@ public class EquipmentOrderService
         {
             item.OrderId = order.Id;
             order.Items.Add(item);
-
         }
 
         EquipmentOrderRepository.Instance.Add(order);
@@ -44,7 +42,6 @@ public class EquipmentOrderService
             EquipmentOrderRepository.Instance.Update(order);
 
             foreach (var equipmentPlacement in warehouse.Equipment)
-            {
                 //TODO: Perhaps don't use try catch. Use GetByKeyInstead
                 try
                 {
@@ -54,7 +51,6 @@ public class EquipmentOrderService
                 {
                     EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
                 }
-            }
         }
     }
 }

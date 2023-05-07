@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
 
-public class EquipmentOrder: INotifyPropertyChanged
+public class EquipmentOrder : INotifyPropertyChanged
 {
-    private bool _pickedUp;
-    private List<EquipmentOrderItem> _items;
-    private string _id;
-    private DateTime _deliveryDateTime;
     private const double _deliveryTimeInDays = 1;
+
+    private bool _delivered;
+    private DateTime _deliveryDateTime;
+    private string _id;
+    private List<EquipmentOrderItem> _items;
+    private bool _pickedUp;
 
     public EquipmentOrder()
     {
@@ -81,12 +82,11 @@ public class EquipmentOrder: INotifyPropertyChanged
         }
     }
 
-    private bool _delivered = false;
     public bool Delivered
     {
         get
         {
-            var deliveryDatePassed = (DeliveryDateTime <= DateTime.Now);
+            var deliveryDatePassed = DeliveryDateTime <= DateTime.Now;
             if (_delivered == deliveryDatePassed) return _delivered;
             _delivered = deliveryDatePassed;
             OnPropertyChanged();
@@ -94,6 +94,8 @@ public class EquipmentOrder: INotifyPropertyChanged
             return _delivered;
         }
     }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public static EquipmentOrder CreateBlankOrder()
     {
@@ -135,15 +137,11 @@ public class EquipmentOrder: INotifyPropertyChanged
         if (PickedUp) return;
 
         foreach (var item in Items)
-        {
             if (item.Equipment != null)
                 destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
-        }
 
         PickedUp = true;
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
