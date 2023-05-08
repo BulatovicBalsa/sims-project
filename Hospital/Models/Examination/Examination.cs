@@ -21,7 +21,8 @@ namespace Hospital.Models.Examination
         public string Anamnesis { get; set; }
         public Room? Room { get; set; }
         public bool Admissioned { get; set; }
-        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room)
+        public bool Urgent { get; set; }
+        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
         {
             Doctor = doctor;
             Patient = patient;
@@ -31,6 +32,7 @@ namespace Hospital.Models.Examination
             Anamnesis = "";
             Room = room;
             Admissioned = false;
+            Urgent = urgent;
         }
 
         public Examination()
