@@ -30,6 +30,8 @@ public class DoctorViewModel : ViewModelBase
 
     private object _selectedPatient;
 
+    private DateTime _selectedDate;
+
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
@@ -91,6 +93,17 @@ public class DoctorViewModel : ViewModelBase
         {
             _selectedPatient = value;
             OnPropertyChanged(nameof(SelectedPatient));
+        }
+    }
+
+    public DateTime SelectedDate
+    {
+        get => _selectedDate;
+        set
+        {
+            _selectedDate = value;
+            OnPropertyChanged(nameof(SelectedDate));
+            _doctorService.GetExaminationsForDate(SelectedDate);
         }
     }
 
