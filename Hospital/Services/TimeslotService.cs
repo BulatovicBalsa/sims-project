@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,20 +21,15 @@ namespace Hospital.Services
             _examinationRepository = new ExaminationRepository();
         }
 
-        public DateTime? GetEarliestFreeTimeslotIn2Hours(Doctor doctor, bool isOperation)
+        public DateTime? GetEarliestFreeTimeslotIn2Hours(Doctor doctor)
         {
-            var doctorExaminations =  _examinationRepository.GetAll(doctor);
+            var upcomingDoctorExaminations =  _examinationRepository.GetAll(doctor).Where(examination => examination.Start > DateTime.Now).ToList();
             var lowerTimeBound = NormalizeTime(DateTime.Now);
             var upperTimeBound = lowerTimeBound.AddHours(2);
 
             for (var time = lowerTimeBound; time <= upperTimeBound; time = time.AddMinutes(15))
             {
-                if (doctorExaminations.Any(examination => examination.Start == time))
-                {
-                    continue;
-                }
-
-                if (isOperation && doctorExaminations.Any(examination => examination.Start == time.AddMinutes(15)))
+                if (upcomingDoctorExaminations.Any(examination => CompareDates(examination.Start, time)))
                 {
                     continue;
                 }
@@ -46,7 +42,16 @@ namespace Hospital.Services
 
         private DateTime NormalizeTime(DateTime time)
         {
-            return time.Minute % 15 == 0 ? time : time.AddMinutes(15 - time.Minute % 15);
+            var validExaminationTimestamp = time.Minute % 15 == 0 ? time : time.AddMinutes(15 - time.Minute % 15);
+            return validExaminationTimestamp.AddSeconds(-validExaminationTimestamp.Second).AddMilliseconds(-validExaminationTimestamp.Millisecond);
+        }
+
+        private bool CompareDates(DateTime dateTime1, DateTime dateTime2)
+        {
+            return dateTime1.Date == dateTime2.Date &&
+                   dateTime1.Hour == dateTime2.Hour &&
+                   dateTime1.Minute == dateTime2.Minute &&
+                   dateTime1.Second == dateTime2.Second;
         }
     }
 }
