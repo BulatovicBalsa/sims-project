@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using Hospital.Repositories.Doctor;
@@ -22,6 +23,8 @@ public partial class App : Application
 
     protected void ApplicationStart(object sender, EventArgs e)
     {
+        CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
+
         ProcessEventsThatOccurredBeforeAppStart();
 
         var loginView = new LoginView();

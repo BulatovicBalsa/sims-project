@@ -1,0 +1,2 @@
+EquipmentId,RoomId,Amount,Id,Name,Type
+1024,5000,12,1024,Pencil,DynamicEquipment
