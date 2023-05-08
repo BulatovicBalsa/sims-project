@@ -16,12 +16,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding RoomEquipments}">
+        <ListBox ItemsSource="{Binding Expenditures}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Equipment.Name}" Margin="5" />
-                        <xctk:IntegerUpDown Value="0" Minimum="0" Maximum="{Binding Amount}" />
+                        <TextBlock Text="(Current amount: " Margin="0 5 0 5" />
+                        <TextBlock Text="{Binding OriginalAmount}" Margin="0 5 0 5"/>
+                        <TextBlock Text=")" Margin="0 5 5 5"/>
+
+
+                        <xctk:IntegerUpDown AllowTextInput="False" Value="{Binding Amount}" Minimum="0" Maximum="{Binding OriginalAmount}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

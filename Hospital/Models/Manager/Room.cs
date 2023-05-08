@@ -65,6 +65,20 @@ public class Room
         return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
     }
 
+    public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
+    {
+        return (from equipmentPlacement in Equipment
+            where equipmentPlacement.Equipment.Type == Models.Manager.Equipment.EquipmentType.DynamicEquipment
+            select equipmentPlacement).ToList();
+    }
+
+    public void ExpendEquipment(Equipment equipment, int amount)
+    {
+        var newAmount = GetAmount(equipment) - amount;
+        if(newAmount > 0)
+            SetAmount(equipment, newAmount);
+    }
+
     public override string ToString()
     {
         return $"{Name}, {Type}";
