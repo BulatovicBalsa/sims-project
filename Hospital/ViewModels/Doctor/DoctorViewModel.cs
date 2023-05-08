@@ -45,6 +45,13 @@ public class DoctorViewModel : ViewModelBase
         UpdateExaminationCommand = new RelayCommand(UpdateExamination);
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
+        DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _doctorService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -118,6 +125,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand PerformExaminationCommand { get; set; }
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
+    public ICommand DefaultExaminationViewCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {
