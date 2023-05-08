@@ -20,7 +20,7 @@ public class DoctorService
     {
         _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
         _patientRepository = new PatientRepository();
-        _roomRepository = new RoomRepository();
+        _roomRepository = RoomRepository.Instance;
     }
 
     public List<Patient> GetViewedPatients(Doctor doctor)

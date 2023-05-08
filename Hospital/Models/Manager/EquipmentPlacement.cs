@@ -38,4 +38,9 @@ public class EquipmentPlacement
         var otherPlacement = (EquipmentPlacement)obj;
         return EquipmentId == otherPlacement.EquipmentId && RoomId == otherPlacement.RoomId;
     }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
