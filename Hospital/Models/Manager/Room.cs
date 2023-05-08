@@ -57,7 +57,7 @@ public class Room
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentPlacement(equipment.Id, Id, amount));
+            Equipment.Add(new EquipmentPlacement(equipment, Id, amount));
     }
 
     public List<Equipment> GetEquipment()
@@ -74,10 +74,5 @@ public class Room
     {
         if (obj is not Room objAsRoom) return false;
         return Id == objAsRoom.Id;
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
     }
 }

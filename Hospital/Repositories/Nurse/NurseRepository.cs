@@ -32,8 +32,8 @@ public class NurseRepository
         allNurses.Add(nurse);
         Serializer<Nurse>.ToCSV(allNurses, FilePath);
     }
-
     public void Update(Nurse nurse)
+
     {
         var allNurses = GetAll();
 
