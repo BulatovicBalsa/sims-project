@@ -35,6 +35,7 @@ public class DoctorViewModel : ViewModelBase
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
+        _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
         Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
@@ -103,7 +104,8 @@ public class DoctorViewModel : ViewModelBase
         {
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
-            _doctorService.GetExaminationsForDate(SelectedDate);
+            Examinations.Clear();
+            _doctorService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
         }
     }
 
