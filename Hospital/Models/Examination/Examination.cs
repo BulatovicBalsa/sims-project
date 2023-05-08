@@ -72,5 +72,10 @@ namespace Hospital.Models.Examination
 
             return copy;
         }
+
+        public override string ToString()
+        {
+            return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
+        }
     }
 }
