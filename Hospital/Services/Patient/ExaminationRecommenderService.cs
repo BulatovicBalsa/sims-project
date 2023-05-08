@@ -74,13 +74,8 @@ namespace Hospital.Services
 
                 while(currentTime <= endTime)
                 {
-                    if(IsExaminationTimeFree(options.PreferredDoctor,patient,currentTime))
-                    {
-                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime);
-                        examinations.Add(examination);
-                        if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
-                        
-                    }
+                    AddExaminationIfTimeFree(options.PreferredDoctor, patient, currentTime, examinations);
+                    if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                     currentTime = currentTime.AddMinutes(1);
                 }
                 currentDate = currentDate.AddDays(1);
@@ -99,12 +94,8 @@ namespace Hospital.Services
 
                 while(currentTime.Date <= currentDate.AddDays(1))
                 {
-                    if (IsExaminationTimeFree(options.PreferredDoctor, patient, currentTime))
-                    {
-                        Examination examination = new Examination(options.PreferredDoctor, patient, false, currentTime);
-                        examinations.Add(examination);
-                        if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
-                    }
+                    AddExaminationIfTimeFree(options.PreferredDoctor, patient, currentTime, examinations);
+                    if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                     currentTime = currentTime.AddMinutes(1);
                 }
             currentDate= currentDate.AddDays(1);
@@ -126,12 +117,8 @@ namespace Hospital.Services
                 {
                     while(currentTime.TimeOfDay < options.EndTime)
                     {
-                        if (IsExaminationTimeFree(doctor, patient, currentTime))
-                        {
-                            Examination examination = new Examination(doctor, patient, false, currentTime);
-                            examinations.Add(examination);
-                            if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
-                        }
+                        AddExaminationIfTimeFree(doctor, patient, currentTime, examinations);
+                        if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
                         currentTime = currentTime.AddMinutes(1);
                     }
                     currentDate = currentDate.AddDays(1);
@@ -178,11 +165,7 @@ namespace Hospital.Services
             {
                 foreach (Doctor doctor in doctors)
                 {
-                    if (IsExaminationTimeFree(doctor, patient, currentDate))
-                    {
-                        Examination examination = new Examination(doctor, patient, false, currentDate);
-                        examinations.Add(examination);
-                    }
+                    AddExaminationIfTimeFree(doctor, patient, currentDate, examinations);
                 }
                 currentDate = currentDate.AddMinutes(1);
             }
@@ -192,6 +175,15 @@ namespace Hospital.Services
         private bool IsExaminationTimeFree(Doctor doctor, Patient patient, DateTime examinationTime)
         {
             return _examinationRepository.IsFree(doctor, examinationTime) && _examinationRepository.IsFree(patient, examinationTime);
+        }
+
+        private void AddExaminationIfTimeFree(Doctor doctor, Patient patient, DateTime currentTime, List<Examination> examinations)
+        {
+            if (IsExaminationTimeFree(doctor, patient, currentTime))
+            {
+                Examination examination = new Examination(doctor, patient, false, currentTime);
+                examinations.Add(examination);
+            }
         }
     }
 }
