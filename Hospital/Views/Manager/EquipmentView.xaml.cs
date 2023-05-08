@@ -8,9 +8,7 @@ using Hospital.Services.Manager;
 
 namespace Hospital.Views.Manager;
 
-/// <summary>
-///     Interaction logic for EquipmentView.xaml
-/// </summary>
+
 public partial class EquipmentView : Window
 {
     private bool _includeExaminationEquipment;

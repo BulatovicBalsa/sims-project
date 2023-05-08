@@ -2,9 +2,6 @@
 
 namespace Hospital.Views.Manager;
 
-/// <summary>
-///     Interaction logic for ManagerView.xaml
-/// </summary>
 public partial class ManagerView : Window
 {
     public ManagerView()

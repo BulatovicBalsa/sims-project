@@ -81,7 +81,7 @@ namespace Hospital.ViewModels
             }
         }
 
-        public IEnumerable<Models.Doctor.Doctor> RecommendedDoctors
+        public IEnumerable<Doctor> RecommendedDoctors
         {
             get { return _recommendedDoctors; }
             set

@@ -12,9 +12,7 @@ public class RoomRepository
     private static RoomRepository? _instance;
     private List<Room>? _rooms;
 
-    private RoomRepository()
-    {
-    }
+    private RoomRepository() { }
 
     public static RoomRepository Instance => _instance ??= new RoomRepository();
 
