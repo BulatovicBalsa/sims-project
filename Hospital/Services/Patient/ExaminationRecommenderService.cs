@@ -90,15 +90,9 @@ namespace Hospital.Services
             
             while(currentDate <= options.LatestDate)
             {
-                DateTime currentTime = currentDate.Add(options.StartTime);
-
-                while(currentTime.Date <= currentDate.AddDays(1))
-                {
-                    AddExaminationIfTimeFree(options.PreferredDoctor, patient, currentTime, examinations);
-                    if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
-                    currentTime = currentTime.AddMinutes(1);
-                }
-            currentDate= currentDate.AddDays(1);
+                AddExaminationIfTimeFree(options.PreferredDoctor, patient, currentDate, examinations);
+                if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
+                currentDate= currentDate.AddMinutes(1);
             }
             return examinations;
         }
