@@ -82,7 +82,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
         var suitableDoctors = _doctorRepository.GetBySpecialization(SelectedSpecialization);
 
         var earliestTimeslots = suitableDoctors
-            .Select(doctor => new KeyValuePair<Doctor, DateTime?>(doctor, _timeslotService.GetEarliestFreeTimeslotIn2Hours(doctor, IsOperation))).ToList();
+            .Select(doctor => new KeyValuePair<Doctor, DateTime?>(doctor, _timeslotService.GetEarliestFreeTimeslotIn2Hours(doctor))).ToList();
 
         var earliestOfAll = earliestTimeslots.Min(doctorTimeslotPair => doctorTimeslotPair.Value ?? DateTime.MaxValue);
 
