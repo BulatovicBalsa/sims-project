@@ -40,10 +40,24 @@ namespace Hospital.Services
             return null;
         }
 
+        public DateTime GetEarliestFreeTimeslot(Doctor doctor)
+        {
+            var upcomingDoctorExaminations = _examinationRepository.GetAll(doctor).Where(examination => examination.Start > DateTime.Now).ToList();
+            var lowerTimeBound = NormalizeTime(DateTime.Now);
+
+            for (var time = lowerTimeBound;; time = time.AddMinutes(15))
+            {
+                if (!upcomingDoctorExaminations.Any(examination => CompareDates(examination.Start, time)))
+                {
+                    return time;
+                }
+            }
+        }
+
         private DateTime NormalizeTime(DateTime time)
         {
-            var validExaminationTimestamp = time.Minute % 15 == 0 ? time : time.AddMinutes(15 - time.Minute % 15);
-            return validExaminationTimestamp.AddSeconds(-validExaminationTimestamp.Second).AddMilliseconds(-validExaminationTimestamp.Millisecond);
+            var validExaminationTimestamp = time.AddSeconds(-time.Second).AddMilliseconds(-time.Millisecond);
+            return validExaminationTimestamp.Minute % 15 == 0 ? validExaminationTimestamp : validExaminationTimestamp.AddMinutes(15 - validExaminationTimestamp.Minute % 15);
         }
 
         private bool CompareDates(DateTime dateTime1, DateTime dateTime2)
