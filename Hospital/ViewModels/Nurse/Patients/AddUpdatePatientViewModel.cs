@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -25,6 +26,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
     private string _usernameError;
     private string _weight;
     private string _weightError;
+
+    public event Action? DialogClosed;
 
     public AddUpdatePatientViewModel()
     {
@@ -256,6 +259,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
     private void CloseDialog()
     {
         Application.Current.Windows[1]?.Close();
+        DialogClosed?.Invoke();
     }
 
     private bool ErrorHappened()

@@ -3,6 +3,8 @@ using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
+using Models.Doctor;
+
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";

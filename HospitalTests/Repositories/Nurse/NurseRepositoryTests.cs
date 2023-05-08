@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Exceptions;
 using Hospital.Repositories.Nurse;
 using Hospital.Serialization;
 
@@ -123,7 +124,7 @@ namespace HospitalTests.Repositories.Nurse
             var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
-            Assert.ThrowsException<KeyNotFoundException>(() => nurseRepository.Update(newNurse));
+            Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Update(newNurse));
         }
 
         [TestMethod]
@@ -133,7 +134,7 @@ namespace HospitalTests.Repositories.Nurse
             var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
-            Assert.ThrowsException<KeyNotFoundException>(() => nurseRepository.Delete(newNurse));
+            Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Delete(newNurse));
         }
     }
 }

@@ -3,17 +3,21 @@ using System.Security;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Input;
-using Hospital.Models.Doctor;
-using Hospital.Models.Patient;
+using Hospital.Exceptions;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login;
 
+using Hospital.Models.Nurse;
+using Models.Manager;
+using Models.Doctor;
+using Models.Patient;
+
 public class LoginViewModel : ViewModelBase
 {
-    private readonly LoginService _loginService;
     private string _errorMessage;
     private bool _isViewVisible = true;
+    private readonly LoginService _loginService;
     private SecureString _password;
     private string _username;
 
@@ -93,15 +97,16 @@ public class LoginViewModel : ViewModelBase
         if (_loginService.LoggedUser == null) return "";
 
         var userId = _loginService.LoggedUser.Id;
+        return $"{userId}|{GetUserType()}";
+    }
 
-        if (_loginService.LoggedUser.GetType() == typeof(Patient)) return userId + "|" + "PATIENT";
+    private string GetUserType()
+    {
+        if (_loginService.LoggedUser?.GetType() == typeof(Patient)) return "PATIENT";
+        if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
+        if (_loginService.LoggedUser?.GetType() == typeof(Nurse)) return "NURSE";
+        if (_loginService.LoggedUser?.GetType() == typeof(Manager)) return "MANAGER";
 
-        if (_loginService.LoggedUser.GetType() == typeof(Doctor)) return userId + "|" + "DOCTOR";
-
-        if (_loginService.LoggedUser.GetType() == typeof(Models.Nurse.Nurse)) return userId + "|" + "NURSE";
-
-        if (_loginService.LoggedUser.GetType() == typeof(Models.Manager.Manager)) return userId + "|" + "MANAGER";
-
-        return "";
+        throw new UnrecognizedUserTypeException();
     }
 }
