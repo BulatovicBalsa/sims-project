@@ -36,9 +36,29 @@
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Amount" Width="*" >
+                    <DataGridTextColumn Header="Amount" Width="*" x:Name="AmountColumn">
+
+                        <DataGridTextColumn.EditingElementStyle>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Validation.ErrorTemplate">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="placeholder" />
+                                                <TextBlock Background="Red" Foreground="White" x:Name="ErrorTextBlock" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" /> 
+
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <!-- <Style TargetType="TextBox">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}"/>
+                            </Style> -->
+                        </DataGridTextColumn.EditingElementStyle>
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                 <Binding.ValidationRules>
                                     <valRule:IntRangeRule Min="1" Max="1000" />
                                 </Binding.ValidationRules>
@@ -49,5 +69,12 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+        <Popup Name="myPopup" IsOpen="False">
+            <Border BorderThickness="1">
+                <TextBlock Name="myPopupText" Background="LightBlue" Foreground="Blue" Padding="30" Text="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}">
+                </TextBlock>
+            </Border>
+        </Popup>
     </DockPanel>
 </Window>
