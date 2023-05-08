@@ -99,14 +99,6 @@ public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
 
     }
 
-    private void SaveEquipmentAmountChanges()
-    {
-        foreach (var equipmentPlacement in _room.Equipment)
-        {
-            EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
-        }
-    }
-
     private void Save(Window window)
     {
         var errorMessage = ValidateInput(window);
@@ -117,7 +109,7 @@ public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
         }
 
         ExpendEquipment(); 
-        SaveEquipmentAmountChanges();
+        RoomRepository.Instance.Update(_room);
 
         window.DialogResult = true;
     }
