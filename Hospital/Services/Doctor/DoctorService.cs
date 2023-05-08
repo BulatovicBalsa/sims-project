@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Doctor;
+﻿using System;
+using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
@@ -75,5 +76,10 @@ public class DoctorService
     public Patient? GetPatientById(string patientId)
     {
         return _patientRepository.GetById(patientId);
+    }
+
+    public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
+    {
+        return _examinationRepository.GetExaminationsForDate(doctor, selectedDate);
     }
 }
