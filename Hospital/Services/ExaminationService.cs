@@ -80,4 +80,13 @@ public class ExaminationService
 
         return patientExaminations.Any(examination => _timeslotService.AreDatesEqual(examination.Start, timeslot));
     }
+
+    public List<Examination> GetUpcomingExaminations(Doctor doctor)
+    {
+        var doctorExaminations = _examinationRepository.GetAll(doctor);
+        var upcomingDoctorExaminations =
+            doctorExaminations.Where(examination => examination.Start > DateTime.Now).ToList();
+
+        return upcomingDoctorExaminations;
+    }
 }

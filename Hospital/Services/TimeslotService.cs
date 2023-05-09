@@ -9,17 +9,17 @@ namespace Hospital.Services;
 public class TimeslotService
 {
     private readonly ExaminationRepository _examinationRepository;
+    private readonly ExaminationService _examinationService;
 
     public TimeslotService()
     {
         _examinationRepository = new ExaminationRepository();
+        _examinationService = new ExaminationService();
     }
 
     public DateTime GetEarliestFreeTimeslot(Doctor doctor)
     {
-        var doctorExaminations = _examinationRepository.GetAll(doctor);
-        var upcomingDoctorExaminations =
-            doctorExaminations.Where(examination => examination.Start > DateTime.Now).ToList();
+        var upcomingDoctorExaminations = _examinationService.GetUpcomingExaminations(doctor);
 
         var earliestTimeslot = GetClosestTimeslot(DateTime.Now);
         while (upcomingDoctorExaminations.Any(examination => AreDatesEqual(examination.Start, earliestTimeslot)))
