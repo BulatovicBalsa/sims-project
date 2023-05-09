@@ -41,7 +41,8 @@ namespace HospitalTests.Repositories.Examination
         private void CreateTestExaminationRepository()
         {
             _examinationRepository = new ExaminationRepository();
-            _doctorRepository = new DoctorRepository();
+            _doctorRepository = DoctorRepository.Instance;
+
             _patientRepository = new PatientRepository();
 
             _patientRepository.PatientAdded += _ => { };

@@ -110,6 +110,7 @@ namespace Hospital.ViewModels
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
+
             Patient = patient;
             
             if (examination == null)

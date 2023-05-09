@@ -28,7 +28,7 @@ public class DoctorService
     {
         var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
         var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
-        return viewedPatients;
+        return viewedPatients!;
     }
 
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
@@ -38,7 +38,7 @@ public class DoctorService
 
     public Patient GetPatient(Examination examination)
     {
-        return _patientRepository.GetById(examination.Patient.Id);
+        return _patientRepository.GetById(examination.Patient!.Id)!;
     }
 
     public List<Patient> GetAllPatients()

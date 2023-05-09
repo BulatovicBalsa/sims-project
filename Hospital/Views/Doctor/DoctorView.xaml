@@ -124,7 +124,7 @@
                             Content="Delete Examination"
                             Margin="5" Command="{Binding DeleteExaminationCommand}"/>
                     <Button x:Name="BtnPerformExamination"
-                            Content="Start Examination"
+                            Content="Perform Examination"
                             Margin="5" Command="{Binding PerformExaminationCommand}"/>
                 </StackPanel>
 
