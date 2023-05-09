@@ -105,28 +105,27 @@ namespace Hospital.ViewModels
         public string Title { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-
-
-        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel)
+        
+        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = new DoctorRepository().GetAll();
-            Examination = new Examination();
-            SelectedDate = DateTime.Now;
-            Examination.Patient = patient;
-            SaveCommand = new RelayCommand(Save);
             Patient = patient;
-            CancelCommand = new RelayCommand(Cancel);
-        }
+            
+            if (examination == null)
+            {
+                Examination = new Examination();
+                Examination.Patient = patient;
+                SelectedDate = DateTime.Now;
+                IsUpdate = false;
+            }
+            else
+            {
+                Examination = examination.DeepCopy();
+                SelectedDate = Examination.Start;
+                IsUpdate = true;
+            }
 
-        public ExaminationDialogViewModel(Patient patient, Examination examination, PatientViewModel patientViewModel)
-        {
-            _patientViewModel = patientViewModel;
-            RecommendedDoctors = new DoctorRepository().GetAll();
-            Examination = examination.DeepCopy();
-            SelectedDate = Examination.Start;
-            Patient = patient;
-            IsUpdate = true;
             SaveCommand = new RelayCommand(Save);
             CancelCommand = new RelayCommand(Cancel);
         }
@@ -221,6 +220,7 @@ namespace Hospital.ViewModels
             {
                 Patient.IsBlocked = true;
                 new PatientRepository().Update(Patient);
+                MessageBox.Show("This user is now blocked due to too many changes or examinations made in the last 30 days.", "User Blocked");
                 Application.Current.Shutdown();
             }
 
