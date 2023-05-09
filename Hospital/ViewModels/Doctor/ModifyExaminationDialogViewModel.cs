@@ -191,11 +191,19 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
             return null;
         }
 
+        var createdExamination = _isUpdate ? _examinationToChange : new Examination();
+
         var startTime = SelectedTime.GetValueOrDefault();
         var startDate = SelectedDate.GetValueOrDefault();
         startDate = startDate.Add(startTime.ToTimeSpan());
 
-        return new Examination(_doctor, SelectedPatient, IsOperation, startDate, SelectedRoom);
+        createdExamination.Start = startDate;
+        createdExamination.Patient = SelectedPatient;
+        createdExamination.Doctor = _doctor;
+        createdExamination.IsOperation = IsOperation;
+        createdExamination.Room = SelectedRoom;
+
+        return createdExamination;
     }
 
     private void UpdateExamination(Examination examination)
