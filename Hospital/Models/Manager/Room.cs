@@ -57,12 +57,26 @@ public class Room
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentPlacement(equipment.Id, Id, amount));
+            Equipment.Add(new EquipmentPlacement(equipment, Id, amount));
     }
 
     public List<Equipment> GetEquipment()
     {
         return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
+    }
+
+    public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
+    {
+        return (from equipmentPlacement in Equipment
+            where equipmentPlacement.Equipment.Type == Models.Manager.Equipment.EquipmentType.DynamicEquipment
+            select equipmentPlacement).ToList();
+    }
+
+    public void ExpendEquipment(Equipment equipment, int amount)
+    {
+        var newAmount = GetAmount(equipment) - amount;
+        if(newAmount >= 0)
+            SetAmount(equipment, newAmount);
     }
 
     public override string ToString()
@@ -74,10 +88,5 @@ public class Room
     {
         if (obj is not Room objAsRoom) return false;
         return Id == objAsRoom.Id;
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
     }
 }

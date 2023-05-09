@@ -30,9 +30,12 @@ public class DoctorViewModel : ViewModelBase
 
     private object _selectedPatient;
 
+    private DateTime _selectedDate;
+
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
+        _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
         Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
@@ -42,6 +45,13 @@ public class DoctorViewModel : ViewModelBase
         UpdateExaminationCommand = new RelayCommand(UpdateExamination);
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
+        DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _doctorService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -94,6 +104,18 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
+    public DateTime SelectedDate
+    {
+        get => _selectedDate;
+        set
+        {
+            _selectedDate = value;
+            OnPropertyChanged(nameof(SelectedDate));
+            Examinations.Clear();
+            _doctorService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
+        }
+    }
+
     public object SelectedExamination { get; set; }
 
     public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
@@ -103,6 +125,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand PerformExaminationCommand { get; set; }
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
+    public ICommand DefaultExaminationViewCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {

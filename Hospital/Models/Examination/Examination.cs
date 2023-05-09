@@ -9,6 +9,23 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Examination
 {
+    public class UpdateExaminationDto
+    {
+        public DateTime Start { get; set; }
+        public bool IsOperation { get; set; }
+        public Room? Room { get; set; }
+        public Patient.Patient Patient { get; set; }
+        public Doctor.Doctor? Doctor { get; set; }
+
+        public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient.Patient patient, Doctor.Doctor? doctor)
+        {
+            Start = start;
+            IsOperation = isOperation;
+            Room = room;
+            Patient = patient;  
+            Doctor = doctor;
+        }
+    }
     public class Examination
     {
         public const int DURATION = 15;
@@ -76,6 +93,15 @@ namespace Hospital.Models.Examination
         public override string ToString()
         {
             return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
+        }
+      
+        public void Update(UpdateExaminationDto examinationDto)
+        {
+            Start = examinationDto.Start;
+            Room = examinationDto.Room;
+            IsOperation = examinationDto.IsOperation;
+            Patient = examinationDto.Patient;
+            Doctor = examinationDto.Doctor;
         }
     }
 }

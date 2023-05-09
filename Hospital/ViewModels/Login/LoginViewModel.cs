@@ -23,8 +23,6 @@ public class LoginViewModel : ViewModelBase
 
     public LoginViewModel()
     {
-        _errorMessage = "";
-        _username = "";
         LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
         _password = new SecureString();
         _loginService = new LoginService();

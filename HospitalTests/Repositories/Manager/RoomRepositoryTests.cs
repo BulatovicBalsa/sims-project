@@ -7,9 +7,24 @@ namespace HospitalTests.Repositories.Manager;
 [TestClass]
 public class RoomRepositoryTests
 {
+    [TestInitialize]
+    public void SetUp()
+    {
+        const string roomFilePath = "../../../Data/rooms.csv";
+        if (File.Exists(roomFilePath))
+            File.Delete(roomFilePath);
+
+        RoomRepository.Instance.DeleteAll();
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        EquipmentRepository.Instance.DeleteAll();
+    }
+
     [TestMethod]
     public void TestGetAll()
     {
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        EquipmentRepository.Instance.DeleteAll();
+
         var rooms = new List<Room>
         {
             new("0", "Warehouse", Room.RoomType.Warehouse),
@@ -22,7 +37,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var loadedRooms = new RoomRepository().GetAll();
+        var loadedRooms = RoomRepository.Instance.GetAll();
         Assert.AreEqual(rooms.Count, loadedRooms.Count);
         ;
     }
@@ -40,7 +55,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var foundRoom = new RoomRepository().GetById("2");
+        var foundRoom = RoomRepository.Instance.GetById("2");
         Assert.IsNotNull(foundRoom);
         Assert.AreEqual("Operating room", foundRoom.Name);
         Assert.AreEqual(Room.RoomType.OperatingRoom, foundRoom.Type);
@@ -51,7 +66,7 @@ public class RoomRepositoryTests
     {
         if (File.Exists("../../../Data/rooms.csv")) File.Delete("../../../Data/rooms.csv");
 
-        Assert.AreEqual(0, new RoomRepository().GetAll().Count);
+        Assert.AreEqual(0, RoomRepository.Instance.GetAll().Count);
     }
 
 
@@ -68,7 +83,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var foundRoom = new RoomRepository().GetById("");
+        var foundRoom = RoomRepository.Instance.GetById("");
         Assert.IsNull(foundRoom);
     }
 
@@ -85,7 +100,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var roomRepository = new RoomRepository();
+        var roomRepository = RoomRepository.Instance;
         roomRepository.Add(new Room("7", "New room", Room.RoomType.WaitingRoom));
 
         Assert.AreEqual(rooms.Count + 1, roomRepository.GetAll().Count);
@@ -102,7 +117,7 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var roomRepository = new RoomRepository();
+        var roomRepository = RoomRepository.Instance;
         var idToUpdate = "1";
         var newName = "Examination room";
         var newType = Room.RoomType.ExaminationRoom;
@@ -124,7 +139,7 @@ public class RoomRepositoryTests
             new("1", "Waiting room", Room.RoomType.WaitingRoom)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
-        var roomRepository = new RoomRepository();
+        var roomRepository = RoomRepository.Instance;
 
         roomRepository.Delete(rooms[1]);
 
@@ -142,7 +157,8 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        var equipmentInRooms = new List<EquipmentPlacement>()
+        EquipmentPlacementRepository.Instance.DeleteAll();
+        var equipmentInRooms = new List<EquipmentPlacement>
         {
             new("1", "0", 1),
             new("2", "0", 2),
@@ -150,13 +166,13 @@ public class RoomRepositoryTests
         };
         Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
 
-        var loadedRooms = new RoomRepository().GetAll();
+        var loadedRooms = RoomRepository.Instance.GetAll();
 
         Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
         Assert.AreEqual(1, loadedRooms[1].Equipment.Count);
-        Assert.AreEqual(1, loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
-        Assert.AreEqual(3, loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
-        
-
+        Assert.AreEqual(1,
+            loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
+        Assert.AreEqual(3,
+            loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
     }
 }
