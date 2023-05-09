@@ -11,7 +11,7 @@ namespace Hospital.Services.Manager
 {
     public class TransferService
     {
-        private static readonly Timer Timer = new(1000);
+        private static readonly Timer Timer = new(1500);
 
         static TransferService()
         {

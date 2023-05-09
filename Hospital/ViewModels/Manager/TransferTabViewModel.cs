@@ -5,10 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Views.Manager;
 
 namespace Hospital.ViewModels.Manager
 {
@@ -52,12 +54,24 @@ namespace Hospital.ViewModels.Manager
             }
         }
 
-        public ICommand OpenAddTransferForm { get; set; }
+        public ICommand OpenAddTransferFormCommand { get; set; }
+
+        private void RefreshTransfersOnFormClose(object? sender, EventArgs eventArgs)
+        {
+            Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
+        }
+
+        public void OpenAddTransferForm()
+        {
+            var transferForm = new AddTransfer();
+            transferForm.Closed += RefreshTransfersOnFormClose;
+            transferForm.Show();
+        }
 
         public TransferTabViewModel()
         {
             Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
-            OpenAddTransferForm = new RelayCommand(() => Console.WriteLine("Komanda"));
+            OpenAddTransferFormCommand = new RelayCommand(OpenAddTransferForm);
         }
     }
 }

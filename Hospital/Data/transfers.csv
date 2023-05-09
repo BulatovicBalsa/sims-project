@@ -1,3 +1,0 @@
-Id,Id,Name,Type,Id,Name,Type,OriginId,DestinationId,DeliveryDateTime,Delivered,Failed
-e2a322fd-06c2-4285-bef7-0360acfcb949,902ac4c8-7676-4ef7-ac1e-f2d0bf3bfdfd,Warehouse,Warehouse,d9bb5102-5ea9-469c-abd0-d3fa7cb859e0,Examination room 1,ExaminationRoom,902ac4c8-7676-4ef7-ac1e-f2d0bf3bfdfd,d9bb5102-5ea9-469c-abd0-d3fa7cb859e0,05/10/2023 12:06:20,False,False
-a932d3c2-5b8d-417d-9e6f-ae2a7bad5fb6,902ac4c8-7676-4ef7-ac1e-f2d0bf3bfdfd,Warehouse,Warehouse,053dd2a2-68f3-4964-9d80-5d2a7bc871c1,Examination room 2,ExaminationRoom,902ac4c8-7676-4ef7-ac1e-f2d0bf3bfdfd,053dd2a2-68f3-4964-9d80-5d2a7bc871c1,05/10/2023 12:06:20,False,False
