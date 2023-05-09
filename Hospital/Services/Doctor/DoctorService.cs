@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Doctor;
+﻿using System;
+using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
@@ -86,5 +87,12 @@ public class DoctorService
         var allDoctors = _doctorRepository.GetAll();
 
         return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
+    }
+
+    public List<Doctor> GetQualifiedDoctors(string specialization)
+    {
+        var allDoctors = _doctorRepository.GetAll();
+
+        return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
     }
 }
