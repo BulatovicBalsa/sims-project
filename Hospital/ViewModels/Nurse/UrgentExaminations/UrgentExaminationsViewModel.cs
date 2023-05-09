@@ -81,55 +81,42 @@ public class UrgentExaminationsViewModel : ViewModelBase
 
     private void ExecuteCreateUrgentExaminationCommand(object obj)
     {
-        var suitableDoctors = _doctorRepository.GetBySpecialization(SelectedSpecialization);
+        var qualifiedDoctors = _doctorService.GetQualifiedDoctors(SelectedSpecialization);
+        var earliestFreeTimeslotDoctors = _timeslotService.GetEarliestFreeTimeslotDoctors(qualifiedDoctors);
+        var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
 
-        var earliestTimeslots = suitableDoctors
-            .Select(doctor => new KeyValuePair<Doctor, DateTime?>(doctor, _timeslotService.GetEarliestFreeTimeslotIn2Hours(doctor))).ToList();
-
-        var earliestOfAll = earliestTimeslots.Min(doctorTimeslotPair => doctorTimeslotPair.Value ?? DateTime.MaxValue);
-
-        if (earliestOfAll != DateTime.MaxValue)
+        if (_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key))
         {
-            var earliestTimeslotDoctor =
-                earliestTimeslots.Where(doctorTimeslotPair => doctorTimeslotPair.Value == earliestOfAll).ToList()[0];
-            _examinationRepository.Add(new Examination(earliestTimeslotDoctor.Key, SelectedPatient, IsOperation, earliestOfAll, null), false);
+            _examinationRepository.Add(new Examination(earliestFreeTimeslotDoctor.Value, SelectedPatient, IsOperation, earliestFreeTimeslotDoctor.Key, null, true), false);
 
             MessageBox.Show("Urgent examination successfully created", "Success");
-
             return;
         }
 
         // nema u naredna dva sata
-        var doctorFirstFreeTimeslot = suitableDoctors
-            .Select(doctor => new KeyValuePair<Doctor, DateTime>(doctor, _timeslotService.GetEarliestFreeTimeslot(doctor))).ToList();
-        var firstFreeTimeslot = doctorFirstFreeTimeslot.Min(doctorTimeslotPair => doctorTimeslotPair.Value);
-        var firstFreeDoctorTimeslotPair =
-            doctorFirstFreeTimeslot.Where(doctorTimeslotPair => doctorTimeslotPair.Value == firstFreeTimeslot);
-
-        doctorFirstFreeTimeslot = doctorFirstFreeTimeslot.OrderBy(pair => pair.Value).ToList();
-        var postponeableExaminations = new List<Examination>();
-
-        while (postponeableExaminations.Count < 5)
+        var postponableExaminations = new List<Examination>();
+        foreach (var (timeslot, doctor) in earliestFreeTimeslotDoctors)
         {
-            foreach (var doctorTimeslotPair in doctorFirstFreeTimeslot)
-            {
-                var doctorExaminations = _examinationRepository.GetAll(doctorTimeslotPair.Key).OrderBy(examination => examination.Start)
-                    .Where(examination => examination.Start > DateTime.Now && !examination.Urgent).ToList();
+            var doctorExaminations = _examinationRepository.GetAll(doctor);
+            var nonUrgentUpcomingExaminations = doctorExaminations
+                .Where(examination => examination.Start > DateTime.Now && !examination.Urgent)
+                .OrderBy(examination => examination.Start).ToList();
 
-                postponeableExaminations.InsertRange(0, doctorExaminations);
-            }
+            postponableExaminations.AddRange(nonUrgentUpcomingExaminations);
+            if (postponableExaminations.Count >= 5)
+                break;
         }
 
-        if (postponeableExaminations.Count > 5)
-            postponeableExaminations = postponeableExaminations.Take(5).ToList();
+        if (postponableExaminations.Count > 5)
+            postponableExaminations = postponableExaminations.Take(5).ToList();
 
-        if (postponeableExaminations.Count == 0)
+        if (postponableExaminations.Count == 0)
         {
-            MessageBox.Show("There are no examinations to postpone", "Error");
+            MessageBox.Show("There are no examinations that can be postponed", "Error");
             return;
         }
 
-        var postponeExaminationViewModel = new PostponeExaminationViewModel(postponeableExaminations, doctorFirstFreeTimeslot);
+        var postponeExaminationViewModel = new PostponeExaminationViewModel(postponableExaminations, earliestFreeTimeslotDoctors);
         postponeExaminationViewModel.DialogClosed += (cancelled, newTimeslot, freeDoctor) =>
         {
             if (cancelled)
@@ -148,4 +135,5 @@ public class UrgentExaminationsViewModel : ViewModelBase
     {
         return SelectedPatient != null && SelectedSpecialization != null;
     }
+
 }
