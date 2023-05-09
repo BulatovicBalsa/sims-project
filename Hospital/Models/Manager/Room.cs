@@ -75,7 +75,7 @@ public class Room
     public void ExpendEquipment(Equipment equipment, int amount)
     {
         var newAmount = GetAmount(equipment) - amount;
-        if(newAmount > 0)
+        if (newAmount >= 0)
             SetAmount(equipment, newAmount);
     }
 
@@ -112,9 +112,22 @@ public class Room
         return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
     }
 
+    private void Reserve(Equipment equipment, int amount)
+    {
+        var placement = GetPlacement(equipment);
+        if (placement != null)
+            placement.Reserved += amount;
+    }
+
     public bool ReserveEquipment(Transfer transfer)
     {
-        throw new NotImplementedException();
+        if (!HasEnoughEquipment(transfer))
+            return false;
+
+        foreach (var item in transfer.Items)
+            Reserve(item.Equipment, item.Amount);
+
+        return true;
     }
 
     private void ReleaseReserved(Equipment equipment, int amount)
@@ -125,11 +138,20 @@ public class Room
 
     public bool Send(Transfer transfer)
     {
-        throw new NotImplementedException();
+        foreach (var item in transfer.Items)
+        {
+            if (GetAmount(item.Equipment) < item.Amount)
+                return false;
+            ReleaseReserved(item.Equipment, item.Amount);
+            ExpendEquipment(item.Equipment, item.Amount);
+        }
+
+        return true;
     }
 
     public void Receive(Transfer transfer)
     {
-        throw new NotImplementedException();
+        foreach (var item in transfer.Items)
+            SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount);
     }
 }

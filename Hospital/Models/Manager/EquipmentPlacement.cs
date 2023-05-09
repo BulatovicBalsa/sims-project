@@ -9,6 +9,7 @@ public class EquipmentPlacement
         Amount = 0;
         EquipmentId = "";
         RoomId = "";
+        Reserved = 0;
     }
 
     public EquipmentPlacement(string equipmentId, string roomId, int amount)

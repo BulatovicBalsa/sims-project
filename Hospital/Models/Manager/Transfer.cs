@@ -1,31 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Models.Manager
+namespace Hospital.Models.Manager;
+
+public class Transfer
 {
-    public class Transfer
+    public Transfer()
     {
-        public string Id { get; set; }
-        public Room Origin { get; set; }
-        public Room Destination { get; set; }
-        public List<EquipmentTransferItem> Items { get; set; }
-        public DateTime DeliveryDateTime { get; set; }
+        Id = "";
+        Origin = new Room();
+        Destination = new Room();
+        Items = new List<EquipmentTransferItem>();
+        DeliveryDateTime = DateTime.Now;
+        Delivered = false;
+        Failed = false;
+    }
 
-        public bool Delivered { get; set; }
-        public bool Failed { get; set; }
+    public Transfer(Room origin, Room destination, DateTime deliveryDateTime)
+    {
+        Id = Guid.NewGuid().ToString();
+        Origin = origin;
+        Destination = destination;
+        Items = new List<EquipmentTransferItem>();
+        DeliveryDateTime = deliveryDateTime;
+        Delivered = false;
+        Failed = false;
+    }
+    public Transfer(Room origin, Room destination, DateTime deliveryDateTime, List<EquipmentTransferItem> items)
+    {
+        Id = Guid.NewGuid().ToString();
+        Origin = origin;
+        Destination = destination;
+        Items = items;
+        DeliveryDateTime = deliveryDateTime;
+        Delivered = false;
+        Failed = false;
+    }
 
-        public bool IsPossible()
+    public string Id { get; set; }
+    public Room Origin { get; set; }
+    public Room Destination { get; set; }
+    public List<EquipmentTransferItem> Items { get; set; }
+    public DateTime DeliveryDateTime { get; set; }
+
+    public bool Delivered { get; set; }
+    public bool Failed { get; set; }
+
+    public void AddItem(EquipmentTransferItem item)
+    {
+        Items.Add(item);
+    } 
+
+    public bool IsPossible()
+    {
+        return Origin.HasEnoughEquipment(this);
+    }
+
+
+    private bool IsReadyForDelivery()
+    {
+        return !Delivered && DeliveryDateTime <= DateTime.Now && !Failed;
+    }
+
+    public bool TryDeliver()
+    {
+        if (!IsReadyForDelivery())
+            return false;
+
+        if (!Origin.Send(this))
         {
-            throw new NotImplementedException();
+            Failed = true;
+            return false;
         }
 
-        public bool TryDeliver()
-        {
-            throw new NotImplementedException();
-        }
-
+        Destination.Receive(this);
+        Delivered = true;
+        return true;
     }
 }
