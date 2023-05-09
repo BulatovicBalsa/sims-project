@@ -61,7 +61,46 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Transfers" />
+            <TabItem Header="Transfers" DataContext="{Binding Children[2]}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddTransferFormCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Transfers, Mode=TwoWay}" SelectedItem="{Binding SelectedTransfer}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Origin" Binding="{Binding Origin}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Destination" Binding="{Binding Destination}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="DeliveryDate" Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*" IsReadOnly="False"/>
+                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridCheckBoxColumn Header="Failed" Binding="{Binding Failed, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedTransferItems}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

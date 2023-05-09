@@ -33,7 +33,7 @@ public class TransferItemRepository
     {
         if (_transferItems != null)
             return _transferItems;
-        _transferItems = Serializer<TransferItem>.FromCSV("../../../transferItems.csv");
+        _transferItems = Serializer<TransferItem>.FromCSV(FilePath);
         JoinWithEquipment();
         return _transferItems;
     }
