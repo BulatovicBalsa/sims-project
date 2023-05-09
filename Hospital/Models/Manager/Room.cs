@@ -75,7 +75,7 @@ public class Room
     public void ExpendEquipment(Equipment equipment, int amount)
     {
         var newAmount = GetAmount(equipment) - amount;
-        if(newAmount > 0)
+        if(newAmount >= 0)
             SetAmount(equipment, newAmount);
     }
 
