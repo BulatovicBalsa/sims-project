@@ -42,7 +42,7 @@ public class EquipmentOrderService
             EquipmentOrderRepository.Instance.Update(order);
 
             foreach (var equipmentPlacement in warehouse.Equipment)
-                //TODO: Perhaps don't use try catch. Use GetByKeyInstead
+                //TODO: Replace this with RoomRepository.Update(warehouse), that method already does this
                 try
                 {
                     EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
