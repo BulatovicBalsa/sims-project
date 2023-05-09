@@ -103,7 +103,7 @@ public class RoomRepository
 
     public Room GetWarehouse()
     {
-        var warehouse = GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
+        var warehouse = GetAll().Find(room => room.Type == RoomType.Warehouse);
         return warehouse ?? throw new NoWarehouseException();
     }
 }
