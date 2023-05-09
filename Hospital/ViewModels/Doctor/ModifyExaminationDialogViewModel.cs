@@ -195,7 +195,7 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
 
         var startDate = CreateDateFromForm();
 
-        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient));
+        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient, _doctor));
         return createdExamination;
     }
 

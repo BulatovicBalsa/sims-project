@@ -94,6 +94,7 @@ namespace Hospital.Models.Examination
             Room = examinationDto.Room;
             IsOperation = examinationDto.IsOperation;
             Patient = examinationDto.Patient;
+            Doctor = examinationDto.Doctor;
         }
     }
 }
