@@ -23,13 +23,14 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Id).Index(0);
         Map(examination => examination.IsOperation).Index(1);
         Map(examination => examination.Start).Index(2);
-
+            
         Map(examination => examination.Doctor).Index(3).TypeConverter<DoctorTypeConverter>();
         Map(examination => examination.Patient).Index(4).TypeConverter<PatientTypeConverter>();
         Map(examination => examination.Anamnesis).Index(5);
-
+            
         Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
         Map(examination => examination.Admissioned).Index(7);
+        Map(examination => examination.Urgent).Index(8);
     }
 
     private List<string> SplitColumnValues(string? columnValue)
@@ -92,6 +93,7 @@ public sealed class ExaminationWriteMapper : ClassMap<Examination>
         Map(examination => examination.Anamnesis).Index(5);
         Map(examination => examination.Room!.Id).Index(6);
         Map(examination => examination.Admissioned).Index(7);
+        Map(examination => examination.Urgent).Index(8);
     }
 }
 

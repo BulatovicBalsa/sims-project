@@ -28,34 +28,29 @@ public class UpdateExaminationDto
 public class Examination
 {
     public const int Duration = 15;
-
-    public Examination(Doctor doctor, Patient patient, bool isOperation, DateTime start, Room room)
-    {
-        Doctor = doctor;
-        Patient = patient;
-        Start = start;
-        IsOperation = isOperation;
-        Id = Guid.NewGuid().ToString();
-        Anamnesis = "";
-        Room = room;
-        Admissioned = false;
-    }
-
-    public Examination()
-    {
-        Id = Guid.NewGuid().ToString();
-        Anamnesis = "";
-    }
-
     public string Id { get; set; }
-    public Doctor? Doctor { get; set; }
-    public Patient? Patient { get; set; }
+    public Doctor.Doctor? Doctor { get; set; }
+    public Patient.Patient Patient { get; set; }
     public DateTime Start { get; set; }
     public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
     public bool IsOperation { get; set; }
     public string Anamnesis { get; set; }
     public Room? Room { get; set; }
     public bool Admissioned { get; set; }
+    public bool Urgent { get; set; }
+  
+    public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
+    {
+         Doctor = doctor;
+         Patient = patient;
+         Start = start;
+         IsOperation = isOperation;
+         Id = Guid.NewGuid().ToString();
+         Anamnesis = "";
+         Room = room;
+         Admissioned = false;
+         Urgent = urgent;
+    }
 
     public bool DoesInterfereWith(Examination otherExamination)
     {
@@ -90,6 +85,11 @@ public class Examination
         return copy;
     }
 
+    public override string ToString()
+    {
+        return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
+    }
+      
     public void Update(UpdateExaminationDto examinationDto)
     {
         Start = examinationDto.Start;

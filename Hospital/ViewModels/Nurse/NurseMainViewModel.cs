@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using Hospital.ViewModels.Nurse.PatientAdmission;
 using Hospital.ViewModels.Nurse.Patients;
+using Hospital.ViewModels.Nurse.UrgentExaminations;
 
 namespace Hospital.ViewModels.Nurse;
 
@@ -11,6 +12,7 @@ public class NurseMainViewModel : ViewModelBase
     {
         ShowPatientsViewCommand = new ViewModelCommand(ExecuteShowPatientsViewCommand);
         ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
+        ShowUrgentExaminationsViewCommand = new ViewModelCommand(ExecuteShowUrgentExaminationsViewCommand);
 
         ExecuteShowPatientsViewCommand(null);
     }
@@ -26,8 +28,9 @@ public class NurseMainViewModel : ViewModelBase
     }
     public ICommand ShowPatientsViewCommand { get; }
     public ICommand ShowPatientAdmissionViewCommand { get; }
+    public ICommand ShowUrgentExaminationsViewCommand { get; }
 
-    private void ExecuteShowPatientsViewCommand(object obj)
+    private void ExecuteShowPatientsViewCommand(object? obj)
     {
         CurrentChildView = new PatientGridViewModel();
     }
@@ -35,5 +38,10 @@ public class NurseMainViewModel : ViewModelBase
     private void ExecuteShowPatientAdmissionViewCommand(object obj)
     {
         CurrentChildView = new PatientAdmissionViewModel();
+    }
+
+    private void ExecuteShowUrgentExaminationsViewCommand(object obj)
+    {
+        CurrentChildView = new UrgentExaminationsViewModel();
     }
 }

@@ -8,6 +8,8 @@
         xmlns:patients="clr-namespace:Hospital.ViewModels.Nurse.Patients"
         xmlns:patientAdmission="clr-namespace:Hospital.ViewModels.Nurse.PatientAdmission"
         xmlns:patientAdmissionViews="clr-namespace:Hospital.Views.Nurse.PatientAdmission"
+        xmlns:urgentExaminations="clr-namespace:Hospital.ViewModels.Nurse.UrgentExaminations"
+        xmlns:urgentExaminationsViews="clr-namespace:Hospital.Views.Nurse.UrgentExaminations"
         mc:Ignorable="d"
         Title="NurseMainView" Height="480" Width="1000"
         WindowStyle="None"
@@ -25,6 +27,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type patientAdmission:PatientAdmissionViewModel}">
             <patientAdmissionViews:PatientAdmissionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type urgentExaminations:UrgentExaminationsViewModel}">
+            <urgentExaminationsViews:UrgentExaminationsView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -71,7 +76,8 @@
                             <TextBlock Text="Patient admission" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}">
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowUrgentExaminationsViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Urgent examinations" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
