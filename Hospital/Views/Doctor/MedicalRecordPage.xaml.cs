@@ -21,11 +21,11 @@ namespace Hospital.Views
 {
     public partial class MedicalRecordPage : Page
     {
-        private MedicalRecordPageViewModel _viewModel;
+        private MedicalRecordViewModel _viewModel;
 
         public MedicalRecordPage(Patient patient, bool isEditable)
         {
-            _viewModel = new MedicalRecordPageViewModel(patient);
+            _viewModel = new MedicalRecordViewModel(patient);
             DataContext = _viewModel;
 
             InitializeComponent();
