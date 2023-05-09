@@ -178,7 +178,7 @@ public class MedicalRecordViewModel : ViewModelBase
     {
         Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy
             ? Patient.MedicalRecord.AddAllergy
-            : Patient.MedicalRecord.AddMedicalConidition;
+            : Patient.MedicalRecord.AddMedicalCondition;
 
         var conditionToAdd = Interaction.InputBox($"Insert {conditionType}: ", $"Add {conditionType}");
         try
