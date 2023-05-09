@@ -12,8 +12,8 @@ public class EquipmentOrderServiceTests
     {
         EquipmentOrderRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
-        RoomRepository.Instance.Add(new Room("1", "Warehouse", RoomType.Warehouse));
-        var equipment = new Equipment("1", "Something", EquipmentType.DynamicEquipment);
+        RoomRepository.Instance.Add(new Room("1", "Warehouse", Room.RoomType.Warehouse));
+        var equipment = new Equipment("1", "Something", Equipment.EquipmentType.DynamicEquipment);
         var orderItems = new List<EquipmentOrderItem>
         {
             new("1", 2, equipment)
@@ -35,8 +35,8 @@ public class EquipmentOrderServiceTests
     {
         EquipmentOrderRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
-        RoomRepository.Instance.Add(new Room("1", "Warehouse", RoomType.Warehouse));
-        var equipment = new Equipment("1", "Something", EquipmentType.DynamicEquipment);
+        RoomRepository.Instance.Add(new Room("1", "Warehouse", Room.RoomType.Warehouse));
+        var equipment = new Equipment("1", "Something", Equipment.EquipmentType.DynamicEquipment);
         var orderItems = new List<EquipmentOrderItem>
         {
             new("1", 2, equipment)
@@ -65,9 +65,9 @@ public class EquipmentOrderServiceTests
     {
         EquipmentOrderRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
-        RoomRepository.Instance.Add(new Room("1", "Warehouse", RoomType.Warehouse));
+        RoomRepository.Instance.Add(new Room("1", "Warehouse", Room.RoomType.Warehouse));
 
-        var equipment = new Equipment("1", "Something", EquipmentType.DynamicEquipment);
+        var equipment = new Equipment("1", "Something", Equipment.EquipmentType.DynamicEquipment);
         var orderItems = new List<EquipmentOrderItem>
         {
             new("1", 2, equipment)

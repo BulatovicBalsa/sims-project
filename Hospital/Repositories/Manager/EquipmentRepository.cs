@@ -11,9 +11,7 @@ public class EquipmentRepository
 
     private List<Equipment>? _equipment;
 
-    private EquipmentRepository()
-    {
-    }
+    private EquipmentRepository() { }
 
     public static EquipmentRepository Instance => _instance ??= new EquipmentRepository();
 
@@ -25,12 +23,12 @@ public class EquipmentRepository
 
     public List<Equipment> GetNonDynamic()
     {
-        return GetAll().FindAll(e => e.Type != EquipmentType.DynamicEquipment);
+        return GetAll().FindAll(e => e.Type != Equipment.EquipmentType.DynamicEquipment);
     }
 
     public List<Equipment> GetDynamic()
     {
-        return GetAll().FindAll(e => e.Type == EquipmentType.DynamicEquipment);
+        return GetAll().FindAll(e => e.Type == Equipment.EquipmentType.DynamicEquipment);
     }
 
     public Equipment? GetById(string id)
