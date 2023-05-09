@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Coordinators;
+using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
@@ -24,6 +25,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
     private readonly TimeslotService _timeslotService;
     private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
+    private readonly NotificationService _notificationService;
 
     private Patient? _selectedPatient;
     private string? _selectedSpecialization;
@@ -37,6 +39,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
         _timeslotService = new TimeslotService();
         _examinationRepository = new ExaminationRepository();
         _examinationService = new ExaminationService();
+        _notificationService = new NotificationService();
 
         AllPatients = _patientRepository.GetAll();
         AllSpecializations = _doctorService.GetAllSpecializations();
@@ -128,7 +131,14 @@ public class UrgentExaminationsViewModel : ViewModelBase
         }
 
         _examinationRepository.Add(new Examination(freeDoctor, SelectedPatient, IsOperation, newTimeslot ?? DateTime.MinValue, null, true), false);
+        SendDoctorNotification(freeDoctor, newTimeslot ?? DateTime.MinValue);
         MessageBox.Show("Urgent examination successfully created", "Success");
+    }
+
+    private void SendDoctorNotification(Doctor doctor, DateTime timeslot)
+    {
+        var notification = new Notification(doctor.Id, $"New urgent examination scheduled at {timeslot}");
+        _notificationService.Send(notification);
     }
 
     private void OpenPostponeExaminationDialog(PostponeExaminationViewModel viewModel)

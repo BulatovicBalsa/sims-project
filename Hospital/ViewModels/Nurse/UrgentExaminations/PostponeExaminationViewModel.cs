@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
@@ -16,6 +17,7 @@ public class PostponeExaminationViewModel : ViewModelBase
     private readonly Dictionary<Doctor, DateTime> _doctorEarliestFreeTimeslot;
     private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
+    private readonly NotificationService _notificationService;
     private Examination? _selectedExamination;
     private readonly Patient _selectedPatient;
 
@@ -32,6 +34,7 @@ public class PostponeExaminationViewModel : ViewModelBase
         _doctorEarliestFreeTimeslot = earliestFreeTimeslotDoctor.ToDictionary(pair => pair.Value, pair => pair.Key);
         _examinationRepository = new ExaminationRepository();
         _examinationService = new ExaminationService();
+        _notificationService = new NotificationService();
         _selectedPatient = selectedPatient;
 
         PostponeExaminationCommand =
@@ -68,8 +71,20 @@ public class PostponeExaminationViewModel : ViewModelBase
 
         SelectedExamination.Start = _doctorEarliestFreeTimeslot[SelectedExamination.Doctor];
         _examinationRepository.Update(SelectedExamination, false);
+        SendNotifications(SelectedExamination);
 
         CloseDialog(false, previousStart, SelectedExamination.Doctor);
+    }
+
+    private void SendNotifications(Examination examination)
+    {
+        var patientNotification = new Notification(examination.Patient.Id,
+            $"Examination {examination.Id} postponed to {examination.Start}");
+        var doctorNotification = new Notification(examination.Doctor.Id,
+            $"Examination {examination.Id} postponed to {examination.Start}");
+        
+        _notificationService.Send(patientNotification);
+        _notificationService.Send(doctorNotification);
     }
 
     private bool CanExecutePostponeExaminationCommand(object obj)
