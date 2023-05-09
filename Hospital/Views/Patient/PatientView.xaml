@@ -48,7 +48,8 @@
                         FontSize="16"
                         FontFamily="Segoe UI"
                         Cursor="Hand"
-                        Grid.Column="1">
+                        Grid.Column="1"
+                        Click="BtnMinimize_Click">
                 </Button>
 
                 <Button x:Name="BtnClose"

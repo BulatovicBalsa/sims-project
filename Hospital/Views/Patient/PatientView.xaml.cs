@@ -99,5 +99,10 @@ namespace Hospital.Views
             PatientMedicalRecordView patientMedicalRecordView = new PatientMedicalRecordView(_patient);
             patientMedicalRecordView.ShowDialog();
         }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
+        }
     }
 }
