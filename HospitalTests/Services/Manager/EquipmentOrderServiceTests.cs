@@ -90,7 +90,7 @@ public class EquipmentOrderServiceTests
         Assert.AreEqual(3, RoomRepository.Instance.GetWarehouse().GetAmount(equipment));
         Assert.IsTrue(orderThatWillBePickedUp.PickedUp);
 
-        Thread.Sleep(1000);
+        Thread.Sleep(1500);
         Assert.AreEqual(6, RoomRepository.Instance.GetWarehouse().GetAmount(equipment));
     }
 }

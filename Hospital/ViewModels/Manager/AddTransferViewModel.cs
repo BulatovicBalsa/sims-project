@@ -26,7 +26,7 @@ public class AddTransferViewModel : ViewModelBase
     public AddTransferViewModel()
     {
         Rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
-        Equipment = new BindingList<Equipment>(EquipmentRepository.Instance.GetAll());
+        Equipment = new BindingList<Equipment>(EquipmentRepository.Instance.GetAll().ToList());
         Items = new BindingList<TransferItem>();
         AddItemCommand = new RelayCommand(AddItem);
         SendTransferCommand = new RelayCommand<IClosable>(SendTransfer);
