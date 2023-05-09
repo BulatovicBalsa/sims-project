@@ -23,6 +23,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
     private readonly DoctorRepository _doctorRepository;
     private readonly TimeslotService _timeslotService;
     private readonly ExaminationRepository _examinationRepository;
+    private readonly ExaminationService _examinationService;
 
     private Patient? _selectedPatient;
     private string? _selectedSpecialization;
@@ -35,6 +36,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
         _doctorRepository = new DoctorRepository();
         _timeslotService = new TimeslotService();
         _examinationRepository = new ExaminationRepository();
+        _examinationService = new ExaminationService();
 
         AllPatients = _patientRepository.GetAll();
         AllSpecializations = _doctorService.GetAllSpecializations();
@@ -87,29 +89,13 @@ public class UrgentExaminationsViewModel : ViewModelBase
 
         if (_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key))
         {
-            _examinationRepository.Add(new Examination(earliestFreeTimeslotDoctor.Value, SelectedPatient, IsOperation, earliestFreeTimeslotDoctor.Key, null, true), false);
+            AddUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
 
             MessageBox.Show("Urgent examination successfully created", "Success");
             return;
         }
 
-        // nema u naredna dva sata
-        var postponableExaminations = new List<Examination>();
-        foreach (var (timeslot, doctor) in earliestFreeTimeslotDoctors)
-        {
-            var doctorExaminations = _examinationRepository.GetAll(doctor);
-            var nonUrgentUpcomingExaminations = doctorExaminations
-                .Where(examination => examination.Start > DateTime.Now && !examination.Urgent)
-                .OrderBy(examination => examination.Start).ToList();
-
-            postponableExaminations.AddRange(nonUrgentUpcomingExaminations);
-            if (postponableExaminations.Count >= 5)
-                break;
-        }
-
-        if (postponableExaminations.Count > 5)
-            postponableExaminations = postponableExaminations.Take(5).ToList();
-
+        var postponableExaminations = _examinationService.GetPostponableExaminations(earliestFreeTimeslotDoctors);
         if (postponableExaminations.Count == 0)
         {
             MessageBox.Show("There are no examinations that can be postponed", "Error");
@@ -117,16 +103,24 @@ public class UrgentExaminationsViewModel : ViewModelBase
         }
 
         var postponeExaminationViewModel = new PostponeExaminationViewModel(postponableExaminations, earliestFreeTimeslotDoctors);
-        postponeExaminationViewModel.DialogClosed += (cancelled, newTimeslot, freeDoctor) =>
-        {
-            if (cancelled)
-                return;
+        postponeExaminationViewModel.DialogClosed += AddUrgentExamination;
+        
+        OpenPostponeExaminationDialog(postponeExaminationViewModel);
+    }
 
-            _examinationRepository.Add(new Examination(freeDoctor, SelectedPatient, IsOperation, newTimeslot ?? DateTime.MinValue, null), false);
-        };
+    private void AddUrgentExamination(bool cancelled, DateTime? newTimeslot, Doctor? freeDoctor)
+    {
+        if (cancelled)
+            return;
+
+        _examinationRepository.Add(new Examination(freeDoctor, SelectedPatient, IsOperation, newTimeslot ?? DateTime.MinValue, null, true), false);
+    }
+
+    private void OpenPostponeExaminationDialog(PostponeExaminationViewModel viewModel)
+    {
         var postponeExaminationDialog = new PostponeExaminationDialogView()
         {
-            DataContext = postponeExaminationViewModel
+            DataContext = viewModel
         };
         postponeExaminationDialog.ShowDialog();
     }
