@@ -17,7 +17,7 @@ public class EquipmentFilterService
         _equipmentRepository = EquipmentRepository.Instance;
     }
 
-    public List<Equipment> GetEquipment(Room.RoomType type)
+    public List<Equipment> GetEquipment(RoomType type)
     {
         var result = new HashSet<Equipment>();
         var rooms = _roomRepository.GetAll();
@@ -37,7 +37,7 @@ public class EquipmentFilterService
             ).ToList();
     }
 
-    public List<Equipment> GetEquipment(Equipment.EquipmentType type)
+    public List<Equipment> GetEquipment(EquipmentType type)
     {
         return _equipmentRepository.GetAll().Where(equipment => equipment.Type == type).ToList();
     }
@@ -85,7 +85,7 @@ public class EquipmentFilterService
 
     public List<Equipment> SelectNotInWarehouse(List<Equipment> equipment)
     {
-        var warehouse = _roomRepository.GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
+        var warehouse = _roomRepository.GetAll().Find(room => room.Type == RoomType.Warehouse);
         var result = new List<Equipment>();
 
         if (warehouse == null) return equipment;
@@ -97,17 +97,17 @@ public class EquipmentFilterService
         return result;
     }
 
-    private string GetStringRepresentation(Equipment.EquipmentType type)
+    private string GetStringRepresentation(EquipmentType type)
     {
         switch (type)
         {
-            case Equipment.EquipmentType.ExaminationEquipment:
+            case EquipmentType.ExaminationEquipment:
                 return "examination equipment";
-            case Equipment.EquipmentType.Furniture:
+            case EquipmentType.Furniture:
                 return "furniture";
-            case Equipment.EquipmentType.HallwayEquipment:
+            case EquipmentType.HallwayEquipment:
                 return "hallway equipment";
-            case Equipment.EquipmentType.OperationEquipment:
+            case EquipmentType.OperationEquipment:
                 return "operation equipment";
             default:
                 return "";
