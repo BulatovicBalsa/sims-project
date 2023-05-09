@@ -109,7 +109,7 @@ namespace Hospital.ViewModels
         public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = new DoctorRepository().GetAll();
+            RecommendedDoctors = DoctorRepository.Instance.GetAll();
             Patient = patient;
             
             if (examination == null)
@@ -125,7 +125,6 @@ namespace Hospital.ViewModels
                 SelectedDate = Examination.Start;
                 IsUpdate = true;
             }
-
             SaveCommand = new RelayCommand(Save);
             CancelCommand = new RelayCommand(Cancel);
         }

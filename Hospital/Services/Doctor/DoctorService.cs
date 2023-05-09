@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
@@ -7,7 +7,9 @@ using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Hospital.Repositories.Doctor;
 
 namespace Hospital.Coordinators;
 
@@ -16,11 +18,13 @@ public class DoctorService
     private readonly ExaminationRepository _examinationRepository;
     private readonly PatientRepository _patientRepository;
     private readonly RoomRepository _roomRepository;
+    private readonly DoctorRepository _doctorRepository;
 
     public DoctorService()
     {
         _examinationRepository = new ExaminationRepository();
         _patientRepository = new PatientRepository();
+        _doctorRepository = new DoctorRepository();
         _roomRepository = RoomRepository.Instance;
     }
 
@@ -28,7 +32,7 @@ public class DoctorService
     {
         var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
         var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
-        return viewedPatients;
+        return viewedPatients!;
     }
 
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
@@ -38,7 +42,7 @@ public class DoctorService
 
     public Patient GetPatient(Examination examination)
     {
-        return _patientRepository.GetById(examination.Patient.Id);
+        return _patientRepository.GetById(examination.Patient!.Id)!;
     }
 
     public List<Patient> GetAllPatients()
@@ -76,6 +80,20 @@ public class DoctorService
     public Patient? GetPatientById(string patientId)
     {
         return _patientRepository.GetById(patientId);
+    }
+
+    public List<string> GetAllSpecializations()
+    {
+        var allDoctors = _doctorRepository.GetAll();
+
+        return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
+    }
+
+    public List<Doctor> GetQualifiedDoctors(string specialization)
+    {
+        var allDoctors = _doctorRepository.GetAll();
+
+        return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
     }
 
     public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)

@@ -29,7 +29,7 @@ namespace Hospital.Views
     {
         public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null)
         {
-            DataContext = new ModifyExaminationDialogViewModel(doctor, examinationCollection, examinationToChange);
+            DataContext = new ModifyExaminationViewModel(doctor, examinationCollection, examinationToChange);
             InitializeComponent();
             ConfigWindow();
         }

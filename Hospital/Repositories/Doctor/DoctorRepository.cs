@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
@@ -8,32 +9,37 @@ using Models.Doctor;
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
+    private static DoctorRepository? _instance;
 
-    public List<Models.Doctor.Doctor> GetAll()
+    public static DoctorRepository Instance => _instance ??=new DoctorRepository();
+
+    private DoctorRepository() { }
+
+    public List<Doctor> GetAll()
     {
-        return Serializer<Models.Doctor.Doctor>.FromCSV(FilePath);
+        return Serializer<Doctor>.FromCSV(FilePath);
     }
 
-    public Models.Doctor.Doctor? GetById(string id)
+    public Doctor? GetById(string id)
     {
         return GetAll().Find(doctor => doctor.Id == id);
     }
 
-    public Models.Doctor.Doctor? GetByUsername(string username)
+    public Doctor? GetByUsername(string username)
     {
         return GetAll().Find(doctor => doctor.Profile.Username == username);
     }
 
-    public void Add(Models.Doctor.Doctor doctor)
+    public void Add(Doctor doctor)
     {
         var allDoctor = GetAll();
 
         allDoctor.Add(doctor);
 
-        Serializer<Models.Doctor.Doctor>.ToCSV(allDoctor, FilePath);
+        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
     }
 
-    public void Update(Models.Doctor.Doctor doctor)
+    public void Update(Doctor doctor)
     {
         var allDoctor = GetAll();
 
@@ -42,10 +48,10 @@ public class DoctorRepository
 
         allDoctor[indexToUpdate] = doctor;
 
-        Serializer<Models.Doctor.Doctor>.ToCSV(allDoctor, FilePath);
+        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
     }
 
-    public void Delete(Models.Doctor.Doctor doctor)
+    public void Delete(Doctor doctor)
     {
         var allDoctor = GetAll();
 
@@ -54,12 +60,12 @@ public class DoctorRepository
 
         allDoctor.RemoveAt(indexToDelete);
 
-        Serializer<Models.Doctor.Doctor>.ToCSV(allDoctor, FilePath);
+        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
     }
 
     public static void DeleteAll()
     {
-        var emptyDoctorList = new List<Models.Doctor.Doctor>();
-        Serializer<Models.Doctor.Doctor>.ToCSV(emptyDoctorList, FilePath);
+        var emptyDoctorList = new List<Doctor>();
+        Serializer<Doctor>.ToCSV(emptyDoctorList, FilePath);
     }
 }
