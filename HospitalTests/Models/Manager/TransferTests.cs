@@ -15,7 +15,7 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 10));
+        transfer.AddItem(new TransferItem(injection, 10));
 
         Assert.IsTrue(transfer.TryDeliver());
         Assert.IsFalse(transfer.Failed);
@@ -33,7 +33,7 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 4));
+        transfer.AddItem(new TransferItem(injection, 4));
 
         Assert.IsTrue(transfer.TryDeliver());
         Assert.IsFalse(transfer.TryDeliver());
@@ -51,7 +51,7 @@ public class TransferTests
         origin.SetAmount(injection, 5);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 6));
+        transfer.AddItem(new TransferItem(injection, 6));
 
         Assert.IsFalse(transfer.TryDeliver());
         Assert.IsTrue(transfer.Failed);
@@ -69,7 +69,7 @@ public class TransferTests
         origin.SetAmount(injection, 4);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 5));
+        transfer.AddItem(new TransferItem(injection, 5));
 
         Assert.IsFalse(transfer.TryDeliver());
         Assert.IsTrue(transfer.Failed);
@@ -91,7 +91,7 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddSeconds(10));
-        transfer.AddItem(new EquipmentTransferItem(injection, 4));
+        transfer.AddItem(new TransferItem(injection, 4));
 
         Assert.IsFalse(transfer.TryDeliver());
         Assert.AreEqual(10, origin.GetAmount(injection));
@@ -108,7 +108,7 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 4));
+        transfer.AddItem(new TransferItem(injection, 4));
 
         Assert.IsTrue(transfer.IsPossible());
     }
@@ -123,7 +123,7 @@ public class TransferTests
         origin.SetAmount(injection, 1);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 4));
+        transfer.AddItem(new TransferItem(injection, 4));
 
         Assert.IsFalse(transfer.IsPossible());
     }
@@ -138,9 +138,9 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 6));
+        transfer.AddItem(new TransferItem(injection, 6));
         var transferThatWontHaveEquipment = new Transfer(origin, destination, DateTime.Now);
-        transferThatWontHaveEquipment.AddItem(new EquipmentTransferItem(injection, 6));
+        transferThatWontHaveEquipment.AddItem(new TransferItem(injection, 6));
 
         origin.ReserveEquipment(transfer);
         Assert.IsFalse(transferThatWontHaveEquipment.IsPossible());
@@ -156,9 +156,9 @@ public class TransferTests
         origin.SetAmount(injection, 10);
 
         var transfer = new Transfer(origin, destination, DateTime.Now.AddDays(-1));
-        transfer.AddItem(new EquipmentTransferItem(injection, 6));
+        transfer.AddItem(new TransferItem(injection, 6));
         var transfer2 = new Transfer(origin, destination, DateTime.Now);
-        transfer2.AddItem(new EquipmentTransferItem(injection, 4));
+        transfer2.AddItem(new TransferItem(injection, 4));
 
         origin.ReserveEquipment(transfer);
         Assert.IsTrue(transfer2.IsPossible());

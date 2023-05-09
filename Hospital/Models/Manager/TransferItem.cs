@@ -1,20 +1,20 @@
 ﻿namespace Hospital.Models.Manager;
 
-public class EquipmentTransferItem
+public class TransferItem
 {
-    public EquipmentTransferItem()
+    public TransferItem()
     {
         TransferId = "";
         Equipment = new Equipment();
     }
 
-    public EquipmentTransferItem(string transferId, Equipment equipment, int amount)
+    public TransferItem(string transferId, Equipment equipment, int amount)
     {
         TransferId = transferId;
         Equipment = equipment;
         Amount = amount;
     }
-    public EquipmentTransferItem(Equipment equipment, int amount)
+    public TransferItem(Equipment equipment, int amount)
     {
         TransferId = "";
         Equipment = equipment;
@@ -28,9 +28,9 @@ public class EquipmentTransferItem
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj.GetType() != typeof(EquipmentTransferItem)) return false;
+        if (obj == null || obj.GetType() != typeof(TransferItem)) return false;
 
-        var other = (EquipmentTransferItem)obj;
+        var other = (TransferItem)obj;
         return other.Equipment.Equals(Equipment) && other.TransferId.Equals(TransferId);
     }
 }

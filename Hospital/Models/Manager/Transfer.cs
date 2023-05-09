@@ -10,7 +10,7 @@ public class Transfer
         Id = "";
         Origin = new Room();
         Destination = new Room();
-        Items = new List<EquipmentTransferItem>();
+        Items = new List<TransferItem>();
         DeliveryDateTime = DateTime.Now;
         Delivered = false;
         Failed = false;
@@ -21,13 +21,13 @@ public class Transfer
         Id = Guid.NewGuid().ToString();
         Origin = origin;
         Destination = destination;
-        Items = new List<EquipmentTransferItem>();
+        Items = new List<TransferItem>();
         DeliveryDateTime = deliveryDateTime;
         Delivered = false;
         Failed = false;
     }
 
-    public Transfer(Room origin, Room destination, DateTime deliveryDateTime, List<EquipmentTransferItem> items)
+    public Transfer(Room origin, Room destination, DateTime deliveryDateTime, List<TransferItem> items)
     {
         Id = Guid.NewGuid().ToString();
         Origin = origin;
@@ -41,13 +41,13 @@ public class Transfer
     public string Id { get; set; }
     public Room Origin { get; set; }
     public Room Destination { get; set; }
-    public List<EquipmentTransferItem> Items { get; set; }
+    public List<TransferItem> Items { get; set; }
     public DateTime DeliveryDateTime { get; set; }
 
     public bool Delivered { get; set; }
     public bool Failed { get; set; }
 
-    public void AddItem(EquipmentTransferItem item)
+    public void AddItem(TransferItem item)
     {
         Items.Add(item);
     }
