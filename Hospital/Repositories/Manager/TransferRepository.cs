@@ -27,6 +27,7 @@ public class TransferRepository
         _transfers = Serializer<Transfer>.FromCSV(FilePath);
 
         JoinWithItems();
+        JoinWithRooms();
 
         return _transfers;
     }
