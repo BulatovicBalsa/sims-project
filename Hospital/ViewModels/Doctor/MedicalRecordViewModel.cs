@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 
 namespace Hospital.ViewModels;
 
-public class MedicalRecordPageViewModel : ViewModelBase
+public class MedicalRecordViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
 
@@ -27,22 +27,19 @@ public class MedicalRecordPageViewModel : ViewModelBase
 
     private Patient _patient;
 
-    private string _selectedAllergy;
+    private string? _selectedAllergy;
 
-    private string _selectedMedicalCondition;
+    private string? _selectedMedicalCondition;
 
     private string _weight;
 
 
-    public MedicalRecordPageViewModel(Patient patient)
+    public MedicalRecordViewModel(Patient patient)
     {
         Patient = patient;
         Weight = Patient.MedicalRecord.Weight.ToString();
         Height = Patient.MedicalRecord.Height.ToString();
         Allergies = new ObservableCollection<string>(patient.MedicalRecord.Allergies);
-
-       
-
         MedicalHistory = new ObservableCollection<string>(patient.MedicalRecord.MedicalHistory);
 
         AddAllergyCommand = new RelayCommand(AddAllergy);
@@ -87,7 +84,7 @@ public class MedicalRecordPageViewModel : ViewModelBase
         }
     }
 
-    public string SelectedAllergy
+    public string? SelectedAllergy
     {
         get => _selectedAllergy;
         set
@@ -97,7 +94,7 @@ public class MedicalRecordPageViewModel : ViewModelBase
         }
     }
 
-    public string SelectedMedicalCondition
+    public string? SelectedMedicalCondition
     {
         get => _selectedMedicalCondition;
         set
@@ -181,7 +178,7 @@ public class MedicalRecordPageViewModel : ViewModelBase
     {
         Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy
             ? Patient.MedicalRecord.AddAllergy
-            : Patient.MedicalRecord.AddMedicalConidition;
+            : Patient.MedicalRecord.AddMedicalCondition;
 
         var conditionToAdd = Interaction.InputBox($"Insert {conditionType}: ", $"Add {conditionType}");
         try
@@ -206,17 +203,16 @@ public class MedicalRecordPageViewModel : ViewModelBase
         var selectedHealthCondition =
             conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
 
-        var selectedCondition = (string)selectedHealthCondition;
-        if (selectedCondition is null)
+        if (selectedHealthCondition is null)
         {
             MessageBox.Show("You must select condition in order to update it");
             return;
         }
 
-        var updatedCondition = Interaction.InputBox($"Update '{selectedCondition}' name: ", $"Update {conditionType}");
+        var updatedCondition = Interaction.InputBox($"Update '{selectedHealthCondition}' name: ", $"Update {conditionType}");
         try
         {
-            medicalRecordOperation(selectedCondition, updatedCondition);
+            medicalRecordOperation(selectedHealthCondition, updatedCondition);
         }
         catch (ArgumentException ex)
         {
@@ -236,8 +232,7 @@ public class MedicalRecordPageViewModel : ViewModelBase
         var selectedHealthCondition =
             conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
 
-        var selectedCondition = (string)selectedHealthCondition;
-        if (selectedCondition is null)
+        if (selectedHealthCondition is null)
         {
             MessageBox.Show($"You must select {conditionType} in order to delete it");
             return;
@@ -245,7 +240,7 @@ public class MedicalRecordPageViewModel : ViewModelBase
 
         try
         {
-            medicalRecordOperation(selectedCondition);
+            medicalRecordOperation(selectedHealthCondition);
         }
         catch (ArgumentException ex)
         {
@@ -261,9 +256,9 @@ public class MedicalRecordPageViewModel : ViewModelBase
     {
         Action<int> medicalRecordOperation =
             isHeight ? Patient.MedicalRecord.ChangeHeight : Patient.MedicalRecord.ChangeWeight;
-        var sizeToChangeStr = isHeight ? Height : Weight;
+        var physicalCharacteristicString = isHeight ? Height : Weight;
 
-        var sizeToChange = int.Parse(sizeToChangeStr);
+        var sizeToChange = int.Parse(physicalCharacteristicString);
         try
         {
             medicalRecordOperation(sizeToChange);

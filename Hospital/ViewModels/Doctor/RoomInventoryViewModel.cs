@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
@@ -12,7 +9,7 @@ using Hospital.Repositories.Manager;
 
 namespace Hospital.ViewModels;
 
-public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
+public class RoomInventoryViewModel : ViewModelBase
 {
     public class EquipmentExpenditure
     {
@@ -33,14 +30,14 @@ public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
     private ICommand _saveCommand;
     private readonly Room _room;
 
-    public ChangeDynamicRoomEquipmentViewModel(Room room)
+    public RoomInventoryViewModel(Room room)
     {
         _room = room;
         foreach (var equipmentPlacement in room.GetDynamicEquipmentAmounts())
             Expenditures.Add(new EquipmentExpenditure(equipmentPlacement));
 
         RoomEquipments =
-            new ObservableCollection<EquipmentPlacement>(room.GetDynamicEquipmentAmounts()); //room.GetDynamicEquipment
+            new ObservableCollection<EquipmentPlacement>(room.GetDynamicEquipmentAmounts());
         SaveCommand = new RelayCommand<Window>(Save);
     }
 
@@ -77,31 +74,24 @@ public class ChangeDynamicRoomEquipmentViewModel : ViewModelBase
         }
     }
 
-    private string ValidateInput(Window window)
+    private string ValidateInput()
     {
-        foreach (var expenditure in Expenditures)
-        { 
-            if (expenditure.OriginalAmount < expenditure.Amount)
-                return
-                    $"It is not possible to spend more of {expenditure.Equipment.Name} than there currently are.";
-        }
+        var invalidExpenditures = Expenditures.Where(expenditure => expenditure.OriginalAmount < expenditure.Amount).ToList();
+        if (!invalidExpenditures.Any()) return "";
+        var errorMessage = $"It is not possible to spend more of {invalidExpenditures.First().Equipment.Name} than there currently are.";
+        return errorMessage;
 
-        return "";
     }
 
 
     private void ExpendEquipment()
     {
-        foreach (var expenditure in Expenditures)
-        { 
-            _room.ExpendEquipment(expenditure.Equipment, expenditure.Amount);
-        }
-
+        Expenditures.ToList().ForEach(expenditure => _room.ExpendEquipment(expenditure.Equipment, expenditure.Amount));
     }
 
     private void Save(Window window)
     {
-        var errorMessage = ValidateInput(window);
+        var errorMessage = ValidateInput();
         if (!string.IsNullOrEmpty(errorMessage))
         {
             MessageBox.Show(errorMessage);
