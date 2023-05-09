@@ -9,6 +9,21 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Examination
 {
+    public class UpdateExaminationDto
+    {
+        public DateTime Start { get; set; }
+        public bool IsOperation { get; set; }
+        public Room? Room { get; set; }
+        public Patient.Patient Patient { get; set; }
+
+        public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient.Patient patient)
+        {
+            Start = start;
+            IsOperation = isOperation;
+            Room = room;
+            Patient = patient;  
+        }
+    }
     public class Examination
     {
         public const int DURATION = 15;
@@ -69,6 +84,14 @@ namespace Hospital.Models.Examination
             };
 
             return copy;
+        }
+
+        public void UpdateExamination(UpdateExaminationDto examinationDto)
+        {
+            Start = examinationDto.Start;
+            Room = examinationDto.Room;
+            IsOperation = examinationDto.IsOperation;
+            Patient = examinationDto.Patient;
         }
     }
 }

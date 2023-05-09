@@ -202,7 +202,7 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
         createdExamination.Doctor = _doctor;
         createdExamination.IsOperation = IsOperation;
         createdExamination.Room = SelectedRoom;
-
+        
         return createdExamination;
     }
 
