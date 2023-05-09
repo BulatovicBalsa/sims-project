@@ -106,7 +106,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
 
     private void PostponeExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
     {
-        var postponableExaminations = _examinationService.GetPostponableExaminations(earliestFreeTimeslotDoctors);
+        var postponableExaminations = _examinationService.GetFivePostponableExaminations(earliestFreeTimeslotDoctors);
         if (postponableExaminations.Count == 0)
         {
             MessageBox.Show("There are no examinations that can be postponed", "Error");

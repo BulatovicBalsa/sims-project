@@ -75,10 +75,22 @@ public class AdmissionDialogViewModel : ViewModelBase
 
     private void ExecuteEndAdmissionCommand(object obj)
     {
-        _selectedPatient.MedicalRecord.MedicalHistory = MedicalHistory.Split(", ").ToList();
-        _selectedPatient.MedicalRecord.Allergies = Allergies.Split(", ").ToList();
-        _patientRepository.Update(_selectedPatient);
+        UpdateMedicalRecord();
+        SaveExamination();
 
+        CloseDialog();
+    }
+
+    private void UpdateMedicalRecord()
+    {
+        _selectedPatient.MedicalRecord.MedicalHistory = SplitByComma(MedicalHistory);
+        _selectedPatient.MedicalRecord.Allergies = SplitByComma(Allergies);
+
+        _patientRepository.Update(_selectedPatient);
+    }
+
+    private void SaveExamination()
+    {
         _examination.Anamnesis = Symptoms;
         _examination.Admissioned = true;
 
@@ -90,8 +102,6 @@ public class AdmissionDialogViewModel : ViewModelBase
         {
             _examinationRepository.Update(_examination, false);
         }
-
-        CloseDialog();
     }
 
     private bool CanExecuteEndAdmissionCommand(object obj)
@@ -107,6 +117,11 @@ public class AdmissionDialogViewModel : ViewModelBase
     private string GetCommaSeparatedString(IEnumerable<string> words)
     {
         return string.Join(", ", words);
+    }
+
+    private List<string> SplitByComma(string commaSeparated)
+    {
+        return commaSeparated.Split(", ").ToList();
     }
 
     private void CloseDialog()
