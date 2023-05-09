@@ -10,11 +10,20 @@ public class TransferRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
+
+        string transferItemsFile = "../../../Data/transferItems.csv";
+        string transfersFile = "../../../Data/transfers.csv";
+
+        if(File.Exists(transferItemsFile))
+            File.Delete(transferItemsFile);
+        if(File.Exists(transfersFile))
+            File.Delete(transfersFile);
+
+        TransferItemRepository.Instance.DeleteAll();
+        TransferRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
         EquipmentPlacementRepository.Instance.DeleteAll();
-        TransferRepository.Instance.DeleteAll();
-        TransferItemRepository.Instance.DeleteAll();
     }
 
     [TestMethod]
@@ -45,8 +54,6 @@ public class TransferRepositoryTests
         Assert.IsNotNull(TransferRepository.Instance.GetAll()[0].Origin);
         Assert.AreEqual("Injection", TransferRepository.Instance.GetAll()[1].Items[0].Equipment.Name);
     }
-
-    [TestMethod()]
     public void TestAdd()
     {
         TransferRepository.Instance.Add(new Transfer());
