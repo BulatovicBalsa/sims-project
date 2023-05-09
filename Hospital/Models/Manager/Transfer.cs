@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
 
-public class Transfer
+public class Transfer: INotifyPropertyChanged
 {
+    private DateTime _deliveryDateTime;
+    private bool _delivered;
+    private bool _failed;
+
     public Transfer()
     {
         Id = "";
@@ -50,10 +56,39 @@ public class Transfer
     public string OriginId { get; set; }
     public string DestinationId { get; set; }
     public List<TransferItem> Items { get; set; }
-    public DateTime DeliveryDateTime { get; set; }
 
-    public bool Delivered { get; set; }
-    public bool Failed { get; set; }
+    public DateTime DeliveryDateTime
+    {
+        get => _deliveryDateTime;
+        set
+        {
+            if (value.Equals(_deliveryDateTime)) return;
+            _deliveryDateTime = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool Delivered
+    {
+        get => _delivered;
+        set
+        {
+            if (value == _delivered) return;
+            _delivered = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool Failed
+    {
+        get => _failed;
+        set
+        {
+            if (value == _failed) return;
+            _failed = value;
+            OnPropertyChanged();
+        }
+    }
 
     public void AddItem(TransferItem item)
     {
@@ -85,6 +120,21 @@ public class Transfer
 
         Destination.Receive(this);
         Delivered = true;
+        return true;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
         return true;
     }
 }
