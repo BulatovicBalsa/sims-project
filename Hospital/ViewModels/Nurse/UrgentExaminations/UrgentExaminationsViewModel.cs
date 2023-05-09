@@ -86,15 +86,23 @@ public class UrgentExaminationsViewModel : ViewModelBase
         var qualifiedDoctors = _doctorService.GetQualifiedDoctors(SelectedSpecialization);
         var earliestFreeTimeslotDoctors = _timeslotService.GetEarliestFreeTimeslotDoctors(qualifiedDoctors);
 
-        var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
-        if (_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key))
-        {
-            AddUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
-
-            MessageBox.Show("Urgent examination successfully created", "Success");
+        if (ScheduleUrgentExamination(earliestFreeTimeslotDoctors))
             return;
-        }
 
+        PostponeExamination(earliestFreeTimeslotDoctors);
+    }
+
+    private bool ScheduleUrgentExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
+    {
+        var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
+        if (!_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
+
+        SaveUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
+        return true;
+    }
+
+    private void PostponeExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
+    {
         var postponableExaminations = _examinationService.GetPostponableExaminations(earliestFreeTimeslotDoctors);
         if (postponableExaminations.Count == 0)
         {
@@ -102,18 +110,25 @@ public class UrgentExaminationsViewModel : ViewModelBase
             return;
         }
 
-        var postponeExaminationViewModel = new PostponeExaminationViewModel(postponableExaminations, earliestFreeTimeslotDoctors);
-        postponeExaminationViewModel.DialogClosed += AddUrgentExamination;
-        
+        var postponeExaminationViewModel = new PostponeExaminationViewModel(postponableExaminations, earliestFreeTimeslotDoctors, SelectedPatient);
+        postponeExaminationViewModel.DialogClosed += SaveUrgentExamination;
+
         OpenPostponeExaminationDialog(postponeExaminationViewModel);
     }
 
-    private void AddUrgentExamination(bool cancelled, DateTime? newTimeslot, Doctor? freeDoctor)
+    private void SaveUrgentExamination(bool cancelled, DateTime? newTimeslot, Doctor? freeDoctor)
     {
         if (cancelled)
             return;
 
+        if (_examinationService.IsPatientBusy(SelectedPatient, newTimeslot ?? DateTime.MinValue))
+        {
+            MessageBox.Show("Patient already has an examination at given time", "Error");
+            return;
+        }
+
         _examinationRepository.Add(new Examination(freeDoctor, SelectedPatient, IsOperation, newTimeslot ?? DateTime.MinValue, null, true), false);
+        MessageBox.Show("Urgent examination successfully created", "Success");
     }
 
     private void OpenPostponeExaminationDialog(PostponeExaminationViewModel viewModel)
