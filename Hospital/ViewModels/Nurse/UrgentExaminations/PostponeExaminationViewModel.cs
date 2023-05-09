@@ -69,11 +69,16 @@ public class PostponeExaminationViewModel : ViewModelBase
             return;
         }
 
-        SelectedExamination.Start = _doctorEarliestFreeTimeslot[SelectedExamination.Doctor];
-        _examinationRepository.Update(SelectedExamination, false);
+        PostponeExamination();
         SendNotifications(SelectedExamination);
 
         CloseDialog(false, previousStart, SelectedExamination.Doctor);
+    }
+
+    private void PostponeExamination()
+    {
+        SelectedExamination.Start = _doctorEarliestFreeTimeslot[SelectedExamination.Doctor];
+        _examinationRepository.Update(SelectedExamination, false);
     }
 
     private void SendNotifications(Examination examination)

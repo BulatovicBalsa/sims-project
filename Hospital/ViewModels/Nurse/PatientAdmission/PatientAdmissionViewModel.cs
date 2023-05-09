@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Examination;
@@ -78,6 +77,11 @@ public class PatientAdmissionViewModel : ViewModelBase
             }
         };
 
+        OpenAddPatientDialog(viewModel);
+    }
+
+    private void OpenAddPatientDialog(AddUpdatePatientViewModel viewModel)
+    {
         var addPatientDialog = new AddPatientView
         {
             DataContext = viewModel
@@ -88,23 +92,26 @@ public class PatientAdmissionViewModel : ViewModelBase
 
     private void ExecuteStartAdmissionCommand(object? obj)
     {
-        Examination admissibleExamination;
+        Examination? admissibleExamination = ProcessAdmissibleExamination(obj as Examination);
+        if (admissibleExamination == null)
+            return;
 
-        if (obj == null)
-        {
-            admissibleExamination = _examinationService.GetAdmissibleExamination(SelectedPatient);
+        OpenPatientAdmissionDialog(admissibleExamination);
+    }
 
-            if (admissibleExamination == null)
-            {
-                MessageBox.Show("Selected patient does not have an examination in the next 15 minutes", "Error");
-                return;
-            }
-        }
-        else
-        {
-            admissibleExamination = obj as Examination;
-        }
+    private Examination? ProcessAdmissibleExamination(Examination? admissibleExamination)
+    {
+        if (admissibleExamination != null) return admissibleExamination;
 
+        admissibleExamination = _examinationService.GetAdmissibleExamination(SelectedPatient);
+        if (admissibleExamination != null) return admissibleExamination;
+
+        MessageBox.Show("Selected patient does not have an examination in the next 15 minutes", "Error");
+        return null;
+    }
+
+    private void OpenPatientAdmissionDialog(Examination admissibleExamination)
+    {
         var patientAdmissionDialog = new AdmissionDialogView
         {
             DataContext = new AdmissionDialogViewModel(_patientRepository, SelectedPatient, admissibleExamination)
