@@ -166,7 +166,7 @@ namespace Hospital.Services
         {
             if (IsExaminationTimeFree(doctor, patient, currentTime))
             {
-                Examination examination = new Examination(doctor, patient, false, currentTime);
+                Examination examination = new Examination(doctor, patient, false, currentTime, null);
                 examinations.Add(examination);
             }
         }

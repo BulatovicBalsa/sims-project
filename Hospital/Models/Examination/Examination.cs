@@ -38,8 +38,6 @@ public class Examination
     public Room? Room { get; set; }
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
-  
-    public Examination(){}
 
     public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
     {
