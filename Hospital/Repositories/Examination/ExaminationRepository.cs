@@ -228,7 +228,7 @@ public class ExaminationRepository
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
     {
         return GetAll(doctor).Where(examination =>
-            examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)).ToList();
+            (examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)) || examination.IsPerformable()).OrderBy(examination => examination.Start).ToList();
     }
 
     public bool IsFree(Doctor? doctor, DateTime start, string? examinationId = null)
