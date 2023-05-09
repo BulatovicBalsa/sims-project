@@ -82,6 +82,7 @@ namespace Hospital.Views
                     {
                         _patient.IsBlocked = true;
                         new PatientRepository().Update(_patient);
+                        MessageBox.Show("This user is now blocked due to too many changes made in the last 30 days.", "User Blocked");
                         Application.Current.Shutdown();
                     }
                 }

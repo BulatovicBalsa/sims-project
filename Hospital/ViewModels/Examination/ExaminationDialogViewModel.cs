@@ -154,6 +154,7 @@ namespace Hospital.ViewModels
             {
                 HandleException(ex);
             }
+            _patientViewModel.RefreshExaminations(_patient);
             Close();
         }
 
