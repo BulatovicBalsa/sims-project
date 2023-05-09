@@ -4,15 +4,6 @@ namespace Hospital.Models.Manager;
 
 public class Equipment
 {
-    public enum EquipmentType
-    {
-        Furniture,
-        HallwayEquipment,
-        ExaminationEquipment,
-        OperationEquipment,
-        DynamicEquipment
-    }
-
     public Equipment()
     {
         Id = Guid.NewGuid().ToString();
@@ -43,5 +34,15 @@ public class Equipment
     public override string ToString()
     {
         return Name;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null || obj.GetType() != typeof(Equipment))
+        {
+            return false;
+        }
+
+        return ((Equipment)obj).Id == Id;
     }
 }

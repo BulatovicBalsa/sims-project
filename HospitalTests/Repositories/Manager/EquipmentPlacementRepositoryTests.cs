@@ -14,9 +14,9 @@ public class EquipmentPlacementRepositoryTests
         EquipmentRepository.Instance.DeleteAll();
         var equipment = new List<Equipment>
         {
-            new("1", "Chair", Equipment.EquipmentType.Furniture),
+            new("1", "Chair", EquipmentType.Furniture),
             new("2", "Operating table",
-                Equipment.EquipmentType.OperationEquipment)
+                EquipmentType.OperationEquipment)
         };
 
         Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
