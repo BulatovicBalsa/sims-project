@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
+using Hospital.Services;
 
 namespace Hospital.ViewModels.Nurse.UrgentExaminations;
 
@@ -13,7 +15,9 @@ public class PostponeExaminationViewModel : ViewModelBase
 {
     private readonly Dictionary<Doctor, DateTime> _doctorEarliestFreeTimeslot;
     private readonly ExaminationRepository _examinationRepository;
+    private readonly ExaminationService _examinationService;
     private Examination? _selectedExamination;
+    private readonly Patient _selectedPatient;
 
     public PostponeExaminationViewModel()
     {
@@ -21,12 +25,14 @@ public class PostponeExaminationViewModel : ViewModelBase
     }
 
     public PostponeExaminationViewModel(List<Examination> examinations,
-        SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctor)
+        SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctor, Patient selectedPatient)
     {
         Examinations = examinations;
         _selectedExamination = null;
         _doctorEarliestFreeTimeslot = earliestFreeTimeslotDoctor.ToDictionary(pair => pair.Value, pair => pair.Key);
         _examinationRepository = new ExaminationRepository();
+        _examinationService = new ExaminationService();
+        _selectedPatient = selectedPatient;
 
         PostponeExaminationCommand =
             new ViewModelCommand(ExecutePostponeExaminationCommand, CanExecutePostponeExaminationCommand);
@@ -53,6 +59,13 @@ public class PostponeExaminationViewModel : ViewModelBase
     private void ExecutePostponeExaminationCommand(object obj)
     {
         var previousStart = SelectedExamination.Start;
+
+        if (_examinationService.IsPatientBusy(_selectedPatient, previousStart))
+        {
+            CloseDialog(false, previousStart, SelectedExamination.Doctor);
+            return;
+        }
+
         SelectedExamination.Start = _doctorEarliestFreeTimeslot[SelectedExamination.Doctor];
         _examinationRepository.Update(SelectedExamination, false);
 
