@@ -27,13 +27,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="First Name: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding FirstName, Mode=OneTime}" Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding PatientOnExamination.FirstName, Mode=OneTime}" Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Last Name: " Grid.Row="1" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding LastName, Mode=OneTime}" Margin="5" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding PatientOnExamination.LastName, Mode=OneTime}" Margin="5" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
 
                 <Label Content="Jmbg: " Grid.Row="2" Grid.Column="0" Margin="5"/>
-                <TextBox Text="{Binding Jmbg, Mode=OneTime}" Margin="5" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+                <TextBox Text="{Binding PatientOnExamination.Jmbg, Mode=OneTime}" Margin="5" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
 
             </Grid>
             
@@ -50,8 +50,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Row="2" Grid.Column="1" Width="150"/>
-                <Button x:Name="CofirmAnamnesisButton" Content="Confirm" Grid.Column="2" Margin="5" Command="{Binding UpdateExaminationCommand}" Height="25.96"/>
+                <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150"/>
+                <Button x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5" Command="{Binding UpdateAnamnesisCommand}" Height="25.96"/>
             </Grid>
 
             <Grid Grid.Row="3">
