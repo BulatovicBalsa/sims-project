@@ -6,6 +6,15 @@ namespace Hospital.Models.Manager;
 
 public class Room
 {
+    public enum RoomType
+    {
+        Warehouse,
+        OperatingRoom,
+        ExaminationRoom,
+        WaitingRoom,
+        Ward
+    }
+
     public Room()
     {
         Id = Guid.NewGuid().ToString();
@@ -59,14 +68,14 @@ public class Room
     public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
     {
         return (from equipmentPlacement in Equipment
-            where equipmentPlacement.Equipment.Type == EquipmentType.DynamicEquipment
+            where equipmentPlacement.Equipment.Type == Models.Manager.Equipment.EquipmentType.DynamicEquipment
             select equipmentPlacement).ToList();
     }
 
     public void ExpendEquipment(Equipment equipment, int amount)
     {
         var newAmount = GetAmount(equipment) - amount;
-        if (newAmount >= 0)
+        if(newAmount >= 0)
             SetAmount(equipment, newAmount);
     }
 
@@ -79,70 +88,5 @@ public class Room
     {
         if (obj is not Room objAsRoom) return false;
         return Id == objAsRoom.Id;
-    }
-
-
-    private EquipmentPlacement? GetPlacement(Equipment equipment)
-    {
-        return Equipment.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
-    }
-
-    private int GetReservedAmount(Equipment equipment)
-    {
-        var placement = GetPlacement(equipment);
-        return placement?.Reserved ?? 0;
-    }
-
-    public bool CanReserve(Equipment equipment, int amount)
-    {
-        return GetAmount(equipment) >= GetReservedAmount(equipment) + amount;
-    }
-
-    public bool HasEnoughEquipment(Transfer transfer)
-    {
-        return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
-    }
-
-    private void Reserve(Equipment equipment, int amount)
-    {
-        var placement = GetPlacement(equipment);
-        if (placement != null)
-            placement.Reserved += amount;
-    }
-
-    public bool ReserveEquipment(Transfer transfer)
-    {
-        if (!HasEnoughEquipment(transfer))
-            return false;
-
-        foreach (var item in transfer.Items)
-            Reserve(item.Equipment, item.Amount);
-
-        return true;
-    }
-
-    private void ReleaseReserved(Equipment equipment, int amount)
-    {
-        var placement = GetPlacement(equipment);
-        if (placement != null) placement.Reserved -= amount;
-    }
-
-    public bool Send(Transfer transfer)
-    {
-        foreach (var item in transfer.Items)
-        {
-            if (GetAmount(item.Equipment) < item.Amount)
-                return false;
-            ReleaseReserved(item.Equipment, item.Amount);
-            ExpendEquipment(item.Equipment, item.Amount);
-        }
-
-        return true;
-    }
-
-    public void Receive(Transfer transfer)
-    {
-        foreach (var item in transfer.Items)
-            SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount);
     }
 }

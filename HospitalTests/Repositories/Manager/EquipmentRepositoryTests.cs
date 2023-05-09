@@ -14,11 +14,11 @@ public class EquipmentRepositoryTests
         EquipmentRepository.Instance.DeleteAll();
         var equipment = new List<Equipment>
         {
-            new("1", "Chair", EquipmentType.Furniture),
+            new("1", "Chair", Equipment.EquipmentType.Furniture),
             new("2", "Operating Table",
-                EquipmentType.OperationEquipment),
-            new("3", "Stethoscope", EquipmentType.ExaminationEquipment),
-            new("4", "Wheelchair", EquipmentType.HallwayEquipment)
+                Equipment.EquipmentType.OperationEquipment),
+            new("3", "Stethoscope", Equipment.EquipmentType.ExaminationEquipment),
+            new("4", "Wheelchair", Equipment.EquipmentType.HallwayEquipment)
         };
 
         Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
@@ -31,7 +31,7 @@ public class EquipmentRepositoryTests
 
         var loadedEquipment = equipmentRepository.GetAll();
         Assert.AreEqual(4, loadedEquipment.Count);
-        Assert.AreEqual(EquipmentType.OperationEquipment, loadedEquipment[1].Type);
+        Assert.AreEqual(Equipment.EquipmentType.OperationEquipment, loadedEquipment[1].Type);
         Assert.AreEqual("Operating Table", loadedEquipment[1].Name);
     }
 
@@ -49,7 +49,7 @@ public class EquipmentRepositoryTests
         var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.AreEqual("Stethoscope", equipmentRepository.GetById("3").Name);
-        Assert.AreEqual(EquipmentType.Furniture, equipmentRepository.GetById("1").Type);
+        Assert.AreEqual(Equipment.EquipmentType.Furniture, equipmentRepository.GetById("1").Type);
         Assert.IsNull(equipmentRepository.GetById("0"));
     }
 
@@ -58,16 +58,16 @@ public class EquipmentRepositoryTests
     {
         var equipmentRepository = EquipmentRepository.Instance;
 
-        equipmentRepository.Update(new Equipment("1", "Table", EquipmentType.Furniture));
+        equipmentRepository.Update(new Equipment("1", "Table", Equipment.EquipmentType.Furniture));
 
         Assert.AreEqual("Table", equipmentRepository.GetById("1").Name);
-        Assert.AreEqual(EquipmentType.Furniture, equipmentRepository.GetById("1").Type);
+        Assert.AreEqual(Equipment.EquipmentType.Furniture, equipmentRepository.GetById("1").Type);
     }
 
     [TestMethod]
     public void TestDelete()
     {
-        var equipmentToDelete = new Equipment("2", "Operating table", EquipmentType.OperationEquipment);
+        var equipmentToDelete = new Equipment("2", "Operating table", Equipment.EquipmentType.OperationEquipment);
 
         var equipmentRepository = EquipmentRepository.Instance;
 
@@ -80,7 +80,7 @@ public class EquipmentRepositoryTests
     [TestMethod]
     public void TestAdd()
     {
-        var newEquipment = new Equipment("5", "C-Arm", EquipmentType.OperationEquipment);
+        var newEquipment = new Equipment("5", "C-Arm", Equipment.EquipmentType.OperationEquipment);
 
         var equipmentRepository = EquipmentRepository.Instance;
 
@@ -89,7 +89,7 @@ public class EquipmentRepositoryTests
 
         Assert.AreEqual(5, equipmentRepository.GetAll().Count);
         Assert.AreEqual("C-Arm", loadedNewEquipment.Name);
-        Assert.AreEqual(EquipmentType.OperationEquipment, loadedNewEquipment.Type);
+        Assert.AreEqual(Equipment.EquipmentType.OperationEquipment, loadedNewEquipment.Type);
     }
 
     [TestMethod]
@@ -98,7 +98,7 @@ public class EquipmentRepositoryTests
         var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Update(new Equipment("0", "Nonexistent",
-            EquipmentType.Furniture)));
+            Equipment.EquipmentType.Furniture)));
     }
 
     [TestMethod]
@@ -107,7 +107,7 @@ public class EquipmentRepositoryTests
         var equipmentRepository = EquipmentRepository.Instance;
 
         Assert.ThrowsException<KeyNotFoundException>(() => equipmentRepository.Delete(new Equipment("0", "Nonexistent",
-            EquipmentType.Furniture)));
+            Equipment.EquipmentType.Furniture)));
     }
 
 
@@ -115,16 +115,16 @@ public class EquipmentRepositoryTests
     {
         var equipment = new List<Equipment>
         {
-            new("1", "Chair", EquipmentType.Furniture),
+            new("1", "Chair", Equipment.EquipmentType.Furniture),
             new("2", "Operating Table",
-                EquipmentType.OperationEquipment),
-            new("3", "Stethoscope", EquipmentType.ExaminationEquipment),
-            new("4", "Wheelchair", EquipmentType.HallwayEquipment),
-            new("5", "Pencil", EquipmentType.DynamicEquipment),
-            new("6", "Paper", EquipmentType.DynamicEquipment),
-            new("7", "Band-Aid", EquipmentType.DynamicEquipment),
-            new("8", "Bandage", EquipmentType.DynamicEquipment),
-            new("9", "Buckle", EquipmentType.DynamicEquipment)
+                Equipment.EquipmentType.OperationEquipment),
+            new("3", "Stethoscope", Equipment.EquipmentType.ExaminationEquipment),
+            new("4", "Wheelchair", Equipment.EquipmentType.HallwayEquipment),
+            new("5", "Pencil", Equipment.EquipmentType.DynamicEquipment),
+            new("6", "Paper", Equipment.EquipmentType.DynamicEquipment),
+            new("7", "Band-Aid", Equipment.EquipmentType.DynamicEquipment),
+            new("8", "Bandage", Equipment.EquipmentType.DynamicEquipment),
+            new("9", "Buckle", Equipment.EquipmentType.DynamicEquipment)
         };
 
         Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");

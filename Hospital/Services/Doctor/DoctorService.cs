@@ -74,7 +74,7 @@ public class DoctorService
     {
         var allRooms = _roomRepository.GetAll();
         return allRooms.Where(room =>
-            room.Type == RoomType.OperatingRoom || room.Type == RoomType.ExaminationRoom).ToList();
+            room.Type == Room.RoomType.OperatingRoom || room.Type == Room.RoomType.ExaminationRoom).ToList();
     }
 
     public Patient? GetPatientById(string patientId)

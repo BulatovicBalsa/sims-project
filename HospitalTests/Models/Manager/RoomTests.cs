@@ -8,8 +8,8 @@ public class RoomTests
     [TestMethod]
     public void TestExpendEquipmentMoreThanAvailable()
     {
-        var room = new Room("Room", RoomType.ExaminationRoom);
-        var equipment = new Equipment("Dynamic equipment", EquipmentType.DynamicEquipment);
+        var room = new Room("Room", Room.RoomType.ExaminationRoom);
+        var equipment = new Equipment("Dynamic equipment", Equipment.EquipmentType.DynamicEquipment);
         room.SetAmount(equipment, 10);
 
         room.ExpendEquipment(equipment, 11);
@@ -19,8 +19,8 @@ public class RoomTests
     [TestMethod]
     public void TestExpendAllEquipment()
     {
-        var room = new Room("Room", RoomType.ExaminationRoom);
-        var equipment = new Equipment("Dynamic equipment", EquipmentType.DynamicEquipment);
+        var room = new Room("Room", Room.RoomType.ExaminationRoom);
+        var equipment = new Equipment("Dynamic equipment", Equipment.EquipmentType.DynamicEquipment);
         room.SetAmount(equipment, 10);
 
         room.ExpendEquipment(equipment, 10);
@@ -30,8 +30,8 @@ public class RoomTests
     [TestMethod]
     public void TestExpendEquipment()
     {
-        var room = new Room("Room", RoomType.ExaminationRoom);
-        var equipment = new Equipment("Dynamic equipment", EquipmentType.DynamicEquipment);
+        var room = new Room("Room", Room.RoomType.ExaminationRoom);
+        var equipment = new Equipment("Dynamic equipment", Equipment.EquipmentType.DynamicEquipment);
         room.SetAmount(equipment, 10);
 
         room.ExpendEquipment(equipment, 6);

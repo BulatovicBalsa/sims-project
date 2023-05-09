@@ -95,16 +95,16 @@ public partial class EquipmentView : Window
 
         if (!IsEquipmentTypeFilterOn()) return;
         
-        var includedTypes = new List<EquipmentType>();
+        var includedTypes = new List<Equipment.EquipmentType>();
 
         if (IncludeExaminationEquipment)
-            includedTypes.Add(EquipmentType.ExaminationEquipment);
+            includedTypes.Add(Models.Manager.Equipment.EquipmentType.ExaminationEquipment);
 
-        if (IncludeFurniture) includedTypes.Add(EquipmentType.Furniture);
+        if (IncludeFurniture) includedTypes.Add(Models.Manager.Equipment.EquipmentType.Furniture);
 
-        if (IncludeHallwayEquipment) includedTypes.Add(EquipmentType.HallwayEquipment);
+        if (IncludeHallwayEquipment) includedTypes.Add(Models.Manager.Equipment.EquipmentType.HallwayEquipment);
 
-        if (IncludeOperationEquipment) includedTypes.Add(EquipmentType.OperationEquipment);
+        if (IncludeOperationEquipment) includedTypes.Add(Models.Manager.Equipment.EquipmentType.OperationEquipment);
 
         Equipment.Clear();
         foreach (var e in EquipmentRepository.Instance.GetAll())
