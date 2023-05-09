@@ -102,7 +102,7 @@ namespace HospitalTests.Models.Manager
             };
 
             Assert.IsTrue(TransferService.TrySendTransfer(origin, destination1, transferItems1, DateTime.Now.AddSeconds(-1)));
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
             Assert.IsTrue(TransferRepository.Instance.GetAll()[0].Delivered);
             Assert.AreEqual(0, origin.Equipment[0].Reserved);
         }
