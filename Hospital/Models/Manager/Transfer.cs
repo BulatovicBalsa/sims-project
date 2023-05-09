@@ -26,6 +26,7 @@ public class Transfer
         Delivered = false;
         Failed = false;
     }
+
     public Transfer(Room origin, Room destination, DateTime deliveryDateTime, List<EquipmentTransferItem> items)
     {
         Id = Guid.NewGuid().ToString();
@@ -49,7 +50,7 @@ public class Transfer
     public void AddItem(EquipmentTransferItem item)
     {
         Items.Add(item);
-    } 
+    }
 
     public bool IsPossible()
     {
