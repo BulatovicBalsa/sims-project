@@ -36,7 +36,7 @@ public class TimeslotService
         return validExaminationTimeslot;
     }
 
-    private bool AreDatesEqual(DateTime dateTime1, DateTime dateTime2)
+    public bool AreDatesEqual(DateTime dateTime1, DateTime dateTime2)
     {
         return dateTime1.Date == dateTime2.Date &&
                dateTime1.Hour == dateTime2.Hour &&
@@ -60,9 +60,4 @@ public class TimeslotService
 
         return result;
     }
-
-    //public DateTime? GetEarliestFreeTimeslot()
-    //{
-
-    //}
 }
