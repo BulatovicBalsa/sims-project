@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -45,7 +45,7 @@ namespace HospitalTests.Repositories.Examination
             _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
             _examinationRepository = new ExaminationRepository(_examinationChangesTracker);
-            _doctorRepository = new DoctorRepository();
+            _doctorRepository = DoctorRepository.Instance;
             _patientRepository = new PatientRepository();
 
             _patientRepository.PatientAdded += _ => { };
@@ -62,9 +62,9 @@ namespace HospitalTests.Repositories.Examination
             _patientRepository.Add(patient1);
             _patientRepository.Add(patient2);
 
-            var examination1 = new Examination(doctor1, patient1, false, DateTime.Now.AddHours(30), new RoomRepository().GetAll()[0]);
-            var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40), new RoomRepository().GetAll()[0]);
-            var examination3 = new Examination(doctor2, patient1, true, DateTime.Now.AddHours(50), new RoomRepository().GetAll()[0]);
+            var examination1 = new Examination(doctor1, patient1, false, DateTime.Now.AddHours(30), RoomRepository.Instance.GetAll()[0]);
+            var examination2 = new Examination(doctor1, patient2, false, DateTime.Now.AddHours(40), RoomRepository.Instance.GetAll()[0]);
+            var examination3 = new Examination(doctor2, patient1, true, DateTime.Now.AddHours(50), RoomRepository.Instance.GetAll()[0]);
 
             _examinationRepository.Add(examination1, true);
             _examinationRepository.Add(examination2, true);
@@ -79,7 +79,7 @@ namespace HospitalTests.Repositories.Examination
             _doctorRepository.Add(doctor);
             _patientRepository.Add(patient);
 
-            _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60), new RoomRepository().GetAll()[0]);
+            _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60), RoomRepository.Instance.GetAll()[0]);
         }
 
         [TestMethod]

@@ -21,6 +21,12 @@ namespace HospitalTests.Repositories.Patient
         [TestInitialize]
         public void TestInitialize()
         {
+            var examinationFilePath = "../../../Data/examination.csv";
+            if (File.Exists(examinationFilePath))
+            {
+                File.Delete(examinationFilePath);
+            }
+
             var testPatients = new List<Patient>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
@@ -80,7 +86,7 @@ namespace HospitalTests.Repositories.Patient
             patientRepository.PatientUpdated += _ => { };
 
             var loadedPatients = patientRepository.GetAll();
-            
+
             var testPatient = loadedPatients[1];
             testPatient.FirstName = "TestFirstName";
             testPatient.LastName = "TestLastName";
@@ -126,7 +132,7 @@ namespace HospitalTests.Repositories.Patient
             var loadedPatients = patientRepository.GetAll();
 
             var testPatient = loadedPatients[4];
-            
+
             Assert.AreEqual(5, patientRepository.GetAll().Count);
             Assert.AreEqual(testPatient, patientRepository.GetById(testPatient.Id));
         }

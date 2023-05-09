@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace Hospital.ViewModels;
 
-public class ModifyExaminationDialogViewModel : ViewModelBase
+public class ModifyExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
 
@@ -37,7 +37,7 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
 
     private TimeOnly? _selectedTime;
 
-    public ModifyExaminationDialogViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null)
+    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null)
     {
         _isUpdate = examinationToChange is not null;
         _doctor = doctor;
@@ -47,6 +47,8 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
         Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
         PossibleTimes = new ObservableCollection<TimeOnly>(GetPossibleTimes());
         Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
+
+        ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         FillForm();
     }
 
@@ -132,9 +134,7 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
         }
     }
 
-
     public ICommand ModifyExaminationCommand { get; set; }
-
 
     private void FillForm()
     {
@@ -145,10 +145,7 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
             : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
         SelectedPatient = _examinationToChange?.Patient;
         SelectedRoom = _examinationToChange?.Room;
-
         ButtonContent = _examinationToChange is null ? "Create" : "Update";
-
-        ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
     }
 
     private void ModifyExamination(Window window)
@@ -191,11 +188,19 @@ public class ModifyExaminationDialogViewModel : ViewModelBase
             return null;
         }
 
+        var startDate = CreateDateFromForm();
+
+        var createdExamination = _isUpdate ? _examinationToChange : new Examination();
+        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient, _doctor));
+        return createdExamination;
+    }
+
+    private DateTime CreateDateFromForm()
+    {
         var startTime = SelectedTime.GetValueOrDefault();
         var startDate = SelectedDate.GetValueOrDefault();
         startDate = startDate.Add(startTime.ToTimeSpan());
-
-        return new Examination(_doctor, SelectedPatient, IsOperation, startDate, SelectedRoom);
+        return startDate;
     }
 
     private void UpdateExamination(Examination examination)

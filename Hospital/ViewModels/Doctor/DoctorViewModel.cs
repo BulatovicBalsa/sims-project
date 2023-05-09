@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -30,9 +28,12 @@ public class DoctorViewModel : ViewModelBase
 
     private object _selectedPatient;
 
+    private DateTime _selectedDate;
+
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
+        _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
         Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
@@ -42,6 +43,13 @@ public class DoctorViewModel : ViewModelBase
         UpdateExaminationCommand = new RelayCommand(UpdateExamination);
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
+        DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _doctorService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -94,6 +102,18 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
+    public DateTime SelectedDate
+    {
+        get => _selectedDate;
+        set
+        {
+            _selectedDate = value;
+            OnPropertyChanged(nameof(SelectedDate));
+            Examinations.Clear();
+            _doctorService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
+        }
+    }
+
     public object SelectedExamination { get; set; }
 
     public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
@@ -103,6 +123,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand PerformExaminationCommand { get; set; }
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
+    public ICommand DefaultExaminationViewCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {
@@ -186,11 +207,11 @@ public class DoctorViewModel : ViewModelBase
 
         var patientOnExamination = _doctorService.GetPatient(examinationToPerform);
 
-        /*if (!examination.IsPerfomable())
+        if (!examinationToPerform.IsPerformable())
         {
             MessageBox.Show("Chosen examination can't be performed right now");
             return;
-        }*/
+        }
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();

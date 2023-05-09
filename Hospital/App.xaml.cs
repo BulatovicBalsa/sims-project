@@ -1,22 +1,32 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
+using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;
 
 namespace Hospital;
 
-/// <summary>
-///     Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
+    private const string _unsuccessfulLoginMessage = "Login was not successful.";
+
+    private void ProcessEventsThatOccurredBeforeAppStart()
+    {
+        EquipmentOrderService.AttemptPickUpOfAllOrders();
+    }
+
     protected void ApplicationStart(object sender, EventArgs e)
     {
+        CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
+
+        ProcessEventsThatOccurredBeforeAppStart();
+
         var loginView = new LoginView();
         loginView.Show();
         loginView.IsVisibleChanged += (s, ev) =>
@@ -32,14 +42,16 @@ public partial class App : Application
                 var patient = new PatientRepository().GetById(id);
                 if (patient == null)
                 {
-                    MessageBox.Show("Login was not successful.");
+                    MessageBox.Show(_unsuccessfulLoginMessage);
                     return;
                 }
+
                 if (patient.IsBlocked)
                 {
                     MessageBox.Show("Your profile is blocked.");
                     return;
                 }
+
                 var patientView = new PatientView(patient);
                 patientView.Show();
 
@@ -60,7 +72,12 @@ public partial class App : Application
 
             else if (role == "DOCTOR")
             {
-                var doctor = new DoctorRepository().GetById(id);
+                var doctor = DoctorRepository.Instance.GetById(id);
+                if (doctor == null)
+                {
+                    MessageBox.Show(_unsuccessfulLoginMessage);
+                    return;
+                }
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
 

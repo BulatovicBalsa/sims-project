@@ -54,7 +54,7 @@ public class MedicalRecord
         AddHealthCondition(allergyToAdd, HealthConditionType.Allergy);
     }
 
-    public void AddMedicalConidition(string medicalConditionToAdd)
+    public void AddMedicalCondition(string medicalConditionToAdd)
     {
         AddHealthCondition(medicalConditionToAdd, HealthConditionType.MedicalCondition);
     }
@@ -116,7 +116,7 @@ public class MedicalRecord
 
     public void ChangeWeight(int newWeight)
     {
-        if (newWeight >= MIN_WEIGHT && newWeight <= MAX_WEIGHT)
+        if (newWeight is >= MIN_WEIGHT and <= MAX_WEIGHT)
             Weight = newWeight;
         else
             throw new ArgumentException($"Weight must be between {MIN_WEIGHT} and {MAX_WEIGHT}");
@@ -124,7 +124,7 @@ public class MedicalRecord
 
     public void ChangeHeight(int newHeight)
     {
-        if (newHeight >= MIN_HEIGHT && newHeight <= MAX_HEIGHT)
+        if (newHeight is >= MIN_HEIGHT and <= MAX_HEIGHT)
             Height = newHeight;
         else
             throw new ArgumentException($"Height must be between {MIN_HEIGHT} and {MAX_HEIGHT}");

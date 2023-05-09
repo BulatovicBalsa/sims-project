@@ -9,6 +9,11 @@ using Models.Doctor;
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
+    private static DoctorRepository? _instance;
+
+    public static DoctorRepository Instance => _instance ??=new DoctorRepository();
+
+    private DoctorRepository() { }
 
     public List<Doctor> GetAll()
     {

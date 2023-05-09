@@ -110,6 +110,10 @@
                 <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                    <Label Content="View for:"></Label>
+                    <DatePicker Background="Black"  x:Name="ExaminationDatePicker" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
+                    <Button Content="Default View"
+                            Margin="5" Command="{Binding DefaultExaminationViewCommand}"/>
                     <Button x:Name="BtnAddExamination"
                             Content="Add Examination"
                             Margin="5" Command="{Binding AddExaminationCommand}"/>
@@ -120,7 +124,7 @@
                             Content="Delete Examination"
                             Margin="5" Command="{Binding DeleteExaminationCommand}"/>
                     <Button x:Name="BtnPerformExamination"
-                            Content="Start Examination"
+                            Content="Perform Examination"
                             Margin="5" Command="{Binding PerformExaminationCommand}"/>
                 </StackPanel>
 

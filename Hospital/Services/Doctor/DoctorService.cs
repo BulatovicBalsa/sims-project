@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
@@ -24,15 +24,15 @@ public class DoctorService
     {
         _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
         _patientRepository = new PatientRepository();
-        _roomRepository = new RoomRepository();
-        _doctorRepository = new DoctorRepository();
+        _doctorRepository = DoctorRepository.Instance;
+        _roomRepository = RoomRepository.Instance;
     }
 
     public List<Patient> GetViewedPatients(Doctor doctor)
     {
         var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
         var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
-        return viewedPatients;
+        return viewedPatients!;
     }
 
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
@@ -42,7 +42,7 @@ public class DoctorService
 
     public Patient GetPatient(Examination examination)
     {
-        return _patientRepository.GetById(examination.Patient.Id);
+        return _patientRepository.GetById(examination.Patient!.Id)!;
     }
 
     public List<Patient> GetAllPatients()
@@ -94,5 +94,10 @@ public class DoctorService
         var allDoctors = _doctorRepository.GetAll();
 
         return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
+    }
+
+    public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
+    {
+        return _examinationRepository.GetExaminationsForDate(doctor, selectedDate);
     }
 }
