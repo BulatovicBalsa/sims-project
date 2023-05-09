@@ -5,6 +5,7 @@ using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
+using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;

@@ -55,6 +55,7 @@ public class Examination
 
     public Examination()
     {
+        Id = Guid.NewGuid().ToString();
         Room = RoomRepository.Instance.GetAll()[0];
     }
 
