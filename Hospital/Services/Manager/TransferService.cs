@@ -55,6 +55,7 @@ namespace Hospital.Services.Manager
         public static void AttemptDeliveryOfAllTransfers()
         {
             var transfers = TransferRepository.Instance.GetAll();
+
             foreach (var transfer in transfers.ToList())
             {
                 transfer.TryDeliver();
