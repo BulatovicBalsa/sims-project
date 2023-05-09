@@ -18,6 +18,7 @@ namespace Hospital.Services
     public class ExaminationRecommenderService
     {
         private const int NUMBER_OF_SUGGESTED_EXAMINATIONS = 3;
+        private const int MAX_NUMBER_OF_CLOSEST_EXAMINATIONS = 50;
 
         private DoctorRepository _doctorRepository;
         private ExaminationRepository _examinationRepository;
@@ -40,27 +41,26 @@ namespace Hospital.Services
 
         public List<Examination> FindAvailableExaminations(Patient patient, ExaminationSearchOptions options)
         {
-            List<Examination> examinations = SearchByBothCriteria(patient, options);
+            //List<Examination> examinations = SearchByBothCriteria(patient, options);
             
-            if (examinations.Count>0) return examinations;
-            if (options.Priority == Priority.Doctor)
-            {
-                examinations = SearchByDoctorPriority(patient, options);
-                if(examinations.Count > 0) return examinations;
-                examinations = SearchByTimeRangePriority(patient, options);
-                if(examinations.Count > 0) return examinations;
-            }
-            else
-            {
-                examinations = SearchByTimeRangePriority(patient, options);
-                if (examinations.Count > 0) return examinations;
-                examinations = SearchByDoctorPriority(patient, options);
-                if (examinations.Count > 0) return examinations;
-            }
+            //if (examinations.Count>0) return examinations;
+            //if (options.Priority == Priority.Doctor)
+            //{
+            //    examinations = SearchByDoctorPriority(patient, options);
+            //    if(examinations.Count > 0) return examinations;
+            //    examinations = SearchByTimeRangePriority(patient, options);
+            //    if(examinations.Count > 0) return examinations;
+            //}
+            //else
+            //{
+            //    examinations = SearchByTimeRangePriority(patient, options);
+            //    if (examinations.Count > 0) return examinations;
+            //    examinations = SearchByDoctorPriority(patient, options);
+            //    if (examinations.Count > 0) return examinations;
+            //}
             return SearchWithoutPriority(patient, options);
 
         }
-
         private List<Examination> SearchByBothCriteria(Patient patient,ExaminationSearchOptions options)
         {
             List<Examination> examinations = new List<Examination>();
@@ -160,8 +160,9 @@ namespace Hospital.Services
                 foreach (Doctor doctor in doctors)
                 {
                     AddExaminationIfTimeFree(doctor, patient, currentDate, examinations);
+                    if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
                 }
-                currentDate = currentDate.AddMinutes(1);
+                currentDate = currentDate.AddMinutes(15);
             }
             return examinations;
         }
