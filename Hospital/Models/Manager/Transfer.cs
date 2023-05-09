@@ -10,6 +10,8 @@ public class Transfer
         Id = "";
         Origin = new Room();
         Destination = new Room();
+        OriginId = "";
+        DestinationId = "";
         Items = new List<TransferItem>();
         DeliveryDateTime = DateTime.Now;
         Delivered = false;
@@ -21,6 +23,8 @@ public class Transfer
         Id = Guid.NewGuid().ToString();
         Origin = origin;
         Destination = destination;
+        OriginId = origin.Id;
+        DestinationId = destination.Id;
         Items = new List<TransferItem>();
         DeliveryDateTime = deliveryDateTime;
         Delivered = false;
@@ -32,6 +36,8 @@ public class Transfer
         Id = Guid.NewGuid().ToString();
         Origin = origin;
         Destination = destination;
+        OriginId = origin.Id;
+        DestinationId = destination.Id;
         Items = items;
         DeliveryDateTime = deliveryDateTime;
         Delivered = false;
@@ -41,6 +47,8 @@ public class Transfer
     public string Id { get; set; }
     public Room Origin { get; set; }
     public Room Destination { get; set; }
+    public string OriginId { get; set; }
+    public string DestinationId { get; set; }
     public List<TransferItem> Items { get; set; }
     public DateTime DeliveryDateTime { get; set; }
 
@@ -49,6 +57,7 @@ public class Transfer
 
     public void AddItem(TransferItem item)
     {
+        item.TransferId = Id;
         Items.Add(item);
     }
 

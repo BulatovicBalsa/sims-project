@@ -6,6 +6,7 @@ public class TransferItem
     {
         TransferId = "";
         Equipment = new Equipment();
+        EquipmentId = "";
     }
 
     public TransferItem(string transferId, Equipment equipment, int amount)
@@ -13,17 +14,20 @@ public class TransferItem
         TransferId = transferId;
         Equipment = equipment;
         Amount = amount;
+        EquipmentId = equipment.Id;
     }
     public TransferItem(Equipment equipment, int amount)
     {
         TransferId = "";
         Equipment = equipment;
         Amount = amount;
+        EquipmentId = equipment.Id;
     }
     
 
     public string TransferId { get; set; }
     public Equipment Equipment { get; set; }
+    public string EquipmentId { get; set; }
     public int Amount { get; set; }
 
     public override bool Equals(object? obj)

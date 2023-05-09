@@ -11,7 +11,9 @@ public class EquipmentRepository
 
     private List<Equipment>? _equipment;
 
-    private EquipmentRepository() { }
+    private EquipmentRepository()
+    {
+    }
 
     public static EquipmentRepository Instance => _instance ??= new EquipmentRepository();
 
