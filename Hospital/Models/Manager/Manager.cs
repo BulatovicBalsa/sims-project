@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Hospital.Models.Manager;
 
-namespace Hospital.Models.Manager
+public class Manager : Person
 {
-    public class Manager: Person
+    public Manager()
     {
-        public Manager()
-        {
-            Id = "1";
-        }
+        Id = "1";
     }
 }

@@ -30,8 +30,8 @@
     <Border CornerRadius="15">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#a1ffce" Offset="0"></GradientStop>
-                <GradientStop Color="#faffd1" Offset="1"></GradientStop>
+                <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0"></GradientStop>
+                <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1"></GradientStop>
             </LinearGradientBrush>
         </Border.Background>
 
@@ -132,7 +132,7 @@
                        Height="100"/>
 
                 <TextBlock Text="HOSPITAL"
-                           Foreground="Black"
+                           Foreground="{StaticResource SecondaryFont}"
                            FontSize="25"
                            FontWeight="Black"
                            FontFamily="Montserrat"
@@ -180,7 +180,7 @@
 
                 <TextBlock
                     Text="{Binding ErrorMessage}"
-                    Foreground="Red"
+                    Foreground="{StaticResource ErrorFont}"
                     FontSize="12"
                     FontWeight="Medium"
                     FontFamily="Montserrat"

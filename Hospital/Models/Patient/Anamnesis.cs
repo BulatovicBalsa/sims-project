@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Hospital.Models.Patient
+namespace Hospital.Models.Patient;
+
+public class Anamnesis
 {
-    public class Anamnesis
+    public Anamnesis()
     {
-        public List<string> Symptoms { get; }
-        public string Report { get; set; }
+        Symptoms = new List<string>();
+        Report = "";
+    }
 
-        public Anamnesis()
-        {
-            Symptoms = new List<string>();
-            Report = "";
-        }
+    public List<string> Symptoms { get; }
+    public string Report { get; set; }
 
-        public void AddSymptom(string symptom)
-        {
-            Symptoms.Add(symptom);
-        }
+    public void AddSymptom(string symptom)
+    {
+        Symptoms.Add(symptom);
     }
 }

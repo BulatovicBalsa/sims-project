@@ -1,73 +1,102 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
-using Hospital.Views;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
+using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;
 
-namespace Hospital
+namespace Hospital;
+
+public partial class App : Application
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    private const string _unsuccessfulLoginMessage = "Login was not successful.";
+
+    private void ProcessEventsThatOccurredBeforeAppStart()
     {
-        protected void ApplicationStart(object sender, EventArgs e)
+        EquipmentOrderService.AttemptPickUpOfAllOrders();
+    }
+
+    protected void ApplicationStart(object sender, EventArgs e)
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
+
+        ProcessEventsThatOccurredBeforeAppStart();
+
+        var loginView = new LoginView();
+        loginView.Show();
+        loginView.IsVisibleChanged += (s, ev) =>
         {
-            var loginView = new LoginView();
-            loginView.Show();
-            loginView.IsVisibleChanged += (s, ev) =>
+            if (loginView.IsVisible || !loginView.IsLoaded) return;
+
+            var identityName = Thread.CurrentPrincipal.Identity.Name;
+            var id = identityName.Split("|")[0];
+            var role = identityName.Split("|")[1];
+
+            if (role == "PATIENT")
             {
-                if (loginView.IsVisible || !loginView.IsLoaded) return;
-
-                var identityName = Thread.CurrentPrincipal.Identity.Name;
-                var id = identityName.Split("|")[0];
-                var role = identityName.Split("|")[1];
-
-                if (role == "PATIENT")
+                var patient = new PatientRepository().GetById(id);
+                if (patient == null)
                 {
-                    var patient = new PatientRepository().GetById(id);
-                    if (patient == null)
-                    {
-                        MessageBox.Show("Login was not successful.");
-                        return;
-                    }
-                    var patientView = new PatientView(patient);
-                    patientView.Show();
+                    MessageBox.Show(_unsuccessfulLoginMessage);
+                    return;
                 }
 
-                else if (role == "NURSE")
+                if (patient.IsBlocked)
                 {
-                    var nurseView = new NurseView();
-                    nurseView.Show();
+                    MessageBox.Show("Your profile is blocked.");
+                    return;
                 }
 
-                else if (role == "MANAGER")
-                {
-                    var managerView = new ManagerView();
-                    managerView.Show();
-                    
-                    //throw new NotImplementedException();
-                }
+                var patientView = new PatientView(patient);
+                patientView.Show();
 
-                else if (role == "DOCTOR")
-                {
-                    var doctor = new DoctorRepository().GetById(id);
-                    DoctorView doctorView = new DoctorView(doctor);
-                    doctorView.Show();
-                }
+                ShowNotifications(id);
+            }
 
-                loginView.Close();
-            };
-        }
+            else if (role == "NURSE")
+            {
+                var nurseView = new NurseMainView();
+                nurseView.Show();
+            }
+
+            else if (role == "MANAGER")
+            {
+                var managerView = new ManagerView();
+                managerView.Show();
+            }
+
+            else if (role == "DOCTOR")
+            {
+                var doctor = DoctorRepository.Instance.GetById(id);
+                if (doctor == null)
+                {
+                    MessageBox.Show(_unsuccessfulLoginMessage);
+                    return;
+                }
+                var doctorView = new DoctorView(doctor);
+                doctorView.Show();
+
+                ShowNotifications(id);
+            }
+
+            loginView.Close();
+        };
+    }
+
+    private void ShowNotifications(string id)
+    {
+        var notificationService = new NotificationService();
+        var notificationsToShow = notificationService.GetAllUnsent(id);
+
+        notificationsToShow.ForEach(notification =>
+        {
+            MessageBox.Show(notification.Message, "Notification");
+            notificationService.MarkSent(notification);
+        });
     }
 }

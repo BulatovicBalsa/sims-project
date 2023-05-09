@@ -1,13 +1,19 @@
 ﻿using System.Collections.Generic;
-using Hospital.Models.Manager;
+using System.Linq;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
-using Hospital.Models.Doctor;
+using Models.Doctor;
+
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
+    private static DoctorRepository? _instance;
+
+    public static DoctorRepository Instance => _instance ??=new DoctorRepository();
+
+    private DoctorRepository() { }
 
     public List<Doctor> GetAll()
     {
@@ -55,5 +61,11 @@ public class DoctorRepository
         allDoctor.RemoveAt(indexToDelete);
 
         Serializer<Doctor>.ToCSV(allDoctor, FilePath);
+    }
+
+    public static void DeleteAll()
+    {
+        var emptyDoctorList = new List<Doctor>();
+        Serializer<Doctor>.ToCSV(emptyDoctorList, FilePath);
     }
 }

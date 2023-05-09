@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers.Patient;
 
 namespace HospitalTests.Repositories.Patient
 {
@@ -19,6 +21,12 @@ namespace HospitalTests.Repositories.Patient
         [TestInitialize]
         public void TestInitialize()
         {
+            var examinationFilePath = "../../../Data/examination.csv";
+            if (File.Exists(examinationFilePath))
+            {
+                File.Delete(examinationFilePath);
+            }
+
             var testPatients = new List<Patient>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234", new MedicalRecord(175, 70, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
@@ -74,8 +82,11 @@ namespace HospitalTests.Repositories.Patient
         public void TestUpdate()
         {
             var patientRepository = new PatientRepository();
+            patientRepository.PatientAdded += _ => { };
+            patientRepository.PatientUpdated += _ => { };
+
             var loadedPatients = patientRepository.GetAll();
-            
+
             var testPatient = loadedPatients[1];
             testPatient.FirstName = "TestFirstName";
             testPatient.LastName = "TestLastName";
@@ -87,6 +98,11 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual("TestLastName", patientRepository.GetById(testPatient.Id)?.LastName);
             Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
             Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
+        }
+
+        private void PatientRepository_PatientUpdated(Patient obj)
+        {
+            throw new NotImplementedException();
         }
 
         [TestMethod]
@@ -109,12 +125,14 @@ namespace HospitalTests.Repositories.Patient
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
             var patientRepository = new PatientRepository();
-            
+            patientRepository.PatientAdded += _ => { };
+            patientRepository.PatientUpdated += _ => { };
+
             patientRepository.Add(newPatient);
             var loadedPatients = patientRepository.GetAll();
 
             var testPatient = loadedPatients[4];
-            
+
             Assert.AreEqual(5, patientRepository.GetAll().Count);
             Assert.AreEqual(testPatient, patientRepository.GetById(testPatient.Id));
         }

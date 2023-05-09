@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -9,22 +8,35 @@ public class EquipmentPlacementRepository
 {
     private const string FilePath = "../../../Data/equipmentItems.csv";
 
+    private static EquipmentPlacementRepository? _instance;
+
+    private List<EquipmentPlacement>? _equipmentPlacements;
+
+    private EquipmentPlacementRepository() { }
+
+    public static EquipmentPlacementRepository Instance => _instance ??= new EquipmentPlacementRepository();
+
     private static void JoinWithEquipment(List<EquipmentPlacement> equipmentItems)
-    { 
-        var allEquipment = new EquipmentRepository().GetAll();
+    {
+        var allEquipment = EquipmentRepository.Instance.GetAll();
 
         foreach (var equipmentPlacement in equipmentItems)
-        {
-            equipmentPlacement.Equipment = allEquipment.Find(equipment => equipment.Id == equipmentPlacement.EquipmentId);
-        }
-
+            equipmentPlacement.Equipment =
+                allEquipment.Find(equipment => equipment.Id == equipmentPlacement.EquipmentId);
     }
 
     public List<EquipmentPlacement> GetAll()
     {
-        var equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
-        JoinWithEquipment(equipmentPlacements);
-        return equipmentPlacements;
+        if (_equipmentPlacements != null) return _equipmentPlacements;
+        _equipmentPlacements = Serializer<EquipmentPlacement>.FromCSV(FilePath);
+        JoinWithEquipment(_equipmentPlacements);
+
+        return _equipmentPlacements;
+    }
+
+    public EquipmentPlacement? GetByKey(string roomId, string equipmentId)
+    {
+        return GetAll().Find(e => e.RoomId == roomId && e.EquipmentId == equipmentId);
     }
 
     public void Add(EquipmentPlacement equipmentPlacement)
@@ -40,8 +52,7 @@ public class EquipmentPlacementRepository
     {
         var equipmentPlacements = GetAll();
 
-        var indexToUpdate = equipmentPlacements.FindIndex(e =>
-            e.EquipmentId == equipmentPlacement.EquipmentId && e.RoomId == equipmentPlacement.RoomId);
+        var indexToUpdate = equipmentPlacements.FindIndex(e => e.Equals(equipmentPlacement));
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
         equipmentPlacements[indexToUpdate] = equipmentPlacement;
@@ -53,12 +64,19 @@ public class EquipmentPlacementRepository
     {
         var equipmentPlacements = GetAll();
 
-        var indexToDelete = equipmentPlacements.FindIndex(e =>
-            e.EquipmentId == equipmentPlacement.EquipmentId && e.RoomId == equipmentPlacement.RoomId);
+        var indexToDelete = equipmentPlacements.FindIndex(e => e.Equals(equipmentPlacement));
         if (indexToDelete == -1) throw new KeyNotFoundException();
 
         equipmentPlacements.RemoveAt(indexToDelete);
 
         Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, FilePath);
+    }
+
+    public void DeleteAll()
+    {
+        if (_equipmentPlacements == null) return;
+        _equipmentPlacements.Clear();
+        Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
+        _equipmentPlacements = null;
     }
 }
