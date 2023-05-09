@@ -1,4 +1,6 @@
-﻿namespace Hospital.Models.Manager;
+﻿using System.Reflection.Metadata;
+
+namespace Hospital.Models.Manager;
 
 public class EquipmentPlacement
 {
@@ -14,6 +16,7 @@ public class EquipmentPlacement
         EquipmentId = equipmentId;
         RoomId = roomId;
         Amount = amount;
+        Reserved = 0;
     }
 
     public EquipmentPlacement(Equipment equipment, string roomId, int amount)
@@ -22,6 +25,7 @@ public class EquipmentPlacement
         RoomId = roomId;
         Amount = amount;
         Equipment = equipment;
+        Reserved = 0;
     }
 
     public string EquipmentId { get; set; }
@@ -31,12 +35,24 @@ public class EquipmentPlacement
 
     public Equipment? Equipment { get; set; }
 
+    public int Reserved { get; set; }
+
     public override bool Equals(object? obj)
     {
         if (obj == null || obj.GetType() != typeof(EquipmentPlacement)) return false;
 
         var otherPlacement = (EquipmentPlacement)obj;
         return EquipmentId == otherPlacement.EquipmentId && RoomId == otherPlacement.RoomId;
+    }
+
+    public void Reserve(int amount)
+    {
+        Reserved += amount;
+    }
+
+    public bool CanReserve(int amount)
+    {
+        return Amount >= Reserved + amount;
     }
 
     public override int GetHashCode()

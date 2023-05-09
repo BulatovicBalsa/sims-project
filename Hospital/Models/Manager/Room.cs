@@ -89,4 +89,47 @@ public class Room
         if (obj is not Room objAsRoom) return false;
         return Id == objAsRoom.Id;
     }
+
+
+    private EquipmentPlacement? GetPlacement(Equipment equipment)
+    {
+        return Equipment.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
+    }
+
+    private int GetReservedAmount(Equipment equipment)
+    {
+        var placement = GetPlacement(equipment);
+        return placement?.Reserved ?? 0;
+    }
+
+    public bool CanReserve(Equipment equipment, int amount)
+    {
+        return GetAmount(equipment) >= GetReservedAmount(equipment) + amount;
+    }
+
+    public bool HasEnoughEquipment(Transfer transfer)
+    {
+        return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
+    }
+
+    public bool ReserveEquipment(Transfer transfer)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ReleaseReserved(Equipment equipment, int amount)
+    {
+        var placement = GetPlacement(equipment);
+        if (placement != null) placement.Reserved -= amount;
+    }
+
+    public bool Send(Transfer transfer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Receive(Transfer transfer)
+    {
+        throw new NotImplementedException();
+    }
 }
