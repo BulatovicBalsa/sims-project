@@ -8,9 +8,9 @@ public class TransferTests
     [TestMethod]
     public void TestDelivery()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 
@@ -26,9 +26,9 @@ public class TransferTests
     [TestMethod]
     public void TestDoubleDelivery()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 
@@ -44,9 +44,9 @@ public class TransferTests
     [TestMethod]
     public void TestTransferNotEnoughEquipmentInOrigin()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 5);
 
@@ -62,9 +62,9 @@ public class TransferTests
     [TestMethod]
     public void TestRedeliverFailedTransfer()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 4);
 
@@ -84,9 +84,9 @@ public class TransferTests
     [TestMethod]
     public void TestDeliverTooEarly()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 
@@ -101,9 +101,9 @@ public class TransferTests
     [TestMethod]
     public void TestTransferIsPossible()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 
@@ -116,9 +116,9 @@ public class TransferTests
     [TestMethod]
     public void TestTransferIsPossibleOriginDoesNotHaveEnoughEquipment()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 1);
 
@@ -131,9 +131,9 @@ public class TransferTests
     [TestMethod]
     public void TestTransferNotPossibleEquipmentReserved()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 
@@ -149,9 +149,9 @@ public class TransferTests
     [TestMethod]
     public void TestTransferIsPossibleEquipmentReserved()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination = new Room("Examination room", Room.RoomType.ExaminationRoom);
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination = new Room("Examination room", RoomType.ExaminationRoom);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
 
         origin.SetAmount(injection, 10);
 

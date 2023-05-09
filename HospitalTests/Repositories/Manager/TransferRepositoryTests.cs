@@ -20,14 +20,14 @@ public class TransferRepositoryTests
     [TestMethod]
     public void TestGetAllAndJoin()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination1 = new Room("Examination room 1", Room.RoomType.ExaminationRoom);
-        var destination2 = new Room("Examination room 2", Room.RoomType.ExaminationRoom);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination1 = new Room("Examination room 1", RoomType.ExaminationRoom);
+        var destination2 = new Room("Examination room 2", RoomType.ExaminationRoom);
         RoomRepository.Instance.Add(origin);
         RoomRepository.Instance.Add(destination1);
         RoomRepository.Instance.Add(destination2);
 
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
         EquipmentRepository.Instance.Add(injection);
 
         var transfer1 = new Transfer(origin, destination1, DateTime.Now);
@@ -56,14 +56,14 @@ public class TransferRepositoryTests
     [TestMethod()]
     public void TestUpdate()
     {
-        var origin = new Room("Warehouse", Room.RoomType.Warehouse);
-        var destination1 = new Room("Examination room 1", Room.RoomType.ExaminationRoom);
-        var destination2 = new Room("Examination room 2", Room.RoomType.ExaminationRoom);
+        var origin = new Room("Warehouse", RoomType.Warehouse);
+        var destination1 = new Room("Examination room 1", RoomType.ExaminationRoom);
+        var destination2 = new Room("Examination room 2", RoomType.ExaminationRoom);
         RoomRepository.Instance.Add(origin);
         RoomRepository.Instance.Add(destination1);
         RoomRepository.Instance.Add(destination2);
 
-        var injection = new Equipment("Injection", Equipment.EquipmentType.DynamicEquipment);
+        var injection = new Equipment("Injection", EquipmentType.DynamicEquipment);
         EquipmentRepository.Instance.Add(injection);
 
         var transfer1 = new Transfer(origin, destination1, DateTime.Now);

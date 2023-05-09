@@ -6,15 +6,6 @@ namespace Hospital.Models.Manager;
 
 public class Room
 {
-    public enum RoomType
-    {
-        Warehouse,
-        OperatingRoom,
-        ExaminationRoom,
-        WaitingRoom,
-        Ward
-    }
-
     public Room()
     {
         Id = Guid.NewGuid().ToString();
@@ -68,7 +59,7 @@ public class Room
     public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
     {
         return (from equipmentPlacement in Equipment
-            where equipmentPlacement.Equipment.Type == Models.Manager.Equipment.EquipmentType.DynamicEquipment
+            where equipmentPlacement.Equipment.Type == EquipmentType.DynamicEquipment
             select equipmentPlacement).ToList();
     }
 

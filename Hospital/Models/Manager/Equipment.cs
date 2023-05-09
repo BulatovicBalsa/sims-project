@@ -4,15 +4,6 @@ namespace Hospital.Models.Manager;
 
 public class Equipment
 {
-    public enum EquipmentType
-    {
-        Furniture,
-        HallwayEquipment,
-        ExaminationEquipment,
-        OperationEquipment,
-        DynamicEquipment
-    }
-
     public Equipment()
     {
         Id = Guid.NewGuid().ToString();
