@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -209,11 +207,11 @@ public class DoctorViewModel : ViewModelBase
 
         var patientOnExamination = _doctorService.GetPatient(examinationToPerform);
 
-        /*if (!examination.IsPerfomable())
+        if (!examinationToPerform.IsPerformable())
         {
             MessageBox.Show("Chosen examination can't be performed right now");
             return;
-        }*/
+        }
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();

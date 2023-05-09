@@ -23,7 +23,7 @@ namespace Hospital.Views
     {
         public ChangeDynamicRoomEquipment(Room room)
         {
-            DataContext = new ChangeDynamicRoomEquipmentViewModel(room);
+            DataContext = new RoomInventoryViewModel(room);
             InitializeComponent();
         }
     }

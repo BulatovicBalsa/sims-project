@@ -110,7 +110,7 @@ namespace Hospital.ViewModels
         public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = new DoctorRepository().GetAll();
+            RecommendedDoctors = DoctorRepository.Instance.GetAll();
             Examination = new Examination();
             SelectedDate = DateTime.Now;
             Examination.Patient = patient;
@@ -122,7 +122,7 @@ namespace Hospital.ViewModels
         public ExaminationDialogViewModel(Patient patient, Examination examination, PatientViewModel patientViewModel)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = new DoctorRepository().GetAll();
+            RecommendedDoctors = DoctorRepository.Instance.GetAll();
             Examination = examination.DeepCopy();
             SelectedDate = Examination.Start;
             Patient = patient;

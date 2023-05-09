@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" 
-        d:DataContext="{d:DesignInstance Type=viewmodels:ChangeDynamicRoomEquipmentViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewmodels:RoomInventoryViewModel}"
         x:Name="ChangeDynamicRoomEquipmentWindow"
         Title="Room Equipment" Height="450" Width="800">
     <Grid>

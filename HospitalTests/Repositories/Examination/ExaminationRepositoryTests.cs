@@ -45,7 +45,7 @@ namespace HospitalTests.Repositories.Examination
             _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
             _examinationRepository = new ExaminationRepository(_examinationChangesTracker);
-            _doctorRepository = new DoctorRepository();
+            _doctorRepository = DoctorRepository.Instance;
             _patientRepository = new PatientRepository();
 
             _patientRepository.PatientAdded += _ => { };
