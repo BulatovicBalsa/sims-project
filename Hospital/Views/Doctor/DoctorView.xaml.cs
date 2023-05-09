@@ -34,11 +34,11 @@ namespace Hospital.Views
         public DoctorView(Doctor doctor)
         {
             isUserInput = false;
-            _viewModel = new DoctorViewModel(doctor);
-
-            ConfigWindow();
 
             InitializeComponent();
+
+            _viewModel = new DoctorViewModel(doctor);
+            ConfigWindow();
         }
 
         private void ConfigWindow()
