@@ -62,18 +62,17 @@ namespace Hospital.Services
             return SearchWithoutPriority(patient, options);
 
         }
-        private List<Examination> SearchExaminations(Patient patient, ExaminationSearchOptions options, Doctor doctor, Func<DateTime, TimeRange> timeRangeFunc)
+        private List<Examination> SearchExaminations(Patient patient, ExaminationSearchOptions options, Doctor doctor, Func<DateTime, TimeRange> getSearchRangeForDay)
         {
             List<Examination> examinations = new List<Examination>();
             var startDate = DateTime.Now.Date.AddDays(1);
 
             for (var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
             {
-                TimeRange timeRange = timeRangeFunc(currentDate);
+                TimeRange timeRange = getSearchRangeForDay(currentDate);
                 examinations = SearchInTimeRange(doctor, patient, timeRange, examinations);
                 if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
             }
-
             return examinations;
         }
 
