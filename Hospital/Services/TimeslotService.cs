@@ -36,7 +36,7 @@ public class TimeslotService
         return validExaminationTimeslot;
     }
 
-    public bool AreDatesEqual(DateTime dateTime1, DateTime dateTime2)
+    public static bool AreDatesEqual(DateTime dateTime1, DateTime dateTime2)
     {
         return dateTime1.Date == dateTime2.Date &&
                dateTime1.Hour == dateTime2.Hour &&
