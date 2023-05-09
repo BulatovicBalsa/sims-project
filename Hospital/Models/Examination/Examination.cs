@@ -29,8 +29,8 @@ public class Examination
 {
     public const int Duration = 15;
     public string Id { get; set; }
-    public Doctor.Doctor? Doctor { get; set; }
-    public Patient.Patient Patient { get; set; }
+    public Doctor? Doctor { get; set; }
+    public Patient Patient { get; set; }
     public DateTime Start { get; set; }
     public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
     public bool IsOperation { get; set; }
@@ -39,7 +39,9 @@ public class Examination
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
   
-    public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
+    public Examination(){}
+
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
     {
          Doctor = doctor;
          Patient = patient;

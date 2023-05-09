@@ -24,7 +24,7 @@ public class DoctorService
     {
         _examinationRepository = new ExaminationRepository(new ExaminationChangesTracker());
         _patientRepository = new PatientRepository();
-        _doctorRepository = new DoctorRepository();
+        _doctorRepository = DoctorRepository.Instance;
         _roomRepository = RoomRepository.Instance;
     }
 

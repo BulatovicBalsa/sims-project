@@ -196,7 +196,7 @@ public class ExaminationRepository
     public List<Examination> GetAll(Doctor doctor)
     {
         var doctorExaminations = GetAll()
-            .Where(examination => examination.Doctor!.Equals(doctor))
+            .Where(examination => examination.Doctor?.Equals(doctor) ?? false)
             .ToList();
         return doctorExaminations;
     }
@@ -213,7 +213,7 @@ public class ExaminationRepository
     {
         var currentTime = DateTime.Now;
         var finishedExaminations = GetAll()
-            .Where(examination => examination.Doctor!.Equals(doctor) && examination.Start < currentTime).ToList();
+            .Where(examination => (examination.Doctor?.Equals(doctor) ?? false)&& examination.Start < currentTime).ToList();
         return finishedExaminations;
     }
 
