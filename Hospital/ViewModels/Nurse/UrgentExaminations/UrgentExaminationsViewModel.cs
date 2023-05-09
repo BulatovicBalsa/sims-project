@@ -85,8 +85,8 @@ public class UrgentExaminationsViewModel : ViewModelBase
     {
         var qualifiedDoctors = _doctorService.GetQualifiedDoctors(SelectedSpecialization);
         var earliestFreeTimeslotDoctors = _timeslotService.GetEarliestFreeTimeslotDoctors(qualifiedDoctors);
-        var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
 
+        var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
         if (_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key))
         {
             AddUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
