@@ -12,10 +12,12 @@ namespace Hospital.Services;
 public class ExaminationService
 {
     private readonly ExaminationRepository _examinationRepository;
+    private readonly TimeslotService _timeslotService;
 
     public ExaminationService()
     {
         _examinationRepository = new ExaminationRepository();
+        _timeslotService = new TimeslotService();
     }
 
     public Examination? GetAdmissibleExamination(Patient patient)
@@ -50,5 +52,12 @@ public class ExaminationService
             postponableExaminations = postponableExaminations.Take(5).ToList();
 
         return postponableExaminations;
+    }
+
+    public bool IsPatientBusy(Patient patient, DateTime timeslot)
+    {
+        var patientExaminations = _examinationRepository.GetAll(patient);
+
+        return patientExaminations.Any(examination => _timeslotService.AreDatesEqual(examination.Start, timeslot));
     }
 }
