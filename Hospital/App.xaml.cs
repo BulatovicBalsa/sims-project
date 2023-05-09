@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
 using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
@@ -13,6 +14,8 @@ namespace Hospital;
 
 public partial class App : Application
 {
+    private const string _unsuccessfulLoginMessage = "Login was not successful.";
+
     private void ProcessEventsThatOccurredBeforeAppStart()
     {
         EquipmentOrderService.AttemptPickUpOfAllOrders();
@@ -40,7 +43,7 @@ public partial class App : Application
                 var patient = new PatientRepository().GetById(id);
                 if (patient == null)
                 {
-                    MessageBox.Show("Login was not successful.");
+                    MessageBox.Show(_unsuccessfulLoginMessage);
                     return;
                 }
 
@@ -52,6 +55,8 @@ public partial class App : Application
 
                 var patientView = new PatientView(patient);
                 patientView.Show();
+
+                ShowNotifications(id);
             }
 
             else if (role == "NURSE")
@@ -68,12 +73,31 @@ public partial class App : Application
 
             else if (role == "DOCTOR")
             {
-                var doctor = new DoctorRepository().GetById(id);
+                var doctor = DoctorRepository.Instance.GetById(id);
+                if (doctor == null)
+                {
+                    MessageBox.Show(_unsuccessfulLoginMessage);
+                    return;
+                }
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
+
+                ShowNotifications(id);
             }
 
             loginView.Close();
         };
+    }
+
+    private void ShowNotifications(string id)
+    {
+        var notificationService = new NotificationService();
+        var notificationsToShow = notificationService.GetAllUnsent(id);
+
+        notificationsToShow.ForEach(notification =>
+        {
+            MessageBox.Show(notification.Message, "Notification");
+            notificationService.MarkSent(notification);
+        });
     }
 }

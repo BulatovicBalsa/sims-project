@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hospital.Exceptions;
+using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
@@ -17,14 +20,71 @@ public class ExaminationService
 
     public Examination? GetAdmissibleExamination(Patient patient)
     {
-        var validExaminations = _examinationRepository.GetAll(patient)
-            .Where(examination => examination.Admissioned != true).ToList();
-        var admissibleExaminations = validExaminations.Where(examination =>
-            examination.Start < DateTime.Now.AddMinutes(15) && examination.Start > DateTime.Now).ToList();
+        var admissibleExaminations = GetAdmissibleExaminations(patient);
 
         if (admissibleExaminations.Count == 0) return null;
-        if (admissibleExaminations.Count > 1) throw new Exception();
+        if (admissibleExaminations.Count > 1) throw new MultipleExaminationsOneTimeslotException();
 
-        return admissibleExaminations[0];
+        return admissibleExaminations.First();
+    }
+
+    private List<Examination> GetAdmissibleExaminations(Patient patient)
+    {
+        var patientExaminations = _examinationRepository.GetAll(patient);
+        var unadmittedExaminations = patientExaminations.Where(examination => examination.Admissioned != true).ToList();
+        var admissibleExaminations = unadmittedExaminations.Where(examination =>
+            examination.Start < DateTime.Now.AddMinutes(15) && examination.Start > DateTime.Now).ToList();
+
+        return admissibleExaminations;
+    }
+
+    public List<Examination> GetFivePostponableExaminations(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
+    {
+        var postponableExaminations = GetPostponableExaminations(earliestFreeTimeslotDoctors);
+
+        var fivePostponableExaminations = postponableExaminations.Count > 5
+            ? postponableExaminations.Take(5).ToList()
+            : postponableExaminations;
+
+        return fivePostponableExaminations;
+    }
+
+    private List<Examination> GetPostponableExaminations(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
+    {
+        var postponableExaminations = new List<Examination>();
+        foreach (var (_, doctor) in earliestFreeTimeslotDoctors)
+        {
+            var nonUrgentUpcomingExaminations = GetNonUrgentUpcomingExaminations(doctor);
+
+            postponableExaminations.AddRange(nonUrgentUpcomingExaminations);
+        }
+
+        return postponableExaminations;
+    }
+
+    private List<Examination> GetNonUrgentUpcomingExaminations(Doctor doctor)
+    {
+        var doctorExaminations = _examinationRepository.GetAll(doctor);
+        var nonUrgentUpcomingExaminations = doctorExaminations
+            .Where(examination => examination.Start > DateTime.Now && !examination.Urgent)
+            .OrderBy(examination => examination.Start).ToList();
+
+        return nonUrgentUpcomingExaminations;
+    }
+
+    public bool IsPatientBusy(Patient patient, DateTime timeslot)
+    {
+        var patientExaminations = _examinationRepository.GetAll(patient);
+
+        return patientExaminations.Any(examination => TimeslotService.AreDatesEqual(examination.Start, timeslot));
+    }
+
+    public List<Examination> GetUpcomingExaminations(Doctor doctor)
+    {
+        var doctorExaminations = _examinationRepository.GetAll(doctor);
+        var upcomingDoctorExaminations =
+            doctorExaminations.Where(examination => examination.Start > DateTime.Now).ToList();
+
+        return upcomingDoctorExaminations;
     }
 }

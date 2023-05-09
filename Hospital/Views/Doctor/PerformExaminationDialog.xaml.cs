@@ -33,7 +33,7 @@ namespace Hospital.Views
             SizeToContent = SizeToContent.WidthAndHeight;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Title = $"{patientOnExamination.FirstName} {patientOnExamination.LastName}'s Examination";
-            DataContext = new PerformExaminationDialogViewModel(examinationToPerform, patientOnExamination);
+            DataContext = new PerformExaminationViewModel(examinationToPerform, patientOnExamination);
         }
 
         private void loadMedicalRecordFrame(Patient patientOnExamination)

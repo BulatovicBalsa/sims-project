@@ -21,8 +21,6 @@ namespace HospitalTests.Repositories.Examination
     [TestClass]
     public class ExaminationRepositoryTests
     {
-        private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
-        private ExaminationChangesTracker _examinationChangesTracker;
         private ExaminationRepository _examinationRepository;
         private DoctorRepository _doctorRepository;
         private Examination _examination;
@@ -42,10 +40,8 @@ namespace HospitalTests.Repositories.Examination
         }
         private void CreateTestExaminationRepository()
         {
-            _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
-            _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
-            _examinationRepository = new ExaminationRepository(_examinationChangesTracker);
-            _doctorRepository = new DoctorRepository();
+            _examinationRepository = new ExaminationRepository();
+            _doctorRepository = DoctorRepository.Instance;
             _patientRepository = new PatientRepository();
 
             _patientRepository.PatientAdded += _ => { };
