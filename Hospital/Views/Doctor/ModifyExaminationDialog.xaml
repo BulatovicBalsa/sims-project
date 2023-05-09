@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ModifyExaminationDialogViewModel}" 
         mc:Ignorable="d"
         Title="New Examination" Height="Auto" Width="Auto">
     <Grid>
@@ -32,8 +33,11 @@
         
         <Label Grid.Row="3" Grid.Column="0" Content="Is Operation:" />
         <CheckBox Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
-
-        <Button x:Name="ConfirmButton" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
+        
+        <Label Grid.Row="4" Grid.Column="0" Content="Choose Room:" />
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RoomComboBox" ItemsSource="{Binding Rooms}" SelectedItem="{Binding SelectedRoom, Mode=TwoWay}" />
+        
+        <Button x:Name="ConfirmButton" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
 
     </Grid>
 </Window>

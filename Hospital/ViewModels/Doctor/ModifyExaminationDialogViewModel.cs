@@ -3,186 +3,227 @@ using Hospital.Coordinators;
 using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
+using Hospital.Models.Manager;
 using Hospital.Models.Patient;
-using Hospital.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels;
+
+public class ModifyExaminationDialogViewModel : ViewModelBase
 {
-    public class ModifyExaminationDialogViewModel : ViewModelDialogBase
+    private readonly DoctorService _doctorService = new();
+
+    private string _buttonContent;
+    private readonly Doctor _doctor;
+    private readonly ObservableCollection<Examination> _examinationCollection;
+    private readonly Examination? _examinationToChange;
+
+    private bool _isOperation;
+    private readonly bool _isUpdate;
+
+    private ObservableCollection<Patient> _patients;
+
+    private ObservableCollection<TimeOnly> _possibleTimes;
+
+    private DateTime? _selectedDate;
+
+    private Patient? _selectedPatient;
+
+    private Room? _selectedRoom;
+
+    private TimeOnly? _selectedTime;
+
+    public ModifyExaminationDialogViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null)
     {
-        private Doctor _doctor;
-        private bool _isUpdate = false;
-        private ObservableCollection<Examination> _examinationCollection;
-        private Examination? _examinationToChange = null;
-        private readonly DoctorService _doctorService = new DoctorService();
+        _isUpdate = examinationToChange is not null;
+        _doctor = doctor;
+        _examinationCollection = examinationCollection;
+        _examinationToChange = examinationToChange;
 
-        private bool _isOperation;
+        Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
+        PossibleTimes = new ObservableCollection<TimeOnly>(GetPossibleTimes());
+        Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
+        FillForm();
+    }
 
-        public bool IsOperation
+    public bool IsOperation
+    {
+        get => _isOperation;
+        set
         {
-            get { return _isOperation; }
-            set { _isOperation = value; OnPropertyChanged(nameof(IsOperation)); }
+            _isOperation = value;
+            OnPropertyChanged(nameof(IsOperation));
         }
+    }
 
-        private DateTime? _selectedDate;
-
-        public DateTime? SelectedDate
+    public DateTime? SelectedDate
+    {
+        get => _selectedDate;
+        set
         {
-            get { return _selectedDate; }
-            set { _selectedDate = value; OnPropertyChanged(nameof(SelectedDate)); }
+            _selectedDate = value;
+            OnPropertyChanged(nameof(SelectedDate));
         }
+    }
 
-        private Patient? _selectedPatient;
-
-        public Patient? SelectedPatient
+    public Patient? SelectedPatient
+    {
+        get => _selectedPatient;
+        set
         {
-            get { return _selectedPatient; }
-            set { _selectedPatient = value; OnPropertyChanged(nameof(SelectedPatient)); }
+            _selectedPatient = value;
+            OnPropertyChanged(nameof(SelectedPatient));
         }
+    }
 
-        private ObservableCollection<Patient> _patients;
-
-        public ObservableCollection<Patient> Patients
+    public ObservableCollection<Patient> Patients
+    {
+        get => _patients;
+        set
         {
-            get { return _patients; }
-            set { _patients = value; OnPropertyChanged(nameof(Patients)); }
+            _patients = value;
+            OnPropertyChanged(nameof(Patients));
         }
+    }
 
-        private string _buttonContent;
-
-        public string ButtonContent
+    public string ButtonContent
+    {
+        get => _buttonContent;
+        set
         {
-            get { return _buttonContent; }
-            set { _buttonContent = value; OnPropertyChanged(nameof(ButtonContent)); }
+            _buttonContent = value;
+            OnPropertyChanged(nameof(ButtonContent));
         }
+    }
 
-        private TimeOnly? _selectedTime;
-
-        public TimeOnly? SelectedTime
+    public TimeOnly? SelectedTime
+    {
+        get => _selectedTime;
+        set
         {
-            get { return _selectedTime; }
-            set { _selectedTime = value; OnPropertyChanged(nameof(SelectedTime)); }
+            _selectedTime = value;
+            OnPropertyChanged(nameof(SelectedTime));
         }
+    }
 
-        private ObservableCollection<TimeOnly> _possibleTimes;
-
-        public ObservableCollection<TimeOnly> PossibleTimes
+    public ObservableCollection<TimeOnly> PossibleTimes
+    {
+        get => _possibleTimes;
+        set
         {
-            get { return _possibleTimes; }
-            set { _possibleTimes = value; OnPropertyChanged(nameof(PossibleTimes)); }
+            _possibleTimes = value;
+            OnPropertyChanged(nameof(PossibleTimes));
         }
+    }
 
-        public ICommand ModifyExaminationCommand { get; set; }
+    public ObservableCollection<Room> Rooms { get; set; }
 
-        public ModifyExaminationDialogViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange = null)
+    public Room? SelectedRoom
+    {
+        get => _selectedRoom;
+        set
         {
-            _isUpdate = !(examinationToChange is null);
-            _doctor = doctor;
-            _examinationCollection = examinationCollection;
-            _examinationToChange = examinationToChange;
-
-            Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
-            PossibleTimes = new ObservableCollection<TimeOnly>(getPossibleTimes());
-            fillForm();
+            _selectedRoom = value;
+            OnPropertyChanged(nameof(SelectedRoom));
         }
+    }
 
 
-        private void fillForm()
+    public ICommand ModifyExaminationCommand { get; set; }
+
+
+    private void FillForm()
+    {
+        SelectedDate = _examinationToChange?.Start ?? DateTime.Now;
+        IsOperation = _examinationToChange is not null && _examinationToChange.IsOperation;
+        SelectedTime = _examinationToChange is null
+            ? null
+            : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
+        SelectedPatient = _examinationToChange?.Patient;
+        SelectedRoom = _examinationToChange?.Room;
+
+        ButtonContent = _examinationToChange is null ? "Create" : "Update";
+
+        ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
+    }
+
+    private void ModifyExamination(Window window)
+    {
+        var createdExamination = CreateExaminationFromForm();
+        if (createdExamination is null) return;
+
+        try
         {
-            SelectedDate = _examinationToChange is null ? DateTime.Now : _examinationToChange.Start;
-            IsOperation = _examinationToChange is null ? false : _examinationToChange.IsOperation;
-            SelectedPatient = _examinationToChange is null ? null : _examinationToChange.Patient;
-            SelectedTime = _examinationToChange is null ? null : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
-
-            ButtonContent = _examinationToChange is null ? "Create" : "Update";
-
-            ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
-        }
-
-        private void ModifyExamination(Window window)
-        {
-            var createdExamination = createExaminationFromForm();
-            if (createdExamination is null) return;
-
-            try
+            if (_isUpdate)
             {
-                if (_isUpdate)
-                {
-                    updateExamination(createdExamination);
-                }
-                else
-                {
-                    _doctorService.AddExamination(createdExamination);
-                    _examinationCollection.Add(createdExamination);
-                }
+                UpdateExamination(createdExamination);
             }
-            catch (Exception ex)
+            else
             {
-                if (ex is DoctorBusyException || ex is PatientBusyException)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
+                _doctorService.AddExamination(createdExamination);
+                _examinationCollection.Add(createdExamination);
             }
-
-            window.DialogResult = true;
         }
-
-        private Examination? createExaminationFromForm()
+        catch (Exception ex)
         {
-            if (SelectedPatient is null)
+            if (ex is DoctorBusyException or PatientBusyException)
             {
-                MessageBox.Show("You must select patient");
-                return null;
+                MessageBox.Show(ex.Message);
+                return;
             }
-
-            if (SelectedDate is null)
-            {
-                MessageBox.Show("You must select date");
-                return null;
-            }
-
-            if (SelectedTime is null)
-            {
-                MessageBox.Show("You must select time");
-                return null;
-            }
-
-            TimeOnly startTime = SelectedTime.GetValueOrDefault();
-            DateTime startDate = SelectedDate.GetValueOrDefault();
-            startDate = startDate.Add(startTime.ToTimeSpan());
-
-            return new Examination(_doctor, SelectedPatient, IsOperation, startDate);
         }
 
-        private void updateExamination(Examination examination)
+        window.DialogResult = true;
+    }
+
+    private Examination? CreateExaminationFromForm()
+    {
+        if (SelectedPatient == null
+            || SelectedDate == null
+            || SelectedTime == null
+            || SelectedRoom == null)
         {
-            examination.Id = _examinationToChange.Id;
-            _doctorService.UpdateExamination(examination);
-            _examinationCollection.Clear();
-            _doctorService.GetExaminationsForNextThreeDays(_doctor).ForEach(examination => _examinationCollection.Add(examination));
+            MessageBox.Show("You must select patient, date, time, and room");
+            return null;
         }
 
-        private List<TimeOnly> getPossibleTimes()
-        {
-            List<TimeOnly> possibleTimes = new List<TimeOnly>();
+        var createdExamination = _isUpdate ? _examinationToChange : new Examination();
 
-            for (int hour = 0; hour <= 23; hour++)
-            {
-                for (int minute = 0; minute < 60; minute += 15)
-                {
-                    possibleTimes.Add(new TimeOnly(hour, minute));
-                }
-            }
-            return possibleTimes;
-        }
+        var startDate = CreateDateFromForm();
+
+        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient, _doctor));
+        return createdExamination;
+    }
+
+    private DateTime CreateDateFromForm()
+    {
+        var startTime = SelectedTime.GetValueOrDefault();
+        var startDate = SelectedDate.GetValueOrDefault();
+        startDate = startDate.Add(startTime.ToTimeSpan());
+        return startDate;
+    }
+
+    private void UpdateExamination(Examination examination)
+    {
+        if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
+        else throw new InvalidOperationException("examination to change can't be null");
+        _doctorService.UpdateExamination(examination);
+        _examinationCollection.Clear();
+        _doctorService.GetExaminationsForNextThreeDays(_doctor)
+            .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));
+    }
+
+    private List<TimeOnly> GetPossibleTimes()
+    {
+        var possibleTimes = new List<TimeOnly>();
+
+        for (var hour = 0; hour <= 23; hour++)
+        for (var minute = 0; minute < 60; minute += 15)
+            possibleTimes.Add(new TimeOnly(hour, minute));
+        return possibleTimes;
     }
 }

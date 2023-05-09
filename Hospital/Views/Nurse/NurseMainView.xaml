@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Hospital.Views.Nurse"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse"
         xmlns:patients="clr-namespace:Hospital.ViewModels.Nurse.Patients"
+        xmlns:patientAdmission="clr-namespace:Hospital.ViewModels.Nurse.PatientAdmission"
+        xmlns:patientAdmissionViews="clr-namespace:Hospital.Views.Nurse.PatientAdmission"
         mc:Ignorable="d"
         Title="NurseMainView" Height="480" Width="1000"
         WindowStyle="None"
@@ -20,6 +22,9 @@
     <Window.Resources>
         <DataTemplate DataType="{x:Type patients:PatientGridViewModel}">
             <local:PatientGridView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type patientAdmission:PatientAdmissionViewModel}">
+            <patientAdmissionViews:PatientAdmissionView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -54,13 +59,14 @@
                                Opacity="1"/>
 
                     <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientsView}"
+                                 Command="{Binding ShowPatientsViewCommand}"
                                  IsChecked="True">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}">
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientAdmissionViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Patient admission" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>

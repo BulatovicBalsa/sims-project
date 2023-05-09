@@ -99,7 +99,6 @@ namespace Hospital.Services
                 {
                     examinations = SearchExaminations(patient, options, doctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
                     if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
-                    
                 }
             }
             return examinations;

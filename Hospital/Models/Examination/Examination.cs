@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Doctor;
+using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,36 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Examination
 {
+    public class UpdateExaminationDto
+    {
+        public DateTime Start { get; set; }
+        public bool IsOperation { get; set; }
+        public Room? Room { get; set; }
+        public Patient.Patient Patient { get; set; }
+        public Doctor.Doctor? Doctor { get; set; }
+
+        public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient.Patient patient, Doctor.Doctor? doctor)
+        {
+            Start = start;
+            IsOperation = isOperation;
+            Room = room;
+            Patient = patient;  
+            Doctor = doctor;
+        }
+    }
     public class Examination
     {
         public const int DURATION = 15;
         public string Id { get; set; }
-        public Doctor.Doctor Doctor { get; set; }
+        public Doctor.Doctor? Doctor { get; set; }
         public Patient.Patient Patient { get; set; }
         public DateTime Start { get; set; }
         public DateTime End => Start.AddMinutes(15); // NOTE: this isn't a property 
         public bool IsOperation { get; set; }
         public string Anamnesis { get; set; }
-
-        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start)
+        public Room? Room { get; set; }
+        public bool Admissioned { get; set; }
+        public Examination(Doctor.Doctor doctor, Patient.Patient patient, bool isOperation, DateTime start, Room room = null)
         {
             Doctor = doctor;
             Patient = patient;
@@ -27,6 +46,8 @@ namespace Hospital.Models.Examination
             IsOperation = isOperation;
             Id = Guid.NewGuid().ToString();
             Anamnesis = "";
+            Room = room;
+            Admissioned = false;
         }
 
         public Examination()
@@ -65,6 +86,15 @@ namespace Hospital.Models.Examination
             };
 
             return copy;
+        }
+
+        public void Update(UpdateExaminationDto examinationDto)
+        {
+            Start = examinationDto.Start;
+            Room = examinationDto.Room;
+            IsOperation = examinationDto.IsOperation;
+            Patient = examinationDto.Patient;
+            Doctor = examinationDto.Doctor;
         }
     }
 }

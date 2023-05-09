@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hospital.Exceptions;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -8,18 +9,27 @@ namespace Hospital.Repositories.Manager;
 public class RoomRepository
 {
     public const string FilePath = "../../../Data/rooms.csv";
+    private static RoomRepository? _instance;
+    private List<Room>? _rooms;
+
+    private RoomRepository() { }
+
+    public static RoomRepository Instance => _instance ??= new RoomRepository();
 
     public List<Room> GetAll()
     {
-        var rooms = Serializer<Room>.FromCSV(FilePath);
-        PlaceEquipment(rooms);
+        if (_rooms == null)
+        {
+            _rooms = Serializer<Room>.FromCSV(FilePath);
+            PlaceEquipment(_rooms);
+        }
 
-        return rooms;
+        return _rooms;
     }
 
     private static void PlaceEquipment(List<Room> rooms)
     {
-        var equipmentPlacements = new EquipmentPlacementRepository().GetAll();
+        var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
 
         var equipmentPlacementsByRoom =
             from equipmentPlacement in equipmentPlacements
@@ -47,6 +57,9 @@ public class RoomRepository
         rooms.Add(room);
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+
+        foreach (var equipmentPlacement in room.Equipment)
+            EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
     }
 
     public void Update(Room room)
@@ -59,6 +72,13 @@ public class RoomRepository
         rooms[indexToUpdate] = room;
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+
+        foreach (var equipmentPlacement in room.Equipment)
+            if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
+                    equipmentPlacement.EquipmentId) == null)
+                EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+            else
+                EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
     }
 
     public void Delete(Room room)
@@ -71,5 +91,19 @@ public class RoomRepository
         rooms.RemoveAt(indexToDelete);
 
         Serializer<Room>.ToCSV(rooms, FilePath);
+    }
+
+    public void DeleteAll()
+    {
+        if (_rooms == null) return;
+        _rooms.Clear();
+        Serializer<Room>.ToCSV(_rooms, FilePath);
+        _rooms = null;
+    }
+
+    public Room GetWarehouse()
+    {
+        var warehouse = GetAll().Find(room => room.Type == Room.RoomType.Warehouse);
+        return warehouse ?? throw new NoWarehouseException();
     }
 }

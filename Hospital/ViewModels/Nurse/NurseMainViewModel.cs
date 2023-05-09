@@ -1,8 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Windows.Input;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Patient;
+﻿using System.Windows.Input;
+using Hospital.ViewModels.Nurse.PatientAdmission;
 using Hospital.ViewModels.Nurse.Patients;
 
 namespace Hospital.ViewModels.Nurse;
@@ -10,23 +7,12 @@ namespace Hospital.ViewModels.Nurse;
 public class NurseMainViewModel : ViewModelBase
 {
     private ViewModelBase _currentChildView;
-    private string _errorMessage;
-
     public NurseMainViewModel()
     {
-        ShowPatientsView = new ViewModelCommand(ExecuteShowPatientsViewCommand);
+        ShowPatientsViewCommand = new ViewModelCommand(ExecuteShowPatientsViewCommand);
+        ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
 
         ExecuteShowPatientsViewCommand(null);
-    }
-
-    public string ErrorMessage
-    {
-        get => _errorMessage;
-        set
-        {
-            _errorMessage = value;
-            OnPropertyChanged(nameof(ErrorMessage));
-        }
     }
 
     public ViewModelBase CurrentChildView
@@ -38,10 +24,16 @@ public class NurseMainViewModel : ViewModelBase
             OnPropertyChanged(nameof(CurrentChildView));
         }
     }
-    public ICommand ShowPatientsView { get; }
+    public ICommand ShowPatientsViewCommand { get; }
+    public ICommand ShowPatientAdmissionViewCommand { get; }
 
     private void ExecuteShowPatientsViewCommand(object obj)
     {
         CurrentChildView = new PatientGridViewModel();
+    }
+
+    private void ExecuteShowPatientAdmissionViewCommand(object obj)
+    {
+        CurrentChildView = new PatientAdmissionViewModel();
     }
 }
