@@ -86,7 +86,7 @@ namespace Hospital.Models.Examination
             return copy;
         }
 
-        public void UpdateExamination(UpdateExaminationDto examinationDto)
+        public void Update(UpdateExaminationDto examinationDto)
         {
             Start = examinationDto.Start;
             Room = examinationDto.Room;
