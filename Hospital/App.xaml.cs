@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
 using Hospital.Views;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;
@@ -41,6 +42,8 @@ public partial class App : Application
                 }
                 var patientView = new PatientView(patient);
                 patientView.Show();
+
+                ShowNotifications(id);
             }
 
             else if (role == "NURSE")
@@ -60,9 +63,23 @@ public partial class App : Application
                 var doctor = new DoctorRepository().GetById(id);
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
+
+                ShowNotifications(id);
             }
 
             loginView.Close();
         };
+    }
+
+    private void ShowNotifications(string id)
+    {
+        var notificationService = new NotificationService();
+        var notificationsToShow = notificationService.GetAllUnsent(id);
+
+        notificationsToShow.ForEach(notification =>
+        {
+            MessageBox.Show(notification.Message, "Notification");
+            notificationService.MarkSent(notification);
+        });
     }
 }
