@@ -269,7 +269,7 @@ public class ExaminationRepository
     private void ValidateMaxAllowedExaminationsLast30Days(Patient patient)
     {
         if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) + 1 >
-            Patient.MAX_ALLOWED_APPOINTMENTS_LAST_30_DAYS)
+            Patient.MAX_ALLOWED_EXAMINATIONS_LAST_30_DAYS)
             throw new InvalidOperationException("Patient made too many examinations in last 30 days");
     }
 
