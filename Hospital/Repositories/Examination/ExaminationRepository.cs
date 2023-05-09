@@ -49,7 +49,7 @@ namespace Hospital.Repositories.Examinaton
                 if (string.IsNullOrEmpty(doctorId))
                     return null;
                 // Retrieve the Doctor object based on the ID
-                Doctor doctor = new DoctorRepository().GetById(doctorId) ?? throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                Doctor doctor = DoctorRepository.Instance.GetById(doctorId) ?? throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
                 return doctor;
             }
         }
