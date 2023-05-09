@@ -133,58 +133,27 @@ namespace Hospital.ViewModels
 
         private void Save()
         {
-            if (Examination.Start < DateTime.Now)
+            string errorMessage = ValidateExamination();
+            if (!string.IsNullOrEmpty(errorMessage))
             {
-                MessageBox.Show("Examination can't be in the past", "Error");
+                MessageBox.Show(errorMessage, "Error");
                 return;
             }
 
-            if (Examination.Doctor == null)
+            try
             {
-                MessageBox.Show("Please select doctor", "Error");
-                return;
-            }
-
-            if (!IsValidDateTime(SelectedDate, Examination.Start.TimeOfDay))
-            {
-                MessageBox.Show("Invalid time input", "Error");
-                return;
-            }
-
-            if (!IsUpdate)
-            {
-                try
-                {
-                    _patientViewModel.AddExamination(Examination);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error");
-                }
-            }
-            else
-            {
-                try
+                if (IsUpdate)
                 {
                     _patientViewModel.UpdateExamination(Examination);
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message, "Error");
-
-                    if (ex.Message.Contains("Patient made too many changes in last 30 days") || ex.Message.Contains("Patient made too many examinations in last 30 days"))
-                    {
-                        Patient.IsBlocked = true;
-                        new PatientRepository().Update(Patient);
-                        Application.Current.Shutdown();
-                    }
-
-                    _patientViewModel.RefreshExaminations(_patient);
-                    return;
+                    _patientViewModel.AddExamination(Examination);
                 }
-                _patientViewModel.RefreshExaminations(_patient);
-
-
+            }
+            catch(Exception ex)
+            {
+                HandleException(ex);
             }
             Close();
         }
@@ -222,6 +191,40 @@ namespace Hospital.ViewModels
 
             DateTime dateTime = date.Value.Date + time;
             return dateTime >= DateTime.Now;
+        }
+
+        private string ValidateExamination()
+        {
+            if (Examination.Start < DateTime.Now)
+            {
+                return "Examination can't be in the past";
+            }
+
+            if (Examination.Doctor == null)
+            {
+                return "Please select doctor";
+            }
+
+            if (!IsValidDateTime(SelectedDate, Examination.Start.TimeOfDay))
+            {
+                return "Invalid time input";
+            }
+
+            return string.Empty;
+        }
+
+        private void HandleException(Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error");
+
+            if (ex.Message.Contains("Patient made too many changes in last 30 days") || ex.Message.Contains("Patient made too many examinations in last 30 days"))
+            {
+                Patient.IsBlocked = true;
+                new PatientRepository().Update(Patient);
+                Application.Current.Shutdown();
+            }
+
+            _patientViewModel.RefreshExaminations(_patient);
         }
     }
 }
