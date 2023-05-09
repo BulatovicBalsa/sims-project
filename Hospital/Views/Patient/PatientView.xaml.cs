@@ -28,7 +28,7 @@ namespace Hospital.Views
             InitializeComponent();
 
             _examinationRepository =
-                new ExaminationRepository(new ExaminationChangesTracker(new ExaminationChangesTrackerRepository()));
+                new ExaminationRepository();
             _viewModel = new PatientViewModel(_examinationRepository);
             _viewModel.LoadExaminations(patient);
 
@@ -82,6 +82,7 @@ namespace Hospital.Views
                     {
                         _patient.IsBlocked = true;
                         new PatientRepository().Update(_patient);
+                        MessageBox.Show("This user is now blocked due to too many changes made in the last 30 days.", "User Blocked");
                         Application.Current.Shutdown();
                     }
                 }
@@ -98,6 +99,11 @@ namespace Hospital.Views
         {
             PatientMedicalRecordView patientMedicalRecordView = new PatientMedicalRecordView(_patient);
             patientMedicalRecordView.ShowDialog();
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
     }
 }

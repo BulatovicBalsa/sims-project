@@ -65,7 +65,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
     }
 
     public class RoomTypeConverter : DefaultTypeConverter
-    {
+   {
         public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
         {
             var roomId = inputText.Trim();

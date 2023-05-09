@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 
 namespace Hospital.Models.Examination;
 using Doctor;
+using Hospital.Repositories.Manager;
 using Patient;
 
 public class UpdateExaminationDto
@@ -17,7 +18,6 @@ public class UpdateExaminationDto
         Patient = patient;
         Doctor = doctor;
     }
-
     public DateTime Start { get; set; }
     public bool IsOperation { get; set; }
     public Room? Room { get; set; }
@@ -49,9 +49,16 @@ public class Examination
          IsOperation = isOperation;
          Id = Guid.NewGuid().ToString();
          Anamnesis = "";
-         Room = room;
+        if (room == null) room = RoomRepository.Instance.GetAll()[0];
+        else Room = room;
          Admissioned = false;
          Urgent = urgent;
+    }
+
+    public Examination()
+    {
+        Id = Guid.NewGuid().ToString();
+        Room = RoomRepository.Instance.GetAll()[0];
     }
 
     public bool DoesInterfereWith(Examination otherExamination)

@@ -60,5 +60,10 @@ namespace Hospital.Views
         {
             _viewModel.FindCommand.Execute(null);
         }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
+        }
     }
 }

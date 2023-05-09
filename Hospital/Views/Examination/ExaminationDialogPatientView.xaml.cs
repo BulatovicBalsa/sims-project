@@ -21,7 +21,7 @@ namespace Hospital.Views
             InitializeComponent();
 
             _viewModel = examination != null
-                ? new ExaminationDialogViewModel( patient,examination, patientViewModel)
+                ? new ExaminationDialogViewModel( patient,patientViewModel,examination)
                 : new ExaminationDialogViewModel( patient,patientViewModel);
 
             _viewModel.IsUpdate = isUpdate;
