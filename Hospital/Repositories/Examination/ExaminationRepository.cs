@@ -193,7 +193,7 @@ namespace Hospital.Repositories.Examinaton
         public List<Examination> GetAll(Doctor doctor)
         {
             List<Examination> doctorExaminations = GetAll()
-                .Where(examination => examination.Doctor.Equals(doctor))
+                .Where(examination => examination.Doctor?.Equals(doctor) ?? false)
                 .ToList();
             return doctorExaminations;
         }
@@ -209,7 +209,7 @@ namespace Hospital.Repositories.Examinaton
         public List<Examination> GetFinishedExaminations(Doctor doctor)
         {
             var currentTime = DateTime.Now;
-            List<Examination> finishedExaminations = GetAll().Where(examination => examination.Doctor.Equals(doctor) && examination.Start < currentTime).ToList();
+            List<Examination> finishedExaminations = GetAll().Where(examination => (examination.Doctor?.Equals(doctor) ?? false) && examination.Start < currentTime).ToList();
             return finishedExaminations;
         }
 
