@@ -1,5 +1,6 @@
 ﻿using Hospital.Models.Manager;
 using System;
+using System.Windows.Navigation;
 
 namespace Hospital.Models.Examination;
 using Doctor;
@@ -72,8 +73,8 @@ public class Examination
 
     public bool IsPerformable()
     {
-        var now = DateTime.Now;
-        return Start < now && End > now;
+        var difference = Start - DateTime.Now;
+        return Math.Abs(difference.TotalMinutes) <= 15;
     }
 
     public Examination DeepCopy()
