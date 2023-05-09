@@ -15,13 +15,15 @@ namespace Hospital.Models.Examination
         public bool IsOperation { get; set; }
         public Room? Room { get; set; }
         public Patient.Patient Patient { get; set; }
+        public Doctor.Doctor? Doctor { get; set; }
 
-        public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient.Patient patient)
+        public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient.Patient patient, Doctor.Doctor? doctor)
         {
             Start = start;
             IsOperation = isOperation;
             Room = room;
             Patient = patient;  
+            Doctor = doctor;
         }
     }
     public class Examination
