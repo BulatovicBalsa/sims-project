@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
+using Xceed.Wpf.Toolkit;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Hospital.ViewModels.Manager;
 
@@ -22,6 +23,7 @@ public class AddTransferViewModel : ViewModelBase
     private Equipment? _selectedEquipment;
     private Room? _selectedOrigin;
     private ICommand _sendTransferCommand;
+    private DateTime _date;
 
     public AddTransferViewModel()
     {
@@ -30,6 +32,7 @@ public class AddTransferViewModel : ViewModelBase
         Items = new BindingList<TransferItem>();
         AddItemCommand = new RelayCommand(AddItem);
         SendTransferCommand = new RelayCommand<IClosable>(SendTransfer);
+        Date = DateTime.Now.AddDays(1);
     }
 
     public BindingList<Equipment> Equipment
@@ -39,6 +42,7 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _equipment)) return;
             _equipment = value;
+            OnPropertyChanged(nameof(Equipment));
             OnPropertyChanged(nameof(Equipment));
         }
     }
@@ -51,6 +55,7 @@ public class AddTransferViewModel : ViewModelBase
             if (_selectedEquipment == value) return;
             _selectedEquipment = value;
             OnPropertyChanged(nameof(SelectedEquipment));
+            OnPropertyChanged(nameof(SelectedEquipment));
         }
     }
 
@@ -62,6 +67,18 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _items)) return;
             _items = value;
             OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(Items));
+        }
+    }
+
+    public DateTime Date
+    {
+        get => _date;
+        set
+        {
+            if (value.Equals(_date)) return;
+            _date = value;
+            OnPropertyChanged(nameof(Date));
         }
     }
 
@@ -72,6 +89,7 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _selectedOrigin)) return;
             _selectedOrigin = value;
+            OnPropertyChanged(nameof(SelectedOrigin));
             if (_selectedOrigin != null)
             {
                 Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment().Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
@@ -89,6 +107,7 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _selectedDestination)) return;
             _selectedDestination = value;
             OnPropertyChanged(nameof(SelectedDestination));
+            OnPropertyChanged(nameof(SelectedDestination));
         }
     }
 
@@ -99,6 +118,7 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _rooms)) return;
             _rooms = value;
+            OnPropertyChanged(nameof(Rooms));
             OnPropertyChanged(nameof(Rooms));
         }
     }
@@ -111,6 +131,7 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _addItemCommand)) return;
             _addItemCommand = value;
             OnPropertyChanged(nameof(AddItemCommand));
+            OnPropertyChanged(nameof(AddItemCommand));
         }
     }
 
@@ -121,6 +142,7 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _sendTransferCommand)) return;
             _sendTransferCommand = value;
+            OnPropertyChanged(nameof(SendTransferCommand));
             OnPropertyChanged(nameof(SendTransferCommand));
         }
     }
@@ -158,7 +180,7 @@ public class AddTransferViewModel : ViewModelBase
         }
 
         if (!TransferService.TrySendTransfer(SelectedOrigin, SelectedDestination, Items.ToList(),
-                DateTime.Now.AddDays(1)))
+                Date))
         {
             MessageBox.Show(
                 "Can not send more equipment than there are available for transfers. (Some equipment may have been reserved)");

@@ -8,8 +8,9 @@
         xmlns:manager="clr-namespace:Hospital.ViewModels.Manager"
         xmlns:viewModels="clr-namespace:Hospital.ViewModels.Manager"
         xmlns:valRule="clr-namespace:Hospital.ValidationRules"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddTransfer" Height="450" Width="800">
+        Title="AddTransfer" Height="450" Width="1200">
     <Window.DataContext>
         <viewModels:AddTransferViewModel />
     </Window.DataContext>
@@ -27,12 +28,14 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="SelectEquipmentComboBox" ItemsSource="{Binding Equipment, Mode=TwoWay}"
                       SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Text="Select equipment"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-            <Label  Height="50"  
-                    Width="180"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label  Height="50"
+                    Width="180"
                     HorizontalAlignment="Left"
                     DataContext="{Binding ElementName=SelectEquipmentComboBox,Path=SelectedItem}"  
                     Content="Equipment"
@@ -56,16 +59,19 @@
                     </Style>
                 </Label.Style>
             </Label>
+            <Button Grid.Row="0" Grid.Column="1" Content="Add" Command="{Binding AddItemCommand}" Width="45"
+                    HorizontalAlignment="Left" Margin="0 0 0 0"/>
+
             <ComboBox x:Name="SelectOriginComboBox" ItemsSource="{Binding Rooms, Mode=TwoWay}"
-                      SelectedItem="{Binding SelectedOrigin, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Text="Select origin" 
+                      SelectedItem="{Binding SelectedOrigin, Mode=TwoWay}" Grid.Row="0" Grid.Column="2" Text="Select origin" 
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
             <Label  Height="50"  
-                    Width="180"   
+                    Width="180"
                     HorizontalAlignment="Left"
                     DataContext="{Binding ElementName=SelectOriginComboBox,Path=SelectedItem}"  
                     Content="Origin room"
                     Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="2"
 
             >
                 <Label.Style>
@@ -87,17 +93,17 @@
                 </Label.Style>
             </Label>
 
-            <ComboBox Grid.Row="0" Grid.Column="2" x:Name="SelectDestinationComboBox" ItemsSource="{Binding Rooms, Mode=TwoWay}" 
+            <ComboBox Grid.Row="0" Grid.Column="3" x:Name="SelectDestinationComboBox" ItemsSource="{Binding Rooms, Mode=TwoWay}" 
                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                       SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
                       />
-            <Label  Height="50"  
-                    Width="180"   
+            <Label  Height="50"
+                    Width="180"
                     HorizontalAlignment="Left"
                     DataContext="{Binding ElementName=SelectDestinationComboBox,Path=SelectedItem}"  
                     Content="Destination room"
                     Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="3"
 
             >
                 <Label.Style>
@@ -118,11 +124,12 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Button Grid.Row="0" Grid.Column="3" Content="Add" Command="{Binding AddItemCommand}" Width="40"
-                    HorizontalAlignment="Left" Margin="10 0 0 0"/>
-            <Button Grid.Row="0" Grid.Column="3" Content="Submit" Command="{Binding SendTransferCommand}"
+
+            <xctk:DateTimePicker Grid.Row="0" Grid.Column="4" VerticalAlignment="Top" Value="{Binding Date, Mode=TwoWay}" />
+
+            <Button Grid.Row="0" Grid.Column="5" Content="Submit" Command="{Binding SendTransferCommand}"
                     CommandParameter="{Binding ElementName=SendTransferWindow}" Width="50" HorizontalAlignment="Right" />
-            <DataGrid ItemsSource="{Binding Items, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+            <DataGrid ItemsSource="{Binding Items, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
