@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels.Manager;
 
@@ -12,7 +13,7 @@ public class AddDynamicEquipmentTransferViewModel : AddTransferViewModelBase
 
     public AddDynamicEquipmentTransferViewModel()
     {
-        _destinationRooms = new BindingList<Room>(RoomRepository.Instance.GetAll().ToList());
+        _destinationRooms = new BindingList<Room>(RoomFilterService.GetRoomsLowOnDynamicEquipment());
     }
 
     public BindingList<Room> DestinationRooms
