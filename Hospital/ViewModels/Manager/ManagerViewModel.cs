@@ -11,6 +11,7 @@ public class ManagerViewModel : ViewModelBase
         Children = new ObservableCollection<object>();
         Children.Add(new EquipmentTabViewModel());
         Children.Add(new OrderTabViewModel());
+        Children.Add(new TransferTabViewModel());
 
         OrderTabViewModel = new OrderTabViewModel();
     }

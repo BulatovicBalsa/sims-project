@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Hospital\Hospital.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
