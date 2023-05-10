@@ -26,7 +26,7 @@ public class AddTransferViewModel : ViewModelBase
     public AddTransferViewModel()
     {
         Rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
-        Equipment = new BindingList<Equipment>(EquipmentRepository.Instance.GetAll().ToList());
+        Equipment = new BindingList<Equipment>();
         Items = new BindingList<TransferItem>();
         AddItemCommand = new RelayCommand(AddItem);
         SendTransferCommand = new RelayCommand<IClosable>(SendTransfer);
@@ -72,7 +72,12 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _selectedOrigin)) return;
             _selectedOrigin = value;
-            OnPropertyChanged(nameof(SelectedOrigin));
+            if (_selectedOrigin != null)
+            {
+                Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment().Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
+                Items = new BindingList<TransferItem>();
+            }
+           OnPropertyChanged(nameof(SelectedOrigin));
         }
     }
 

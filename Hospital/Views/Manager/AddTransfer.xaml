@@ -87,7 +87,10 @@
                 </Label.Style>
             </Label>
 
-            <ComboBox Grid.Row="0" Grid.Column="2" x:Name="SelectDestinationComboBox" ItemsSource="{Binding Rooms, Mode=TwoWay}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox Grid.Row="0" Grid.Column="2" x:Name="SelectDestinationComboBox" ItemsSource="{Binding Rooms, Mode=TwoWay}" 
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
+                      />
             <Label  Height="50"  
                     Width="180"   
                     HorizontalAlignment="Left"
