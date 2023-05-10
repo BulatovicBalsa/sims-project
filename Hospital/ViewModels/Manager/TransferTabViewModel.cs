@@ -19,8 +19,8 @@ public class TransferTabViewModel : ViewModelBase
     public TransferTabViewModel()
     {
         Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
-        OpenAddStaticEquipmentTransferCommand = new RelayCommand(OpenAddStaticEquipmentTransfer);
-        OpenAddDynamicEquipmentTransferCommand = new RelayCommand(OpenAddDynamicEquipmentTransfer);
+        OpenAddStaticEquipmentTransferCommand = new RelayCommand(() => OpenAddTransferDialog(new AddStaticEquipmentTransfer()));
+        OpenAddDynamicEquipmentTransferCommand = new RelayCommand(() => OpenAddTransferDialog(new AddDynamicEquipmentTransfer()));
     }
 
     public BindingList<Transfer> Transfers
@@ -67,19 +67,10 @@ public class TransferTabViewModel : ViewModelBase
         Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
     }
 
-    
-
-    public void OpenAddStaticEquipmentTransfer()
+    public void OpenAddTransferDialog(Window dialog)
     {
-        var transferForm = new AddStaticEquipmentTransfer();
-        transferForm.Closed += RefreshTransfersOnFormClose;
-        transferForm.Show();
+        dialog.Closed += RefreshTransfersOnFormClose;
+        dialog.Show();
     }
 
-    public void OpenAddDynamicEquipmentTransfer()
-    {
-        var transferForm = new AddDynamicEquipmentTransfer();
-        transferForm.Closed += RefreshTransfersOnFormClose;
-        transferForm.Show();
-    }
 }
