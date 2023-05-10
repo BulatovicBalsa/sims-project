@@ -130,17 +130,18 @@ public class EquipmentOrder : INotifyPropertyChanged
             item.Amount = amount;
     }
 
-    public void PickUp(Room destination)
+    public bool TryPickUp(Room destination)
     {
-        if (!Delivered) return;
+        if (!Delivered) return false;
 
-        if (PickedUp) return;
+        if (PickedUp) return false;
 
         foreach (var item in Items)
             if (item.Equipment != null)
                 destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
 
         PickedUp = true;
+        return true;
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

@@ -102,7 +102,7 @@ public class Transfer: INotifyPropertyChanged
     }
 
 
-    private bool IsReadyForDelivery()
+    public bool IsReadyForDelivery()
     {
         return !Delivered && DeliveryDateTime <= DateTime.Now && !Failed;
     }
