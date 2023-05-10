@@ -152,7 +152,7 @@ public class AddTransferViewModelBase : ViewModelBase
         Equipment.Remove(SelectedEquipment);
     }
 
-    public void SendTransfer(IClosable window)
+    public virtual void SendTransfer(IClosable window)
     {
         if (ValidateTransfer() && TrySendTransfer()) window.Close();
     }
