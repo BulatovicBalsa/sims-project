@@ -156,7 +156,7 @@ public class AddTransferViewModel : ViewModelBase
 
     public void SendTransfer(IClosable window)
     {
-        if (ValidateTransfer()) window.Close();
+        if (ValidateTransfer() && TrySendTransfer()) window.Close();
     }
 
     public bool ValidateTransfer()
@@ -179,6 +179,11 @@ public class AddTransferViewModel : ViewModelBase
             return false;
         }
 
+        return true;
+    }
+
+    private bool TrySendTransfer()
+    {
         if (!TransferService.TrySendTransfer(SelectedOrigin, SelectedDestination, Items.ToList(),
                 Date))
         {
