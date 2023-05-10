@@ -1,19 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
-using Xceed.Wpf.Toolkit;
-using MessageBox = System.Windows.MessageBox;
 
 namespace Hospital.ViewModels.Manager;
 
-public class AddTransferViewModel : ViewModelBase
+public class AddTransferViewModelBase : ViewModelBase
 {
     private ICommand _addItemCommand;
+    private DateTime _date;
     private BindingList<Equipment> _equipment;
     private BindingList<TransferItem> _items;
     private BindingList<Room> _rooms;
@@ -23,9 +23,8 @@ public class AddTransferViewModel : ViewModelBase
     private Equipment? _selectedEquipment;
     private Room? _selectedOrigin;
     private ICommand _sendTransferCommand;
-    private DateTime _date;
 
-    public AddTransferViewModel()
+    public AddTransferViewModelBase()
     {
         Rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
         Equipment = new BindingList<Equipment>();
@@ -43,7 +42,6 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _equipment)) return;
             _equipment = value;
             OnPropertyChanged(nameof(Equipment));
-            OnPropertyChanged(nameof(Equipment));
         }
     }
 
@@ -55,7 +53,6 @@ public class AddTransferViewModel : ViewModelBase
             if (_selectedEquipment == value) return;
             _selectedEquipment = value;
             OnPropertyChanged(nameof(SelectedEquipment));
-            OnPropertyChanged(nameof(SelectedEquipment));
         }
     }
 
@@ -66,7 +63,6 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _items)) return;
             _items = value;
-            OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(Items));
         }
     }
@@ -90,13 +86,18 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _selectedOrigin)) return;
             _selectedOrigin = value;
             OnPropertyChanged(nameof(SelectedOrigin));
-            if (_selectedOrigin != null)
-            {
-                Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment().Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
-                Items = new BindingList<TransferItem>();
-            }
-           OnPropertyChanged(nameof(SelectedOrigin));
+            UpdateEquipmentList();
+            Items = new BindingList<TransferItem>();
+
+            OnPropertyChanged(nameof(SelectedOrigin));
         }
+    }
+
+    protected virtual void UpdateEquipmentList()
+    {
+        if (_selectedOrigin == null) return;
+        Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment()
+            .Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
     }
 
     public Room? SelectedDestination
@@ -106,7 +107,6 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _selectedDestination)) return;
             _selectedDestination = value;
-            OnPropertyChanged(nameof(SelectedDestination));
             OnPropertyChanged(nameof(SelectedDestination));
         }
     }
@@ -131,7 +131,6 @@ public class AddTransferViewModel : ViewModelBase
             if (Equals(value, _addItemCommand)) return;
             _addItemCommand = value;
             OnPropertyChanged(nameof(AddItemCommand));
-            OnPropertyChanged(nameof(AddItemCommand));
         }
     }
 
@@ -142,7 +141,6 @@ public class AddTransferViewModel : ViewModelBase
         {
             if (Equals(value, _sendTransferCommand)) return;
             _sendTransferCommand = value;
-            OnPropertyChanged(nameof(SendTransferCommand));
             OnPropertyChanged(nameof(SendTransferCommand));
         }
     }

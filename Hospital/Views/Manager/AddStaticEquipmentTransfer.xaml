@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hospital.Views.Manager.AddTransfer"
+﻿<Window x:Class="Hospital.Views.Manager.AddStaticEquipmentTransfer"
         x:Name="SendTransferWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,9 +10,9 @@
         xmlns:valRule="clr-namespace:Hospital.ValidationRules"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddTransfer" Height="450" Width="1200">
+        Title="AddStaticEquipmentTransfer" Height="450" Width="1200">
     <Window.DataContext>
-        <viewModels:AddTransferViewModel />
+        <viewModels:AddStaticEquipmentTransferViewModel />
     </Window.DataContext>
 
 

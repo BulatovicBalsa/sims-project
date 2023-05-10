@@ -54,16 +54,23 @@ namespace Hospital.ViewModels.Manager
             }
         }
 
-        public ICommand OpenAddTransferFormCommand { get; set; }
+        public ICommand OpenAddStaticEquipmentTransferCommand { get; set; }
 
         private void RefreshTransfersOnFormClose(object? sender, EventArgs eventArgs)
         {
             Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
         }
 
-        public void OpenAddTransferForm()
+        public void OpenAddStaticEquipmentTransfer()
         {
-            var transferForm = new AddTransfer();
+            var transferForm = new AddStaticEquipmentTransfer();
+            transferForm.Closed += RefreshTransfersOnFormClose;
+            transferForm.Show();
+        }
+
+        public void OpenAddDynamicEquipmentTransfer()
+        {
+            var transferForm = new AddStaticEquipmentTransfer();
             transferForm.Closed += RefreshTransfersOnFormClose;
             transferForm.Show();
         }
@@ -71,7 +78,7 @@ namespace Hospital.ViewModels.Manager
         public TransferTabViewModel()
         {
             Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
-            OpenAddTransferFormCommand = new RelayCommand(OpenAddTransferForm);
+            OpenAddStaticEquipmentTransferCommand = new RelayCommand(OpenAddStaticEquipmentTransfer);
         }
     }
 }

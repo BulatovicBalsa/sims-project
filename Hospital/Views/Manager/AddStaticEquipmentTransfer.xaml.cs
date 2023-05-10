@@ -16,11 +16,11 @@ using Hospital.ViewModels;
 namespace Hospital.Views.Manager
 {
     /// <summary>
-    /// Interaction logic for AddTransfer.xaml
+    /// Interaction logic for AddStaticEquipmentTransfer.xaml
     /// </summary>
-    public partial class AddTransfer : Window, IClosable
+    public partial class AddStaticEquipmentTransfer : Window, IClosable
     {
-        public AddTransfer()
+        public AddStaticEquipmentTransfer()
         {
             InitializeComponent();
         }
