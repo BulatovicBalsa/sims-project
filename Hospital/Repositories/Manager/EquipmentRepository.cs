@@ -73,9 +73,9 @@ public class EquipmentRepository
 
     public void DeleteAll()
     {
-        if (_equipment == null) return;
-        _equipment.Clear();
-        Serializer<Equipment>.ToCSV(_equipment, FilePath);
+        var equipment = _equipment ?? GetAll();
+        equipment.Clear();
+        Serializer<Equipment>.ToCSV(equipment, FilePath);
         _equipment = null;
     }
 }

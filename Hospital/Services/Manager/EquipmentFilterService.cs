@@ -42,7 +42,7 @@ public class EquipmentFilterService
         return _equipmentRepository.GetAll().Where(equipment => equipment.Type == type).ToList();
     }
 
-    public List<Equipment> Select(List<EquipmentPlacement> equipmentPlacements, int maxAmountInclusive)
+    public List<Equipment> Select(List<InventoryItem> equipmentPlacements, int maxAmountInclusive)
     {
         var equipmentPlacementsByEquipment =
             from equipmentPlacement in equipmentPlacements
@@ -57,7 +57,7 @@ public class EquipmentFilterService
         return equipmentWithAppropriateAmounts;
     }
 
-    private static int TotalAmount(IGrouping<Equipment, EquipmentPlacement> equipmentPlacementGroup)
+    private static int TotalAmount(IGrouping<Equipment, InventoryItem> equipmentPlacementGroup)
     {
         return equipmentPlacementGroup.ToList().Sum(equipmentPlacement => equipmentPlacement.Amount);
     }

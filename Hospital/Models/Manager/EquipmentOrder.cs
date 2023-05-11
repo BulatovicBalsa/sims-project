@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
@@ -130,23 +131,22 @@ public class EquipmentOrder : INotifyPropertyChanged
             item.Amount = amount;
     }
 
-    public void PickUp(Room destination)
+    public bool TryPickUp(Room destination)
     {
-        if (!Delivered) return;
+        if (!Delivered) return false;
 
-        if (PickedUp) return;
+        if (PickedUp) return false;
 
-        foreach (var item in Items)
-            if (item.Equipment != null)
-                destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
+        foreach (var item in Items.Where(item => item.Equipment != null))
+            destination.SetAmount(item.Equipment, destination.GetAmount(item.Equipment) + item.Amount);
 
         PickedUp = true;
+        return true;
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)

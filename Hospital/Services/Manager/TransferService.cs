@@ -11,7 +11,7 @@ namespace Hospital.Services.Manager
 {
     public class TransferService
     {
-        private static readonly Timer Timer = new(1500);
+        private static readonly Timer Timer = new(1000);
 
         static TransferService()
         {
@@ -39,7 +39,7 @@ namespace Hospital.Services.Manager
                 return false;
             }
 
-            transfer.Origin.ReserveEquipment(transfer);
+            transfer.Origin.TryReserveEquipment(transfer);
             RoomRepository.Instance.Update(origin);
             TransferRepository.Instance.Add(transfer);
             return true;
@@ -58,15 +58,16 @@ namespace Hospital.Services.Manager
 
             foreach (var transfer in transfers.ToList())
             {
+                if (!transfer.IsReadyForDelivery()) continue;
                 transfer.TryDeliver();
-                try
-                {
-                    SaveChanges(transfer);
-                }
-                catch (System.IO.IOException e)
-                {
-                    System.Console.WriteLine(e.Message);
-                }
+                    try
+                    {
+                        SaveChanges(transfer);
+                    }
+                    catch (System.IO.IOException e)
+                    {
+                        System.Console.WriteLine(e.Message);
+                    }
             }
         }
     }

@@ -1,99 +1,88 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
 
-namespace Hospital.ViewModels.Manager
+namespace Hospital.ViewModels.Manager;
+
+public class AddOrderViewModel : ViewModelBase
 {
-    public class AddOrderViewModel : ViewModelBase
+    private BindingList<Equipment> _dynamicEquipmentRunningOut;
+
+    private BindingList<EquipmentOrderItem> _items;
+
+    private Equipment? _selectedEquipment;
+
+    public AddOrderViewModel()
     {
-        private BindingList<Equipment> _dynamicEquipmentRunningOut;
-        public AddOrderViewModel()
+        var filterService = new EquipmentFilterService();
+        DynamicEquipmentRunningOut = new BindingList<Equipment>(filterService.GetDynamicEquipmentLowInWarehouse());
+        Items = new BindingList<EquipmentOrderItem>();
+        AddItemCommand = new RelayCommand(AddItem);
+        SendOrderCommand = new RelayCommand<IClosable>(SendOrder);
+    }
+
+    public BindingList<Equipment> DynamicEquipmentRunningOut
+    {
+        get => _dynamicEquipmentRunningOut;
+        set
         {
-            var filterService = new EquipmentFilterService();
-            DynamicEquipmentRunningOut = new BindingList<Equipment>(filterService.GetDynamicEquipmentLowInWarehouse());
-            Items = new BindingList<EquipmentOrderItem>();
-            AddItemCommand = new RelayCommand(AddItem);
-            SendOrderCommand = new RelayCommand<IClosable>(SendOrder);
+            if (_dynamicEquipmentRunningOut == value) return;
+            _dynamicEquipmentRunningOut = value;
+            OnPropertyChanged(nameof(DynamicEquipmentRunningOut));
         }
+    }
 
-        public BindingList<Equipment> DynamicEquipmentRunningOut
+    public Equipment? SelectedEquipment
+    {
+        get => _selectedEquipment;
+        set
         {
-            get => _dynamicEquipmentRunningOut;
-            set
-            {
-                if (_dynamicEquipmentRunningOut == value) return;
-                _dynamicEquipmentRunningOut = value;
-                OnPropertyChanged(nameof(DynamicEquipmentRunningOut));
-            }
+            if (_selectedEquipment == value) return;
+            _selectedEquipment = value;
+            OnPropertyChanged(nameof(SelectedEquipment));
         }
+    }
 
-        private Equipment? _selectedEquipment;
-
-        public Equipment? SelectedEquipment
+    public BindingList<EquipmentOrderItem> Items
+    {
+        get => _items;
+        set
         {
-            get => _selectedEquipment;
-            set
-            {
-                if (_selectedEquipment == value) return;
-                _selectedEquipment = value;
-                OnPropertyChanged(nameof(SelectedEquipment));
-            }
+            if (_items == value) return;
+            _items = value;
+            OnPropertyChanged(nameof(Items));
         }
+    }
 
-        public void AddItem()
+    public ICommand AddItemCommand { get; set; }
+
+    public ICommand SendOrderCommand { get; set; }
+
+    public void AddItem()
+    {
+        if (SelectedEquipment == null) return;
+        Items.Add(new EquipmentOrderItem("", 1, SelectedEquipment));
+        DynamicEquipmentRunningOut.Remove(SelectedEquipment);
+    }
+
+    public void SendOrder(IClosable window)
+    {
+        if (ValidateOrder())
         {
-            if (SelectedEquipment == null) return;
-            Items.Add(new EquipmentOrderItem("", 1, SelectedEquipment));
-            DynamicEquipmentRunningOut.Remove(SelectedEquipment);
-            
+            EquipmentOrderService.SendOrder(Items.ToList());
+            window.Close();
         }
+    }
 
-        private BindingList<EquipmentOrderItem> _items;
+    public bool ValidateOrder()
+    {
+        if (Items.Count > 0) return true;
 
-        public BindingList<EquipmentOrderItem> Items
-        {
-            get => _items;
-            set
-            {
-                if (_items == value) return;
-                _items = value;
-                OnPropertyChanged(nameof(Items));
-            }
-        }
-
-        public void SendOrder(IClosable window)
-        {
-            if (ValidateOrder())
-            {
-                EquipmentOrderService.SendOrder(Items.ToList());
-                window.Close();
-            }
-
-        }
-
-        public Boolean ValidateOrder()
-        {
-            if (Items.Count > 0)
-            {
-                return true;
-            }
-
-            MessageBox.Show("An order must contain at least one item");
-            return false;
-        }
-
-        public ICommand AddItemCommand { get; set; }
-
-        public ICommand SendOrderCommand { get; set; }
+        MessageBox.Show("An order must contain at least one item");
+        return false;
     }
 }

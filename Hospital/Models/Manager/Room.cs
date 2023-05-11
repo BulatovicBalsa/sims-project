@@ -10,7 +10,7 @@ public class Room
     {
         Id = Guid.NewGuid().ToString();
         Name = "";
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<InventoryItem>();
     }
 
     public Room(string name, RoomType type)
@@ -18,7 +18,7 @@ public class Room
         Id = Guid.NewGuid().ToString();
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<InventoryItem>();
     }
 
     public Room(string id, string name, RoomType type)
@@ -26,7 +26,7 @@ public class Room
         Id = id;
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<InventoryItem>();
     }
 
     public string Id { get; set; }
@@ -34,31 +34,31 @@ public class Room
 
     public RoomType Type { get; set; }
 
-    public List<EquipmentPlacement> Equipment { get; set; }
+    public List<InventoryItem> Inventory { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
-        var equipmentItem = Equipment.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
+        var equipmentItem = Inventory.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
         return equipmentItem?.Amount ?? 0;
     }
 
     public void SetAmount(Equipment equipment, int amount)
     {
-        var equipmentItem = Equipment.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
+        var equipmentItem = Inventory.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentPlacement(equipment, Id, amount));
+            Inventory.Add(new InventoryItem(equipment, Id, amount));
     }
 
     public List<Equipment> GetEquipment()
     {
-        return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
+        return (from equipmentPlacement in Inventory select equipmentPlacement.Equipment).ToList();
     }
 
-    public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
+    public List<InventoryItem> GetDynamicEquipmentAmounts()
     {
-        return (from equipmentPlacement in Equipment
+        return (from equipmentPlacement in Inventory
             where equipmentPlacement.Equipment.Type == EquipmentType.DynamicEquipment
             select equipmentPlacement).ToList();
     }
@@ -82,14 +82,14 @@ public class Room
     }
 
 
-    private EquipmentPlacement? GetPlacement(Equipment equipment)
+    private InventoryItem? GetInventoryItem(Equipment equipment)
     {
-        return Equipment.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
+        return Inventory.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
     }
 
     private int GetReservedAmount(Equipment equipment)
     {
-        var placement = GetPlacement(equipment);
+        var placement = GetInventoryItem(equipment);
         return placement?.Reserved ?? 0;
     }
 
@@ -103,27 +103,29 @@ public class Room
         return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
     }
 
-    private void Reserve(Equipment equipment, int amount)
+    private bool TryReserve(Equipment equipment, int amount)
     {
-        var placement = GetPlacement(equipment);
+
+        if (!CanReserve(equipment, amount)) return false;
+        var placement = GetInventoryItem(equipment);
         if (placement != null)
             placement.Reserved += amount;
+        return true;
     }
 
-    public bool ReserveEquipment(Transfer transfer)
+    public bool TryReserveEquipment(Transfer transfer)
     {
         if (!HasEnoughEquipment(transfer))
             return false;
 
-        foreach (var item in transfer.Items)
-            Reserve(item.Equipment, item.Amount);
+        transfer.Items.ForEach(item => TryReserve(item.Equipment, item.Amount));
 
         return true;
     }
 
     private void ReleaseReserved(Equipment equipment, int amount)
     {
-        var placement = GetPlacement(equipment);
+        var placement = GetInventoryItem(equipment);
         if (placement != null) placement.Reserved -= amount;
     }
 
@@ -142,7 +144,6 @@ public class Room
 
     public void Receive(Transfer transfer)
     {
-        foreach (var item in transfer.Items)
-            SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount);
+        transfer.Items.ForEach(item => SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount));
     }
 }

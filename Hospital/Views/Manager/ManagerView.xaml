@@ -12,15 +12,15 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="Equipment">
+            <TabItem Header="Inventory">
                 <DockPanel LastChildFill="False">
                     <ToolBar DockPanel.Dock="Top">
-                        <Button x:Name="EquipmentButton" Content="Equipment" Width="NaN" HorizontalAlignment="Left"
+                        <Button x:Name="EquipmentButton" Content="Inventory" Width="NaN" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Click="Button_Click" />
                     </ToolBar>
                 </DockPanel>
             </TabItem>
-            <TabItem DataContext="{Binding Children[1]}" Header="Orders" Margin="-2,0,-2,0">
+            <TabItem DataContext="{Binding Children[0]}" Header="Orders" Margin="-2,0,-2,0">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -52,7 +52,7 @@
                         <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"
                                   AutoGenerateColumns="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
                                                     IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
                                                     Width="*" />
@@ -61,14 +61,21 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Transfers" DataContext="{Binding Children[2]}">
+            <TabItem Header="Transfers" DataContext="{Binding Children[1]}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
-                                Command="{Binding OpenAddTransferFormCommand}">
+                                Command="{Binding OpenAddStaticEquipmentTransferCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
-                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0" />
+                                <TextBlock Text="Add static equipment transfer" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddDynamicEquipmentTransferCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Add dynamic equipment transfer" VerticalAlignment="Center" Margin="2 0 0 0" />
                             </StackPanel>
                         </Button>
                     </ToolBar>
@@ -92,7 +99,7 @@
                         <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedTransferItems}" CanUserAddRows="False"
                                   AutoGenerateColumns="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
                                                     IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
                                                     Width="*" />

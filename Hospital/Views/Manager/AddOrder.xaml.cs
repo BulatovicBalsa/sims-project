@@ -1,16 +1,12 @@
 ﻿using System.Windows;
 using Hospital.ViewModels;
 
-namespace Hospital.Views.Manager
+namespace Hospital.Views.Manager;
+
+public partial class AddOrder : Window, IClosable
 {
-    /// <summary>
-    /// Interaction logic for AddOrder.xaml
-    /// </summary>
-    public partial class AddOrder : Window, IClosable
+    public AddOrder()
     {
-        public AddOrder()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
