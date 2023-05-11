@@ -9,21 +9,21 @@ public enum HealthConditionType
     MedicalCondition
 }
 
-public class HealthCondition
+public class HealthConditionList
 {
-    public HealthCondition(HealthConditionType type)
+    public HealthConditionList(HealthConditionType type)
     {
         Type = type;
         Conditions = new List<string>();
     }
 
-    public HealthCondition(HealthConditionType type, List<string> conditions)
+    public HealthConditionList(HealthConditionType type, List<string> conditions)
     {
         Type = type;
         Conditions = conditions;
     }
 
-    public HealthCondition()
+    public HealthConditionList()
     {
         Conditions = new List<string>();
     }
