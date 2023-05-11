@@ -33,8 +33,8 @@ public class AdmissionDialogViewModel : ViewModelBase
         _selectedPatient = selectedPatient;
         _examination = examination;
 
-        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies);
-        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory);
+        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies.Conditions);
+        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory.Conditions);
 
         EndAdmissionCommand = new ViewModelCommand(ExecuteEndAdmissionCommand, CanExecuteEndAdmissionCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
@@ -83,8 +83,8 @@ public class AdmissionDialogViewModel : ViewModelBase
 
     private void UpdateMedicalRecord()
     {
-        _selectedPatient.MedicalRecord.MedicalHistory = SplitByComma(MedicalHistory);
-        _selectedPatient.MedicalRecord.Allergies = SplitByComma(Allergies);
+        _selectedPatient.MedicalRecord.MedicalHistory.Conditions = SplitByComma(MedicalHistory);
+        _selectedPatient.MedicalRecord.Allergies.Conditions = SplitByComma(Allergies);
 
         _patientRepository.Update(_selectedPatient);
     }

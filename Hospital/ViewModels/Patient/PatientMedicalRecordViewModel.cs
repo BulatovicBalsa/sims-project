@@ -38,8 +38,8 @@ namespace Hospital.ViewModels
                 OnPropertyChanged(nameof(Weight));
             }
         }
-        public ObservableCollection<string> Allergies => new ObservableCollection<string>(_patient.MedicalRecord.Allergies);
-        public ObservableCollection<string> MedicalHistory => new ObservableCollection<string>(_patient.MedicalRecord.MedicalHistory);
+        public ObservableCollection<string> Allergies => new ObservableCollection<string>(_patient.MedicalRecord.Allergies.Conditions);
+        public ObservableCollection<string> MedicalHistory => new ObservableCollection<string>(_patient.MedicalRecord.MedicalHistory.Conditions);
         public ObservableCollection<Examination> Examinations
         {
             get => _examinations;
