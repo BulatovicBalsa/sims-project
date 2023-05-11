@@ -82,14 +82,14 @@ public class Room
     }
 
 
-    private InventoryItem? GetPlacement(Equipment equipment)
+    private InventoryItem? GetInventoryItem(Equipment equipment)
     {
         return Inventory.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
     }
 
     private int GetReservedAmount(Equipment equipment)
     {
-        var placement = GetPlacement(equipment);
+        var placement = GetInventoryItem(equipment);
         return placement?.Reserved ?? 0;
     }
 
@@ -107,7 +107,7 @@ public class Room
     {
 
         if (!CanReserve(equipment, amount)) return false;
-        var placement = GetPlacement(equipment);
+        var placement = GetInventoryItem(equipment);
         if (placement != null)
             placement.Reserved += amount;
         return true;
@@ -125,7 +125,7 @@ public class Room
 
     private void ReleaseReserved(Equipment equipment, int amount)
     {
-        var placement = GetPlacement(equipment);
+        var placement = GetInventoryItem(equipment);
         if (placement != null) placement.Reserved -= amount;
     }
 
