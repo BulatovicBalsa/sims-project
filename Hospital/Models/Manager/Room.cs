@@ -103,11 +103,14 @@ public class Room
         return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
     }
 
-    private void Reserve(Equipment equipment, int amount)
+    private bool Reserve(Equipment equipment, int amount)
     {
+
+        if (!CanReserve(equipment, amount)) return false;
         var placement = GetPlacement(equipment);
         if (placement != null)
             placement.Reserved += amount;
+        return true;
     }
 
     public bool ReserveEquipment(Transfer transfer)
