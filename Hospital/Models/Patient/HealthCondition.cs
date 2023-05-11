@@ -17,6 +17,12 @@ namespace Hospital.Models.Patient
             Conditions = new List<string>();
         }
 
+        public HealthCondition(HealthConditionType type, List<string> conditions)
+        {
+            Type = type;
+            Conditions = conditions;
+        }
+
         public void Add(string conditionToAdd, HealthConditionType conditionType)
         {
             conditionToAdd = conditionToAdd.Trim();

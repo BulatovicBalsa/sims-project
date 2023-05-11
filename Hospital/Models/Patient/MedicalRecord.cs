@@ -21,8 +21,8 @@ public class MedicalRecord
     {
         Weight = 0;
         Height = 0;
-        Allergies = new List<string>();
-        MedicalHistory = new List<string>();
+        Allergies = new HealthCondition(HealthConditionType.Allergy);
+        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition);
         //Prescriptions = new List<Prescription>();
     }
 
@@ -30,8 +30,8 @@ public class MedicalRecord
     {
         Height = height;
         Weight = weight;
-        Allergies = new List<string>();
-        MedicalHistory = new List<string>();
+        Allergies = new HealthCondition(HealthConditionType.Allergy);
+        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition);
         //Prescriptions = new List<Prescription>();
     }
 
@@ -46,73 +46,8 @@ public class MedicalRecord
 
     public int Height { get; set; }
     public int Weight { get; set; }
-    public List<string> Allergies { get; set; }
-    public List<string> MedicalHistory { get; set; }
-
-    public void AddAllergy(string allergyToAdd)
-    {
-        AddHealthCondition(allergyToAdd, HealthConditionType.Allergy);
-    }
-
-    public void AddMedicalCondition(string medicalConditionToAdd)
-    {
-        AddHealthCondition(medicalConditionToAdd, HealthConditionType.MedicalCondition);
-    }
-
-    public void UpdateMedicalCondition(string selectedMedicalCondition, string updatedMedicalCondition)
-    {
-        UpdateHealthCondition(selectedMedicalCondition, updatedMedicalCondition, HealthConditionType.MedicalCondition);
-    }
-
-    public void UpdateAllergy(string selectedAllergy, string updatedAllergy)
-    {
-        UpdateHealthCondition(selectedAllergy, updatedAllergy, HealthConditionType.Allergy);
-    }
-
-    public void DeleteMedicalCondition(string selectedMedicalCondition)
-    {
-        DeleteHealthCondition(selectedMedicalCondition, HealthConditionType.MedicalCondition);
-    }
-
-    public void DeleteAllergy(string selectedAllergy)
-    {
-        DeleteHealthCondition(selectedAllergy, HealthConditionType.Allergy);
-    }
-
-    private void AddHealthCondition(string conditionToAdd, HealthConditionType conditionType)
-    {
-        var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
-        conditionToAdd = conditionToAdd.Trim();
-
-        if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{conditionType} name can't be empty");
-        if (healthConditionList.Contains(conditionToAdd))
-            throw new ArgumentException($"{conditionToAdd} already exists in medical record");
-        healthConditionList.Add(conditionToAdd);
-    }
-
-    private void DeleteHealthCondition(string selectedCondition, HealthConditionType conditionType)
-    {
-        var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
-
-        if (!healthConditionList.Contains(selectedCondition))
-            throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-        healthConditionList.Remove(selectedCondition);
-    }
-
-    private void UpdateHealthCondition(string selectedCondition, string updatedCondition,
-        HealthConditionType conditionType)
-    {
-        var healthConditionList = conditionType == HealthConditionType.Allergy ? Allergies : MedicalHistory;
-
-        updatedCondition = updatedCondition.Trim();
-        var indexToUpdate = healthConditionList.IndexOf(selectedCondition);
-        if (indexToUpdate == -1)
-            throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-        if (string.IsNullOrEmpty(updatedCondition)) throw new ArgumentException($"{conditionType} name can't be empty");
-        if (healthConditionList.Contains(updatedCondition))
-            throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
-        healthConditionList[indexToUpdate] = updatedCondition;
-    }
+    public HealthCondition Allergies { get; set; }
+    public HealthCondition MedicalHistory { get; set; }
 
     public void ChangeWeight(int newWeight)
     {
