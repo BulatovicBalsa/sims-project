@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Patient
 {
+    public enum HealthConditionType
+    {
+        Allergy,
+        MedicalCondition
+    }
+
     public class HealthCondition
     {
-        public  HealthConditionType Type { get; private set; }
+        public HealthConditionType Type { get; private set; }
         public List<string> Conditions { get; set; }
 
         public HealthCondition(HealthConditionType type)

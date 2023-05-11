@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace Hospital.Models.Patient;
 
-public enum HealthConditionType
-{
-    Allergy,
-    MedicalCondition
-}
-
 public class MedicalRecord
 {
     private const int MinWeight = 1;
