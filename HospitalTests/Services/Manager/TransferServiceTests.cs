@@ -18,7 +18,7 @@ namespace HospitalTests.Models.Manager
         {
             EquipmentRepository.Instance.DeleteAll();
             RoomRepository.Instance.DeleteAll();
-            EquipmentPlacementRepository.Instance.DeleteAll();
+            InventoryItemRepository.Instance.DeleteAll();
             TransferRepository.Instance.DeleteAll();
             TransferItemRepository.Instance.DeleteAll();
         }

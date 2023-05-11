@@ -15,14 +15,14 @@ public class RoomRepositoryTests
             File.Delete(roomFilePath);
 
         RoomRepository.Instance.DeleteAll();
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
     }
 
     [TestMethod]
     public void TestGetAll()
     {
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
 
         var rooms = new List<Room>
@@ -157,14 +157,14 @@ public class RoomRepositoryTests
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        EquipmentPlacementRepository.Instance.DeleteAll();
-        var equipmentInRooms = new List<EquipmentPlacement>
+        InventoryItemRepository.Instance.DeleteAll();
+        var equipmentInRooms = new List<InventoryItem>
         {
             new("1", "0", 1),
             new("2", "0", 2),
             new("1", "1", 3)
         };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
+        Serializer<InventoryItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
 
         var loadedRooms = RoomRepository.Instance.GetAll();
 

@@ -12,7 +12,7 @@ public class EquipmentFilterServiceTests
     public void SetUp()
     {
         EquipmentRepository.Instance.DeleteAll();
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
         var filesUsed = new List<string>
         {
@@ -55,7 +55,7 @@ public class EquipmentFilterServiceTests
         foreach (var e in equipment) equipmentRepository.Add(e);
 
 
-        var equipmentPlacements = new List<EquipmentPlacement>
+        var equipmentPlacements = new List<InventoryItem>
         {
             new("1021", "5000", 15), // 15 chairs in warehouse
             new("1021", "2001", 3), // 3 Chairs in Waiting Room 1
@@ -113,13 +113,13 @@ public class EquipmentFilterServiceTests
 
         // 3 beds in every ward
         foreach (var ward in rooms.Where(room => room.Type == RoomType.Ward))
-            equipmentPlacements.Add(new EquipmentPlacement("1010", ward.Id, 3));
+            equipmentPlacements.Add(new InventoryItem("1010", ward.Id, 3));
 
-        //equipmentPlacements.Add(new EquipmentPlacement("1010", "3004", 3));
+        //equipmentPlacements.Add(new InventoryItem("1010", "3004", 3));
 
-        EquipmentPlacementRepository.Instance.DeleteAll();
-        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
-        EquipmentPlacementRepository.Instance.GetAll();
+        InventoryItemRepository.Instance.DeleteAll();
+        Serializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        InventoryItemRepository.Instance.GetAll();
     }
 
     [TestMethod]

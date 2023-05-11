@@ -10,7 +10,7 @@ public class RoomFilterServiceTests
     [TestInitialize]
     public void SetUp()
     {
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
     }

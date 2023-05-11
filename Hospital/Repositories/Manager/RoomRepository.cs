@@ -31,7 +31,7 @@ public class RoomRepository
 
     private static void PlaceEquipment(List<Room> rooms)
     {
-        var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
+        var equipmentPlacements = InventoryItemRepository.Instance.GetAll();
 
         var equipmentPlacementsByRoom =
             from equipmentPlacement in equipmentPlacements
@@ -61,7 +61,7 @@ public class RoomRepository
         Serializer<Room>.ToCSV(rooms, FilePath);
 
         foreach (var equipmentPlacement in room.Inventory)
-            EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+            InventoryItemRepository.Instance.Add(equipmentPlacement);
     }
 
     public void Update(Room room)
@@ -76,11 +76,11 @@ public class RoomRepository
         Serializer<Room>.ToCSV(rooms, FilePath);
 
         foreach (var equipmentPlacement in room.Inventory)
-            if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
+            if (InventoryItemRepository.Instance.GetByKey(equipmentPlacement.RoomId,
                     equipmentPlacement.EquipmentId) == null)
-                EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+                InventoryItemRepository.Instance.Add(equipmentPlacement);
             else
-                EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
+                InventoryItemRepository.Instance.Update(equipmentPlacement);
     }
 
     public void Delete(Room room)
