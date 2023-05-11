@@ -206,8 +206,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
         Password = selectedPatient.Profile.Password;
         Height = selectedPatient.MedicalRecord.Height.ToString();
         Weight = selectedPatient.MedicalRecord.Weight.ToString();
-        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory);
-        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies);
+        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory.Conditions);
+        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies.Conditions);
     }
 
     private string GetCommaSeparatedString(IEnumerable<string> words)
@@ -252,8 +252,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
         _patientToUpdate.Profile.Password = Password;
         _patientToUpdate.MedicalRecord.Height = int.Parse(Height);
         _patientToUpdate.MedicalRecord.Weight = int.Parse(Weight);
-        _patientToUpdate.MedicalRecord.MedicalHistory = MedicalHistory.Split(", ").ToList();
-        _patientToUpdate.MedicalRecord.Allergies = Allergies.Split(", ").ToList();
+        _patientToUpdate.MedicalRecord.MedicalHistory.Conditions = MedicalHistory.Split(", ").ToList();
+        _patientToUpdate.MedicalRecord.Allergies.Conditions = Allergies.Split(", ").ToList();
     }
 
     private void CloseDialog()
