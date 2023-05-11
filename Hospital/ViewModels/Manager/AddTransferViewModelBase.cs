@@ -183,14 +183,11 @@ public class AddTransferViewModelBase : ViewModelBase
 
     private bool TrySendTransfer()
     {
-        if (!TransferService.TrySendTransfer(SelectedOrigin, SelectedDestination, Items.ToList(),
-                Date))
-        {
-            MessageBox.Show(
-                "Can not send more equipment than there are available for transfers. (Some equipment may have been reserved)");
-            return false;
-        }
+        if (TransferService.TrySendTransfer(SelectedOrigin, SelectedDestination, Items.ToList(),
+                Date)) return true;
+        MessageBox.Show(
+            "Can not send more equipment than there are available for transfers. (Some equipment may have been reserved)");
+        return false;
 
-        return true;
     }
 }
