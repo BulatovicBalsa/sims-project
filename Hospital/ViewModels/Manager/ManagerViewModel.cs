@@ -8,9 +8,11 @@ public class ManagerViewModel : ViewModelBase
 
     public ManagerViewModel()
     {
-        Children = new ObservableCollection<object>();
-        Children.Add(new OrderTabViewModel());
-        Children.Add(new TransferTabViewModel());
+        Children = new ObservableCollection<object>
+        {
+            new OrderTabViewModel(),
+            new TransferTabViewModel()
+        };
     }
 
 
