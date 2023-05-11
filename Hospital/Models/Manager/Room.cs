@@ -115,8 +115,7 @@ public class Room
         if (!HasEnoughEquipment(transfer))
             return false;
 
-        foreach (var item in transfer.Items)
-            Reserve(item.Equipment, item.Amount);
+        transfer.Items.ForEach(item => Reserve(item.Equipment, item.Amount));
 
         return true;
     }
@@ -142,7 +141,6 @@ public class Room
 
     public void Receive(Transfer transfer)
     {
-        foreach (var item in transfer.Items)
-            SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount);
+        transfer.Items.ForEach(item => SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount));
     }
 }
