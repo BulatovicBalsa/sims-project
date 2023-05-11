@@ -31,15 +31,15 @@ public class RoomRepository
 
     private static void PlaceEquipment(List<Room> rooms)
     {
-        var equipmentPlacements = InventoryItemRepository.Instance.GetAll();
+        var inventoryItems = InventoryItemRepository.Instance.GetAll();
 
-        var equipmentPlacementsByRoom =
-            from equipmentPlacement in equipmentPlacements
+        var inventoryItemsByRoom =
+            from equipmentPlacement in inventoryItems
             group equipmentPlacement by equipmentPlacement.RoomId
             into equipmentInRoom
             select equipmentInRoom;
 
-        foreach (var roomGroup in equipmentPlacementsByRoom)
+        foreach (var roomGroup in inventoryItemsByRoom)
         {
             var room = rooms.Find(room => room.Id == roomGroup.Key);
             if (room == null) continue;
@@ -60,8 +60,8 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Inventory)
-            InventoryItemRepository.Instance.Add(equipmentPlacement);
+        foreach (var inventoryItem in room.Inventory)
+            InventoryItemRepository.Instance.Add(inventoryItem);
     }
 
     public void Update(Room room)
@@ -75,12 +75,12 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Inventory)
-            if (InventoryItemRepository.Instance.GetByKey(equipmentPlacement.RoomId,
-                    equipmentPlacement.EquipmentId) == null)
-                InventoryItemRepository.Instance.Add(equipmentPlacement);
+        foreach (var inventoryItem in room.Inventory)
+            if (InventoryItemRepository.Instance.GetByKey(inventoryItem.RoomId,
+                    inventoryItem.EquipmentId) == null)
+                InventoryItemRepository.Instance.Add(inventoryItem);
             else
-                InventoryItemRepository.Instance.Update(equipmentPlacement);
+                InventoryItemRepository.Instance.Update(inventoryItem);
     }
 
     public void Delete(Room room)
