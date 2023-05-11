@@ -213,6 +213,12 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
+        if (examinationToPerform.Room is null)
+        {
+            MessageBox.Show("Chosen examination doesn't have room. Please add room");
+            return;
+        }
+
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();
     }
