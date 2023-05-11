@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 
 namespace Hospital.Models.Manager;
 
-public class Transfer: INotifyPropertyChanged
+public class Transfer : INotifyPropertyChanged
 {
-    private DateTime _deliveryDateTime;
     private bool _delivered;
+    private DateTime _deliveryDateTime;
     private bool _failed;
 
     public Transfer()
@@ -90,6 +90,8 @@ public class Transfer: INotifyPropertyChanged
         }
     }
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     public void AddItem(TransferItem item)
     {
         item.TransferId = Id;
@@ -122,8 +124,6 @@ public class Transfer: INotifyPropertyChanged
         Delivered = true;
         return true;
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

@@ -12,7 +12,9 @@ public class EquipmentPlacementRepository
 
     private List<EquipmentPlacement>? _equipmentPlacements;
 
-    private EquipmentPlacementRepository() { }
+    private EquipmentPlacementRepository()
+    {
+    }
 
     public static EquipmentPlacementRepository Instance => _instance ??= new EquipmentPlacementRepository();
 

@@ -93,13 +93,6 @@ public class AddTransferViewModelBase : ViewModelBase
         }
     }
 
-    protected virtual void UpdateEquipmentList()
-    {
-        if (_selectedOrigin == null) return;
-        Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment()
-            .Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
-    }
-
     public Room? SelectedDestination
     {
         get => _selectedDestination;
@@ -143,6 +136,13 @@ public class AddTransferViewModelBase : ViewModelBase
             _sendTransferCommand = value;
             OnPropertyChanged(nameof(SendTransferCommand));
         }
+    }
+
+    protected virtual void UpdateEquipmentList()
+    {
+        if (_selectedOrigin == null) return;
+        Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment()
+            .Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
     }
 
     public void AddItem()

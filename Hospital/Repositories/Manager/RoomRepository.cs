@@ -12,7 +12,9 @@ public class RoomRepository
     private static RoomRepository? _instance;
     private List<Room>? _rooms;
 
-    private RoomRepository() { }
+    private RoomRepository()
+    {
+    }
 
     public static RoomRepository Instance => _instance ??= new RoomRepository();
 
@@ -95,7 +97,6 @@ public class RoomRepository
 
     public void DeleteAll()
     {
-
         var rooms = _rooms ?? GetAll();
         rooms.Clear();
         Serializer<Room>.ToCSV(rooms, FilePath);

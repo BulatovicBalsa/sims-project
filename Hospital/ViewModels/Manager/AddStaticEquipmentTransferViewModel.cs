@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
 
 namespace Hospital.ViewModels.Manager;
 
