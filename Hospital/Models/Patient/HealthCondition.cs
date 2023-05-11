@@ -23,30 +23,30 @@ namespace Hospital.Models.Patient
             Conditions = conditions;
         }
 
-        public void Add(string conditionToAdd, HealthConditionType conditionType)
+        public void Add(string conditionToAdd)
         {
             conditionToAdd = conditionToAdd.Trim();
 
-            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{conditionType} name can't be empty");
+            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{Type} name can't be empty");
             if (Conditions.Contains(conditionToAdd))
                 throw new ArgumentException($"{conditionToAdd} already exists in medical record");
             Conditions.Add(conditionToAdd);
         }
 
-        public void Delete(string selectedCondition, HealthConditionType conditionType)
+        public void Delete(string selectedCondition)
         {
             if (!Conditions.Contains(selectedCondition))
                 throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
             Conditions.Remove(selectedCondition);
         }
 
-        public void Update(string selectedCondition, string updatedCondition, HealthConditionType conditionType)
+        public void Update(string selectedCondition, string updatedCondition)
         {
             updatedCondition = updatedCondition.Trim();
             var indexToUpdate = Conditions.IndexOf(selectedCondition);
             if (indexToUpdate == -1)
                 throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            if (string.IsNullOrEmpty(updatedCondition)) throw new ArgumentException($"{conditionType} name can't be empty");
+            if (string.IsNullOrEmpty(updatedCondition)) throw new ArgumentException($"{Type} name can't be empty");
             if (Conditions.Contains(updatedCondition))
                 throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
             Conditions[indexToUpdate] = updatedCondition;
