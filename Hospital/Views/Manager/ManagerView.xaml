@@ -20,7 +20,7 @@
                     </ToolBar>
                 </DockPanel>
             </TabItem>
-            <TabItem DataContext="{Binding Children[1]}" Header="Orders" Margin="-2,0,-2,0">
+            <TabItem DataContext="{Binding Children[0]}" Header="Orders" Margin="-2,0,-2,0">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -61,7 +61,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Transfers" DataContext="{Binding Children[2]}">
+            <TabItem Header="Transfers" DataContext="{Binding Children[1]}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
