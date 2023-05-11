@@ -141,8 +141,9 @@ public class AddTransferViewModelBase : ViewModelBase
     protected virtual void UpdateEquipmentList()
     {
         if (_selectedOrigin == null) return;
-        Equipment = new BindingList<Equipment>(_selectedOrigin.GetEquipment()
-            .Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList());
+        var availableEquipmentAtOrigin = _selectedOrigin.GetEquipment()
+            .Where(equipment => _selectedOrigin.GetAmount(equipment) > 0).ToList();
+        Equipment = new BindingList<Equipment>(availableEquipmentAtOrigin);
     }
 
     public void AddItem()
