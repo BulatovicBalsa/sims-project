@@ -15,8 +15,8 @@ public class MedicalRecord
     {
         Weight = 0;
         Height = 0;
-        Allergies = new HealthCondition(HealthConditionType.Allergy);
-        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition);
+        Allergies = new HealthConditionList(HealthConditionType.Allergy);
+        MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition);
         //Prescriptions = new List<Prescription>();
     }
 
@@ -24,8 +24,8 @@ public class MedicalRecord
     {
         Height = height;
         Weight = weight;
-        Allergies = new HealthCondition(HealthConditionType.Allergy);
-        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition);
+        Allergies = new HealthConditionList(HealthConditionType.Allergy);
+        MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition);
         //Prescriptions = new List<Prescription>();
     }
 
@@ -33,15 +33,15 @@ public class MedicalRecord
     {
         Height = height;
         Weight = weight;
-        Allergies = new HealthCondition(HealthConditionType.Allergy, allergies);
-        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition, medicalHistory);
+        Allergies = new HealthConditionList(HealthConditionType.Allergy, allergies);
+        MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition, medicalHistory);
         //Prescriptions = prescriptions;
     }
 
     public int Height { get; set; }
     public int Weight { get; set; }
-    public HealthCondition Allergies { get; set; }
-    public HealthCondition MedicalHistory { get; set; }
+    public HealthConditionList Allergies { get; set; }
+    public HealthConditionList MedicalHistory { get; set; }
 
     public void ChangeWeight(int newWeight)
     {
@@ -63,8 +63,8 @@ public class MedicalRecord
     {
         var copy = new MedicalRecord(Height, Weight)
         {
-            Allergies = new HealthCondition(Allergies.Type, Allergies.Conditions),
-            MedicalHistory = new HealthCondition(MedicalHistory.Type, MedicalHistory.Conditions)
+            Allergies = new HealthConditionList(Allergies.Type, Allergies.Conditions),
+            MedicalHistory = new HealthConditionList(MedicalHistory.Type, MedicalHistory.Conditions)
             //Prescriptions = new List<Prescription>(Prescriptions.Select(p => p.DeepCopy()))
         };
 
