@@ -11,10 +11,10 @@ public enum HealthConditionType
 
 public class MedicalRecord
 {
-    private const int MIN_WEIGHT = 1;
-    private const int MAX_WEIGHT = 200;
-    private const int MIN_HEIGHT = 30;
-    private const int MAX_HEIGHT = 220;
+    private const int MinWeight = 1;
+    private const int MaxWeight = 200;
+    private const int MinHeight = 30;
+    private const int MaxHeight = 220;
     //public List<Prescription> Prescriptions { get; set; }
 
     public MedicalRecord()
@@ -116,18 +116,18 @@ public class MedicalRecord
 
     public void ChangeWeight(int newWeight)
     {
-        if (newWeight is >= MIN_WEIGHT and <= MAX_WEIGHT)
+        if (newWeight is >= MinWeight and <= MaxWeight)
             Weight = newWeight;
         else
-            throw new ArgumentException($"Weight must be between {MIN_WEIGHT} and {MAX_WEIGHT}");
+            throw new ArgumentException($"Weight must be between {MinWeight} and {MaxWeight}");
     }
 
     public void ChangeHeight(int newHeight)
     {
-        if (newHeight is >= MIN_HEIGHT and <= MAX_HEIGHT)
+        if (newHeight is >= MinHeight and <= MaxHeight)
             Height = newHeight;
         else
-            throw new ArgumentException($"Height must be between {MIN_HEIGHT} and {MAX_HEIGHT}");
+            throw new ArgumentException($"Height must be between {MinHeight} and {MaxHeight}");
     }
 
     public MedicalRecord DeepCopy()
