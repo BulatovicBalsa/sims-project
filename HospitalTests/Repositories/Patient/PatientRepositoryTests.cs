@@ -75,7 +75,7 @@ namespace HospitalTests.Repositories.Patient
             var testPatient = loadedPatients[0];
             Assert.AreEqual(testPatient.FirstName, patientRepository.GetById(testPatient.Id)?.FirstName);
             Assert.IsNull(patientRepository.GetById("0"));
-            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Conditions.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
+            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Conditions.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Conditions.Count);
         }
 
         [TestMethod]
