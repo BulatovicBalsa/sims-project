@@ -15,6 +15,13 @@
         <viewModels:AddStaticEquipmentTransferViewModel />
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
 
 
     <DockPanel LastChildFill="True">
@@ -33,7 +40,14 @@
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="SelectEquipmentComboBox" ItemsSource="{Binding Equipment, Mode=TwoWay}"
                       SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Text="Select equipment"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
             <Label  Height="50"
                     Width="180"
                     HorizontalAlignment="Left"
