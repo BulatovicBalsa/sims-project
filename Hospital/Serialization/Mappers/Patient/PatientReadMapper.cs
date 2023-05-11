@@ -18,9 +18,9 @@ public sealed class PatientReadMapper : ClassMap<Patient>
         Map(patient => patient.Profile.Password).Index(5);
         Map(patient => patient.MedicalRecord.Height).Index(6);
         Map(patient => patient.MedicalRecord.Weight).Index(7);
-        Map(patient => patient.MedicalRecord.Allergies).Index(8)
+        Map(patient => patient.MedicalRecord.Allergies.Conditions).Index(8)
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("Allergies")));
-        Map(patient => patient.MedicalRecord.MedicalHistory).Index(9)
+        Map(patient => patient.MedicalRecord.MedicalHistory.Conditions).Index(9)
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
         Map(patient => patient.IsBlocked).Index(10);
     }

@@ -17,8 +17,8 @@ internal class MedicalRecordViewModel : ViewModelBase
     {
         Weight = selectedPatientMedicalRecord.Weight.ToString();
         Height = selectedPatientMedicalRecord.Height.ToString();
-        MedicalHistory = selectedPatientMedicalRecord.MedicalHistory;
-        Allergies = selectedPatientMedicalRecord.Allergies;
+        MedicalHistory = selectedPatientMedicalRecord.MedicalHistory.Conditions;
+        Allergies = selectedPatientMedicalRecord.Allergies.Conditions;
 
         CloseDialogCommand = new ViewModelCommand(ExecuteCloseDialogCommand);
     }
