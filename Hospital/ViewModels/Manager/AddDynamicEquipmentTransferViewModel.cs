@@ -29,8 +29,9 @@ public class AddDynamicEquipmentTransferViewModel : AddTransferViewModelBase
     protected override void UpdateEquipmentList()
     {
         base.UpdateEquipmentList();
-        Equipment = new BindingList<Equipment>(Equipment
-            .Where(equipment => equipment.Type == EquipmentType.DynamicEquipment).ToList());
+        var availableDynamicEquipmentAtOrigin = Equipment
+            .Where(equipment => equipment.Type == EquipmentType.DynamicEquipment).ToList();
+        Equipment = new BindingList<Equipment>(availableDynamicEquipmentAtOrigin);
     }
 
     public override void SendTransfer(IClosable window)

@@ -9,7 +9,8 @@ public class AddStaticEquipmentTransferViewModel : AddTransferViewModelBase
     protected override void UpdateEquipmentList()
     {
         base.UpdateEquipmentList();
-        Equipment = new BindingList<Equipment>(Equipment.Where(equipment =>
-            equipment.Type != EquipmentType.DynamicEquipment).ToList());
+        var avaliableStaticEquipmentAtOrigin = Equipment.Where(equipment =>
+            equipment.Type != EquipmentType.DynamicEquipment).ToList();
+        Equipment = new BindingList<Equipment>(avaliableStaticEquipmentAtOrigin);
     }
 }
