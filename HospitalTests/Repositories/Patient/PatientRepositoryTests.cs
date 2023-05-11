@@ -50,9 +50,9 @@ namespace HospitalTests.Repositories.Patient
             Assert.AreEqual(177, loadedPatients[2].MedicalRecord.Height);
             Assert.AreNotEqual(177, loadedPatients[0].MedicalRecord.Height);
             Assert.AreNotEqual("1111111111111", loadedPatients[3].Jmbg);
-            Assert.IsTrue(loadedPatients[0].MedicalRecord.Allergies.Count == 3);
-            Assert.IsTrue(loadedPatients[2].MedicalRecord.MedicalHistory.Count == 2);
-            Assert.IsTrue(loadedPatients[3].MedicalRecord.MedicalHistory.Contains("mental illness"));
+            Assert.IsTrue(loadedPatients[0].MedicalRecord.Allergies.Conditions.Count == 3);
+            Assert.IsTrue(loadedPatients[2].MedicalRecord.MedicalHistory.Conditions.Count == 2);
+            Assert.IsTrue(loadedPatients[3].MedicalRecord.MedicalHistory.Conditions.Contains("mental illness"));
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace HospitalTests.Repositories.Patient
             var testPatient = loadedPatients[0];
             Assert.AreEqual(testPatient.FirstName, patientRepository.GetById(testPatient.Id)?.FirstName);
             Assert.IsNull(patientRepository.GetById("0"));
-            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
+            Assert.AreEqual(testPatient.MedicalRecord.MedicalHistory.Conditions.Count, patientRepository.GetById(testPatient.Id)?.MedicalRecord.MedicalHistory.Count);
         }
 
         [TestMethod]
@@ -90,14 +90,14 @@ namespace HospitalTests.Repositories.Patient
             var testPatient = loadedPatients[1];
             testPatient.FirstName = "TestFirstName";
             testPatient.LastName = "TestLastName";
-            testPatient.MedicalRecord.Allergies = new List<string> { "testAllergy" };
+            testPatient.MedicalRecord.Allergies.Conditions = new List<string> { "testAllergy" };
 
             patientRepository.Update(testPatient);
 
             Assert.AreEqual("TestFirstName", patientRepository.GetById(testPatient.Id)?.FirstName);
             Assert.AreEqual("TestLastName", patientRepository.GetById(testPatient.Id)?.LastName);
-            Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Count);
-            Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies[0]);
+            Assert.AreEqual(1, patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Conditions.Count);
+            Assert.AreEqual("testAllergy", patientRepository.GetById(testPatient.Id)?.MedicalRecord.Allergies.Conditions[0]);
         }
 
         private void PatientRepository_PatientUpdated(Patient obj)
