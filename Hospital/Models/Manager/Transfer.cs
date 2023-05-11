@@ -37,19 +37,6 @@ public class Transfer : INotifyPropertyChanged
         Failed = false;
     }
 
-    public Transfer(Room origin, Room destination, DateTime deliveryDateTime, List<TransferItem> items)
-    {
-        Id = Guid.NewGuid().ToString();
-        Origin = origin;
-        Destination = destination;
-        OriginId = origin.Id;
-        DestinationId = destination.Id;
-        Items = items;
-        DeliveryDateTime = deliveryDateTime;
-        Delivered = false;
-        Failed = false;
-    }
-
     public string Id { get; set; }
     public Room Origin { get; set; }
     public Room Destination { get; set; }
