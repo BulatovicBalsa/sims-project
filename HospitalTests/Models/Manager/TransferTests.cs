@@ -142,7 +142,7 @@ public class TransferTests
         var transferThatWontHaveEquipment = new Transfer(origin, destination, DateTime.Now);
         transferThatWontHaveEquipment.AddItem(new TransferItem(injection, 6));
 
-        origin.ReserveEquipment(transfer);
+        origin.TryReserveEquipment(transfer);
         Assert.IsFalse(transferThatWontHaveEquipment.IsPossible());
     }
 
@@ -160,7 +160,7 @@ public class TransferTests
         var transfer2 = new Transfer(origin, destination, DateTime.Now);
         transfer2.AddItem(new TransferItem(injection, 4));
 
-        origin.ReserveEquipment(transfer);
+        origin.TryReserveEquipment(transfer);
         Assert.IsTrue(transfer2.IsPossible());
     }
 }

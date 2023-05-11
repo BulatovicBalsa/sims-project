@@ -9,13 +9,15 @@ public class TransferItem
         EquipmentId = "";
     }
 
-    public TransferItem(string transferId, Equipment equipment, int amount)
+    public TransferItem(Equipment equipment, int amount, string transferId)
+
     {
         TransferId = transferId;
         Equipment = equipment;
         Amount = amount;
         EquipmentId = equipment.Id;
     }
+
     public TransferItem(Equipment equipment, int amount)
     {
         TransferId = "";
@@ -23,7 +25,7 @@ public class TransferItem
         Amount = amount;
         EquipmentId = equipment.Id;
     }
-    
+
 
     public string TransferId { get; set; }
     public Equipment Equipment { get; set; }

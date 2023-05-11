@@ -1,77 +1,77 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Views.Manager;
 
-namespace Hospital.ViewModels.Manager
+namespace Hospital.ViewModels.Manager;
+
+public class TransferTabViewModel : ViewModelBase
 {
-    public class TransferTabViewModel: ViewModelBase
+    private Transfer _selectedTransfer;
+    private ObservableCollection<TransferItem> _selectedTransferItems;
+    private BindingList<Transfer> _transfers;
+
+    public TransferTabViewModel()
     {
-        private BindingList<Transfer> _transfers;
-        private Transfer _selectedTransfer;
-        private ObservableCollection<TransferItem> _selectedTransferItems;
+        Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
+        OpenAddStaticEquipmentTransferCommand =
+            new RelayCommand(() => OpenAddTransferDialog(new AddStaticEquipmentTransfer()));
+        OpenAddDynamicEquipmentTransferCommand =
+            new RelayCommand(() => OpenAddTransferDialog(new AddDynamicEquipmentTransfer()));
+    }
 
-        public BindingList<Transfer> Transfers
+    public BindingList<Transfer> Transfers
+    {
+        get => _transfers;
+        set
         {
-            get => _transfers;
-            set
-            {
-                if (Equals(value, _transfers)) return;
-                _transfers = value;
-                OnPropertyChanged(nameof(Transfers));
-            }
+            if (Equals(value, _transfers)) return;
+            _transfers = value;
+            OnPropertyChanged(nameof(Transfers));
         }
+    }
 
-        public Transfer SelectedTransfer
+    public Transfer SelectedTransfer
+    {
+        get => _selectedTransfer;
+        set
         {
-            get => _selectedTransfer;
-            set
-            {
-                if (Equals(value, _selectedTransfer)) return;
-                _selectedTransfer = value;
-                if (_selectedTransfer != null) SelectedTransferItems = new ObservableCollection<TransferItem>(_selectedTransfer.Items);
-                OnPropertyChanged(nameof(SelectedTransfer));
-            }
+            if (Equals(value, _selectedTransfer)) return;
+            _selectedTransfer = value;
+            if (_selectedTransfer != null)
+                SelectedTransferItems = new ObservableCollection<TransferItem>(_selectedTransfer.Items);
+            OnPropertyChanged(nameof(SelectedTransfer));
         }
+    }
 
-        public ObservableCollection<TransferItem> SelectedTransferItems
+    public ObservableCollection<TransferItem> SelectedTransferItems
+    {
+        get => _selectedTransferItems;
+        set
         {
-            get => _selectedTransferItems;
-            set
-            {
-                if (Equals(value, _selectedTransferItems)) return;
-                _selectedTransferItems = value;
-                OnPropertyChanged(nameof(SelectedTransferItems));
-            }
+            if (Equals(value, _selectedTransferItems)) return;
+            _selectedTransferItems = value;
+            OnPropertyChanged(nameof(SelectedTransferItems));
         }
+    }
 
-        public ICommand OpenAddTransferFormCommand { get; set; }
+    public ICommand OpenAddStaticEquipmentTransferCommand { get; set; }
 
-        private void RefreshTransfersOnFormClose(object? sender, EventArgs eventArgs)
-        {
-            Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
-        }
+    public ICommand OpenAddDynamicEquipmentTransferCommand { get; set; }
 
-        public void OpenAddTransferForm()
-        {
-            var transferForm = new AddTransfer();
-            transferForm.Closed += RefreshTransfersOnFormClose;
-            transferForm.Show();
-        }
+    private void RefreshTransfersOnFormClose(object? sender, EventArgs eventArgs)
+    {
+        Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
+    }
 
-        public TransferTabViewModel()
-        {
-            Transfers = new BindingList<Transfer>(TransferRepository.Instance.GetAll());
-            OpenAddTransferFormCommand = new RelayCommand(OpenAddTransferForm);
-        }
+    public void OpenAddTransferDialog(Window dialog)
+    {
+        dialog.Closed += RefreshTransfersOnFormClose;
+        dialog.Show();
     }
 }

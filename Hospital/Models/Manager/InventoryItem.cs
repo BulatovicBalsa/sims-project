@@ -1,8 +1,8 @@
 ﻿namespace Hospital.Models.Manager;
 
-public class EquipmentPlacement
+public class InventoryItem
 {
-    public EquipmentPlacement()
+    public InventoryItem()
     {
         Amount = 0;
         EquipmentId = "";
@@ -10,7 +10,7 @@ public class EquipmentPlacement
         Reserved = 0;
     }
 
-    public EquipmentPlacement(string equipmentId, string roomId, int amount)
+    public InventoryItem(string equipmentId, string roomId, int amount)
     {
         EquipmentId = equipmentId;
         RoomId = roomId;
@@ -18,7 +18,7 @@ public class EquipmentPlacement
         Reserved = 0;
     }
 
-    public EquipmentPlacement(Equipment equipment, string roomId, int amount)
+    public InventoryItem(Equipment equipment, string roomId, int amount)
     {
         EquipmentId = equipment.Id;
         RoomId = roomId;
@@ -38,9 +38,9 @@ public class EquipmentPlacement
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj.GetType() != typeof(EquipmentPlacement)) return false;
+        if (obj == null || obj.GetType() != typeof(InventoryItem)) return false;
 
-        var otherPlacement = (EquipmentPlacement)obj;
+        var otherPlacement = (InventoryItem)obj;
         return EquipmentId == otherPlacement.EquipmentId && RoomId == otherPlacement.RoomId;
     }
 

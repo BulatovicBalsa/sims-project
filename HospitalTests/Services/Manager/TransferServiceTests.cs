@@ -18,7 +18,7 @@ namespace HospitalTests.Models.Manager
         {
             EquipmentRepository.Instance.DeleteAll();
             RoomRepository.Instance.DeleteAll();
-            EquipmentPlacementRepository.Instance.DeleteAll();
+            InventoryItemRepository.Instance.DeleteAll();
             TransferRepository.Instance.DeleteAll();
             TransferItemRepository.Instance.DeleteAll();
         }
@@ -102,9 +102,10 @@ namespace HospitalTests.Models.Manager
             };
 
             Assert.IsTrue(TransferService.TrySendTransfer(origin, destination1, transferItems1, DateTime.Now.AddSeconds(-1)));
+            TransferService.AttemptDeliveryOfAllTransfers();
             Thread.Sleep(5000);
             Assert.IsTrue(TransferRepository.Instance.GetAll()[0].Delivered);
-            Assert.AreEqual(0, origin.Equipment[0].Reserved);
+            Assert.AreEqual(0, origin.Inventory[0].Reserved);
         }
     }
 }

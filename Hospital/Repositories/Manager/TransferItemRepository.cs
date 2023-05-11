@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
-using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace Hospital.Repositories.Manager;
 
@@ -23,10 +22,8 @@ public class TransferItemRepository
     {
         if (_transferItems == null) return;
         foreach (var item in _transferItems)
-        {
             item.Equipment = EquipmentRepository.Instance.GetById(item.EquipmentId) ??
-                             throw new InvalidOperationException("Equipment reference in transfer item not found");
-        }
+                             throw new InvalidOperationException("Inventory reference in transfer item not found");
     }
 
     public List<TransferItem> GetAll()

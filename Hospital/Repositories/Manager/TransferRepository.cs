@@ -57,11 +57,13 @@ public class TransferRepository
 
     private void JoinWithRooms()
     {
-        if (_transfers == null) return; 
+        if (_transfers == null) return;
         foreach (var transfer in _transfers)
         {
-            transfer.Origin = RoomRepository.Instance.GetById(transfer.OriginId) ?? throw new InvalidOperationException();
-            transfer.Destination = RoomRepository.Instance.GetById(transfer.DestinationId) ?? throw new InvalidOperationException();
+            transfer.Origin = RoomRepository.Instance.GetById(transfer.OriginId) ??
+                              throw new InvalidOperationException();
+            transfer.Destination = RoomRepository.Instance.GetById(transfer.DestinationId) ??
+                                   throw new InvalidOperationException();
         }
     }
 

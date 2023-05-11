@@ -38,10 +38,7 @@ public class Equipment
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj.GetType() != typeof(Equipment))
-        {
-            return false;
-        }
+        if (obj == null || obj.GetType() != typeof(Equipment)) return false;
 
         return ((Equipment)obj).Id == Id;
     }

@@ -24,7 +24,7 @@ public class EquipmentOrderTests
         var order = EquipmentOrder.CreateBlankOrder();
         order.AddOrUpdateItem(equipment, 2);
 
-        order.PickUp(warehouse);
+        order.TryPickUp(warehouse);
 
         Assert.IsFalse(order.PickedUp);
         Assert.AreEqual(0, warehouse.GetAmount(equipment));
@@ -38,7 +38,7 @@ public class EquipmentOrderTests
         var order = new EquipmentOrder(DateTime.Now.AddDays(-1));
         order.AddOrUpdateItem(equipment, 2);
 
-        order.PickUp(warehouse);
+        order.TryPickUp(warehouse);
 
         Assert.IsTrue(order.PickedUp);
         Assert.AreEqual(2, warehouse.GetAmount(equipment));
@@ -52,8 +52,8 @@ public class EquipmentOrderTests
         var order = new EquipmentOrder(DateTime.Now.AddDays(-1));
         order.AddOrUpdateItem(equipment, 2);
 
-        order.PickUp(warehouse);
-        order.PickUp(warehouse);
+        order.TryPickUp(warehouse);
+        order.TryPickUp(warehouse);
 
         Assert.IsTrue(order.PickedUp);
         Assert.AreEqual(2, warehouse.GetAmount(equipment));
