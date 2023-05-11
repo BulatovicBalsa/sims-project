@@ -39,7 +39,7 @@ namespace Hospital.Services.Manager
                 return false;
             }
 
-            transfer.Origin.ReserveEquipment(transfer);
+            transfer.Origin.TryReserveEquipment(transfer);
             RoomRepository.Instance.Update(origin);
             TransferRepository.Instance.Add(transfer);
             return true;

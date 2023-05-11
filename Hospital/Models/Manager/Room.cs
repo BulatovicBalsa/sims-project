@@ -103,7 +103,7 @@ public class Room
         return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
     }
 
-    private bool Reserve(Equipment equipment, int amount)
+    private bool TryReserve(Equipment equipment, int amount)
     {
 
         if (!CanReserve(equipment, amount)) return false;
@@ -113,12 +113,12 @@ public class Room
         return true;
     }
 
-    public bool ReserveEquipment(Transfer transfer)
+    public bool TryReserveEquipment(Transfer transfer)
     {
         if (!HasEnoughEquipment(transfer))
             return false;
 
-        transfer.Items.ForEach(item => Reserve(item.Equipment, item.Amount));
+        transfer.Items.ForEach(item => TryReserve(item.Equipment, item.Amount));
 
         return true;
     }
