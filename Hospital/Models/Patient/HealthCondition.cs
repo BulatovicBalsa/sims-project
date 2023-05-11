@@ -1,61 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Models.Patient
+namespace Hospital.Models.Patient;
+
+public enum HealthConditionType
 {
-    public enum HealthConditionType
+    Allergy,
+    MedicalCondition
+}
+
+public class HealthCondition
+{
+    public HealthCondition(HealthConditionType type)
     {
-        Allergy,
-        MedicalCondition
+        Type = type;
+        Conditions = new List<string>();
     }
 
-    public class HealthCondition
+    public HealthCondition(HealthConditionType type, List<string> conditions)
     {
-        public HealthConditionType Type { get; private set; }
-        public List<string> Conditions { get; set; }
+        Type = type;
+        Conditions = conditions;
+    }
 
-        public HealthCondition(HealthConditionType type)
-        {
-            Type = type;
-            Conditions = new List<string>();
-        }
+    public HealthConditionType Type { get; }
+    public List<string> Conditions { get; set; }
 
-        public HealthCondition(HealthConditionType type, List<string> conditions)
-        {
-            Type = type;
-            Conditions = conditions;
-        }
+    public void Add(string conditionToAdd)
+    {
+        conditionToAdd = conditionToAdd.Trim();
 
-        public void Add(string conditionToAdd)
-        {
-            conditionToAdd = conditionToAdd.Trim();
+        if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{Type} name can't be empty");
+        if (Conditions.Contains(conditionToAdd))
+            throw new ArgumentException($"{conditionToAdd} already exists in medical record");
+        Conditions.Add(conditionToAdd);
+    }
 
-            if (string.IsNullOrEmpty(conditionToAdd)) throw new ArgumentException($"{Type} name can't be empty");
-            if (Conditions.Contains(conditionToAdd))
-                throw new ArgumentException($"{conditionToAdd} already exists in medical record");
-            Conditions.Add(conditionToAdd);
-        }
+    public void Delete(string selectedCondition)
+    {
+        if (!Conditions.Contains(selectedCondition))
+            throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
+        Conditions.Remove(selectedCondition);
+    }
 
-        public void Delete(string selectedCondition)
-        {
-            if (!Conditions.Contains(selectedCondition))
-                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            Conditions.Remove(selectedCondition);
-        }
-
-        public void Update(string selectedCondition, string updatedCondition)
-        {
-            updatedCondition = updatedCondition.Trim();
-            var indexToUpdate = Conditions.IndexOf(selectedCondition);
-            if (indexToUpdate == -1)
-                throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
-            if (string.IsNullOrEmpty(updatedCondition)) throw new ArgumentException($"{Type} name can't be empty");
-            if (Conditions.Contains(updatedCondition))
-                throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
-            Conditions[indexToUpdate] = updatedCondition;
-        }
+    public void Update(string selectedCondition, string updatedCondition)
+    {
+        updatedCondition = updatedCondition.Trim();
+        var indexToUpdate = Conditions.IndexOf(selectedCondition);
+        if (indexToUpdate == -1)
+            throw new ArgumentException($"{selectedCondition} doesn't exist in this patient's medical record");
+        if (string.IsNullOrEmpty(updatedCondition)) throw new ArgumentException($"{Type} name can't be empty");
+        if (Conditions.Contains(updatedCondition))
+            throw new ArgumentException($"{updatedCondition} already exist in this patient's medical record");
+        Conditions[indexToUpdate] = updatedCondition;
     }
 }
