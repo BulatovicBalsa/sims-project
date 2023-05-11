@@ -10,7 +10,7 @@ public class Room
     {
         Id = Guid.NewGuid().ToString();
         Name = "";
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<EquipmentPlacement>();
     }
 
     public Room(string name, RoomType type)
@@ -18,7 +18,7 @@ public class Room
         Id = Guid.NewGuid().ToString();
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<EquipmentPlacement>();
     }
 
     public Room(string id, string name, RoomType type)
@@ -26,7 +26,7 @@ public class Room
         Id = id;
         Name = name;
         Type = type;
-        Equipment = new List<EquipmentPlacement>();
+        Inventory = new List<EquipmentPlacement>();
     }
 
     public string Id { get; set; }
@@ -34,31 +34,31 @@ public class Room
 
     public RoomType Type { get; set; }
 
-    public List<EquipmentPlacement> Equipment { get; set; }
+    public List<EquipmentPlacement> Inventory { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
-        var equipmentItem = Equipment.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
+        var equipmentItem = Inventory.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
         return equipmentItem?.Amount ?? 0;
     }
 
     public void SetAmount(Equipment equipment, int amount)
     {
-        var equipmentItem = Equipment.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
+        var equipmentItem = Inventory.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
         if (equipmentItem != null)
             equipmentItem.Amount = amount;
         else
-            Equipment.Add(new EquipmentPlacement(equipment, Id, amount));
+            Inventory.Add(new EquipmentPlacement(equipment, Id, amount));
     }
 
     public List<Equipment> GetEquipment()
     {
-        return (from equipmentPlacement in Equipment select equipmentPlacement.Equipment).ToList();
+        return (from equipmentPlacement in Inventory select equipmentPlacement.Equipment).ToList();
     }
 
     public List<EquipmentPlacement> GetDynamicEquipmentAmounts()
     {
-        return (from equipmentPlacement in Equipment
+        return (from equipmentPlacement in Inventory
             where equipmentPlacement.Equipment.Type == EquipmentType.DynamicEquipment
             select equipmentPlacement).ToList();
     }
@@ -84,7 +84,7 @@ public class Room
 
     private EquipmentPlacement? GetPlacement(Equipment equipment)
     {
-        return Equipment.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
+        return Inventory.Find(placement => placement.Equipment != null && placement.Equipment.Equals(equipment));
     }
 
     private int GetReservedAmount(Equipment equipment)

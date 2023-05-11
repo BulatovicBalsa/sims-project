@@ -43,7 +43,7 @@ public class RoomRepository
         {
             var room = rooms.Find(room => room.Id == roomGroup.Key);
             if (room == null) continue;
-            room.Equipment = roomGroup.ToList();
+            room.Inventory = roomGroup.ToList();
         }
     }
 
@@ -60,7 +60,7 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Equipment)
+        foreach (var equipmentPlacement in room.Inventory)
             EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
     }
 
@@ -75,7 +75,7 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Equipment)
+        foreach (var equipmentPlacement in room.Inventory)
             if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
                     equipmentPlacement.EquipmentId) == null)
                 EquipmentPlacementRepository.Instance.Add(equipmentPlacement);

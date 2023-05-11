@@ -168,8 +168,8 @@ public class RoomRepositoryTests
 
         var loadedRooms = RoomRepository.Instance.GetAll();
 
-        Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
-        Assert.AreEqual(1, loadedRooms[1].Equipment.Count);
+        Assert.AreEqual(2, loadedRooms[0].Inventory.Count);
+        Assert.AreEqual(1, loadedRooms[1].Inventory.Count);
         Assert.AreEqual(1,
             loadedRooms[0].GetAmount(new Equipment("1", "", EquipmentType.ExaminationEquipment)));
         Assert.AreEqual(3,

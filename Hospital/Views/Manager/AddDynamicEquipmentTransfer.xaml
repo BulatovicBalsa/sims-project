@@ -60,7 +60,7 @@
                     Width="180"
                     HorizontalAlignment="Left"
                     DataContext="{Binding ElementName=SelectEquipmentComboBox,Path=SelectedItem}"  
-                    Content="Equipment"
+                    Content="Inventory"
 
             >
                 <Label.Style>
@@ -152,7 +152,7 @@
             <DataGrid ItemsSource="{Binding Items, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Inventory" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
                     <DataGridTextColumn Header="Amount" Width="*" x:Name="AmountColumn">
 
                         <DataGridTextColumn.EditingElementStyle>

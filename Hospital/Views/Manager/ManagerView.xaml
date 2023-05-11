@@ -12,10 +12,10 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="Equipment">
+            <TabItem Header="Inventory">
                 <DockPanel LastChildFill="False">
                     <ToolBar DockPanel.Dock="Top">
-                        <Button x:Name="EquipmentButton" Content="Equipment" Width="NaN" HorizontalAlignment="Left"
+                        <Button x:Name="EquipmentButton" Content="Inventory" Width="NaN" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Click="Button_Click" />
                     </ToolBar>
                 </DockPanel>
@@ -52,7 +52,7 @@
                         <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"
                                   AutoGenerateColumns="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
                                                     IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
                                                     Width="*" />
@@ -99,7 +99,7 @@
                         <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedTransferItems}" CanUserAddRows="False"
                                   AutoGenerateColumns="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Equipment name" Binding="{Binding Equipment}"
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
                                                     IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
                                                     Width="*" />

@@ -105,7 +105,7 @@ namespace HospitalTests.Models.Manager
             TransferService.AttemptDeliveryOfAllTransfers();
             Thread.Sleep(5000);
             Assert.IsTrue(TransferRepository.Instance.GetAll()[0].Delivered);
-            Assert.AreEqual(0, origin.Equipment[0].Reserved);
+            Assert.AreEqual(0, origin.Inventory[0].Reserved);
         }
     }
 }
