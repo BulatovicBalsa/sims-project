@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Models.Patient
 {
-    class HealthCondition
+    public class HealthCondition
     {
         public  HealthConditionType Type { get; private set; }
         public List<string> Conditions { get; set; }

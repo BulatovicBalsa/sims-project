@@ -39,8 +39,8 @@ public class MedicalRecord
     {
         Height = height;
         Weight = weight;
-        Allergies = allergies;
-        MedicalHistory = medicalHistory;
+        Allergies = new HealthCondition(HealthConditionType.Allergy, allergies);
+        MedicalHistory = new HealthCondition(HealthConditionType.MedicalCondition, medicalHistory);
         //Prescriptions = prescriptions;
     }
 
