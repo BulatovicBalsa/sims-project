@@ -6,7 +6,7 @@ using Hospital.Models.Manager;
 
 namespace Hospital.Converters;
 
-public class EquipmentToAmountInRoomTextColorConverter : IMultiValueConverter
+public class EquipmentToAmountInRoomColorConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {

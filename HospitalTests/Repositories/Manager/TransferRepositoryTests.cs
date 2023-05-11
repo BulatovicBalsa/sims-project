@@ -23,7 +23,7 @@ public class TransferRepositoryTests
         TransferRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
     }
 
     [TestMethod]

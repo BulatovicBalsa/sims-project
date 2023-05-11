@@ -23,27 +23,27 @@ public class RoomRepository
         if (_rooms == null)
         {
             _rooms = Serializer<Room>.FromCSV(FilePath);
-            PlaceEquipment(_rooms);
+            JoinWithInventories(_rooms);
         }
 
         return _rooms;
     }
 
-    private static void PlaceEquipment(List<Room> rooms)
+    private static void JoinWithInventories(List<Room> rooms)
     {
-        var equipmentPlacements = EquipmentPlacementRepository.Instance.GetAll();
+        var inventoryItems = InventoryItemRepository.Instance.GetAll();
 
-        var equipmentPlacementsByRoom =
-            from equipmentPlacement in equipmentPlacements
+        var inventoryItemsByRoom =
+            from equipmentPlacement in inventoryItems
             group equipmentPlacement by equipmentPlacement.RoomId
             into equipmentInRoom
             select equipmentInRoom;
 
-        foreach (var roomGroup in equipmentPlacementsByRoom)
+        foreach (var roomGroup in inventoryItemsByRoom)
         {
             var room = rooms.Find(room => room.Id == roomGroup.Key);
             if (room == null) continue;
-            room.Equipment = roomGroup.ToList();
+            room.Inventory = roomGroup.ToList();
         }
     }
 
@@ -60,8 +60,8 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Equipment)
-            EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+        foreach (var inventoryItem in room.Inventory)
+            InventoryItemRepository.Instance.Add(inventoryItem);
     }
 
     public void Update(Room room)
@@ -75,12 +75,12 @@ public class RoomRepository
 
         Serializer<Room>.ToCSV(rooms, FilePath);
 
-        foreach (var equipmentPlacement in room.Equipment)
-            if (EquipmentPlacementRepository.Instance.GetByKey(equipmentPlacement.RoomId,
-                    equipmentPlacement.EquipmentId) == null)
-                EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
+        foreach (var inventoryItem in room.Inventory)
+            if (InventoryItemRepository.Instance.GetByKey(inventoryItem.RoomId,
+                    inventoryItem.EquipmentId) == null)
+                InventoryItemRepository.Instance.Add(inventoryItem);
             else
-                EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
+                InventoryItemRepository.Instance.Update(inventoryItem);
     }
 
     public void Delete(Room room)
