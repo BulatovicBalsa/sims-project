@@ -5,19 +5,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Manager"
-        xmlns:manager="clr-namespace:Hospital.ViewModels.Manager"
+        xmlns:model="clr-namespace:Hospital.Models.Manager"
         xmlns:viewModels="clr-namespace:Hospital.ViewModels.Manager"
         xmlns:valRule="clr-namespace:Hospital.ValidationRules"
+        xmlns:converters="clr-namespace:Hospital.Converters"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
  
         mc:Ignorable="d"
         Title="AddDynamicEquipmentTransfer" Height="450" Width="1200">
     <Window.DataContext>
-        <manager:AddDynamicEquipmentTransferViewModel />
+        <viewModels:AddDynamicEquipmentTransferViewModel />
     </Window.DataContext>
 
-
-
+    <Window.Resources>
+        <converters:EquipmentToAmountInRoomTextColorConverter x:Key="EquipmentToAmountInRoomTextColorConverter" />
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <Grid>
             <Grid.RowDefinitions>
@@ -34,7 +36,20 @@
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="SelectEquipmentComboBox" ItemsSource="{Binding Equipment, Mode=TwoWay}"
                       SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Text="Select equipment"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource EquipmentToAmountInRoomTextColorConverter}">
+                                    <Binding Path="." />
+                                    <Binding Path="DataContext.SelectedDestination" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
             <Label  Height="50"
                     Width="180"
                     HorizontalAlignment="Left"

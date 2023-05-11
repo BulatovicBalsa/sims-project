@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using Hospital.Converters;
 using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels.Manager;
@@ -15,7 +15,7 @@ public class AddDynamicEquipmentTransferViewModel : AddTransferViewModelBase
     {
         _destinationRooms = new BindingList<Room>(RoomFilterService.GetRoomsLowOnDynamicEquipment());
     }
-
+   
     public BindingList<Room> DestinationRooms
     {
         get => _destinationRooms;
