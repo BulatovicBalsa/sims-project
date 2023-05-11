@@ -15,9 +15,6 @@ using Hospital.ViewModels;
 
 namespace Hospital.Views.Manager
 {
-    /// <summary>
-    /// Interaction logic for AddStaticEquipmentTransfer.xaml
-    /// </summary>
     public partial class AddStaticEquipmentTransfer : Window, IClosable
     {
         public AddStaticEquipmentTransfer()
