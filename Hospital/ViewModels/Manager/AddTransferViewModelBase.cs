@@ -148,7 +148,7 @@ public class AddTransferViewModelBase : ViewModelBase
     public void AddItem()
     {
         if (SelectedEquipment == null) return;
-        Items.Add(new TransferItem("", SelectedEquipment, 0));
+        Items.Add(new TransferItem(SelectedEquipment, 0, ""));
         Equipment.Remove(SelectedEquipment);
     }
 

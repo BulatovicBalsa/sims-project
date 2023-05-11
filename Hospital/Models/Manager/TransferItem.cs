@@ -9,7 +9,8 @@ public class TransferItem
         EquipmentId = "";
     }
 
-    public TransferItem(string transferId, Equipment equipment, int amount)
+    public TransferItem(Equipment equipment, int amount, string transferId)
+
     {
         TransferId = transferId;
         Equipment = equipment;
