@@ -19,6 +19,10 @@
 
     <Window.Resources>
         <converters:EquipmentToAmountInRoomTextColorConverter x:Key="EquipmentToAmountInRoomTextColorConverter" />
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Grid>
@@ -36,14 +40,16 @@
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="SelectEquipmentComboBox" ItemsSource="{Binding Equipment, Mode=TwoWay}"
                       SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Text="Select equipment"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VirtualizingPanel.IsVirtualizing="False">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
                         <Setter Property="Foreground">
                             <Setter.Value>
                                 <MultiBinding Converter="{StaticResource EquipmentToAmountInRoomTextColorConverter}">
                                     <Binding Path="." />
-                                    <Binding Path="DataContext.SelectedDestination" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                    <Binding Path="DataContext.SelectedDestination" ElementName="SelectDestinationComboBox" />
                                 </MultiBinding>
                             </Setter.Value>
                         </Setter>
