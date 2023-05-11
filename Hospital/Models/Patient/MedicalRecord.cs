@@ -69,8 +69,8 @@ public class MedicalRecord
     {
         var copy = new MedicalRecord(Height, Weight)
         {
-            Allergies = new List<string>(Allergies),
-            MedicalHistory = new List<string>(MedicalHistory)
+            Allergies = new HealthCondition(Allergies.Type, Allergies.Conditions),
+            MedicalHistory = new HealthCondition(MedicalHistory.Type, MedicalHistory.Conditions)
             //Prescriptions = new List<Prescription>(Prescriptions.Select(p => p.DeepCopy()))
         };
 
