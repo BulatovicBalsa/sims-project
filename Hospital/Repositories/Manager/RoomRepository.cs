@@ -23,13 +23,13 @@ public class RoomRepository
         if (_rooms == null)
         {
             _rooms = Serializer<Room>.FromCSV(FilePath);
-            PlaceEquipment(_rooms);
+            JoinWithInventories(_rooms);
         }
 
         return _rooms;
     }
 
-    private static void PlaceEquipment(List<Room> rooms)
+    private static void JoinWithInventories(List<Room> rooms)
     {
         var inventoryItems = InventoryItemRepository.Instance.GetAll();
 
