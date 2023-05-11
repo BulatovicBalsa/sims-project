@@ -18,7 +18,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <converters:EquipmentToAmountInRoomTextColorConverter x:Key="EquipmentToAmountInRoomTextColorConverter" />
+        <converters:EquipmentToAmountInRoomColorConverter x:Key="EquipmentToAmountInRoomTextColorConverter" />
         <Style TargetType="ComboBoxItem">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
