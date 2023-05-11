@@ -23,6 +23,11 @@ public class HealthCondition
         Conditions = conditions;
     }
 
+    public HealthCondition()
+    {
+        Conditions = new List<string>();
+    }
+
     public HealthConditionType Type { get; }
     public List<string> Conditions { get; set; }
 
