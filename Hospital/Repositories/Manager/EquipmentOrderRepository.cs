@@ -12,7 +12,9 @@ public class EquipmentOrderRepository
     private static EquipmentOrderRepository? _instance;
     private List<EquipmentOrder>? _orders;
 
-    private EquipmentOrderRepository() { }
+    private EquipmentOrderRepository()
+    {
+    }
 
     public static EquipmentOrderRepository Instance
     {

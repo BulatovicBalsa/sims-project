@@ -103,11 +103,14 @@ public class Room
         return transfer.Items.All(item => CanReserve(item.Equipment, item.Amount));
     }
 
-    private void Reserve(Equipment equipment, int amount)
+    private bool Reserve(Equipment equipment, int amount)
     {
+
+        if (!CanReserve(equipment, amount)) return false;
         var placement = GetPlacement(equipment);
         if (placement != null)
             placement.Reserved += amount;
+        return true;
     }
 
     public bool ReserveEquipment(Transfer transfer)
@@ -115,8 +118,7 @@ public class Room
         if (!HasEnoughEquipment(transfer))
             return false;
 
-        foreach (var item in transfer.Items)
-            Reserve(item.Equipment, item.Amount);
+        transfer.Items.ForEach(item => Reserve(item.Equipment, item.Amount));
 
         return true;
     }
@@ -142,7 +144,6 @@ public class Room
 
     public void Receive(Transfer transfer)
     {
-        foreach (var item in transfer.Items)
-            SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount);
+        transfer.Items.ForEach(item => SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount));
     }
 }

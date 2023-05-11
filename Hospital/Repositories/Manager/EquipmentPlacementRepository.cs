@@ -12,7 +12,9 @@ public class EquipmentPlacementRepository
 
     private List<EquipmentPlacement>? _equipmentPlacements;
 
-    private EquipmentPlacementRepository() { }
+    private EquipmentPlacementRepository()
+    {
+    }
 
     public static EquipmentPlacementRepository Instance => _instance ??= new EquipmentPlacementRepository();
 
@@ -74,9 +76,9 @@ public class EquipmentPlacementRepository
 
     public void DeleteAll()
     {
-        if (_equipmentPlacements == null) return;
-        _equipmentPlacements.Clear();
-        Serializer<EquipmentPlacement>.ToCSV(_equipmentPlacements, FilePath);
+        var equipmentPlacements = _equipmentPlacements ?? GetAll();
+        equipmentPlacements.Clear();
+        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, FilePath);
         _equipmentPlacements = null;
     }
 }
