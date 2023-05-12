@@ -16,7 +16,7 @@ using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
-    public class CreateReferralDialog : Window
+    public partial class CreateReferralDialog : Window
     {
         public CreateReferralDialog(Referral? referralToCreate)
         {
