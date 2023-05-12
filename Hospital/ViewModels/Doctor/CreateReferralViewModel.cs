@@ -85,7 +85,6 @@ public class CreateReferralViewModel : ViewModelBase
             : new Referral(SelectedDoctor!);
 
         ReferralToCreate?.DeepCopy(referralDto);
-
         MessageBox.Show("Succeed");
         window.DialogResult = true;
     }
