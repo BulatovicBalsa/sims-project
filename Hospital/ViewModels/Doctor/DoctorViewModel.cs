@@ -19,6 +19,7 @@ public class DoctorViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
     private readonly ExaminationService _examinationService = new();
+    private readonly PatientService _patientService = new();
 
     private const string Placeholder = "Search...";
 
@@ -130,7 +131,7 @@ public class DoctorViewModel : ViewModelBase
 
     private void ViewMedicalRecord(string patientId)
     {
-        var patient = _doctorService.GetPatientById(patientId);
+        var patient = _patientService.GetPatientById(patientId);
         if (patient == null)
         {
             MessageBox.Show("Please select examination in order to delete it");
@@ -208,7 +209,7 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        var patientOnExamination = _doctorService.GetPatient(examinationToPerform);
+        var patientOnExamination = _patientService.GetPatient(examinationToPerform);
 
         if (!examinationToPerform.IsPerformable())
         {
