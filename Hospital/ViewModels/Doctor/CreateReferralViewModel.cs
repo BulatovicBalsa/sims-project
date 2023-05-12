@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using Hospital.Coordinators;
 using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
@@ -14,13 +13,13 @@ public class CreateReferralViewModel : ViewModelBase
     private readonly DoctorService _doctorService = new();
     private ObservableCollection<Doctor> _doctors;
 
+    private bool _isSelectedItemChanged;
+
     private Doctor? _selectedDoctor;
 
     private string? _selectedSpecialization;
 
     private ObservableCollection<string> _specializations;
-
-    private bool isChanged = false;
 
     public CreateReferralViewModel(Referral? referralToCreate)
     {
@@ -38,16 +37,7 @@ public class CreateReferralViewModel : ViewModelBase
             _selectedDoctor = value;
             OnPropertyChanged(nameof(SelectedDoctor));
 
-            if (isChanged)
-            {
-                isChanged = false;
-                return;
-            }
-            if (!isChanged)
-            {
-                isChanged = true;
-                SelectedSpecialization = null;
-            }
+            TryChangeSelectedItemToNull(true);
         }
     }
 
@@ -59,16 +49,7 @@ public class CreateReferralViewModel : ViewModelBase
             _selectedSpecialization = value;
             OnPropertyChanged(nameof(SelectedSpecialization));
 
-            if (isChanged)
-            {
-                isChanged = false;
-                return;
-            }
-            if (!isChanged)
-            {
-                isChanged = true;
-                SelectedDoctor = null;
-            }
+            TryChangeSelectedItemToNull(false);
         }
     }
 
@@ -95,6 +76,19 @@ public class CreateReferralViewModel : ViewModelBase
     public Referral? ReferralToCreate { get; set; }
 
     public ICommand CreateReferralCommand { get; set; }
+
+    private void TryChangeSelectedItemToNull(bool doesDoctorCalled)
+    {
+        if (_isSelectedItemChanged)
+        {
+            _isSelectedItemChanged = false;
+            return;
+        }
+
+        _isSelectedItemChanged = true;
+        if (doesDoctorCalled) SelectedSpecialization = null;
+        else SelectedDoctor = null;
+    }
 
     private void CreateReferral(Window window)
     {
