@@ -5,12 +5,14 @@ using Hospital.Models.Patient;
 using Hospital.Views;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class PerformExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly ExaminationService _examinationService = new();
 
     private string _anamnesis;
 
@@ -43,7 +45,7 @@ public class PerformExaminationViewModel : ViewModelBase
     private void UpdateAnamnesis()
     {
         _examinationToPerform.Anamnesis = Anamnesis;
-        _doctorService.UpdateExamination(_examinationToPerform);
+        _examinationService.UpdateExamination(_examinationToPerform);
         MessageBox.Show("Succeed");
     }
 
