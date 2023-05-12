@@ -27,7 +27,7 @@ public class Referral
         Specialization = other.Specialization;
     }
 
-    public bool isDefault()
+    public bool IsDefault()
     {
         return Specialization == "";
     }
