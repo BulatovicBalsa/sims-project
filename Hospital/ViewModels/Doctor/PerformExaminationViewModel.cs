@@ -41,6 +41,7 @@ public class PerformExaminationViewModel : ViewModelBase
 
     public ICommand UpdateAnamnesisCommand { get; set; }
     public ICommand FinishExaminationCommand { get; set; }
+    public ICommand CreateReferralCommand { get; set; }
 
     private void UpdateAnamnesis()
     {
