@@ -24,13 +24,6 @@ public class DoctorService
         _roomRepository = RoomRepository.Instance;
     }
 
-    public List<Room> GetRoomsForExamination()
-    {
-        var allRooms = _roomRepository.GetAll();
-        return allRooms.Where(room =>
-            room.Type == RoomType.OperatingRoom || room.Type == RoomType.ExaminationRoom).ToList();
-    }
-
     public List<string> GetAllSpecializations()
     {
         var allDoctors = _doctorRepository.GetAll();
