@@ -10,12 +10,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class ModifyExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly ExaminationService _examinationService = new();
 
     private string _buttonContent;
     private readonly Doctor _doctor;
@@ -161,7 +163,7 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
             else
             {
-                _doctorService.AddExamination(createdExamination);
+                _examinationService.AddExamination(createdExamination);
                 _examinationCollection.Add(createdExamination);
             }
         }
@@ -207,9 +209,9 @@ public class ModifyExaminationViewModel : ViewModelBase
     {
         if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
         else throw new InvalidOperationException("examination to change can't be null");
-        _doctorService.UpdateExamination(examination);
+        _examinationService.UpdateExamination(examination);
         _examinationCollection.Clear();
-        _doctorService.GetExaminationsForNextThreeDays(_doctor)
+        _examinationService.GetExaminationsForNextThreeDays(_doctor)
             .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));
     }
 
