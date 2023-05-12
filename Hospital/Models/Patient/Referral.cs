@@ -26,4 +26,9 @@ public class Referral
         Doctor = other.Doctor;
         Specialization = other.Specialization;
     }
+
+    public bool isDefault()
+    {
+        return Specialization == "";
+    }
 }
