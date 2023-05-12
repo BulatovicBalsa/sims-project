@@ -8,8 +8,6 @@ public class Patient : Person
     public const int MaxChangesOrDeletesLast30Days = 4;
     public const int MaxAllowedExaminationsLast30Days = 8;
 
-    public List<Referral> Referrals { get; set; }
-
     public Patient(string firstName, string lastName, string jmbg, string username, string password,
         MedicalRecord medicalRecord) : base(firstName, lastName, jmbg, username, password)
     {
@@ -24,6 +22,7 @@ public class Patient : Person
         Referrals = new List<Referral>();
     }
 
+    public List<Referral> Referrals { get; set; }
     public bool IsBlocked { get; set; }
     public MedicalRecord MedicalRecord { get; set; }
 
