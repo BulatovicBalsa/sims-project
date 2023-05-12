@@ -11,12 +11,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly ExaminationService _examinationService = new();
+
     private const string Placeholder = "Search...";
 
     private Doctor _doctor;
@@ -34,8 +37,8 @@ public class DoctorViewModel : ViewModelBase
     {
         _doctor = doctor;
         _selectedDate = DateTime.Now;
-        Patients = new ObservableCollection<Patient>(_doctorService.GetViewedPatients(doctor));
-        Examinations = new ObservableCollection<Examination>(_doctorService.GetExaminationsForNextThreeDays(doctor));
+        Patients = new ObservableCollection<Patient>(_examinationService.GetViewedPatients(doctor));
+        Examinations = new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
         ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
@@ -49,7 +52,7 @@ public class DoctorViewModel : ViewModelBase
     private void DefaultExaminationView()
     {
         Examinations.Clear();
-        _doctorService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -110,7 +113,7 @@ public class DoctorViewModel : ViewModelBase
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
             Examinations.Clear();
-            _doctorService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
+            _examinationService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
         }
     }
 
@@ -179,7 +182,7 @@ public class DoctorViewModel : ViewModelBase
 
         try
         {
-            _doctorService.DeleteExamination(examination);
+            _examinationService.DeleteExamination(examination);
         }
         catch (DoctorNotBusyException ex)
         {
