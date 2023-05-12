@@ -18,13 +18,15 @@ public class CreateReferralViewModel : ViewModelBase
 
     private string? _selectedSpecialization;
 
-    private ObservableCollection<string> _specialization;
+    private ObservableCollection<string> _specializations;
+
+    private bool isChanged = false;
 
     public CreateReferralViewModel(Referral? referralToCreate)
     {
         ReferralToCreate = referralToCreate;
         Doctors = new ObservableCollection<Doctor>(_doctorService.GetAll());
-        Specialization = new ObservableCollection<string>(_doctorService.GetAllSpecializations());
+        Specializations = new ObservableCollection<string>(_doctorService.GetAllSpecializations());
         CreateReferralCommand = new RelayCommand<Window>(CreateReferral);
     }
 
@@ -35,6 +37,17 @@ public class CreateReferralViewModel : ViewModelBase
         {
             _selectedDoctor = value;
             OnPropertyChanged(nameof(SelectedDoctor));
+
+            if (isChanged)
+            {
+                isChanged = false;
+                return;
+            }
+            if (!isChanged)
+            {
+                isChanged = true;
+                SelectedSpecialization = null;
+            }
         }
     }
 
@@ -45,6 +58,17 @@ public class CreateReferralViewModel : ViewModelBase
         {
             _selectedSpecialization = value;
             OnPropertyChanged(nameof(SelectedSpecialization));
+
+            if (isChanged)
+            {
+                isChanged = false;
+                return;
+            }
+            if (!isChanged)
+            {
+                isChanged = true;
+                SelectedDoctor = null;
+            }
         }
     }
 
@@ -58,13 +82,13 @@ public class CreateReferralViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<string> Specialization
+    public ObservableCollection<string> Specializations
     {
-        get => _specialization;
+        get => _specializations;
         set
         {
-            _specialization = value;
-            OnPropertyChanged(nameof(Specialization));
+            _specializations = value;
+            OnPropertyChanged(nameof(Specializations));
         }
     }
 
@@ -76,7 +100,7 @@ public class CreateReferralViewModel : ViewModelBase
     {
         if (SelectedDoctor is null && SelectedSpecialization is null)
         {
-            MessageBox.Show("You must enter Specialization or Doctor");
+            MessageBox.Show("You must enter Specializations or Doctor");
             return;
         }
 
