@@ -24,6 +24,11 @@ public class DoctorService
         _roomRepository = RoomRepository.Instance;
     }
 
+    public List<Doctor> GetAll()
+    {
+        return _doctorRepository.GetAll(); 
+    }
+
     public List<string> GetAllSpecializations()
     {
         var allDoctors = _doctorRepository.GetAll();
