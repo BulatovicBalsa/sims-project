@@ -21,6 +21,12 @@ public class Referral
         Specialization = specialization;
     }
 
+    public Referral(string specialization, Doctor? doctor)
+    {
+        Specialization = specialization;
+        Doctor = doctor;
+    }
+
     public void DeepCopy(Referral other)
     {
         Doctor = other.Doctor;
@@ -34,6 +40,6 @@ public class Referral
 
     public override string ToString()
     {
-        return $"{Specialization} ; {Doctor?.Id}";
+        return $"{Specialization};{Doctor?.Id}";
     }
 }
