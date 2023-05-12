@@ -18,6 +18,7 @@ public class ModifyExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
     private readonly ExaminationService _examinationService = new();
+    private readonly PatientService _patientService = new();
 
     private string _buttonContent;
     private readonly Doctor _doctor;
@@ -46,7 +47,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         _examinationCollection = examinationCollection;
         _examinationToChange = examinationToChange;
 
-        Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
+        Patients = new ObservableCollection<Patient>(_patientService.GetAllPatients());
         PossibleTimes = new ObservableCollection<TimeOnly>(GetPossibleTimes());
         Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
 
