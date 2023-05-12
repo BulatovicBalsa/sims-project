@@ -28,18 +28,6 @@ public class DoctorService
         _roomRepository = RoomRepository.Instance;
     }
 
-    public List<Patient> GetViewedPatients(Doctor doctor)
-    {
-        var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
-        var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
-        return viewedPatients!;
-    }
-
-    public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
-    {
-        return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
-    }
-
     public Patient GetPatient(Examination examination)
     {
         return _patientRepository.GetById(examination.Patient!.Id)!;
@@ -53,21 +41,6 @@ public class DoctorService
     public void UpdatePatient(Patient patient)
     {
         _patientRepository.Update(patient);
-    }
-
-    public void AddExamination(Examination examination)
-    {
-        _examinationRepository.Add(examination, false);
-    }
-
-    public void UpdateExamination(Examination examination)
-    {
-        _examinationRepository.Update(examination, false);
-    }
-
-    public void DeleteExamination(Examination examination)
-    {
-        _examinationRepository.Delete(examination, false);
     }
 
     public List<Room> GetRoomsForExamination()
@@ -94,10 +67,5 @@ public class DoctorService
         var allDoctors = _doctorRepository.GetAll();
 
         return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
-    }
-
-    public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
-    {
-        return _examinationRepository.GetExaminationsForDate(doctor, selectedDate);
     }
 }
