@@ -1,4 +1,6 @@
-﻿namespace Hospital.Models.Patient;
+﻿using System.Collections.Generic;
+
+namespace Hospital.Models.Patient;
 
 public class Patient : Person
 {
@@ -6,18 +8,20 @@ public class Patient : Person
     public const int MaxChangesOrDeletesLast30Days = 4;
     public const int MaxAllowedExaminationsLast30Days = 8;
 
-
+    public List<Referral> Referrals { get; set; }
 
     public Patient(string firstName, string lastName, string jmbg, string username, string password,
         MedicalRecord medicalRecord) : base(firstName, lastName, jmbg, username, password)
     {
         MedicalRecord = medicalRecord;
         IsBlocked = false;
+        Referrals = new List<Referral>();
     }
 
     public Patient()
     {
         MedicalRecord = new MedicalRecord();
+        Referrals = new List<Referral>();
     }
 
     public bool IsBlocked { get; set; }
