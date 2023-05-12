@@ -20,4 +20,10 @@ public class Referral
     {
         Specialization = specialization;
     }
+
+    public void DeepCopy(Referral other)
+    {
+        Doctor = other.Doctor;
+        Specialization = other.Specialization;
+    }
 }
