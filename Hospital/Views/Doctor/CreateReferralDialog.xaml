@@ -18,10 +18,10 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Doctor:"/>
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DoctorComboBox" Margin="0 0 0 10" ItemsSource="{Binding Doctors}"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DoctorComboBox" Margin="0 0 0 10" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor}"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Specialization:"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="SpecializationComboBox" Margin="0 0 0 10" ItemsSource="{Binding Specializations}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="SpecializationComboBox" Margin="0 0 0 10" ItemsSource="{Binding Specializations}" SelectedItem="{Binding SelectedSpecialization}"/>
 
         <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Create Referral" Command="{Binding CreateReferralCommand}" Margin="0 10 0 0"/>
     </Grid>
