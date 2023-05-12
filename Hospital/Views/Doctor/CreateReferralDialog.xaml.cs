@@ -11,16 +11,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Patient;
+using Hospital.ViewModels;
 
-namespace Hospital.Views.Doctor
+namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for CreateReferralDialog.xaml
-    /// </summary>
-    public partial class CreateReferralDialog : Window
+    public class CreateReferralDialog : Window
     {
-        public CreateReferralDialog()
+        public CreateReferralDialog(Referral? referralToCreate)
         {
+            DataContext = new CreateReferralViewModel(referralToCreate);
             InitializeComponent();
         }
     }
