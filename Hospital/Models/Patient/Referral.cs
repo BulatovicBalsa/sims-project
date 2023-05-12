@@ -31,4 +31,9 @@ public class Referral
     {
         return Specialization == "";
     }
+
+    public override string ToString()
+    {
+        return $"{Specialization} ; {Doctor?.Id}";
+    }
 }
