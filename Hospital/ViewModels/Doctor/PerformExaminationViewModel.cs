@@ -24,6 +24,7 @@ public class PerformExaminationViewModel : ViewModelBase
 
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
+        CreateReferralCommand = new RelayCommand(CreateReferral);
     }
 
     private readonly Examination _examinationToPerform;
@@ -55,5 +56,11 @@ public class PerformExaminationViewModel : ViewModelBase
         window.Close();
         var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room!);
         dialog.ShowDialog();
+    }
+
+    private void CreateReferral()
+    {
+        Referral? createdReferral;
+        var dialog = new CreateReferralDialog();
     }
 }
