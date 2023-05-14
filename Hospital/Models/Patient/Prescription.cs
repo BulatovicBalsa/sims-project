@@ -32,4 +32,9 @@ public class Prescription
     {
         return new Prescription(Medication, Amount, DailyUsage, MedicationTiming);
     }
+
+    public override string ToString()
+    {
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming}";
+    }
 }
