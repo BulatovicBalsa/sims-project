@@ -1,5 +1,6 @@
 ﻿using Hospital.Serialization;
 using Hospital.Models.Patient;
+using Hospital.Serialization.Mappers.Patient;
 
 namespace HospitalTests.Repositories.Patient;
 
@@ -26,7 +27,7 @@ public class MedicationRepositoryTests
         };
 
 
-        Serializer<Medication>.ToCSV(testMedications, TestFilePath);
+        Serializer<Medication>.ToCSV(testMedications, TestFilePath, new MedicationWriteMapper());
     }
 
     [TestMethod]
