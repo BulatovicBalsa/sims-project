@@ -8,7 +8,7 @@ using Hospital.Repositories.Patient;
 [TestClass]
 public class MedicationRepositoryTests
 {
-    private const string TestFilePath = "../../../Data/Medications.csv";
+    private const string TestFilePath = "../../../Data/medications.csv";
 
     [TestInitialize]
     public void TestInitialize()
@@ -103,7 +103,7 @@ public class MedicationRepositoryTests
 
         var testMedication = loadedMedications[4];
 
-        Assert.AreEqual(5, medicationRepository.GetAll().Count);
+        Assert.AreEqual(9, medicationRepository.GetAll().Count);
         Assert.AreEqual(testMedication, medicationRepository.GetById(testMedication.Id));
     }
 
