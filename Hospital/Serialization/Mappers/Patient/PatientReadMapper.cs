@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CsvHelper.Configuration;
+using Hospital.Repositories.Patient;
 
 namespace Hospital.Serialization.Mappers.Patient;
 
@@ -27,6 +29,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
         Map(patient => patient.IsBlocked).Index(10);
         Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
+        Map(patient => patient.MedicalRecord.Prescriptions).Index(12).TypeConverter<PrescriptionTypeConverter>();
     }
 
     private static List<string> SplitColumnValues(string? columnValue)
@@ -47,6 +50,26 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 let specialization = referralArgs[0].Trim() select new Referral(specialization, doctor));
 
             return referrals;
+        }
+    }
+
+    public class PrescriptionTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            var prescriptionStringList = SplitColumnValues(inputText);
+            List<Prescription> prescriptions = new();
+            if (string.IsNullOrEmpty(prescriptionStringList[0])) return prescriptions;
+            prescriptions.AddRange(from item in prescriptionStringList
+                select item.Split(";") into prescriptionArgs
+                let medicationId = prescriptionArgs[0].Trim()
+                let medication = MedicationRepository.Instance.GetById(medicationId)
+                let amount = Convert.ToInt32(prescriptionArgs[1])
+                let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
+                let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
+                select new Prescription(medication, amount, dailyUsage, medicationTiming));
+
+            return prescriptions;
         }
     }
 }
