@@ -12,10 +12,12 @@ public class Prescription
 {
     public Prescription()
     {
+        Medication = new Medication();
     }
 
-    public Prescription(int amount, int dailyUsage, MedicationTiming medicationTiming)
+    public Prescription(Medication medication,int amount, int dailyUsage, MedicationTiming medicationTiming)
     {
+        Medication = medication;
         Amount = amount;
         DailyUsage = dailyUsage;
         MedicationTiming = medicationTiming;
@@ -24,9 +26,10 @@ public class Prescription
     public int Amount { get; set; }
     public int DailyUsage { get; set; }
     public MedicationTiming MedicationTiming { get; set; }
+    public Medication Medication { get; set; }
 
     public Prescription DeepCopy()
     {
-        return new Prescription(Amount, DailyUsage, MedicationTiming);
+        return new Prescription(Medication, Amount, DailyUsage, MedicationTiming);
     }
 }
