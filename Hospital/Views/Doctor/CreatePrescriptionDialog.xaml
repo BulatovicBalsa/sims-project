@@ -1,0 +1,38 @@
+﻿<Window x:Class="Hospital.Views.CreatePrescriptionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CreatePrescriptionViewModel}"
+        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:doctor="clr-namespace:Hospital.ViewModels"
+        mc:Ignorable="d"
+        Title="Manage Prescriptions" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button x:Name="BtnAddPrescription"
+                    Content="Add Prescription"
+                    Margin="5" Command="{Binding AddPrescriptionCommand}"/>
+            <Button x:Name="BtnUpdatePrescription"
+                    Content="Update Prescription"
+                    Margin="5" Command="{Binding UpdatePrescriptionCommand}"/>
+            <Button x:Name="BtnDeletePrescription"
+                    Content="Delete Prescription"
+                    Margin="5" Command="{Binding DeletePrescriptionCommand}"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" x:Name="PatientsDataGrid" ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Medication" Binding="{Binding Medication.Name}" Width="*"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
+                <DataGridTextColumn Header="Daily Usage" Binding="{Binding DailyUsage}" Width="*"/>
+                <DataGridTextColumn Header="Medication Timing" Binding="{Binding MedicationTiming}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
