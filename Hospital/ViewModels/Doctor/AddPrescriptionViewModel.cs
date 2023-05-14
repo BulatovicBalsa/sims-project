@@ -109,7 +109,7 @@ public class AddPrescriptionViewModel : ViewModelBase
 
         if (PatientOnExamination.IsAllergicTo(SelectedMedication))
         {
-            MessageBox.Show("Patient is allergic to this medication!!!");
+            MessageBox.Show($"Patient is allergic to {SelectedMedication}!!!");
             return;
         }
 
