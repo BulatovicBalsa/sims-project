@@ -35,4 +35,18 @@ public class Medication
     {
         return new Medication(Id, Name, Allergens);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null || GetType() != obj.GetType()) return false;
+
+        var other = obj as Medication;
+        if (other == null) return false;
+        return Id == other.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 }
