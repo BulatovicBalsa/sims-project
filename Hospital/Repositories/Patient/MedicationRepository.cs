@@ -1,11 +1,12 @@
 ﻿using Hospital.Serialization;
 using System.Collections.Generic;
 using Hospital.Models.Patient;
+using Hospital.Serialization.Mappers.Patient;
 
 namespace Hospital.Repositories.Patient;
 public class MedicationRepository
 {
-    private const string FilePath = "../../../Data/Medications.csv";
+    private const string FilePath = "../../../Data/medications.csv";
     private static MedicationRepository? _instance;
 
     public static MedicationRepository Instance => _instance ??= new MedicationRepository();
@@ -14,7 +15,7 @@ public class MedicationRepository
 
     public List<Medication> GetAll()
     {
-        return Serializer<Medication>.FromCSV(FilePath);
+        return Serializer<Medication>.FromCSV(FilePath, new MedicationReadMapper());
     }
 
     public Medication? GetById(string id)
@@ -28,7 +29,7 @@ public class MedicationRepository
 
         allMedication.Add(medication);
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath);
+        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public void Update(Medication medication)
@@ -40,7 +41,7 @@ public class MedicationRepository
 
         allMedication[indexToUpdate] = medication;
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath);
+        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public void Delete(Medication medication)
@@ -52,12 +53,12 @@ public class MedicationRepository
 
         allMedication.RemoveAt(indexToDelete);
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath);
+        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public static void DeleteAll()
     {
         var emptyMedicationList = new List<Medication>();
-        Serializer<Medication>.ToCSV(emptyMedicationList, FilePath);
+        Serializer<Medication>.ToCSV(emptyMedicationList, FilePath, new MedicationWriteMapper());
     }
 }
