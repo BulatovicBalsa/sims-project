@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Models.Patient;
 
@@ -35,5 +36,10 @@ public class Patient : Person
         };
 
         return copy;
+    }
+
+    public bool IsAllergicTo(Medication medication)
+    {
+        return medication.Allergens.Any(allergen => MedicalRecord.Allergies.Conditions.Contains(allergen));
     }
 }
