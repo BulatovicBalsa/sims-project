@@ -53,7 +53,7 @@ public class PerformExaminationViewModel : ViewModelBase
         var result = MessageBox.Show("Anamnesis Saved, do you want to create prescriptions?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (result == MessageBoxResult.Yes)
         {
-            var dialog = new CreatePerscriptionsDialog(PatientOnExamination);
+            var dialog = new CreatePrescriptionsDialog(PatientOnExamination);
             dialog.ShowDialog();
         }
     }
