@@ -9,7 +9,7 @@ public class MedicalRecord
     private const int MaxWeight = 200;
     private const int MinHeight = 30;
     private const int MaxHeight = 220;
-    //public List<Prescription> Prescriptions { get; set; }
+    public List<Prescription> Prescriptions { get; set; }
 
     public MedicalRecord()
     {
@@ -20,13 +20,10 @@ public class MedicalRecord
         //Prescriptions = new List<Prescription>();
     }
 
-    public MedicalRecord(int height, int weight)
+    public MedicalRecord(int height, int weight) : this()
     {
         Height = height;
         Weight = weight;
-        Allergies = new HealthConditionList(HealthConditionType.Allergy);
-        MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition);
-        //Prescriptions = new List<Prescription>();
     }
 
     public MedicalRecord(int height, int weight, List<string> allergies, List<string> medicalHistory)
