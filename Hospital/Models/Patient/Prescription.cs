@@ -25,10 +25,8 @@ public class Prescription
     public int DailyUsage { get; set; }
     public MedicationTiming MedicationTiming { get; set; }
 
-    public void DeepCopy(Prescription other)
+    public Prescription DeepCopy()
     {
-        Amount = other.Amount;
-        DailyUsage = other.DailyUsage;
-        MedicationTiming = other.MedicationTiming;
+        return new Prescription(Amount, DailyUsage, MedicationTiming);
     }
 }
