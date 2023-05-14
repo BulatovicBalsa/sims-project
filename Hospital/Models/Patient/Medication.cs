@@ -20,6 +20,13 @@ public class Medication
         Allergens = allergens;
     }
 
+    public Medication(string name, List<string> allergens)
+    {
+        Id = Guid.NewGuid().ToString();
+        Name = name;
+        Allergens = allergens;
+    }
+
     public string Id { get; set; }
     public string Name { get; set; }
     public List<string> Allergens { get; set; }
