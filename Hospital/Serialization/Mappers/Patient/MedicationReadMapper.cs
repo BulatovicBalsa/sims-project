@@ -13,8 +13,9 @@ namespace Hospital.Serialization.Mappers.Patient
     {
         public MedicationReadMapper()
         {
-            Map(patient => patient.Id).Index(0);
-            Map(patient => patient.Allergens).Index(1)
+            Map(medication => medication.Id).Index(0);
+            Map(medication => medication.Name).Index(1);
+            Map(medication => medication.Allergens).Index(2)
                 .Convert(row => SplitColumnValues(row.Row.GetField<string>("Allergens")));
         }
         private static List<string> SplitColumnValues(string? columnValue)

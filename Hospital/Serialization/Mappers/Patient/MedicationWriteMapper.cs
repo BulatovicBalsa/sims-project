@@ -13,8 +13,9 @@ namespace Hospital.Serialization.Mappers.Patient
         public MedicationWriteMapper()
         {
             Map(medication => medication.Id).Index(0);
+            Map(medication => medication.Name).Index(1);
             Map(medication => medication.Allergens)
-                .Convert(row => string.Join("|", row.Value.Allergens)).Index(1);
+                .Convert(row => string.Join("|", row.Value.Allergens)).Index(2);
         }
     }
 }
