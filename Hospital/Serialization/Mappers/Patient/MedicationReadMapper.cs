@@ -20,7 +20,9 @@ namespace Hospital.Serialization.Mappers.Patient
         }
         private static List<string> SplitColumnValues(string? columnValue)
         {
-            return columnValue?.Split("|").ToList() ?? new List<string>();
+            var allergens = columnValue?.Split("|").ToList() ?? new List<string>();
+            if (allergens.Count == 0) return allergens;
+            return string.IsNullOrEmpty(allergens[0]) ? new List<string>() : allergens;
         }
     }
 }
