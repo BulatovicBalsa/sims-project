@@ -219,7 +219,7 @@ namespace Hospital.ViewModels
             if (ex.Message.Contains("Patient made too many changes in last 30 days") || ex.Message.Contains("Patient made too many examinations in last 30 days"))
             {
                 Patient.IsBlocked = true;
-                new PatientRepository().Update(Patient);
+                PatientRepository.Instance.Update(Patient);
                 MessageBox.Show("This user is now blocked due to too many changes or examinations made in the last 30 days.", "User Blocked");
                 Application.Current.Shutdown();
             }

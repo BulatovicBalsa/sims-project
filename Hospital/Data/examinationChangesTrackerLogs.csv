@@ -1,8 +1,4 @@
 IsBlocked,Height,Weight,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,IsCreationLog
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 18:02:47,False
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 18:31:21,True
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 18:35:19,True
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 23:18:34,True
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 23:18:46,False
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 23:20:36,True
-False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/09/2023 23:20:45,False
+False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/10/2023 00:05:44,False
+False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/10/2023 00:06:04,True
+False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/16/2023 22:57:15,True

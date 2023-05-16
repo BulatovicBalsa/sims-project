@@ -58,7 +58,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         {
             var patientId = inputText.Trim();
             // Retrieve the Patient object based on the ID
-            var patient = new PatientRepository().GetById(patientId) ??
+            var patient = PatientRepository.Instance.GetById(patientId) ??
                           throw new KeyNotFoundException($"Patient with ID {patientId} not found");
             return patient;
         }

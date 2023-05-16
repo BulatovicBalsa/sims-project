@@ -16,7 +16,7 @@ public class LoginService
     {
         _doctorRepository = DoctorRepository.Instance;
         _nurseRepository = new NurseRepository();
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
     }
 
     public Person? LoggedUser { get; set; }

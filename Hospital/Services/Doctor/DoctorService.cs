@@ -23,7 +23,7 @@ public class DoctorService
     public DoctorService()
     {
         _examinationRepository = new ExaminationRepository();
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
         _doctorRepository = DoctorRepository.Instance;
         _roomRepository = RoomRepository.Instance;
     }

@@ -23,7 +23,7 @@ public class PatientAdmissionViewModel : ViewModelBase
     public PatientAdmissionViewModel()
     {
         _examinationService = new ExaminationService();
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
 
         _patientRepository.PatientAdded += patient =>
