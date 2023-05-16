@@ -101,13 +101,16 @@ public class ExaminationRepository
 {
     private const string FilePath = "../../../Data/examination.csv";
     private readonly ExaminationChangesTracker _examinationChangesTracker;
+    private static ExaminationRepository? _instance;
+
+    public static ExaminationRepository Instance => _instance ??= new ExaminationRepository();
 
     public ExaminationRepository(ExaminationChangesTracker examinationChangesTracker)
     {
         _examinationChangesTracker = examinationChangesTracker;
     }
 
-    public ExaminationRepository()
+    private ExaminationRepository()
     {
         _examinationChangesTracker = new ExaminationChangesTracker();
     }

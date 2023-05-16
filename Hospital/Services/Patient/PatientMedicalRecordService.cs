@@ -15,7 +15,7 @@ namespace Hospital.Services
 
         public PatientMedicalRecordService()
         {
-            _examinationRepository = new ExaminationRepository();
+            _examinationRepository = ExaminationRepository.Instance;
         }
         public List<Examination> GetPatientExaminations(Patient patient)
         {

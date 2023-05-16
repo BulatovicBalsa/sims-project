@@ -13,7 +13,7 @@ public class TimeslotService
 
     public TimeslotService()
     {
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
     }
 

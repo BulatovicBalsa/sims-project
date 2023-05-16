@@ -32,7 +32,7 @@ public class PostponeExaminationViewModel : ViewModelBase
         Examinations = examinations;
         _selectedExamination = null;
         _doctorEarliestFreeTimeslot = earliestFreeTimeslotDoctor.ToDictionary(pair => pair.Value, pair => pair.Key);
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
         _notificationService = new NotificationService();
         _selectedPatient = selectedPatient;

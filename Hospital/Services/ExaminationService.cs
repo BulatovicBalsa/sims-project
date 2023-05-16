@@ -15,7 +15,7 @@ public class ExaminationService
 
     public ExaminationService()
     {
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository =ExaminationRepository.Instance;
     }
 
     public Examination? GetAdmissibleExamination(Patient patient)

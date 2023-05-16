@@ -27,7 +27,7 @@ namespace Hospital.Services
         public ExaminationRecommenderService() 
         {
             _doctorRepository = DoctorRepository.Instance;
-            _examinationRepository = new ExaminationRepository();
+            _examinationRepository =ExaminationRepository.Instance;
         }
 
         public List<Doctor> GetAllDoctors()

@@ -13,7 +13,7 @@ using Hospital.Repositories.Doctor;
 public class PatientRepository
 {
     private const string FilePath = "../../../Data/patients.csv";
-    private readonly ExaminationRepository _examinationRepository = new ExaminationRepository();
+    private readonly ExaminationRepository _examinationRepository =ExaminationRepository.Instance;
     private static PatientRepository? _instance;
 
     public event Action<Patient>? PatientAdded;

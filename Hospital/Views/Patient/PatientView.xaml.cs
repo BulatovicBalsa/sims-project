@@ -27,8 +27,7 @@ namespace Hospital.Views
         {
             InitializeComponent();
 
-            _examinationRepository =
-                new ExaminationRepository();
+            _examinationRepository =ExaminationRepository.Instance;
             _viewModel = new PatientViewModel(_examinationRepository);
             _viewModel.LoadExaminations(patient);
 

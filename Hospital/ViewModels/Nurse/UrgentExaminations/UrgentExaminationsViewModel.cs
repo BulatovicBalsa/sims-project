@@ -37,7 +37,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
         _patientRepository = PatientRepository.Instance;
         _doctorRepository = DoctorRepository.Instance;
         _timeslotService = new TimeslotService();
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
         _notificationService = new NotificationService();
 
