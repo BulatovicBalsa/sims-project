@@ -1,0 +1,50 @@
+<Window x:Class="Hospital.Views.DoctorSearchView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Doctor Search" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="15">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#a1ffce" Offset="0"></GradientStop>
+                <GradientStop Color="#faffd1" Offset="1"></GradientStop>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Grid.Row="0" Text="DOCTOR SEARCH" Foreground="DarkGray" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+
+            <!-- Search Fields -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                <extToolkit:WatermarkTextBox x:Name="NameTextBox" Width="100" Margin="5" Watermark="Name"/>
+                <extToolkit:WatermarkTextBox x:Name="SurnameTextBox" Width="100" Margin="5" Watermark="Surname"/>
+                <extToolkit:WatermarkTextBox x:Name="ExpertiseTextBox" Width="100" Margin="5" Watermark="Expertise"/>
+                <Button x:Name="SearchButton" Content="Search" Width="100" Margin="5" Click="SearchButton_Click"/>
+            </StackPanel>
+
+            <!-- Doctor List -->
+            <DataGrid Grid.Row="2" x:Name="DoctorDataGrid" Margin="10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="*"/>
+                    <DataGridTextColumn Header="Area of Expertise" Binding="{Binding Expertise}" Width="*"/>
+                    <DataGridTextColumn Header="Average Rating" Binding="{Binding Rating}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</Window>
+
+

@@ -2,3 +2,4 @@ IsBlocked,Height,Weight,Id,FirstName,LastName,Jmbg,Username,Password,Timestamp,I
 False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/10/2023 00:05:44,False
 False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/10/2023 00:06:04,True
 False,177,72,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/16/2023 22:57:15,True
+False,176,71,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Momir,Milutinovic,0123456789012,momirPatient,momirPatient,05/16/2023 23:49:42,True
