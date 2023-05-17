@@ -16,9 +16,9 @@ namespace Hospital.ViewModels
         private ObservableCollection<Doctor> _allDoctors;
         private ObservableCollection<Doctor> _filteredDoctors;
         private Doctor _selectedDoctor;
-        private string _firstNameSearchText;
-        private string _lastNameSearchText;
-        private string _specializationSearhText;
+        private string _firstNameSearchText=string.Empty;
+        private string _lastNameSearchText=string.Empty;
+        private string _specializationSearhText = string.Empty;
 
         public ObservableCollection<Doctor> FilteredDoctors
         {
@@ -85,9 +85,9 @@ namespace Hospital.ViewModels
         }
         private bool DoctorMatchesSearch(Doctor doctor) 
         {
-            return doctor.FirstName.Contains(_firstNameSearchText) &&
-                doctor.LastName.Contains(_lastNameSearchText) &&
-                doctor.Specialization.Contains(_specializationSearhText);
+            return doctor.FirstName.ToLower().Contains(_firstNameSearchText.ToLower()) &&
+                doctor.LastName.ToLower().Contains(_lastNameSearchText.ToLower()) &&
+                doctor.Specialization.ToLower().Contains(_specializationSearhText.ToLower());
         }
     }
 }
