@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Doctor;
+using Hospital.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ namespace Hospital.ViewModels
 {
     class DoctorSearchViewModel : ViewModelBase
     {
+        private DoctorSearchService _doctorSearchService;
         private ObservableCollection<Doctor> _allDoctors;
         private ObservableCollection<Doctor> _filteredDoctors;
         private Doctor _selectedDoctor;
@@ -25,6 +27,18 @@ namespace Hospital.ViewModels
             {
                 _filteredDoctors = value;
                 OnPropertyChanged(nameof(FilteredDoctors));
+            }
+        }
+        public Doctor SelectedDoctor
+        {
+            get => _selectedDoctor;
+            set
+            {
+                if(_selectedDoctor != value)
+                {
+                    _selectedDoctor = value;
+                    OnPropertyChanged(nameof(SelectedDoctor));
+                }
             }
         }
         public string FirstNameSearchText
@@ -60,13 +74,14 @@ namespace Hospital.ViewModels
 
         public DoctorSearchViewModel()
         {
-            _allDoctors = new ObservableCollection<Doctor>(GetAllDoctors());
+            _doctorSearchService = new DoctorSearchService();
+            _allDoctors = new ObservableCollection<Doctor>(_doctorSearchService.GetAllDoctors());
             FilteredDoctors = new ObservableCollection<Doctor>(_allDoctors);
         }
         private void FilterDoctors()
         {
             FilteredDoctors = new ObservableCollection<Doctor>(_allDoctors
-                .Where(DoctorMatchesSearch);
+                .Where(DoctorMatchesSearch));
         }
         private bool DoctorMatchesSearch(Doctor doctor) 
         {

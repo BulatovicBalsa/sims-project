@@ -104,5 +104,11 @@ namespace Hospital.Views
         {
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
+
+        private void BtnDoctorSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var doctorSearchWindow = new DoctorSearchView();
+            doctorSearchWindow.Show();
+        }
     }
 }

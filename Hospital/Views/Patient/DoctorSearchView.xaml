@@ -28,10 +28,10 @@
 
             <!-- Search Fields -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-                <extToolkit:WatermarkTextBox x:Name="NameTextBox" Width="100" Margin="5" Watermark="Name"/>
-                <extToolkit:WatermarkTextBox x:Name="SurnameTextBox" Width="100" Margin="5" Watermark="Surname"/>
-                <extToolkit:WatermarkTextBox x:Name="ExpertiseTextBox" Width="100" Margin="5" Watermark="Expertise"/>
-                <Button x:Name="SearchButton" Content="Search" Width="100" Margin="5" Click="SearchButton_Click"/>
+                <extToolkit:WatermarkTextBox x:Name="NameTextBox" Width="100" Margin="5" Watermark="First Name"/>
+                <extToolkit:WatermarkTextBox x:Name="SurnameTextBox" Width="100" Margin="5" Watermark="Last Name"/>
+                <extToolkit:WatermarkTextBox x:Name="ExpertiseTextBox" Width="100" Margin="5" Watermark="Specialization"/>
+                <!--<Button x:Name="SearchButton" Content="Search" Width="100" Margin="5" Click="SearchButton_Click"/>-->
             </StackPanel>
 
             <!-- Doctor List -->
