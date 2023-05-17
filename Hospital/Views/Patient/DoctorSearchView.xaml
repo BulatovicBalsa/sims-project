@@ -23,8 +23,46 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <!-- Header -->
-            <TextBlock Grid.Row="0" Text="DOCTOR SEARCH" Foreground="DarkGray" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+            <!-- Window Header -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="DOCTOR SEARCH"
+                           Foreground="DarkGray"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           HorizontalAlignment="Center"/>
+
+                <Button x:Name="BtnMinimize"
+                        BorderThickness="0"
+                        Content="-"
+                        Foreground="Black"
+                        FontSize="16"
+                        FontFamily="Segoe UI"
+                        Cursor="Hand"
+                        Grid.Column="1"
+                        Click="BtnMinimize_Click">
+                </Button>
+
+                <Button x:Name="BtnClose"
+                        BorderThickness="0"
+                        Content="X"
+                        Foreground="Black"
+                        FontSize="12"
+                        FontFamily="Segoe UI"
+                        Cursor="Hand"
+                        Grid.Column="2" 
+                        HorizontalAlignment="Right" 
+                        Width="25" 
+                        Click="BtnClose_Click"/>
+            </Grid>
 
             <!-- Search Fields -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
