@@ -19,5 +19,15 @@ namespace Hospital.Views
             _viewModel = new DoctorSearchViewModel();
             this.DataContext = _viewModel;
         }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
