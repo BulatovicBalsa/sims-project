@@ -15,18 +15,20 @@ public class Patient : Person
         MedicalRecord = medicalRecord;
         IsBlocked = false;
         Referrals = new List<Referral>();
+        HospitalTreatmentReferrals = new List<HospitalTreatmentReferral>();
     }
 
     public Patient()
     {
         MedicalRecord = new MedicalRecord();
         Referrals = new List<Referral>();
+        HospitalTreatmentReferrals = new List<HospitalTreatmentReferral>();
     }
 
     public List<Referral> Referrals { get; set; }
     public bool IsBlocked { get; set; }
     public MedicalRecord MedicalRecord { get; set; }
-
+    public List<HospitalTreatmentReferral> HospitalTreatmentReferrals { get; set; }
     public Patient DeepCopy()
     {
         var copy = new Patient(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, MedicalRecord.DeepCopy())

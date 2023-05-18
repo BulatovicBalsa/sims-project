@@ -1,4 +1,6 @@
-﻿namespace Hospital.Models.Patient;
+﻿using System;
+
+namespace Hospital.Models.Patient;
 
 public enum MedicationTiming
 {

@@ -29,7 +29,7 @@ namespace Hospital.Models.Patient
         {
             StringBuilder sb = new();
             
-            sb.AppendLine($"{Duration};");
+            sb.Append($"{Duration};");
             
             for (int i = 0; i < Prescriptions.Count; i++)
             {
@@ -38,13 +38,14 @@ namespace Hospital.Models.Patient
                     sb.Append('|');
             }
 
+            sb.Append(";");
+
             for (int i = 0; i < AdditionalTests.Count; i++)
             {
                 sb.Append(AdditionalTests[i].ToString());
                 if (i < AdditionalTests.Count - 1)
                     sb.Append('|');
             }
-
 
             return sb.ToString();
         }
