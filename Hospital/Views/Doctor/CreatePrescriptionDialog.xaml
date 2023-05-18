@@ -26,7 +26,7 @@
                     Content="Delete Prescription"
                     Margin="5" Command="{Binding DeletePrescriptionCommand}"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" x:Name="PatientsDataGrid" ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+        <DataGrid Grid.Row="1" x:Name="PatientsDataGrid" SelectedItem="{Binding SelectedPrescription}" ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Medication" Binding="{Binding Medication.Name}" Width="*"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
