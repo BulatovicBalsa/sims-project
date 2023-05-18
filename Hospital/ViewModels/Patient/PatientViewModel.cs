@@ -37,16 +37,13 @@ namespace Hospital.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PatientViewModel(ExaminationRepository examinationRepository)
+        public PatientViewModel(Patient patient)
         {
-            _examinationRepository = examinationRepository;
+            _examinationRepository = ExaminationRepository.Instance;
+            LoadExaminations(patient);
         }
 
-        public PatientViewModel()
-        {
-        }
-
-        public void LoadExaminations(Patient patient)
+        private void LoadExaminations(Patient patient)
         {
             var examinations = _examinationRepository.GetAll(patient);
 

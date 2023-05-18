@@ -106,7 +106,7 @@ namespace Hospital.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         
-        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null)
+        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null,Doctor doctor=null)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = DoctorRepository.Instance.GetAll();
@@ -115,6 +115,7 @@ namespace Hospital.ViewModels
             if (examination == null)
             {
                 Examination = new Examination();
+                Examination.Doctor = doctor;
                 Examination.Patient = patient;
                 SelectedDate = DateTime.Now;
                 IsUpdate = false;
@@ -143,11 +144,14 @@ namespace Hospital.ViewModels
                 if (IsUpdate)
                 {
                     _patientViewModel.UpdateExamination(Examination);
+                    MessageBox.Show("Examination updated successfully", "Success");
                 }
                 else
                 {
                     _patientViewModel.AddExamination(Examination);
+                    MessageBox.Show("Examination added successfully", "Success");
                 }
+                
             }
             catch(Exception ex)
             {

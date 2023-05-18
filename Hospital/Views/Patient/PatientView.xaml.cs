@@ -19,7 +19,6 @@ namespace Hospital.Views
     public partial class PatientView : Window
     {
         private PatientViewModel _viewModel;
-        private ExaminationRepository _examinationRepository;
         private Patient _patient;
 
 
@@ -27,9 +26,7 @@ namespace Hospital.Views
         {
             InitializeComponent();
 
-            _examinationRepository =ExaminationRepository.Instance;
-            _viewModel = new PatientViewModel(_examinationRepository);
-            _viewModel.LoadExaminations(patient);
+            _viewModel = new PatientViewModel(patient);
 
             _patient = patient;
             DataContext = _viewModel;
@@ -107,7 +104,7 @@ namespace Hospital.Views
 
         private void BtnDoctorSearch_Click(object sender, RoutedEventArgs e)
         {
-            var doctorSearchWindow = new DoctorSearchView();
+            var doctorSearchWindow = new DoctorSearchView(_patient,_viewModel);
             doctorSearchWindow.Show();
         }
     }
