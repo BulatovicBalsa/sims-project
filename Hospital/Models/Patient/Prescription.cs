@@ -37,4 +37,18 @@ public class Prescription
     {
         return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming}";
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Prescription objAsPrescription) return false;
+        return objAsPrescription.Amount == Amount &&
+            objAsPrescription.DailyUsage == DailyUsage &&
+            objAsPrescription.MedicationTiming == MedicationTiming &&
+            objAsPrescription.Medication.Equals(Medication);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
