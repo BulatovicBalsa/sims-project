@@ -16,7 +16,7 @@ namespace Hospital.Views
         private readonly ExaminationDialogViewModel _viewModel;
 
         public ExaminationDialogView(Patient patient,PatientViewModel patientViewModel, bool isUpdate, 
-             Examination examination = null, IEnumerable<Doctor> recommendedDoctors = null)
+             Examination examination = null)
         {
             InitializeComponent();
 

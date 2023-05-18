@@ -70,7 +70,7 @@
                 <extToolkit:WatermarkTextBox x:Name="NameTextBox" Width="100" Margin="5" Watermark="First Name" Text="{Binding FirstNameSearchText, UpdateSourceTrigger=PropertyChanged}"/>
                 <extToolkit:WatermarkTextBox x:Name="SurnameTextBox" Width="100" Margin="5" Watermark="Last Name" Text="{Binding LastNameSearchText, UpdateSourceTrigger=PropertyChanged}"/>
                 <extToolkit:WatermarkTextBox x:Name="ExpertiseTextBox" Width="100" Margin="5" Watermark="Specialization" Text="{Binding SpecializationSearhText, UpdateSourceTrigger=PropertyChanged}"/>
-                <!--<Button x:Name="SearchButton" Content="Search" Width="100" Margin="5" Click="SearchButton_Click"/>-->
+                <Button x:Name="BtnCreateExamination" Content="Create Examination" Margin="5" Click="BtnCreateExamination_Click"/>
             </StackPanel>
 
             <!-- Doctor List -->
