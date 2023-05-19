@@ -35,7 +35,8 @@ namespace Hospital.ViewModels
             set
             {
                 _prescriptions = value;
-                PatientOnExamination.MedicalRecord.Prescriptions = new List<Prescription>(_prescriptions);
+                PatientOnExamination.MedicalRecord.Prescriptions.Clear();
+                _prescriptions.ToList().ForEach(prescription => PatientOnExamination.MedicalRecord.Prescriptions.Add(prescription));
                 OnPropertyChanged(nameof(Prescriptions));
             }
         }
