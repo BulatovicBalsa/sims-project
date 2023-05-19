@@ -39,7 +39,10 @@ public class Prescription
     {
         return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming}";
     }
-
+    public string ToString(string separator)
+    {
+        return ToString().Replace(";", separator);
+    }
     public override bool Equals(object? obj)
     {
         if (obj is not Prescription objAsPrescription) return false;
