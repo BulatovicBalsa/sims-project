@@ -20,8 +20,8 @@ namespace Hospital.Views
     {
         public CreatePrescriptionDialog(Patient patientOnExamination)
         {
-            DataContext = new CreatePrescriptionViewModel(patientOnExamination);
             InitializeComponent();
+            PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination));
         }
     }
 }
