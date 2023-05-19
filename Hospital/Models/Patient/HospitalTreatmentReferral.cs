@@ -33,7 +33,7 @@ namespace Hospital.Models.Patient
             
             for (int i = 0; i < Prescriptions.Count; i++)
             {
-                sb.Append(Prescriptions[i]);
+                sb.Append(Prescriptions[i]?.ToString("$"));
                 if (i < Prescriptions.Count - 1)
                     sb.Append('#');
             }

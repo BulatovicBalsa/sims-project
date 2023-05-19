@@ -75,7 +75,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
         private Prescription PrescriptionFromString(string prescriptionAsString)
         {
             if (string.IsNullOrEmpty(prescriptionAsString.Trim())) return null;
-            var prescriptionFields = prescriptionAsString.Split(";");
+            var prescriptionFields = prescriptionAsString.Split("$");
             var medicationId = prescriptionFields[0].Trim();
             var medication = MedicationRepository.Instance.GetById(medicationId);
             var amount = Convert.ToInt32(prescriptionFields[1]);
