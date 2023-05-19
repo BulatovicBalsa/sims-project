@@ -4,14 +4,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Patient;
+using Hospital.Services;
+using Microsoft.VisualBasic;
 
 namespace Hospital.ViewModels
 {
     public class CreateHospitalTreatmentReferralViewModel : ViewModelBase
     {
+        private readonly PatientService _patientService = new();
         private int _duration;
         public int Duration
         {
@@ -34,14 +38,14 @@ namespace Hospital.ViewModels
             }
         }
 
-        private string? _selectedAdditionalTest;
-        public string? SelectedAdditionalTest
+        private string? _selectedTest;
+        public string? SelectedTest
         {
-            get => _selectedAdditionalTest;
+            get => _selectedTest;
             set
             {
-                _selectedAdditionalTest = value;
-                OnPropertyChanged(nameof(SelectedAdditionalTest));
+                _selectedTest = value;
+                OnPropertyChanged(nameof(SelectedTest));
             }
         }
 
@@ -65,17 +69,28 @@ namespace Hospital.ViewModels
 
         private void DeleteAdditionalTest()
         {
-            throw new NotImplementedException();
+            if (SelectedTest is null)
+            {
+                MessageBox.Show("You must select additional test in order to delete it", "", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return;
+            }
+
+            AdditionalTests.Remove(SelectedTest);
         }
 
         private void AddAdditionalTest()
         {
-            throw new NotImplementedException();
+            var testToAdd = Interaction.InputBox($"Insert additional test: ", $"Add additional test");
+            AdditionalTests.Add(testToAdd);
         }
 
         private void AddReferral()
         {
-            throw new NotImplementedException();
+            Referral.AdditionalTests = AdditionalTests.ToList();
+            Referral.Duration = Duration;
+            _patientOnExamination.HospitalTreatmentReferrals.Add(Referral);
+            _patientService.UpdatePatient(_patientOnExamination);            
         }
     }
 }
