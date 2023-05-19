@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Create Hospital Treatment Referral" Height="450" Width="800">
+        Title="Create Hospital Treatment Referral" Height="450" Width="800" x:Name="HospitalTreatmentWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,6 +38,6 @@
 
             <Frame Height="300" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
         </Grid>
-        <Button Grid.Row="1" Grid.Column="0" Content="Add Referral" Command="{Binding AddReferralCommand}"></Button>
+        <Button Grid.Row="1" Grid.Column="0" Content="Add Referral" Command="{Binding AddReferralCommand}" CommandParameter="{Binding ElementName=HospitalTreatmentWindow}"></Button>
     </Grid>
 </Window>
