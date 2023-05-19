@@ -86,6 +86,7 @@ public class PerformExaminationViewModel : ViewModelBase
 
     private void CreateHospitalTreatmentReferral()
     {
-        //TODO
+        var dialog = new CreateHospitalTreatmentReferralDialog(PatientOnExamination);
+        dialog.ShowDialog();
     }
 }
