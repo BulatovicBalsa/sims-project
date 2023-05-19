@@ -3,7 +3,7 @@ EquipmentId,RoomId,Amount,Id,Name,Type,Reserved
 1026,5000,6,1026,Injection,DynamicEquipment,0
 1023,5000,7,1023,Bandage,DynamicEquipment,0
 1024,5000,8,1024,Pencil,DynamicEquipment,0
-1021,5000,29,1021,Chair,Furniture,2
+1021,5000,27,1021,Chair,Furniture,0
 1027,1001,7,1027,Band-Aid,DynamicEquipment,0
 1025,5000,6,1025,Paper,DynamicEquipment,0
 1,5000,9,1,Something,DynamicEquipment,0
@@ -16,3 +16,4 @@ EquipmentId,RoomId,Amount,Id,Name,Type,Reserved
 1,1001,5,1,Something,DynamicEquipment,0
 1026,1002,2,1026,Injection,DynamicEquipment,0
 1021,1003,1,1021,Chair,Furniture,0
+1021,1001,2,1021,Chair,Furniture,0

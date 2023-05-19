@@ -1,12 +1,37 @@
-﻿<Window x:Class="Hospital.Views.Doctor.CreateHospitalTreatmentReferral"
+﻿<Window x:Class="Hospital.Views.CreateHospitalTreatmentReferral"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views.Doctor"
+        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="CreateHospitalTreatmentReferral" Height="450" Width="800">
+        Title="Create Hospital Treatment Referral" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Duration:" Grid.Row="0" Grid.Column="0" Margin="5"/>
+        <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration}"></xctk:IntegerUpDown>
+
+        <Label Content="Additional Tests:" Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedAdditionalTest}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5">
+            <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddAdditionalTestCommand}"/>
+            <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Command="{Binding DeleteAdditionalTestCommand}"/>
+        </StackPanel>
+
+        <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Content="Add Referral"></Button>
     </Grid>
 </Window>

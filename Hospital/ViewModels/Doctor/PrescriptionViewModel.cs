@@ -41,7 +41,7 @@ namespace Hospital.ViewModels
             }
         }
 
-        public CreatePrescriptionViewModel(Patient patientOnExamination)
+        public CreatePrescriptionViewModel(Patient patientOnExamination, bool isHospitalTreatment=false)
         {
             PatientOnExamination = patientOnExamination;
             Prescriptions = new ObservableCollection<Prescription>(PatientOnExamination.MedicalRecord.Prescriptions);
