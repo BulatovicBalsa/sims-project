@@ -20,7 +20,7 @@ namespace Hospital.Views
         public CreateHospitalTreatmentReferralDialog(Patient patientOnExamination)
         {
             InitializeComponent();
-            PrescriptionsFrame.Navigate(new CreatePrescriptionDialog(patientOnExamination));
+            PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination));
         }
     }
 }
