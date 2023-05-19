@@ -92,6 +92,7 @@ namespace Hospital.ViewModels
             Referral.Duration = Duration;
             _patientOnExamination.HospitalTreatmentReferrals.Add(Referral);
             _patientService.UpdatePatient(_patientOnExamination);
+            MessageBox.Show("Succeed");
             window.DialogResult = true;
         }
     }
