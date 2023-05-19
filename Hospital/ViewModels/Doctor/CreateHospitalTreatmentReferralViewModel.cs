@@ -63,7 +63,7 @@ namespace Hospital.ViewModels
             Duration = 1;
             AdditionalTests = new ObservableCollection<string>();
 
-            AddReferralCommand = new RelayCommand(AddReferral);
+            AddReferralCommand = new RelayCommand<Window>(AddReferral);
             AddAdditionalTestCommand = new RelayCommand(AddAdditionalTest);
             DeleteAdditionalTestCommand = new RelayCommand(DeleteAdditionalTest);
         }
@@ -86,12 +86,13 @@ namespace Hospital.ViewModels
             AdditionalTests.Add(testToAdd);
         }
 
-        private void AddReferral()
+        private void AddReferral(Window window)
         {
             Referral.AdditionalTests = AdditionalTests.ToList();
             Referral.Duration = Duration;
             _patientOnExamination.HospitalTreatmentReferrals.Add(Referral);
-            _patientService.UpdatePatient(_patientOnExamination);            
+            _patientService.UpdatePatient(_patientOnExamination);
+            window.DialogResult = true;
         }
     }
 }
