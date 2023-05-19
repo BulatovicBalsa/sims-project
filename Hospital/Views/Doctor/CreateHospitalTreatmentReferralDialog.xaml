@@ -32,6 +32,6 @@
         </StackPanel>
 
         <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Content="Add Referral"></Button>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Content="Add Referral" Command="{Binding AddReferral}"></Button>
     </Grid>
 </Window>
