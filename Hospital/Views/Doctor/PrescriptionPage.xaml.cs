@@ -19,9 +19,9 @@ namespace Hospital.Views
 {
     public partial class PrescriptionPage : Page
     {
-        public PrescriptionPage(Patient patientOnExamination)
+        public PrescriptionPage(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify=null)
         {
-            DataContext = new CreatePrescriptionViewModel(patientOnExamination);
+            DataContext = new CreatePrescriptionViewModel(patientOnExamination, referralToModify);
             InitializeComponent();
         }
     }

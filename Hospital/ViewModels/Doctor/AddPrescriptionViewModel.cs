@@ -25,8 +25,9 @@ public class AddPrescriptionViewModel : ViewModelBase
 
     private MedicationTiming? _selectedMedicationTiming;
 
-    public AddPrescriptionViewModel(Patient patientOnExamination)
+    public AddPrescriptionViewModel(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
     {
+        ReferralToModify = referralToModify;
         PatientOnExamination = patientOnExamination;
         AddPrescriptionCommand = new RelayCommand<Window>(AddPrescription);
         Medications = new ObservableCollection<Medication>(MedicationRepository.Instance.GetAll());
@@ -35,6 +36,7 @@ public class AddPrescriptionViewModel : ViewModelBase
         DailyUsage = 1;
     }
 
+    public HospitalTreatmentReferral? ReferralToModify { get; set; }
     public Patient PatientOnExamination { get; set; }
 
     public int Amount
@@ -115,7 +117,10 @@ public class AddPrescriptionViewModel : ViewModelBase
 
         var prescriptionToAdd = new Prescription(SelectedMedication, Amount, DailyUsage,
             SelectedMedicationTiming.GetValueOrDefault());
-        PatientOnExamination.MedicalRecord.Prescriptions.Add(prescriptionToAdd);
+        var PrescriptionsToModify = ReferralToModify is null
+            ? PatientOnExamination.MedicalRecord.Prescriptions
+            : ReferralToModify.Prescriptions;
+        PrescriptionsToModify.Add(prescriptionToAdd);
         MessageBox.Show("Succeed");
         window.DialogResult = true;
     }

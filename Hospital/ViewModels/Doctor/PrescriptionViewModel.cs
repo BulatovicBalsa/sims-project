@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Hospital.Models.Patient;
@@ -35,16 +36,23 @@ namespace Hospital.ViewModels
             set
             {
                 _prescriptions = value;
-                PatientOnExamination.MedicalRecord.Prescriptions.Clear();
-                _prescriptions.ToList().ForEach(prescription => PatientOnExamination.MedicalRecord.Prescriptions.Add(prescription));
+                PrescriptionsToModify.Clear();
+                _prescriptions.ToList().ForEach(prescription => PrescriptionsToModify.Add(prescription));
                 OnPropertyChanged(nameof(Prescriptions));
             }
         }
 
-        public CreatePrescriptionViewModel(Patient patientOnExamination, bool isHospitalTreatment=false)
+        public HospitalTreatmentReferral? ReferralToModify { get; set; }
+
+        public List<Prescription> PrescriptionsToModify { get; set; }
+        public CreatePrescriptionViewModel(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify=null)
         {
             PatientOnExamination = patientOnExamination;
-            Prescriptions = new ObservableCollection<Prescription>(PatientOnExamination.MedicalRecord.Prescriptions);
+            ReferralToModify = referralToModify;
+            PrescriptionsToModify = referralToModify is null
+                ? PatientOnExamination.MedicalRecord.Prescriptions
+                : referralToModify.Prescriptions;
+            Prescriptions = new ObservableCollection<Prescription>(PrescriptionsToModify);
 
             AddPrescriptionCommand = new RelayCommand(AddPrescription);
             UpdatePrescriptionCommand = new RelayCommand(UpdatePrescription);
@@ -70,9 +78,9 @@ namespace Hospital.ViewModels
 
         private void AddPrescription()
         {
-            var dialog = new AddPrescriptionDialog(PatientOnExamination);
+            var dialog = new AddPrescriptionDialog(PatientOnExamination, ReferralToModify);
             dialog.ShowDialog();
-            Prescriptions = new ObservableCollection<Prescription>(PatientOnExamination.MedicalRecord.Prescriptions);
+            Prescriptions = new ObservableCollection<Prescription>(PrescriptionsToModify);
             _patientService.UpdatePatient(PatientOnExamination);
         }
 

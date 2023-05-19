@@ -18,9 +18,9 @@ namespace Hospital.Views
 {
     public partial class AddPrescriptionDialog : Window
     {
-        public AddPrescriptionDialog(Patient patientOnExamination)
+        public AddPrescriptionDialog(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
         {
-            DataContext = new AddPrescriptionViewModel(patientOnExamination);
+            DataContext = new AddPrescriptionViewModel(patientOnExamination, referralToModify);
             InitializeComponent();
         }
     }

@@ -49,16 +49,17 @@ namespace Hospital.ViewModels
             }
         }
 
-        public HospitalTreatmentReferral Referral { get; set; } = new();
+        public HospitalTreatmentReferral Referral { get; set; }
         private readonly Patient _patientOnExamination;
 
         public ICommand AddReferralCommand { get; set; }
         public ICommand AddAdditionalTestCommand { get; set; }
         public ICommand DeleteAdditionalTestCommand { get; set; }
 
-        public CreateHospitalTreatmentReferralViewModel(Patient patientOnExamination)
+        public CreateHospitalTreatmentReferralViewModel(Patient patientOnExamination, HospitalTreatmentReferral referralToModify)
         {
             _patientOnExamination = patientOnExamination;
+            Referral = referralToModify;
             Duration = 1;
             AdditionalTests = new ObservableCollection<string>();
 

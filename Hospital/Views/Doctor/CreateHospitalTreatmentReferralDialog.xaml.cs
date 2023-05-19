@@ -21,8 +21,9 @@ namespace Hospital.Views
         public CreateHospitalTreatmentReferralDialog(Patient patientOnExamination)
         {
             InitializeComponent();
-            DataContext = new CreateHospitalTreatmentReferralViewModel(patientOnExamination);
-            PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination));
+            var referral = new HospitalTreatmentReferral();
+            DataContext = new CreateHospitalTreatmentReferralViewModel(patientOnExamination, referral);
+            PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination, referral));
         }
     }
 }
