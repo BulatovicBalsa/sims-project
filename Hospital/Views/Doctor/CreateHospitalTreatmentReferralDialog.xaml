@@ -24,7 +24,7 @@
         <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration}"></xctk:IntegerUpDown>
 
         <Label Content="Additional Tests:" Grid.Row="1" Grid.Column="0" Margin="5"/>
-        <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedAdditionalTest}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedAdditionalTest}" Grid.Row="1" Grid.Column="1" Margin="5"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5">
             <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddAdditionalTestCommand}"/>
