@@ -64,13 +64,24 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             referrals.AddRange(from item in referralStringList
                                select item.Split(";") into referralArgs
                                let duration = Convert.ToInt32(referralArgs[0].Trim())
-                               let prescriptions = referralArgs[1].Split("|").ToList()
-                                .Select(prescriptionAsString => new PrescriptionTypeConverter().ConvertFromString(prescriptionAsString, rowData, mappingData))
-                                .Cast<Prescription>().ToList()
-                               let additionalTests = referralArgs[2].Trim().Split("|").ToList()
+                               let prescriptions = referralArgs[1].Split("#").ToList()
+                                   .Select(PrescriptionFromString).ToList()
+                               let additionalTests = referralArgs[2].Trim().Split("#").ToList()
                                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
 
             return referrals;
+        }
+
+        private Prescription PrescriptionFromString(string prescriptionAsString)
+        {
+            if (string.IsNullOrEmpty(prescriptionAsString.Trim())) return null;
+            var prescriptionFields = prescriptionAsString.Split(";");
+            var medicationId = prescriptionFields[0].Trim();
+            var medication = MedicationRepository.Instance.GetById(medicationId);
+            var amount = Convert.ToInt32(prescriptionFields[1]);
+            var dailyUsage = Convert.ToInt32(prescriptionFields[2]);
+            var medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionFields[3]);
+            return new Prescription(medication!, amount, dailyUsage, medicationTiming);
         }
     }
 

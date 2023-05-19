@@ -50,7 +50,7 @@ namespace Hospital.ViewModels
         }
 
         public HospitalTreatmentReferral Referral { get; set; } = new();
-        private Patient _patientOnExamination;
+        private readonly Patient _patientOnExamination;
 
         public ICommand AddReferralCommand { get; set; }
         public ICommand AddAdditionalTestCommand { get; set; }

@@ -26,7 +26,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Duration:" Grid.Row="0" Grid.Column="0" Margin="5"/>
-            <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration}"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration, Mode=TwoWay}"></xctk:IntegerUpDown>
 
             <Label Content="Additional Tests:" Grid.Row="1" Grid.Column="0" Margin="5"/>
             <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedTest}" Grid.Row="1" Grid.Column="1" Margin="5"/>

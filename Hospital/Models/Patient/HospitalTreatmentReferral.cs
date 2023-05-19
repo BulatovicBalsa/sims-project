@@ -33,18 +33,18 @@ namespace Hospital.Models.Patient
             
             for (int i = 0; i < Prescriptions.Count; i++)
             {
-                sb.Append(Prescriptions[i].ToString());
+                sb.Append(Prescriptions[i]);
                 if (i < Prescriptions.Count - 1)
-                    sb.Append('|');
+                    sb.Append('#');
             }
 
             sb.Append(";");
 
             for (int i = 0; i < AdditionalTests.Count; i++)
             {
-                sb.Append(AdditionalTests[i].ToString());
+                sb.Append(AdditionalTests[i]);
                 if (i < AdditionalTests.Count - 1)
-                    sb.Append('|');
+                    sb.Append('#');
             }
 
             return sb.ToString();

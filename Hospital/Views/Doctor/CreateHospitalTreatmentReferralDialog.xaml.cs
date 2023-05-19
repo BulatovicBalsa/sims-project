@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Hospital.Models.Patient;
+using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
@@ -20,6 +21,7 @@ namespace Hospital.Views
         public CreateHospitalTreatmentReferralDialog(Patient patientOnExamination)
         {
             InitializeComponent();
+            DataContext = new CreateHospitalTreatmentReferralViewModel(patientOnExamination);
             PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination));
         }
     }
