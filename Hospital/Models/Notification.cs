@@ -6,6 +6,8 @@ namespace Hospital.Models;
 
 public class Notification
 {
+    private const int MealHour = 12;
+    private const int AnytimeNotificationHour= 10;
     public string Id { get; set; }
     public string ForId { get; set; }
     public string Message { get; set; }
@@ -38,9 +40,9 @@ public class Notification
     }
     private DateTime CalculateNotifyTime(int NotificationTime,MedicationTiming timing)
     {
-        DateTime mealTime = DateTime.Now.Date.AddHours(12);
+        DateTime mealTime = DateTime.Now.Date.AddHours(MealHour);
         TimeSpan durationBeforeMeal = TimeSpan.FromMinutes(NotificationTime);
-        DateTime anyTimeNotification = DateTime.Now.Date.AddHours(10);
+        DateTime anyTimeNotification = DateTime.Now.Date.AddHours(AnytimeNotificationHour);
 
         switch (timing)
         {
