@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Models.Patient;
+using System;
+using PatientClass = Hospital.Models.Patient.Patient;
 
 namespace Hospital.Models;
 
@@ -25,19 +27,19 @@ public class Notification
         Message = message;
         Sent = false;
     }
-    public Notification(Patient patient, string message, Prescription prescription)
+    public Notification(PatientClass patient, string message, Prescription prescription)
     {
         Id = Guid.NewGuid().ToString();
         ForId = patient.Id;
         Message = message;
         Sent = false;
         Prescription = prescription;
-        NotifyTime = CalculateNotifyTime(prescription.MedicationTiming);
+        NotifyTime = CalculateNotifyTime(patient.NotificationTime,prescription.MedicationTiming);
     }
-    private DateTime CalculateNotifyTime(MedicationTiming timing)
+    private DateTime CalculateNotifyTime(int NotificationTime,MedicationTiming timing)
     {
         DateTime mealTime = DateTime.Now.Date.AddHours(12);
-        TimeSpan durationBeforeMeal = TimeSpan.FromMinutes(30);
+        TimeSpan durationBeforeMeal = TimeSpan.FromMinutes(NotificationTime);
         DateTime anyTimeNotification = DateTime.Now.Date.AddHours(10);
 
         switch (timing)
