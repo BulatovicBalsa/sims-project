@@ -19,7 +19,6 @@ namespace Hospital.Views
     public partial class PatientView : Window
     {
         private PatientViewModel _viewModel;
-        private ExaminationRepository _examinationRepository;
         private Patient _patient;
 
 
@@ -27,9 +26,7 @@ namespace Hospital.Views
         {
             InitializeComponent();
 
-            _examinationRepository =
-                new ExaminationRepository();
-            _viewModel = new PatientViewModel(_examinationRepository);
+            _viewModel = new PatientViewModel();
             _viewModel.LoadExaminations(patient);
 
             _patient = patient;

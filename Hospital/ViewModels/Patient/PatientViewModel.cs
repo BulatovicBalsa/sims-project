@@ -10,7 +10,9 @@ using Hospital.Models.Patient;
 using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
 using Hospital.Repositories.Examinaton;
-
+using Hospital.Services;
+using System.Windows;
+using Hospital.Models;
 
 namespace Hospital.ViewModels
 {
@@ -18,6 +20,7 @@ namespace Hospital.ViewModels
     {
         private ObservableCollection<Examination> _examinations;
         private readonly ExaminationRepository _examinationRepository;
+        private readonly NotificationService _notificationService;
 
 
         public ObservableCollection<Examination> Examinations
@@ -37,13 +40,10 @@ namespace Hospital.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PatientViewModel(ExaminationRepository examinationRepository)
-        {
-            _examinationRepository = examinationRepository;
-        }
-
         public PatientViewModel()
         {
+            _examinationRepository = new ExaminationRepository();
+            _notificationService = new NotificationService();
         }
 
         public void LoadExaminations(Patient patient)
@@ -80,6 +80,24 @@ namespace Hospital.ViewModels
         public void RefreshExaminations(Patient patient)
         {
             Examinations = new ObservableCollection<Examination>(_examinationRepository.GetAll(patient));
+        }
+        public void DisplayPatientNotifications(string patientId)
+        {
+            var notifications = _notificationService.GetAllUnsent(patientId)
+                .Where(ShouldBeSent)
+                .ToList();
+
+            notifications.ForEach(notification =>
+            {
+                MessageBox.Show(notification.Message);
+                _notificationService.MarkSent(notification);
+            });
+        }
+        private bool ShouldBeSent(Notification notification)
+        {
+            return !notification.Sent &&
+                   notification.NotifyTime.HasValue &&
+                   notification.NotifyTime <= DateTime.Now;
         }
     }
 }
