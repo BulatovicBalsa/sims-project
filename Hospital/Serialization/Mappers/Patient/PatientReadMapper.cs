@@ -30,6 +30,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
         Map(patient => patient.IsBlocked).Index(10);
         Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
         Map(patient => patient.MedicalRecord.Prescriptions).Index(12).TypeConverter<PrescriptionTypeConverter>();
+        Map(patient => patient.NotificationTime).Index(13);
     }
 
     private static List<string> SplitColumnValues(string? columnValue)

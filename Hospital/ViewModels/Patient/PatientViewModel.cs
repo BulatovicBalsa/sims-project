@@ -21,7 +21,7 @@ namespace Hospital.ViewModels
         private const int NotificationIntervalMinutes = 5;
 
         private ObservableCollection<Examination> _examinations;
-        private readonly ExaminationRepository _examinationRepository;
+        private readonly ExaminationService _examinationService;
         private readonly NotificationService _notificationService;
         private Patient _patient;
         private System.Timers.Timer _notificationTimer;
@@ -46,7 +46,7 @@ namespace Hospital.ViewModels
 
         public PatientViewModel(Patient patient)
         {
-            _examinationRepository = new ExaminationRepository();
+            _examinationService = new ExaminationService();
             _notificationService = new NotificationService();
             _patient = patient;
 
@@ -56,7 +56,7 @@ namespace Hospital.ViewModels
 
         public void LoadExaminations()
         {
-            var examinations = _examinationRepository.GetAll(_patient);
+            var examinations = _examinationService.GetAllExaminations(_patient);
 
             Examinations = new ObservableCollection<Examination>(examinations);
         }
@@ -79,24 +79,24 @@ namespace Hospital.ViewModels
 
         public void AddExamination(Examination examination)
         {
-            _examinationRepository.Add(examination, true);
+            _examinationService.AddExamination(examination, true);
             Examinations.Add(examination);
         }
 
         public void UpdateExamination(Examination examination)
         {
-            _examinationRepository.Update(examination, true);
+            _examinationService.UpdateExamination(examination, true);
         }
 
         public void DeleteExamination(Examination examination)
         {
-            _examinationRepository.Delete(examination, true);
+            _examinationService.DeleteExamination(examination, true);
             Examinations.Remove(examination);
         }
 
         public void RefreshExaminations()
         {
-            Examinations = new ObservableCollection<Examination>(_examinationRepository.GetAll(_patient));
+            Examinations = new ObservableCollection<Examination>(_examinationService.GetAllExaminations(_patient));
         }
         public void DisplayPatientNotifications()
         {

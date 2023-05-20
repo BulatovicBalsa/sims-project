@@ -183,7 +183,7 @@ public class DoctorViewModel : ViewModelBase
 
         try
         {
-            _examinationService.DeleteExamination(examination);
+            _examinationService.DeleteExamination(examination, false);
         }
         catch (DoctorNotBusyException ex)
         {

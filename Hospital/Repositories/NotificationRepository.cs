@@ -2,6 +2,7 @@
 using System.Linq;
 using Hospital.Models;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers;
 
 namespace Hospital.Repositories;
 public class NotificationRepository
@@ -10,12 +11,12 @@ public class NotificationRepository
 
     public List<Notification> GetAll()
     {
-        return Serializer<Notification>.FromCSV(FilePath);
+        return Serializer<Notification>.FromCSV(FilePath, new NotificationReadMapper());
     }
 
     public List<Notification> GetAll(string forId)
     {
-        var allNotifications = Serializer<Notification>.FromCSV(FilePath);
+        var allNotifications = Serializer<Notification>.FromCSV(FilePath, new NotificationReadMapper());
 
         return allNotifications.Where(notification => notification.ForId == forId).ToList();
     }
@@ -25,7 +26,7 @@ public class NotificationRepository
         var allNotifications = GetAll();
         allNotifications.Add(notification);
 
-        Serializer<Notification>.ToCSV(allNotifications, FilePath);
+        Serializer<Notification>.ToCSV(allNotifications, FilePath,new NotificationWriteMapper());
     }
 
     public void Update(Notification notification)
@@ -36,6 +37,6 @@ public class NotificationRepository
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
         allNotifications[indexToUpdate] = notification;
-        Serializer<Notification>.ToCSV(allNotifications, FilePath);
+        Serializer<Notification>.ToCSV(allNotifications, FilePath,new NotificationWriteMapper());
     }
 }
