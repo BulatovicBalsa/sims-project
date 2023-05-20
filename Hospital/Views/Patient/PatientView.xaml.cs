@@ -27,7 +27,6 @@ namespace Hospital.Views
             InitializeComponent();
 
             _viewModel = new PatientViewModel();
-            _viewModel.LoadExaminations(patient);
 
             _patient = patient;
             DataContext = _viewModel;
