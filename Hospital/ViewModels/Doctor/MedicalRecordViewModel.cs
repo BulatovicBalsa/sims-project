@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class MedicalRecordViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly PatientService _patientService = new();
 
     private ObservableCollection<string> _allergies;
 
@@ -191,7 +193,7 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
@@ -221,7 +223,7 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
@@ -250,7 +252,7 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
@@ -271,7 +273,7 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         MessageBox.Show("Succeed");
     }
 
