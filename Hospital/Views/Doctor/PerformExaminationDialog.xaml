@@ -42,6 +42,7 @@
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -52,6 +53,8 @@
                 <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
                 <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150"/>
                 <Button x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5" Command="{Binding UpdateAnamnesisCommand}" Height="25.96"/>
+
+                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="5" Content="Create Referral" Command="{Binding CreateReferralCommand}"></Button>
             </Grid>
 
             <Grid Grid.Row="3">

@@ -20,5 +20,12 @@ namespace Hospital.Services.Manager
             return rooms.Where(room =>
                 dynamicEquipment.Exists(equipment => room.GetAmount(equipment) < lowEquipmentThreshold)).ToList();
         }
+
+        public List<Room> GetRoomsForExamination()
+        {
+            var allRooms = RoomRepository.Instance.GetAll();
+            return allRooms.Where(room =>
+                room.Type is RoomType.OperatingRoom or RoomType.ExaminationRoom).ToList();
+        }
     }
 }

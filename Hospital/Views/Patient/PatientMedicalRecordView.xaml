@@ -108,7 +108,7 @@
                         <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Start}" Width="100" />
                         <GridViewColumn Header="Doctor" DisplayMemberBinding="{Binding Doctor}" Width="200" />
                         <GridViewColumn Header="Anamnesis" DisplayMemberBinding="{Binding Anamnesis}" Width="300" />
-                        <GridViewColumn Header="Specialization" DisplayMemberBinding="{Binding Doctor.Specialization}" Width="200" />
+                        <GridViewColumn Header="Specializations" DisplayMemberBinding="{Binding Doctor.Specialization}" Width="200" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -117,7 +117,7 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center">
                     <Button Margin="5" Command="{Binding SortByDateCommand}">Sort by Date</Button>
                     <Button Margin="5" Command="{Binding SortByDoctorCommand}">Sort by Doctor</Button>
-                    <Button Margin="5" Command="{Binding SortBySpecializationCommand}">Sort by Specialization</Button>
+                    <Button Margin="5" Command="{Binding SortBySpecializationCommand}">Sort by Specializations</Button>
                 </StackPanel>
             </DockPanel>
         </Grid>

@@ -1,11 +1,17 @@
-﻿namespace Hospital.Models.Patient;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Hospital.Models.Patient;
 
 public class Patient : Person
 {
-    public const int MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION = 1;
-    public const int MAX_CHANGES_OR_DELETES_LAST_30_DAYS = 4;
-    public const int MAX_ALLOWED_EXAMINATIONS_LAST_30_DAYS = 8;
+
+    public const int MinimumDaysToChangeOrDeleteExamination = 1;
+    public const int MaxChangesOrDeletesLast30Days = 4;
+    public const int MaxAllowedExaminationsLast30Days = 8;
+
     public int NotificationTime { get; set; }
+
 
     public Patient(string firstName, string lastName, string jmbg, string username, string password,
         MedicalRecord medicalRecord) : base(firstName, lastName, jmbg, username, password)
@@ -13,13 +19,16 @@ public class Patient : Person
         MedicalRecord = medicalRecord;
         IsBlocked = false;
         NotificationTime = 30;
+        Referrals = new List<Referral>();
     }
 
     public Patient()
     {
         MedicalRecord = new MedicalRecord();
+        Referrals = new List<Referral>();
     }
 
+    public List<Referral> Referrals { get; set; }
     public bool IsBlocked { get; set; }
     public MedicalRecord MedicalRecord { get; set; }
 
@@ -32,5 +41,10 @@ public class Patient : Person
         };
 
         return copy;
+    }
+
+    public bool IsAllergicTo(Medication medication)
+    {
+        return medication.Allergens.Any(allergen => MedicalRecord.Allergies.Conditions.Contains(allergen));
     }
 }
