@@ -4,7 +4,10 @@ using CsvHelper.Configuration;
 
 namespace Hospital.Serialization.Mappers.Patient;
 
-using Hospital.Models.Patient;
+using CsvHelper.TypeConversion;
+using CsvHelper;
+using Models.Patient;
+using Repositories.Doctor;
 
 public sealed class PatientReadMapper : ClassMap<Patient>
 {
@@ -23,10 +26,27 @@ public sealed class PatientReadMapper : ClassMap<Patient>
         Map(patient => patient.MedicalRecord.MedicalHistory.Conditions).Index(9)
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
         Map(patient => patient.IsBlocked).Index(10);
+        Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
     }
 
-    private List<string> SplitColumnValues(string? columnValue)
+    private static List<string> SplitColumnValues(string? columnValue)
     {
         return columnValue?.Split("|").ToList() ?? new List<string>();
+    }
+
+    public class ReferralTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            var referralStringList = SplitColumnValues(inputText);
+            List<Referral> referrals = new();
+            if (string.IsNullOrEmpty(referralStringList[0])) return referrals;
+            referrals.AddRange(from item in referralStringList select item.Split(";") into referralArgs 
+                let doctorId = referralArgs[1].Trim() 
+                let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId) 
+                let specialization = referralArgs[0].Trim() select new Referral(specialization, doctor));
+
+            return referrals;
+        }
     }
 }
