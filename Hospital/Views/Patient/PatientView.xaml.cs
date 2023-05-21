@@ -101,5 +101,11 @@ namespace Hospital.Views
         {
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
+
+        private void BtnCreateNotification_Click(object sender, RoutedEventArgs e)
+        {
+            PatientNotificationView patientNotificationView = new PatientNotificationView(_patient);
+            patientNotificationView.ShowDialog();
+        }
     }
 }

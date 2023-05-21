@@ -13,6 +13,7 @@ using Hospital.Repositories.Examinaton;
 using Hospital.Services;
 using System.Windows;
 using Hospital.Models;
+using System.Windows.Threading;
 
 namespace Hospital.ViewModels
 {
@@ -24,7 +25,7 @@ namespace Hospital.ViewModels
         private readonly ExaminationService _examinationService;
         private readonly NotificationService _notificationService;
         private Patient _patient;
-        private System.Timers.Timer _notificationTimer;
+        private DispatcherTimer _notificationTimer;
 
 
         public ObservableCollection<Examination> Examinations
@@ -70,9 +71,9 @@ namespace Hospital.ViewModels
 
         public void StartNotificationTimer()
         {
-            _notificationTimer = new System.Timers.Timer();
-            _notificationTimer.Interval = TimeSpan.FromMinutes(NotificationIntervalMinutes).TotalMilliseconds;
-            _notificationTimer.Elapsed += (sender, e) => DisplayPatientNotifications();
+            _notificationTimer = new DispatcherTimer();
+            _notificationTimer.Interval = TimeSpan.FromMinutes(NotificationIntervalMinutes);
+            _notificationTimer.Tick += async (sender, e) => await DisplayPatientNotificationsAsync();
 
             _notificationTimer.Start();
         }
@@ -98,15 +99,18 @@ namespace Hospital.ViewModels
         {
             Examinations = new ObservableCollection<Examination>(_examinationService.GetAllExaminations(_patient));
         }
-        public void DisplayPatientNotifications()
+        public async Task DisplayPatientNotificationsAsync()
         {
-            Task.Run(() =>
+            var notifications = await Task.Run(() =>
             {
-                var notifications = _notificationService.GetAllUnsent(_patient.Id)
+                return _notificationService.GetAllUnsent(_patient.Id)
                     .Where(ShouldBeSent)
                     .ToList();
+            });
 
-                foreach (var notification in notifications)
+            await Task.Run(() =>
+            {
+                notifications.ForEach(notification =>
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -114,7 +118,7 @@ namespace Hospital.ViewModels
                     });
 
                     _notificationService.MarkSent(notification);
-                }
+                });
             });
         }
         private bool ShouldBeSent(Notification notification)

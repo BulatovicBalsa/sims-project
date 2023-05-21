@@ -21,7 +21,7 @@ namespace Hospital.ViewModels
             get { return _message; }
             set
             {
-                Message = value;
+                _message = value;
                 OnPropertyChanged(nameof(Message));
             }
         }
