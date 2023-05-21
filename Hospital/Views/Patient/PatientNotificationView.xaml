@@ -23,7 +23,41 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Margin="5" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Text="Create Notification" />
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Create Notification"
+                           Foreground="DarkGray"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+
+                <Button x:Name="BtnMinimize"
+                        BorderThickness="0"
+                        Content="_"
+                        Foreground="Black"
+                        FontSize="16"
+                        FontFamily="Segoe UI"
+                        Cursor="Hand"
+                        Grid.Column="1"
+                        Click="BtnMinimize_Click">
+                </Button>
+
+                <Button x:Name="BtnClose"
+                        BorderThickness="0"
+                        Content="X"
+                        Foreground="Black"
+                        FontSize="12"
+                        FontFamily="Segoe UI"
+                        Cursor="Hand"
+                        Grid.Column="2" HorizontalAlignment="Right" Width="25" Click="BtnClose_Click"/>
+            </Grid>
 
             <StackPanel Grid.Row="1" Margin="10">
                 <Label Content="Date:" />
@@ -44,3 +78,4 @@
         </Grid>
     </Border>
 </Window>
+
