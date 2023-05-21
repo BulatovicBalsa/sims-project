@@ -19,7 +19,7 @@ namespace Hospital.ViewModels
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
-        private const int NotificationIntervalMinutes = 5;
+        private const int NotificationIntervalMinutes = 1;
 
         private ObservableCollection<Examination> _examinations;
         private readonly ExaminationService _examinationService;
@@ -101,23 +101,17 @@ namespace Hospital.ViewModels
         }
         public async Task DisplayPatientNotificationsAsync()
         {
-            var notifications = await Task.Run(() =>
-            {
-                return _notificationService.GetAllUnsent(_patient.Id)
-                    .Where(ShouldBeSent)
-                    .ToList();
-            });
+            var notifications = _notificationService.GetAllUnsent(_patient.Id)
+             .Where(ShouldBeSent)
+             .ToList();
 
-            await Task.Run(() =>
+            await Application.Current.Dispatcher.InvokeAsync(async () =>
             {
-                notifications.ForEach(notification =>
+                notifications.ForEach(async notification =>
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        MessageBox.Show(notification.Message);
-                    });
-
+                    MessageBox.Show(notification.Message);
                     _notificationService.MarkSent(notification);
+                    await Task.Delay(10); // Delay to allow UI updates
                 });
             });
         }
