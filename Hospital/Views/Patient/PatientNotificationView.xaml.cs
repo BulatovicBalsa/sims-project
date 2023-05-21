@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Models.Patient;
+using Hospital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,28 @@ namespace Hospital.Views
     /// </summary>
     public partial class PatientNotificationView : Window
     {
-        public PatientNotificationView()
+        private PatientNotificationViewModel _viewModel;
+        public PatientNotificationView(Patient patient)
         {
             InitializeComponent();
+            _viewModel = new PatientNotificationViewModel(patient);
+            DataContext = _viewModel;
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CreateNotification();
+            Close();
         }
     }
 }
