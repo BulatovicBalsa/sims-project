@@ -39,7 +39,7 @@ public class Prescription
 
     public override string ToString()
     {
-        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming}";
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate.ToString("yyyy-MM-dd HH:mm:ss")}";
     }
 
     public override bool Equals(object? obj)

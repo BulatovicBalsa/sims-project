@@ -106,7 +106,7 @@ namespace Hospital.ViewModels
 
             notifications.ForEach(async notification =>
             {
-                MessageBox.Show(notification.Message);
+                MessageBox.Show(notification.Message,"Notification");
                 _notificationService.MarkSent(notification);
                 //await Task.Delay(10); // Delay to allow UI updates
             });

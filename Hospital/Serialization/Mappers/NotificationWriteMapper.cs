@@ -6,6 +6,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,26 +63,27 @@ namespace Hospital.Serialization.Mappers
             }
 
             var prescriptionArgs = text.Split(';');
-            if (prescriptionArgs.Length != 4)
+            if (prescriptionArgs.Length != 5)
             {
                 throw new FormatException("Invalid prescription format.");
             }
 
             var medicationId = prescriptionArgs[0].Trim();
+            var medication = MedicationRepository.Instance.GetById(medicationId);
             var amount = int.Parse(prescriptionArgs[1].Trim());
             var dailyUsage = int.Parse(prescriptionArgs[2].Trim());
             var medicationTiming = Enum.Parse<MedicationTiming>(prescriptionArgs[3].Trim());
+            var issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-            var medication = MedicationRepository.Instance.GetById(medicationId);
 
-            return new Prescription(medication, amount, dailyUsage, medicationTiming);
+            return new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate };
         }
 
         public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
             if (value is Prescription prescription)
             {
-                return $"{prescription.Medication.Id};{prescription.Amount};{prescription.DailyUsage};{prescription.MedicationTiming}";
+                return $"{prescription.Medication.Id};{prescription.Amount};{prescription.DailyUsage};{prescription.MedicationTiming};{prescription.IssuedDate}";
             }
 
             return string.Empty;

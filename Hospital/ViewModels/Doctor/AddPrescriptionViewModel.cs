@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Models;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
@@ -24,6 +26,7 @@ public class AddPrescriptionViewModel : ViewModelBase
     private Medication? _selectedMedication;
 
     private MedicationTiming? _selectedMedicationTiming;
+    private NotificationService _notificationService;
 
     public AddPrescriptionViewModel(Patient patientOnExamination)
     {
@@ -31,6 +34,7 @@ public class AddPrescriptionViewModel : ViewModelBase
         AddPrescriptionCommand = new RelayCommand<Window>(AddPrescription);
         Medications = new ObservableCollection<Medication>(MedicationRepository.Instance.GetAll());
         MedicationTimings = new ObservableCollection<MedicationTiming>(Enum.GetValues(typeof(MedicationTiming)).Cast<MedicationTiming>().ToList());
+        _notificationService = new NotificationService();
         Amount = 1;
         DailyUsage = 1;
     }
@@ -116,6 +120,10 @@ public class AddPrescriptionViewModel : ViewModelBase
         var prescriptionToAdd = new Prescription(SelectedMedication, Amount, DailyUsage,
             SelectedMedicationTiming.GetValueOrDefault());
         PatientOnExamination.MedicalRecord.Prescriptions.Add(prescriptionToAdd);
+
+        var notification = new Notification(PatientOnExamination,prescriptionToAdd);
+        _notificationService.Send(notification);
+
         MessageBox.Show("Succeed");
         window.DialogResult = true;
     }

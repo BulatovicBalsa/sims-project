@@ -30,11 +30,11 @@ public class Notification
         Sent = false;
         NotifyTime=DateTime.MinValue;
     }
-    public Notification(PatientClass patient, string message, Prescription prescription)
+    public Notification(PatientClass patient, Prescription prescription)
     {
         Id = Guid.NewGuid().ToString();
         ForId = patient.Id;
-        Message = message;
+        Message = GenerateNotificationMessage(patient, prescription); ;
         Sent = false;
         Prescription = prescription;
         NotifyTime = CalculateNotifyTime(patient.NotificationTime,prescription.MedicationTiming);
@@ -56,5 +56,29 @@ public class Notification
             default:
                 return anyTimeNotification;
         }
+    }
+    private string GenerateNotificationMessage(PatientClass patient, Prescription prescription)
+    {
+        string message = $"Reminder: Take {prescription.Medication.Name} {prescription.DailyUsage} time(s) per day.";
+
+        switch (prescription.MedicationTiming)
+        {
+            case MedicationTiming.BeforeMeal:
+                message += " Take it before meal.";
+                break;
+            case MedicationTiming.AfterMeal:
+                message += " Take it after meal.";
+                break;
+            case MedicationTiming.DuringMeal:
+                message += " Take it during meal.";
+                break;
+            case MedicationTiming.Anytime:
+                message += " Take it anytime.";
+                break;
+        }
+
+        message += $" Issued Date: {prescription.IssuedDate.ToShortDateString()}";
+
+        return message;
     }
 }
