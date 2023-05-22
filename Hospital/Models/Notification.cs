@@ -28,6 +28,7 @@ public class Notification
         ForId = forId;
         Message = message;
         Sent = false;
+        NotifyTime=DateTime.MinValue;
     }
     public Notification(PatientClass patient, string message, Prescription prescription)
     {

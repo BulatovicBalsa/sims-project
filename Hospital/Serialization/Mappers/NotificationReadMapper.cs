@@ -17,7 +17,7 @@ namespace Hospital.Serialization.Mappers
             Map(m => m.Message).Index(2);
             Map(m => m.Sent).Index(3);
             Map(m => m.Prescription).Index(4).TypeConverter<PrescriptionTypeConverter>();
-            Map(m => m.NotifyTime).Index(4).TypeConverter<NullableDateTimeConverter>();
+            Map(m => m.NotifyTime).Index(5).TypeConverter<NullableDateTimeConverter>();
         }
     }
 }

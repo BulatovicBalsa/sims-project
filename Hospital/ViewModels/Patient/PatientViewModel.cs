@@ -72,9 +72,8 @@ namespace Hospital.ViewModels
         public void StartNotificationTimer()
         {
             _notificationTimer = new DispatcherTimer();
-            _notificationTimer.Interval = TimeSpan.FromMinutes(NotificationIntervalMinutes);
-            _notificationTimer.Tick += async (sender, e) => await DisplayPatientNotificationsAsync();
-
+            _notificationTimer.Tick += new EventHandler(DisplayPatientNotifications);
+            _notificationTimer.Interval = new TimeSpan(0, NotificationIntervalMinutes, 0);
             _notificationTimer.Start();
         }
 
@@ -99,20 +98,17 @@ namespace Hospital.ViewModels
         {
             Examinations = new ObservableCollection<Examination>(_examinationService.GetAllExaminations(_patient));
         }
-        public async Task DisplayPatientNotificationsAsync()
+        private void DisplayPatientNotifications(object sender, EventArgs e)
         {
             var notifications = _notificationService.GetAllUnsent(_patient.Id)
              .Where(ShouldBeSent)
              .ToList();
 
-            await Application.Current.Dispatcher.InvokeAsync(async () =>
+            notifications.ForEach(async notification =>
             {
-                notifications.ForEach(async notification =>
-                {
-                    MessageBox.Show(notification.Message);
-                    _notificationService.MarkSent(notification);
-                    await Task.Delay(10); // Delay to allow UI updates
-                });
+                MessageBox.Show(notification.Message);
+                _notificationService.MarkSent(notification);
+                //await Task.Delay(10); // Delay to allow UI updates
             });
         }
         private bool ShouldBeSent(Notification notification)

@@ -42,6 +42,7 @@ namespace Hospital.ViewModels
             Patient = patient;
             _notificationService = new NotificationService();
             _message = "";
+            _selectedDateTime = DateTime.Now;
         }
 
         internal void CreateNotification()
