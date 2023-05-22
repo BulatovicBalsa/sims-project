@@ -121,10 +121,22 @@ public class AddPrescriptionViewModel : ViewModelBase
             SelectedMedicationTiming.GetValueOrDefault());
         PatientOnExamination.MedicalRecord.Prescriptions.Add(prescriptionToAdd);
 
-        var notification = new Notification(PatientOnExamination,prescriptionToAdd);
-        _notificationService.Send(notification);
+        GenerateNotificationsForPrescription(PatientOnExamination, prescriptionToAdd);
 
         MessageBox.Show("Succeed");
         window.DialogResult = true;
+    }
+
+    private void GenerateNotificationsForPrescription(Patient patient, Prescription prescription)
+    {
+        DateTime startDate = prescription.IssuedDate;
+        DateTime endDate = prescription.IssuedDate.AddDays(prescription.Amount);
+
+        var notifications = Enumerable.Range(0, (endDate - startDate).Days)
+            .Select(offset => startDate.AddDays(offset))
+            .Select(date => new Notification(patient, prescription, date))
+            .ToList();
+
+        notifications.ForEach(notification => _notificationService.Send(notification));
     }
 }

@@ -30,20 +30,21 @@ public class Notification
         Sent = false;
         NotifyTime=DateTime.MinValue;
     }
-    public Notification(PatientClass patient, Prescription prescription)
+    public Notification(PatientClass patient, Prescription prescription, DateTime date)
     {
         Id = Guid.NewGuid().ToString();
         ForId = patient.Id;
-        Message = GenerateNotificationMessage(patient, prescription); ;
+        Message = GenerateNotificationMessage(patient, prescription);
         Sent = false;
         Prescription = prescription;
-        NotifyTime = CalculateNotifyTime(patient.NotificationTime,prescription.MedicationTiming);
+        NotifyTime = CalculateNotifyTime(patient.NotificationTime, prescription.MedicationTiming, date);
     }
-    private DateTime CalculateNotifyTime(int NotificationTime,MedicationTiming timing)
+
+    private DateTime CalculateNotifyTime(int notificationTime, MedicationTiming timing, DateTime date)
     {
-        DateTime mealTime = DateTime.Now.Date.AddHours(MealHour);
-        TimeSpan durationBeforeMeal = TimeSpan.FromMinutes(NotificationTime);
-        DateTime anyTimeNotification = DateTime.Now.Date.AddHours(AnytimeNotificationHour);
+        DateTime mealTime = date.Date.AddHours(MealHour);
+        TimeSpan durationBeforeMeal = TimeSpan.FromMinutes(notificationTime);
+        DateTime anyTimeNotification = date.Date.AddHours(AnytimeNotificationHour);
 
         switch (timing)
         {
