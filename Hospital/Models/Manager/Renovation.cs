@@ -1,6 +1,15 @@
 ﻿using System;
+using CsvHelper.Configuration;
 
 namespace Hospital.Models.Manager;
+
+public sealed class RenovationReadMapper : ClassMap<Renovation>
+{
+    public override MemberMap<object, object> Map()
+    {
+        return base.Map();
+    }
+}
 
 public class Renovation
 {
