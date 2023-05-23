@@ -2,6 +2,12 @@ Id,ForId,Message,Sent,Prescription,NotifyTime
 252fedec-4b4e-486e-9999-f29e8c62b815,5d609ec4-86e6-47c2-8e17-36e4c4af0972,xxzc,True,,2023-05-21 12:00:00
 2100a8a2-de47-4997-bfc9-0f46b259f575,5d609ec4-86e6-47c2-8e17-36e4c4af0972,asdasxzc,True,,2023-05-17 12:00:00
 d83eea2a-3955-4331-b22c-8fa704b1bc3e,5d609ec4-86e6-47c2-8e17-36e4c4af0972,4242,True,36b3dffd-ae5d-41a7-8623-460a28854c6b;1;1;BeforeMeal;2022-05-22 10:00:00,2023-05-22 13:56:01
-6e4253da-70ff-48da-9255-0c5a5bbc7ee1,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Reminder: Take Acetaminophen 1 time(s) per day. Take it after meal. Issued Date: 22.5.2023.,False,b843b51d-5e50-4b64-ab22-5c77dac1f05c;3;1;AfterMeal;2023-05-22 17:44:31,2023-05-22 12:30:00
+6e4253da-70ff-48da-9255-0c5a5bbc7ee1,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Reminder: Take Acetaminophen 1 time(s) per day. Take it after meal. Issued Date: 22.5.2023.,True,b843b51d-5e50-4b64-ab22-5c77dac1f05c;3;1;AfterMeal;2023-05-22 17:44:31,2023-05-22 12:30:00
 e9994aea-97e3-4a27-b771-6a9470f8566f,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Reminder: Take Acetaminophen 1 time(s) per day. Take it after meal. Issued Date: 22.5.2023.,False,b843b51d-5e50-4b64-ab22-5c77dac1f05c;3;1;AfterMeal;2023-05-22 17:44:31,2023-05-23 12:30:00
 9d4874d3-0045-45de-825f-a26a4d1057ef,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Reminder: Take Acetaminophen 1 time(s) per day. Take it after meal. Issued Date: 22.5.2023.,False,b843b51d-5e50-4b64-ab22-5c77dac1f05c;3;1;AfterMeal;2023-05-22 17:44:31,2023-05-24 12:30:00
+91894f7f-9886-467b-a486-8383e9ee04ef,4c6439c5-beb7-46db-9622-02e2e46e8557,New urgent examination scheduled at 23.5.2023. 12:15:00,True,,0001-01-01 00:00:00
+9eae4f0f-d40a-4a16-bb9d-35564711b04b,868422c4-6735-4e77-b5cd-f5149ce4c5b7,test,True,,2023-05-23 12:11:50
+825762ae-11ba-4dee-8508-9872c76ed7f1,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Examination postponed scheduled at 23.5.2023. 12:15:00,True,,0001-01-01 00:00:00
+757e7462-52b9-4476-8868-fb731aac3136,4c6439c5-beb7-46db-9622-02e2e46e8557,New urgent examination scheduled at 23.5.2023. 12:30:00,True,,0001-01-01 00:00:00
+9f5cfa03-2f04-4a1e-af0d-c68cb997a3c9,96479d8b-a993-4cfe-a987-2e08dfb66269,New urgent examination scheduled at 23.5.2023. 12:30:00,False,,0001-01-01 00:00:00
+427c6101-d0f2-47a0-b4a8-9913bf99afe0,868422c4-6735-4e77-b5cd-f5149ce4c5b7,testtt,False,,2023-05-23 12:21:01

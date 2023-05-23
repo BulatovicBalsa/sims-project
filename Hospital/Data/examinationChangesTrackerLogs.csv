@@ -4,3 +4,5 @@ NotificationTime,IsBlocked,Height,Weight,Type,Type,Id,FirstName,LastName,Jmbg,Us
 30,False,176,71,Allergy,Allergy,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Momir,Milutinovic,0123456789012,momirPatient,momirPatient,05/20/2023 23:35:13,False
 30,False,177,72,Allergy,Allergy,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/21/2023 23:05:55,True
 30,False,177,72,Allergy,Allergy,5d609ec4-86e6-47c2-8e17-36e4c4af0972,Balsa,Bulatovic,0123456789012,balsaPatient,balsaPatient,05/22/2023 15:57:08,True
+30,False,176,71,Allergy,Allergy,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Momir,Milutinovic,0123456789012,momirPatient,momirPatient,05/23/2023 12:07:58,True
+30,False,176,71,Allergy,Allergy,868422c4-6735-4e77-b5cd-f5149ce4c5b7,Momir,Milutinovic,0123456789012,momirPatient,momirPatient,05/23/2023 12:09:05,True

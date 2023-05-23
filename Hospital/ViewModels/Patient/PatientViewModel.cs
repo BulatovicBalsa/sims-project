@@ -52,6 +52,7 @@ namespace Hospital.ViewModels
             _patient = patient;
 
             LoadExaminations();
+            DisplayPatientNotifications(this,EventArgs.Empty);
             StartNotificationTimer();
         }
 
