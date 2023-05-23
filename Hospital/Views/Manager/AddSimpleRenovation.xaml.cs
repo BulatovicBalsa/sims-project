@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.ViewModels;
 
 namespace Hospital.Views.Manager
 {
     /// <summary>
     /// Interaction logic for AddRenovation.xaml
     /// </summary>
-    public partial class AddRenovation : Window
+    public partial class AddRenovation : Window, IClosable
     {
         public AddRenovation()
         {

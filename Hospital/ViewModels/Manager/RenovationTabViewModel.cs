@@ -30,9 +30,15 @@ public class RenovationTabViewModel : ViewModelBase
 
     public ICommand OpenAddSimpleRenovationFormCommand { get; set; }
 
+    private void Refresh()
+    {
+        Renovations = new BindingList<Renovation>(RenovationRepository.Instance.GetAll());
+    }
+
     public void OpenAddSimpleRenovationForm()
     {
         var addRenovationForm = new AddRenovation();
+        addRenovationForm.Closed += ((sender, args) => Refresh());
         addRenovationForm.Show();
     } 
 }

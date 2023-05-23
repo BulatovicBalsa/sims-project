@@ -7,10 +7,11 @@
         xmlns:local="clr-namespace:Hospital.Views.Manager"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddRenovation" Height="150" Width="300">
-        <Window.DataContext>
-            <viewModels:AddSimpleRenovationViewModel />
-        </Window.DataContext>
+        Title="Add renovation" Height="150" Width="300"
+        x:Name="AddRenovationWindow">
+    <Window.DataContext>
+        <viewModels:AddSimpleRenovationViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -24,14 +25,14 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Room: " FontSize="15" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Rooms}"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Rooms}" SelectedItem="{Binding Room}"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Begin time:" FontSize="15" VerticalAlignment="Center"/>
         <xctk:DateTimePicker Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Value="{Binding StartTime, Mode=TwoWay}" />
 
         <Label Grid.Row="2" Grid.Column="0" Content="End time: " FontSize="15" VerticalAlignment="Center"/>
         <xctk:DateTimePicker Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Value="{Binding EndTime, Mode=TwoWay}" />
-        
-        <Button Grid.Row="3" Grid.Column="0" Content="Add" Grid.ColumnSpan="2" FontSize="15"></Button>
+
+        <Button Grid.Row="3" Grid.Column="0" Content="Submit" Grid.ColumnSpan="2" FontSize="15" Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=AddRenovationWindow}"></Button>
     </Grid>
 </Window>
