@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Scheduling;
-using Hospital.Services.Manager;
 
-namespace Hospital.Models.Manager;
+namespace Hospital.Services.Manager;
 
 public class RenovationService
 {
