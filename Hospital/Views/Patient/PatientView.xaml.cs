@@ -12,6 +12,7 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
 using Hospital.ViewModels;
 
 namespace Hospital.Views
@@ -106,6 +107,26 @@ namespace Hospital.Views
         {
             PatientNotificationView patientNotificationView = new PatientNotificationView(_patient);
             patientNotificationView.ShowDialog();
+        }
+
+        private void BtnSaveNotificationTime_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(TxtNotificationTime.Text, out int notificationTime))
+            {
+                if (notificationTime >= 0)
+                {
+                    _viewModel.SaveNotificationTime(notificationTime);
+                    MessageBox.Show("Notification time saved successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid notification time! Please enter a non-negative number.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid notification time! Please enter a valid number.");
+            }
         }
     }
 }

@@ -22,8 +22,10 @@ namespace Hospital.ViewModels
         private const int NotificationIntervalMinutes = 1;
 
         private ObservableCollection<Examination> _examinations;
+        private int _notificationTime;
         private readonly ExaminationService _examinationService;
         private readonly NotificationService _notificationService;
+        private readonly PatientService _patientService;
         private Patient _patient;
         private DispatcherTimer _notificationTimer;
 
@@ -34,6 +36,16 @@ namespace Hospital.ViewModels
             set
             {
                 _examinations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int NotificationTime
+        {
+            get { return _notificationTime; }
+            set
+            {
+                _notificationTime = value;
                 OnPropertyChanged();
             }
         }
@@ -49,7 +61,9 @@ namespace Hospital.ViewModels
         {
             _examinationService = new ExaminationService();
             _notificationService = new NotificationService();
+            _patientService = new PatientService();
             _patient = patient;
+            _notificationTime = patient.NotificationTime;
 
             LoadExaminations();
             DisplayPatientNotifications(this,EventArgs.Empty);
@@ -119,5 +133,11 @@ namespace Hospital.ViewModels
                    notification.NotifyTime <= DateTime.Now;
         }
 
+        internal void SaveNotificationTime(int notificationTime)
+        {
+            NotificationTime = notificationTime;
+            _patient.NotificationTime = notificationTime;
+            _patientService.UpdatePatient(_patient);
+        }
     }
 }
