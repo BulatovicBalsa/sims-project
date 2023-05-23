@@ -46,8 +46,8 @@ public class RenovationTests
         var renovation = new Renovation("143", DateTime.Now.AddDays(-1), DateTime.Now.AddSeconds(1000), room);
 
         Assert.IsTrue(renovation.OverlapsWith(DateTime.Now.AddHours(-5), DateTime.Now.AddHours(-2)));
-    } 
-    
+    }
+
     [TestMethod]
     public void TestOverlapsWithIntervalDoesNotOverlap()
     {

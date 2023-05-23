@@ -8,6 +8,7 @@ namespace HospitalTests.Services.Manager;
 [TestClass]
 public class RenovationServiceTests
 {
+
     [TestMethod]
     public void TestAddRenovationRoomHasExamination()
     {

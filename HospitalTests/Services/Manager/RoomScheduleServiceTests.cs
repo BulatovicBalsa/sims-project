@@ -4,7 +4,7 @@ using Hospital.Models.Patient;
 using Hospital.Scheduling;
 using Hospital.Services.Manager;
 
-namespace HospitalTests.Models.Manager;
+namespace HospitalTests.Services.Manager;
 
 [TestClass]
 public class RoomScheduleServiceTests
