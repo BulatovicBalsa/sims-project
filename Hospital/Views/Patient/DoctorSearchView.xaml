@@ -81,7 +81,7 @@
                     <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
                     <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
                     <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" Width="*"/>
-                    <!--<DataGridTextColumn Header="Average Rating" Binding="{Binding Rating}" Width="*"/>-->
+                    <DataGridTextColumn Header="Average Rating" Binding="{Binding AverageRating}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
