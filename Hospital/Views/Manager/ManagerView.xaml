@@ -112,7 +112,7 @@
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
-                                Command="{Binding OpenAddStaticEquipmentTransferCommand}">
+                                Command="{Binding OpenAddSimpleRenovationFormCommand }">
                             <StackPanel Orientation="Horizontal">
                                 <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
                                 <TextBlock Text="Add renovation" VerticalAlignment="Center" Margin="2 0 0 0" />
