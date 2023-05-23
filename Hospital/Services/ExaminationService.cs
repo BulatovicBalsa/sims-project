@@ -6,6 +6,8 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
+using Hospital.Scheduling;
+using Hospital.Services.Manager;
 
 namespace Hospital.Services;
 
@@ -102,6 +104,9 @@ public class ExaminationService
 
     public void AddExamination(Examination examination)
     {
+        var roomScheduleService = new RoomScheduleService();
+        if (!roomScheduleService.IsFree(examination.Room ?? throw new InvalidOperationException("Attempted to schedule examination in null room"), new TimeRange(examination.Start, examination.End)))
+            throw new RoomBusyException("Room is busy during the time of the examination.");
         _examinationRepository.Add(examination, false);
     }
 
