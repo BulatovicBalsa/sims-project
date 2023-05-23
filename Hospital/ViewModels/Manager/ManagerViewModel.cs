@@ -11,7 +11,8 @@ public class ManagerViewModel : ViewModelBase
         Children = new ObservableCollection<object>
         {
             new OrderTabViewModel(),
-            new TransferTabViewModel()
+            new TransferTabViewModel(),
+            new RenovationTabViewModel()
         };
     }
 

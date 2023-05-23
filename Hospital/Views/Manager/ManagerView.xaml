@@ -108,6 +108,34 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
+            <TabItem Header="Renovations" DataContext="{Binding Children[2]}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddStaticEquipmentTransferCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Add renovation" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Renovations, Mode=TwoWay}" 
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Room" Binding="{Binding Room.Name}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Begins" Binding="{Binding BeginTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Ends" Binding="{Binding EndTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*"/>
+                                <DataGridCheckBoxColumn Header="Completed" Binding="{Binding Completed}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
