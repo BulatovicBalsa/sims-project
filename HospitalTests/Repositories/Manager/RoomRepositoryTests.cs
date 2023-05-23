@@ -15,25 +15,25 @@ public class RoomRepositoryTests
             File.Delete(roomFilePath);
 
         RoomRepository.Instance.DeleteAll();
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
     }
 
     [TestMethod]
     public void TestGetAll()
     {
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
 
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom),
-            new("2", "Operating room", Room.RoomType.OperatingRoom),
-            new("3", "Hybrid operating room", Room.RoomType.OperatingRoom),
-            new("4", "Examination room", Room.RoomType.ExaminationRoom),
-            new("5", "Ward", Room.RoomType.Ward),
-            new("6", "Intensive care unit", Room.RoomType.Ward)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom),
+            new("2", "Operating room", RoomType.OperatingRoom),
+            new("3", "Hybrid operating room", RoomType.OperatingRoom),
+            new("4", "Examination room", RoomType.ExaminationRoom),
+            new("5", "Ward", RoomType.Ward),
+            new("6", "Intensive care unit", RoomType.Ward)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
@@ -47,18 +47,18 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom),
-            new("2", "Operating room", Room.RoomType.OperatingRoom),
-            new("4", "Examination room", Room.RoomType.ExaminationRoom),
-            new("5", "Ward", Room.RoomType.Ward)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom),
+            new("2", "Operating room", RoomType.OperatingRoom),
+            new("4", "Examination room", RoomType.ExaminationRoom),
+            new("5", "Ward", RoomType.Ward)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var foundRoom = RoomRepository.Instance.GetById("2");
         Assert.IsNotNull(foundRoom);
         Assert.AreEqual("Operating room", foundRoom.Name);
-        Assert.AreEqual(Room.RoomType.OperatingRoom, foundRoom.Type);
+        Assert.AreEqual(RoomType.OperatingRoom, foundRoom.Type);
     }
 
     [TestMethod]
@@ -75,11 +75,11 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom),
-            new("2", "Operating room", Room.RoomType.OperatingRoom),
-            new("4", "Examination room", Room.RoomType.ExaminationRoom),
-            new("5", "Ward", Room.RoomType.Ward)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom),
+            new("2", "Operating room", RoomType.OperatingRoom),
+            new("4", "Examination room", RoomType.ExaminationRoom),
+            new("5", "Ward", RoomType.Ward)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
@@ -92,16 +92,16 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom),
-            new("2", "Operating room", Room.RoomType.OperatingRoom),
-            new("4", "Examination room", Room.RoomType.ExaminationRoom),
-            new("5", "Ward", Room.RoomType.Ward)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom),
+            new("2", "Operating room", RoomType.OperatingRoom),
+            new("4", "Examination room", RoomType.ExaminationRoom),
+            new("5", "Ward", RoomType.Ward)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = RoomRepository.Instance;
-        roomRepository.Add(new Room("7", "New room", Room.RoomType.WaitingRoom));
+        roomRepository.Add(new Room("7", "New room", RoomType.WaitingRoom));
 
         Assert.AreEqual(rooms.Count + 1, roomRepository.GetAll().Count);
         Assert.IsNotNull(roomRepository.GetById("7"));
@@ -112,15 +112,15 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = RoomRepository.Instance;
         var idToUpdate = "1";
         var newName = "Examination room";
-        var newType = Room.RoomType.ExaminationRoom;
+        var newType = RoomType.ExaminationRoom;
         roomRepository.Update(new Room(idToUpdate, newName, newType));
 
         var updatedRoom = roomRepository.GetById(idToUpdate);
@@ -135,8 +135,8 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
         var roomRepository = RoomRepository.Instance;
@@ -152,27 +152,27 @@ public class RoomRepositoryTests
     {
         var rooms = new List<Room>
         {
-            new("0", "Warehouse", Room.RoomType.Warehouse),
-            new("1", "Waiting room", Room.RoomType.WaitingRoom)
+            new("0", "Warehouse", RoomType.Warehouse),
+            new("1", "Waiting room", RoomType.WaitingRoom)
         };
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
-        EquipmentPlacementRepository.Instance.DeleteAll();
-        var equipmentInRooms = new List<EquipmentPlacement>
+        InventoryItemRepository.Instance.DeleteAll();
+        var equipmentInRooms = new List<InventoryItem>
         {
             new("1", "0", 1),
             new("2", "0", 2),
             new("1", "1", 3)
         };
-        Serializer<EquipmentPlacement>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
+        Serializer<InventoryItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
 
         var loadedRooms = RoomRepository.Instance.GetAll();
 
-        Assert.AreEqual(2, loadedRooms[0].Equipment.Count);
-        Assert.AreEqual(1, loadedRooms[1].Equipment.Count);
+        Assert.AreEqual(2, loadedRooms[0].Inventory.Count);
+        Assert.AreEqual(1, loadedRooms[1].Inventory.Count);
         Assert.AreEqual(1,
-            loadedRooms[0].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
+            loadedRooms[0].GetAmount(new Equipment("1", "", EquipmentType.ExaminationEquipment)));
         Assert.AreEqual(3,
-            loadedRooms[1].GetAmount(new Equipment("1", "", Equipment.EquipmentType.ExaminationEquipment)));
+            loadedRooms[1].GetAmount(new Equipment("1", "", EquipmentType.ExaminationEquipment)));
     }
 }

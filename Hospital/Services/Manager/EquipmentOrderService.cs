@@ -38,19 +38,9 @@ public class EquipmentOrderService
         foreach (var order in EquipmentOrderRepository.Instance.GetAll())
         {
             var warehouse = RoomRepository.Instance.GetWarehouse();
-            order.PickUp(RoomRepository.Instance.GetWarehouse());
+            if (!order.TryPickUp(RoomRepository.Instance.GetWarehouse())) continue;
             EquipmentOrderRepository.Instance.Update(order);
-
-            foreach (var equipmentPlacement in warehouse.Equipment)
-                //TODO: Perhaps don't use try catch. Use GetByKeyInstead
-                try
-                {
-                    EquipmentPlacementRepository.Instance.Update(equipmentPlacement);
-                }
-                catch (KeyNotFoundException)
-                {
-                    EquipmentPlacementRepository.Instance.Add(equipmentPlacement);
-                }
+            RoomRepository.Instance.Update(warehouse);
         }
     }
 }

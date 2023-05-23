@@ -19,6 +19,7 @@ public partial class App : Application
     private void ProcessEventsThatOccurredBeforeAppStart()
     {
         EquipmentOrderService.AttemptPickUpOfAllOrders();
+        TransferService.AttemptDeliveryOfAllTransfers();
     }
 
     protected void ApplicationStart(object sender, EventArgs e)

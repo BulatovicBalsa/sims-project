@@ -8,25 +8,13 @@ public class ManagerViewModel : ViewModelBase
 
     public ManagerViewModel()
     {
-        Children = new ObservableCollection<object>();
-        Children.Add(new EquipmentTabViewModel());
-        Children.Add(new OrderTabViewModel());
-
-        OrderTabViewModel = new OrderTabViewModel();
-    }
-
-    public OrderTabViewModel OrderTabViewModel
-    {
-        get => _orderTabViewModel;
-        set
+        Children = new ObservableCollection<object>
         {
-            if (_orderTabViewModel != value)
-            {
-                _orderTabViewModel = value;
-                OnPropertyChanged(nameof(OrderTabViewModel));
-            }
-        }
+            new OrderTabViewModel(),
+            new TransferTabViewModel()
+        };
     }
+
 
     public ObservableCollection<object> Children { get; }
 }

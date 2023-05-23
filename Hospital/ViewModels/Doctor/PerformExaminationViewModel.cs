@@ -5,23 +5,28 @@ using Hospital.Models.Patient;
 using Hospital.Views;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class PerformExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly ExaminationService _examinationService = new();
 
     private string _anamnesis;
+    public bool IsReferralAdded { get; set; }
 
     public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
     {
         _examinationToPerform = examinationToPerform;
         PatientOnExamination = patientOnExamination;
         Anamnesis = _examinationToPerform.Anamnesis;
+        IsReferralAdded = false;
 
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
+        CreateReferralCommand = new RelayCommand(CreateReferral);
     }
 
     private readonly Examination _examinationToPerform;
@@ -39,11 +44,12 @@ public class PerformExaminationViewModel : ViewModelBase
 
     public ICommand UpdateAnamnesisCommand { get; set; }
     public ICommand FinishExaminationCommand { get; set; }
+    public ICommand CreateReferralCommand { get; set; }
 
     private void UpdateAnamnesis()
     {
         _examinationToPerform.Anamnesis = Anamnesis;
-        _doctorService.UpdateExamination(_examinationToPerform);
+        _examinationService.UpdateExamination(_examinationToPerform);
         MessageBox.Show("Succeed");
     }
 
@@ -52,5 +58,21 @@ public class PerformExaminationViewModel : ViewModelBase
         window.Close();
         var dialog = new ChangeDynamicRoomEquipment(_examinationToPerform.Room!);
         dialog.ShowDialog();
+    }
+
+    private void CreateReferral()
+    {
+        if (IsReferralAdded) //Consider Allowing Referral Updates
+        {
+            MessageBox.Show("Referral is already added");
+            return;
+        }
+        Referral createdReferral = new();
+        var dialog = new CreateReferralDialog(createdReferral);
+        dialog.ShowDialog();
+        if (!createdReferral.IsDefault()) IsReferralAdded = true;
+        PatientOnExamination.Referrals.Add(createdReferral);
+
+        new PatientService().UpdatePatient(PatientOnExamination);
     }
 }

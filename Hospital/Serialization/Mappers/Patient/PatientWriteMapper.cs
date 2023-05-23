@@ -17,9 +17,10 @@ public sealed class PatientWriteMapper : ClassMap<Patient>
         Map(patient => patient.MedicalRecord.Height).Index(6);
         Map(patient => patient.MedicalRecord.Weight).Index(7);
         Map(patient => patient.MedicalRecord.Allergies)
-            .Convert(row => string.Join("|", row.Value.MedicalRecord.Allergies)).Index(8);
+            .Convert(row => string.Join("|", row.Value.MedicalRecord.Allergies.Conditions)).Index(8);
         Map(patient => patient.MedicalRecord.MedicalHistory)
-            .Convert(row => string.Join("|", row.Value.MedicalRecord.MedicalHistory)).Index(9);
+            .Convert(row => string.Join("|", row.Value.MedicalRecord.MedicalHistory.Conditions)).Index(9);
         Map(patient => patient.IsBlocked).Index(10);
+        Map(patient => patient.Referrals).Index(11).Convert(row => string.Join("|", row.Value.Referrals)).Index(11); ;
     }
 }

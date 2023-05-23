@@ -87,4 +87,36 @@ public class ExaminationService
 
         return upcomingDoctorExaminations;
     }
+
+    public List<Patient> GetViewedPatients(Doctor doctor)
+    {
+        var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
+        var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
+        return viewedPatients!;
+    }
+
+    public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
+    {
+        return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
+    }
+
+    public void AddExamination(Examination examination)
+    {
+        _examinationRepository.Add(examination, false);
+    }
+
+    public void UpdateExamination(Examination examination)
+    {
+        _examinationRepository.Update(examination, false);
+    }
+
+    public void DeleteExamination(Examination examination)
+    {
+        _examinationRepository.Delete(examination, false);
+    }
+
+    public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
+    {
+        return _examinationRepository.GetExaminationsForDate(doctor, selectedDate);
+    }
 }

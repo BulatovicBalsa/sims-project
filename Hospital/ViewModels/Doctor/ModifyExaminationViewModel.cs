@@ -10,12 +10,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Services;
+using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels;
 
 public class ModifyExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly ExaminationService _examinationService = new();
+    private readonly PatientService _patientService = new();
+    private readonly RoomFilterService _roomFilterService = new();
 
     private string _buttonContent;
     private readonly Doctor _doctor;
@@ -44,9 +49,9 @@ public class ModifyExaminationViewModel : ViewModelBase
         _examinationCollection = examinationCollection;
         _examinationToChange = examinationToChange;
 
-        Patients = new ObservableCollection<Patient>(_doctorService.GetAllPatients());
+        Patients = new ObservableCollection<Patient>(_patientService.GetAllPatients());
         PossibleTimes = new ObservableCollection<TimeOnly>(GetPossibleTimes());
-        Rooms = new ObservableCollection<Room>(_doctorService.GetRoomsForExamination());
+        Rooms = new ObservableCollection<Room>(_roomFilterService.GetRoomsForExamination());
 
         ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         FillForm();
@@ -161,7 +166,7 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
             else
             {
-                _doctorService.AddExamination(createdExamination);
+                _examinationService.AddExamination(createdExamination);
                 _examinationCollection.Add(createdExamination);
             }
         }
@@ -207,9 +212,9 @@ public class ModifyExaminationViewModel : ViewModelBase
     {
         if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
         else throw new InvalidOperationException("examination to change can't be null");
-        _doctorService.UpdateExamination(examination);
+        _examinationService.UpdateExamination(examination);
         _examinationCollection.Clear();
-        _doctorService.GetExaminationsForNextThreeDays(_doctor)
+        _examinationService.GetExaminationsForNextThreeDays(_doctor)
             .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));
     }
 

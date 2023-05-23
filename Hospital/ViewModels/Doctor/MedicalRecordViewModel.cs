@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
 public class MedicalRecordViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService = new();
+    private readonly PatientService _patientService = new();
 
     private ObservableCollection<string> _allergies;
 
@@ -39,8 +41,8 @@ public class MedicalRecordViewModel : ViewModelBase
         Patient = patient;
         Weight = Patient.MedicalRecord.Weight.ToString();
         Height = Patient.MedicalRecord.Height.ToString();
-        Allergies = new ObservableCollection<string>(patient.MedicalRecord.Allergies);
-        MedicalHistory = new ObservableCollection<string>(patient.MedicalRecord.MedicalHistory);
+        Allergies = new ObservableCollection<string>(patient.MedicalRecord.Allergies.Conditions);
+        MedicalHistory = new ObservableCollection<string>(patient.MedicalRecord.MedicalHistory.Conditions);
 
         AddAllergyCommand = new RelayCommand(AddAllergy);
         DeleteAllergyCommand = new RelayCommand(DeleteAllergy);
@@ -176,14 +178,14 @@ public class MedicalRecordViewModel : ViewModelBase
 
     private void AddHealthCondition(HealthConditionType conditionType)
     {
-        Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy
-            ? Patient.MedicalRecord.AddAllergy
-            : Patient.MedicalRecord.AddMedicalCondition;
+        var healthConditionToChange = conditionType == HealthConditionType.Allergy
+            ? Patient.MedicalRecord.Allergies
+            : Patient.MedicalRecord.MedicalHistory;
 
         var conditionToAdd = Interaction.InputBox($"Insert {conditionType}: ", $"Add {conditionType}");
         try
         {
-            medicalRecordOperation(conditionToAdd);
+            healthConditionToChange.Add(conditionToAdd);
         }
         catch (ArgumentException ex)
         {
@@ -191,15 +193,16 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
     private void UpdateHealthCondition(HealthConditionType conditionType)
     {
-        Action<string, string> medicalRecordOperation = conditionType == HealthConditionType.Allergy
-            ? Patient.MedicalRecord.UpdateAllergy
-            : Patient.MedicalRecord.UpdateMedicalCondition;
+        var healthConditionToChange = conditionType == HealthConditionType.Allergy
+            ? Patient.MedicalRecord.Allergies
+            : Patient.MedicalRecord.MedicalHistory;
+
         var selectedHealthCondition =
             conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
 
@@ -209,10 +212,10 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        var updatedCondition = Interaction.InputBox($"Update '{selectedHealthCondition}' name: ", $"Update {conditionType}");
+        var updatedHealthCondition = Interaction.InputBox($"Update '{selectedHealthCondition}' name: ", $"Update {conditionType}");
         try
         {
-            medicalRecordOperation(selectedHealthCondition, updatedCondition);
+            healthConditionToChange.Update(selectedHealthCondition, updatedHealthCondition);
         }
         catch (ArgumentException ex)
         {
@@ -220,15 +223,16 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
     private void DeleteHealthCondition(HealthConditionType conditionType)
     {
-        Action<string> medicalRecordOperation = conditionType == HealthConditionType.Allergy
-            ? Patient.MedicalRecord.DeleteAllergy
-            : Patient.MedicalRecord.DeleteMedicalCondition;
+        var healthConditionToChange = conditionType == HealthConditionType.Allergy
+            ? Patient.MedicalRecord.Allergies
+            : Patient.MedicalRecord.MedicalHistory;
+
         var selectedHealthCondition =
             conditionType == HealthConditionType.Allergy ? SelectedAllergy : SelectedMedicalCondition;
 
@@ -240,7 +244,7 @@ public class MedicalRecordViewModel : ViewModelBase
 
         try
         {
-            medicalRecordOperation(selectedHealthCondition);
+            healthConditionToChange.Delete(selectedHealthCondition);
         }
         catch (ArgumentException ex)
         {
@@ -248,7 +252,7 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         RefreshHealthConditionCollection(conditionType);
     }
 
@@ -269,15 +273,15 @@ public class MedicalRecordViewModel : ViewModelBase
             return;
         }
 
-        _doctorService.UpdatePatient(Patient);
+        _patientService.UpdatePatient(Patient);
         MessageBox.Show("Succeed");
     }
 
     private void RefreshHealthConditionCollection(HealthConditionType conditionType)
     {
         if (conditionType == HealthConditionType.Allergy)
-            Allergies = new ObservableCollection<string>(Patient.MedicalRecord.Allergies);
+            Allergies = new ObservableCollection<string>(Patient.MedicalRecord.Allergies.Conditions);
         else
-            MedicalHistory = new ObservableCollection<string>(Patient.MedicalRecord.MedicalHistory);
+            MedicalHistory = new ObservableCollection<string>(Patient.MedicalRecord.MedicalHistory.Conditions);
     }
 }

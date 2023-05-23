@@ -259,22 +259,22 @@ public class ExaminationRepository
 
     private void ValidateExaminationTiming(DateTime start)
     {
-        if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION))
+        if (start < DateTime.Now.AddDays(Patient.MinimumDaysToChangeOrDeleteExamination))
             throw new InvalidOperationException(
-                $"It is not possible to update an examination less than {Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION * 24} hours in advance.");
+                $"It is not possible to update an examination less than {Patient.MinimumDaysToChangeOrDeleteExamination * 24} hours in advance.");
     }
 
     private void ValidateMaxChangesOrDeletesLast30Days(Patient patient)
     {
         if (_examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(patient) + 1 >
-            Patient.MAX_CHANGES_OR_DELETES_LAST_30_DAYS)
+            Patient.MaxChangesOrDeletesLast30Days)
             throw new InvalidOperationException("Patient made too many changes in last 30 days");
     }
 
     private void ValidateMaxAllowedExaminationsLast30Days(Patient patient)
     {
         if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) + 1 >
-            Patient.MAX_ALLOWED_EXAMINATIONS_LAST_30_DAYS)
+            Patient.MaxAllowedExaminationsLast30Days)
             throw new InvalidOperationException("Patient made too many examinations in last 30 days");
     }
 

@@ -17,16 +17,16 @@ public class RoomInventoryViewModel : ViewModelBase
         public int OriginalAmount { get; set; }
         public int Amount { get; set; }
 
-        public EquipmentExpenditure(EquipmentPlacement equipmentPlacement)
+        public EquipmentExpenditure(InventoryItem inventoryItem)
         {
-            Equipment = equipmentPlacement.Equipment ?? throw new InvalidOperationException();
-            OriginalAmount = equipmentPlacement.Amount;
+            Equipment = inventoryItem.Equipment ?? throw new InvalidOperationException();
+            OriginalAmount = inventoryItem.Amount;
             Amount = 0;
         }
     }
 
     private ObservableCollection<EquipmentExpenditure> _expenditures = new();
-    private ObservableCollection<EquipmentPlacement> _roomEquipments = new();
+    private ObservableCollection<InventoryItem> _roomEquipments = new();
     private ICommand _saveCommand;
     private readonly Room _room;
 
@@ -37,11 +37,11 @@ public class RoomInventoryViewModel : ViewModelBase
             Expenditures.Add(new EquipmentExpenditure(equipmentPlacement));
 
         RoomEquipments =
-            new ObservableCollection<EquipmentPlacement>(room.GetDynamicEquipmentAmounts());
+            new ObservableCollection<InventoryItem>(room.GetDynamicEquipmentAmounts());
         SaveCommand = new RelayCommand<Window>(Save);
     }
 
-    public ObservableCollection<EquipmentPlacement> RoomEquipments
+    public ObservableCollection<InventoryItem> RoomEquipments
     {
         get => _roomEquipments;
         set

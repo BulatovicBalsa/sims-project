@@ -12,7 +12,7 @@ public class EquipmentFilterServiceTests
     public void SetUp()
     {
         EquipmentRepository.Instance.DeleteAll();
-        EquipmentPlacementRepository.Instance.DeleteAll();
+        InventoryItemRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();
         var filesUsed = new List<string>
         {
@@ -28,34 +28,34 @@ public class EquipmentFilterServiceTests
         var equipmentRepository = EquipmentRepository.Instance;
         var equipment = new List<Equipment>
         {
-            new("1001", "Examination Table", Equipment.EquipmentType.ExaminationEquipment),
-            new("1002", "MRI Machine", Equipment.EquipmentType.ExaminationEquipment),
-            new("1003", "Stretcher", Equipment.EquipmentType.HallwayEquipment),
-            new("1004", "Surgery Table", Equipment.EquipmentType.OperationEquipment),
-            new("1005", "Wheelchair", Equipment.EquipmentType.HallwayEquipment),
-            new("1006", "X-ray Machine", Equipment.EquipmentType.ExaminationEquipment),
-            new("1007", "Oxygen Concentrator", Equipment.EquipmentType.Furniture),
-            new("1008", "EKG Machine", Equipment.EquipmentType.ExaminationEquipment),
-            new("1009", "Operating Room Lights", Equipment.EquipmentType.OperationEquipment),
-            new("1010", "Hospital Bed", Equipment.EquipmentType.Furniture),
-            new("1011", "Blood Pressure Monitor", Equipment.EquipmentType.ExaminationEquipment),
-            new("1012", "Defibrillator", Equipment.EquipmentType.OperationEquipment),
-            new("1013", "Ultrasound Machine", Equipment.EquipmentType.ExaminationEquipment),
-            new("1014", "Sterilization Machine", Equipment.EquipmentType.OperationEquipment),
-            new("1015", "Gurney", Equipment.EquipmentType.HallwayEquipment),
-            new("1016", "Anesthesia Machine", Equipment.EquipmentType.OperationEquipment),
-            new("1017", "Nebulizer", Equipment.EquipmentType.ExaminationEquipment),
-            new("1018", "Crash Cart", Equipment.EquipmentType.OperationEquipment),
-            new("1019", "Medical Refrigerator", Equipment.EquipmentType.Furniture),
-            new("1020", "Oxygen Tank", Equipment.EquipmentType.HallwayEquipment),
-            new("1021", "Chair", Equipment.EquipmentType.Furniture),
-            new("1022", "Magazine stand", Equipment.EquipmentType.Furniture)
+            new("1001", "Examination Table", EquipmentType.ExaminationEquipment),
+            new("1002", "MRI Machine", EquipmentType.ExaminationEquipment),
+            new("1003", "Stretcher", EquipmentType.HallwayEquipment),
+            new("1004", "Surgery Table", EquipmentType.OperationEquipment),
+            new("1005", "Wheelchair", EquipmentType.HallwayEquipment),
+            new("1006", "X-ray Machine", EquipmentType.ExaminationEquipment),
+            new("1007", "Oxygen Concentrator", EquipmentType.Furniture),
+            new("1008", "EKG Machine", EquipmentType.ExaminationEquipment),
+            new("1009", "Operating Room Lights", EquipmentType.OperationEquipment),
+            new("1010", "Hospital Bed", EquipmentType.Furniture),
+            new("1011", "Blood Pressure Monitor", EquipmentType.ExaminationEquipment),
+            new("1012", "Defibrillator", EquipmentType.OperationEquipment),
+            new("1013", "Ultrasound Machine", EquipmentType.ExaminationEquipment),
+            new("1014", "Sterilization Machine", EquipmentType.OperationEquipment),
+            new("1015", "Gurney", EquipmentType.HallwayEquipment),
+            new("1016", "Anesthesia Machine", EquipmentType.OperationEquipment),
+            new("1017", "Nebulizer", EquipmentType.ExaminationEquipment),
+            new("1018", "Crash Cart", EquipmentType.OperationEquipment),
+            new("1019", "Medical Refrigerator", EquipmentType.Furniture),
+            new("1020", "Oxygen Tank", EquipmentType.HallwayEquipment),
+            new("1021", "Chair", EquipmentType.Furniture),
+            new("1022", "Magazine stand", EquipmentType.Furniture)
         };
 
         foreach (var e in equipment) equipmentRepository.Add(e);
 
 
-        var equipmentPlacements = new List<EquipmentPlacement>
+        var equipmentPlacements = new List<InventoryItem>
         {
             new("1021", "5000", 15), // 15 chairs in warehouse
             new("1021", "2001", 3), // 3 Chairs in Waiting Room 1
@@ -85,41 +85,41 @@ public class EquipmentFilterServiceTests
 
         var rooms = new List<Room>
         {
-            new("5000", "Warehouse Room", Room.RoomType.Warehouse),
-            new("0001", "Operating Room 1", Room.RoomType.OperatingRoom),
-            new("0002", "Operating Room 2", Room.RoomType.OperatingRoom),
+            new("5000", "Warehouse Room", RoomType.Warehouse),
+            new("0001", "Operating Room 1", RoomType.OperatingRoom),
+            new("0002", "Operating Room 2", RoomType.OperatingRoom),
 
-            new("1001", "Examination Room 1", Room.RoomType.ExaminationRoom),
+            new("1001", "Examination Room 1", RoomType.ExaminationRoom),
 
-            new("1002", "Examination Room 2", Room.RoomType.ExaminationRoom),
+            new("1002", "Examination Room 2", RoomType.ExaminationRoom),
 
-            new("1003", "Examination Room 3", Room.RoomType.ExaminationRoom),
+            new("1003", "Examination Room 3", RoomType.ExaminationRoom),
 
-            new("1004", "Examination Room 4", Room.RoomType.ExaminationRoom),
-            new("2001", "Waiting Room 1", Room.RoomType.WaitingRoom),
+            new("1004", "Examination Room 4", RoomType.ExaminationRoom),
+            new("2001", "Waiting Room 1", RoomType.WaitingRoom),
 
 
-            new("2002", "Waiting Room 2", Room.RoomType.WaitingRoom),
-            new("3001", "Ward Room 101", Room.RoomType.Ward),
+            new("2002", "Waiting Room 2", RoomType.WaitingRoom),
+            new("3001", "Ward Room 101", RoomType.Ward),
 
-            new("3002", "Ward Room 102", Room.RoomType.Ward),
+            new("3002", "Ward Room 102", RoomType.Ward),
 
-            new("3003", "Ward Room 103", Room.RoomType.Ward),
+            new("3003", "Ward Room 103", RoomType.Ward),
 
-            new("3004", "Ward Room 104", Room.RoomType.Ward)
+            new("3004", "Ward Room 104", RoomType.Ward)
         };
 
         Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         // 3 beds in every ward
-        foreach (var ward in rooms.Where(room => room.Type == Room.RoomType.Ward))
-            equipmentPlacements.Add(new EquipmentPlacement("1010", ward.Id, 3));
+        foreach (var ward in rooms.Where(room => room.Type == RoomType.Ward))
+            equipmentPlacements.Add(new InventoryItem("1010", ward.Id, 3));
 
-        //equipmentPlacements.Add(new EquipmentPlacement("1010", "3004", 3));
+        //equipmentPlacements.Add(new InventoryItem("1010", "3004", 3));
 
-        EquipmentPlacementRepository.Instance.DeleteAll();
-        Serializer<EquipmentPlacement>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
-        EquipmentPlacementRepository.Instance.GetAll();
+        InventoryItemRepository.Instance.DeleteAll();
+        Serializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        InventoryItemRepository.Instance.GetAll();
     }
 
     [TestMethod]
@@ -128,8 +128,8 @@ public class EquipmentFilterServiceTests
         var equipmentFilterService = new EquipmentFilterService();
 
         var equipmentInExaminationRooms =
-            equipmentFilterService.GetEquipment(Room.RoomType.ExaminationRoom);
-        var equipmentInWaitingRooms = equipmentFilterService.GetEquipment(Room.RoomType.WaitingRoom);
+            equipmentFilterService.GetEquipment(RoomType.ExaminationRoom);
+        var equipmentInWaitingRooms = equipmentFilterService.GetEquipment(RoomType.WaitingRoom);
 
         Assert.AreEqual(2, equipmentInWaitingRooms.Count); // magazine stand and chairs
         Assert.AreEqual(5, equipmentInExaminationRooms.Count); // EKG, Xray, Blood pressure monitor, chair, nebulizer
@@ -139,8 +139,8 @@ public class EquipmentFilterServiceTests
     public void TestGetEquipmentOfType()
     {
         var equipmentFilterService = new EquipmentFilterService();
-        Assert.AreEqual(7, equipmentFilterService.GetEquipment(Equipment.EquipmentType.ExaminationEquipment).Count);
-        Assert.AreEqual(5, equipmentFilterService.GetEquipment(Equipment.EquipmentType.Furniture).Count);
+        Assert.AreEqual(7, equipmentFilterService.GetEquipment(EquipmentType.ExaminationEquipment).Count);
+        Assert.AreEqual(5, equipmentFilterService.GetEquipment(EquipmentType.Furniture).Count);
     }
 
     [TestMethod]
@@ -164,7 +164,7 @@ public class EquipmentFilterServiceTests
         var warehouse = roomRepository.GetById("5000");
 
         Assert.IsNotNull(warehouse);
-        Assert.AreEqual(3, equipmentFilterService.Select(warehouse.Equipment, 10).Count);
+        Assert.AreEqual(3, equipmentFilterService.Select(warehouse.Inventory, 10).Count);
     }
 
     [TestMethod]
