@@ -8,7 +8,6 @@ namespace HospitalTests.Services.Manager;
 [TestClass]
 public class RenovationServiceTests
 {
-
     [TestMethod]
     public void TestAddRenovationRoomHasExamination()
     {
@@ -24,7 +23,8 @@ public class RenovationServiceTests
         };
         var roomScheduleService = new RoomScheduleService(examinations, renovations);
         var renovationService = new RenovationService(roomScheduleService, null);
-        Assert.IsFalse(renovationService.AddRenovation(new Renovation(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1), room)));
+        Assert.IsFalse(
+            renovationService.AddRenovation(new Renovation(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1), room)));
     }
 
     [TestMethod]
@@ -42,7 +42,8 @@ public class RenovationServiceTests
         };
         var roomScheduleService = new RoomScheduleService(examinations, renovations);
         var renovationService = new RenovationService(roomScheduleService, null);
-        Assert.IsFalse(renovationService.AddRenovation(new Renovation(DateTime.Now.AddDays(-4), DateTime.Now.AddDays(-3), room)));
+        Assert.IsFalse(
+            renovationService.AddRenovation(new Renovation(DateTime.Now.AddDays(-4), DateTime.Now.AddDays(-3), room)));
     }
 
     [TestMethod]

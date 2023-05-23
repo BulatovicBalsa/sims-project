@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using CsvHelper;
 using Hospital.Repositories.Manager;
 using Hospital.Scheduling;
 using Hospital.Services.Manager;
@@ -8,8 +7,8 @@ namespace Hospital.Models.Manager;
 
 public class RenovationService
 {
-    private RoomScheduleService _roomScheduleService;
-    private RenovationRepository? _renovationRepository;
+    private readonly RenovationRepository? _renovationRepository;
+    private readonly RoomScheduleService _roomScheduleService;
 
     public RenovationService()
     {
@@ -41,7 +40,7 @@ public class RenovationService
     {
         foreach (var renovation in RenovationRepository.Instance.GetAll().Where(renovation => renovation.TryComplete()))
         {
-            if(renovation.TryComplete())
+            if (renovation.TryComplete())
                 continue;
             ; //TODO: Write changes
         }
