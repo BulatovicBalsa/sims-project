@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 using Hospital.Scheduling;
@@ -38,11 +39,10 @@ public class RenovationService
 
     public void TryCompleteAllRenovations()
     {
-        foreach (var renovation in RenovationRepository.Instance.GetAll().Where(renovation => renovation.TryComplete()))
+        foreach (var renovation in _renovationRepository?.GetAll().Where(renovation => renovation.TryComplete()) ?? new List<Renovation>())
         {
             if (renovation.TryComplete())
-                continue;
-            ; //TODO: Write changes
+                RenovationRepository.Instance.Update(renovation);
         }
     }
 }

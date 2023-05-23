@@ -1,6 +1,8 @@
-﻿using Hospital.Models.Examination;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hospital.Models.Examination;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
+using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
 
 namespace HospitalTests.Services.Manager;
@@ -8,6 +10,24 @@ namespace HospitalTests.Services.Manager;
 [TestClass]
 public class RenovationServiceTests
 {
+    private const string renovationFilePath = "../../../Data/renovations.csv";
+
+    [TestInitialize]
+    public void SetUp()
+    {
+        if (File.Exists(renovationFilePath))
+        {
+            File.Delete(renovationFilePath);
+        }
+        RenovationRepository.Instance.GetAllFromFile();
+    }
+
+    [TestCleanup]
+    public void CleanUp()
+    {
+        File.Delete(renovationFilePath);
+    }
+
     [TestMethod]
     public void TestAddRenovationRoomHasExamination()
     {
@@ -54,4 +74,21 @@ public class RenovationServiceTests
         Assert.IsTrue(renovationService.AddRenovation(new Renovation("1", DateTime.Now, DateTime.Now.AddDays(1),
             new Room("1", "Ward", RoomType.Ward))));
     }
+
+    [TestMethod()]
+    public void TestTryCompleteAllRenovations()
+    {
+        var roomScheduleService = new RoomScheduleService(new List<Examination>(), new List<Renovation>());
+        var renovationService = new RenovationService(roomScheduleService, RenovationRepository.Instance);
+        Assert.IsTrue(renovationService.AddRenovation(new Renovation("1", DateTime.Now.AddDays(-3), DateTime.Now.AddDays(-1),
+            new Room("1", "Ward", RoomType.Ward))));
+        Assert.IsTrue(renovationService.AddRenovation(new Renovation("1", DateTime.Now.AddDays(1), DateTime.Now.AddDays(3), 
+            new Room("1", "Ward", RoomType.Ward))));
+        
+        Assert.AreEqual(2, RenovationRepository.Instance.GetAll().Count);
+        renovationService.TryCompleteAllRenovations();
+        Assert.IsTrue(RenovationRepository.Instance.GetAll()[0].Completed);
+        Assert.IsFalse(RenovationRepository.Instance.GetAll()[1].Completed);
+    }
+
 }

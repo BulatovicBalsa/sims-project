@@ -24,8 +24,10 @@ public class RenovationRepositoryTests
     [TestCleanup]
     public void CleanUp()
     {
-        File.Delete(roomFilePath);
-        File.Delete(renovationFilePath);
+        if(File.Exists(roomFilePath))
+            File.Delete(roomFilePath);
+        if(File.Exists(renovationFilePath))
+            File.Delete(renovationFilePath);
     }
 
     [TestMethod]
