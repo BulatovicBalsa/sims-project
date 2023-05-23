@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Manager;
+﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
-namespace HospitalTests.Models.Manager;
+namespace HospitalTests.Repositories.Manager;
 
 [TestClass]
 public class TransferRepositoryTests

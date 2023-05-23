@@ -55,9 +55,7 @@ public class TransferItemRepository
 
     public void DeleteAll()
     {
-        GetAll();
-        _transferItems.Clear();
-        Serializer<TransferItem>.ToCSV(_transferItems, FilePath);
+        Serializer<TransferItem>.ToCSV(new List<TransferItem>(), FilePath);
         _transferItems = null;
     }
 }
