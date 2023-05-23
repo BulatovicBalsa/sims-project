@@ -42,4 +42,15 @@ public class RenovationRepository
         _renovations.Add(renovation);
         Serializer<Renovation>.ToCSV(_renovations, FilePath);
     }
+
+    public void Update(Renovation renovation)
+    {
+        var renovations = GetAll();
+        var indexToUpdate = renovations.FindIndex(e => e.Id == renovation.Id);
+        if (indexToUpdate == -1)
+            throw new KeyNotFoundException();
+
+        renovations[indexToUpdate] = renovation;
+        Serializer<Renovation>.ToCSV(renovations, FilePath);
+    }
 }
