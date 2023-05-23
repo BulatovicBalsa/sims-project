@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models;
 using Hospital.Repositories;
@@ -7,10 +8,12 @@ namespace Hospital.Services;
 public class NotificationService
 {
     private readonly NotificationRepository _notificationRepository;
+    private readonly PatientService _patientService;
 
     public NotificationService()
     {
         _notificationRepository = new NotificationRepository();
+        _patientService = new PatientService();
     }
 
     public List<Notification> GetAll(string forId)

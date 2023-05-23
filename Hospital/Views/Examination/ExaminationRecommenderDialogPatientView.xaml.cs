@@ -46,7 +46,7 @@ namespace Hospital.Views
         private void BtnSelect_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SelectCommand.Execute(null);
-            _patientViewModel.RefreshExaminations(_patient);
+            _patientViewModel.RefreshExaminations();
             Close();
         }
 

@@ -49,8 +49,13 @@ public class PerformExaminationViewModel : ViewModelBase
     private void UpdateAnamnesis()
     {
         _examinationToPerform.Anamnesis = Anamnesis;
-        _examinationService.UpdateExamination(_examinationToPerform);
-        MessageBox.Show("Succeed");
+        _examinationService.UpdateExamination(_examinationToPerform, false);
+        var result = MessageBox.Show("Anamnesis Saved, do you want to create prescriptions?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        if (result == MessageBoxResult.Yes)
+        {
+            var dialog = new CreatePrescriptionDialog(PatientOnExamination);
+            dialog.ShowDialog();
+        }
     }
 
     private void FinishExamination(Window window)
