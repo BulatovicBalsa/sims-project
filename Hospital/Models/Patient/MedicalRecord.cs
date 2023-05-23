@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Models.Patient;
 
@@ -9,7 +10,7 @@ public class MedicalRecord
     private const int MaxWeight = 200;
     private const int MinHeight = 30;
     private const int MaxHeight = 220;
-    //public List<Prescription> Prescriptions { get; set; }
+    public List<Prescription> Prescriptions { get; set; }
 
     public MedicalRecord()
     {
@@ -17,16 +18,13 @@ public class MedicalRecord
         Height = 0;
         Allergies = new HealthConditionList(HealthConditionType.Allergy);
         MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition);
-        //Prescriptions = new List<Prescription>();
+        Prescriptions = new List<Prescription>();
     }
 
-    public MedicalRecord(int height, int weight)
+    public MedicalRecord(int height, int weight) : this()
     {
         Height = height;
         Weight = weight;
-        Allergies = new HealthConditionList(HealthConditionType.Allergy);
-        MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition);
-        //Prescriptions = new List<Prescription>();
     }
 
     public MedicalRecord(int height, int weight, List<string> allergies, List<string> medicalHistory)
@@ -35,7 +33,7 @@ public class MedicalRecord
         Weight = weight;
         Allergies = new HealthConditionList(HealthConditionType.Allergy, allergies);
         MedicalHistory = new HealthConditionList(HealthConditionType.MedicalCondition, medicalHistory);
-        //Prescriptions = prescriptions;
+        Prescriptions = new List<Prescription>();
     }
 
     public int Height { get; set; }
@@ -64,8 +62,8 @@ public class MedicalRecord
         var copy = new MedicalRecord(Height, Weight)
         {
             Allergies = new HealthConditionList(Allergies.Type, Allergies.Conditions),
-            MedicalHistory = new HealthConditionList(MedicalHistory.Type, MedicalHistory.Conditions)
-            //Prescriptions = new List<Prescription>(Prescriptions.Select(p => p.DeepCopy()))
+            MedicalHistory = new HealthConditionList(MedicalHistory.Type, MedicalHistory.Conditions),
+            Prescriptions = new List<Prescription>(Prescriptions.Select(p => p.DeepCopy()))
         };
 
         return copy;
