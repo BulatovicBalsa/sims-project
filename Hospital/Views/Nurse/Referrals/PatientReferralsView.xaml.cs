@@ -18,9 +18,9 @@ namespace Hospital.Views.Nurse.Referrals
     /// <summary>
     /// Interaction logic for PatientReferralView.xaml
     /// </summary>
-    public partial class PatientReferralView : UserControl
+    public partial class PatientReferralsView : UserControl
     {
-        public PatientReferralView()
+        public PatientReferralsView()
         {
             InitializeComponent();
         }
