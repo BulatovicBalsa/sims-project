@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -129,20 +128,20 @@ public class AddPrescriptionViewModel : ViewModelBase
         prescriptionsToModify.Add(prescriptionToAdd);
 
         if (ReferralToModify is null)
-            GenerateNotificationsForPrescription(PatientOnExamination, prescriptionToAdd);
+            GenerateNotificationsForPrescription(prescriptionToAdd);
 
         MessageBox.Show("Succeed");
         window.DialogResult = true;
     }
 
-    private void GenerateNotificationsForPrescription(Patient patient, Prescription prescription)
+    private void GenerateNotificationsForPrescription(Prescription prescription)
     {
         var startDate = prescription.IssuedDate;
         var endDate = prescription.IssuedDate.AddDays(prescription.Amount);
 
         var notifications = Enumerable.Range(0, (endDate - startDate).Days)
             .Select(offset => startDate.AddDays(offset))
-            .Select(date => new Notification(patient, prescription, date))
+            .Select(date => new Notification(PatientOnExamination, prescription, date))
             .ToList();
 
         notifications.ForEach(notification => _notificationService.Send(notification));
