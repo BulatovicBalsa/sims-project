@@ -6,6 +6,7 @@ using Hospital.Views;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Services;
+using System;
 
 namespace Hospital.ViewModels;
 
@@ -27,6 +28,7 @@ public class PerformExaminationViewModel : ViewModelBase
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
         CreateReferralCommand = new RelayCommand(CreateReferral);
+        CreateHospitalTreatmentReferralCommand = new RelayCommand(CreateHospitalTreatmentReferral);
     }
 
     private readonly Examination _examinationToPerform;
@@ -45,6 +47,7 @@ public class PerformExaminationViewModel : ViewModelBase
     public ICommand UpdateAnamnesisCommand { get; set; }
     public ICommand FinishExaminationCommand { get; set; }
     public ICommand CreateReferralCommand { get; set; }
+    public ICommand CreateHospitalTreatmentReferralCommand { get; set; }
 
     private void UpdateAnamnesis()
     {
@@ -53,7 +56,7 @@ public class PerformExaminationViewModel : ViewModelBase
         var result = MessageBox.Show("Anamnesis Saved, do you want to create prescriptions?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (result == MessageBoxResult.Yes)
         {
-            var dialog = new CreatePrescriptionDialog(PatientOnExamination);
+            var dialog = new PrescriptionDialog(PatientOnExamination);
             dialog.ShowDialog();
         }
     }
@@ -79,5 +82,11 @@ public class PerformExaminationViewModel : ViewModelBase
         PatientOnExamination.Referrals.Add(createdReferral);
 
         new PatientService().UpdatePatient(PatientOnExamination);
+    }
+
+    private void CreateHospitalTreatmentReferral()
+    {
+        var dialog = new CreateHospitalTreatmentReferralDialog(PatientOnExamination);
+        dialog.ShowDialog();
     }
 }

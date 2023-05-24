@@ -30,8 +30,9 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
         Map(patient => patient.IsBlocked).Index(10);
         Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
-        Map(patient => patient.MedicalRecord.Prescriptions).Index(12).TypeConverter<PrescriptionTypeConverter>();
-        Map(patient => patient.NotificationTime).Index(13);
+        Map(patient => patient.HospitalTreatmentReferrals).Index(12).TypeConverter<HospitalTreatmentReferralTypeConverter>();
+        Map(patient => patient.MedicalRecord.Prescriptions).Index(13).TypeConverter<PrescriptionTypeConverter>();
+        Map(patient => patient.NotificationTime).Index(14);
     }
 
     private static List<string> SplitColumnValues(string? columnValue)
@@ -52,6 +53,37 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 let specialization = referralArgs[0].Trim() select new Referral(specialization, doctor));
 
             return referrals;
+        }
+    }
+
+    public class HospitalTreatmentReferralTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            var referralStringList = SplitColumnValues(inputText);
+            List<HospitalTreatmentReferral> referrals = new();
+            if (string.IsNullOrEmpty(referralStringList[0])) return referrals;
+            referrals.AddRange(from item in referralStringList
+                               select item.Split(";") into referralArgs
+                               let duration = Convert.ToInt32(referralArgs[0].Trim())
+                               let prescriptions = referralArgs[1].Split("#").ToList()
+                                   .Select(PrescriptionFromString).ToList()
+                               let additionalTests = referralArgs[2].Trim().Split("#").ToList()
+                               select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
+
+            return referrals;
+        }
+
+        private Prescription PrescriptionFromString(string prescriptionAsString)
+        {
+            if (string.IsNullOrEmpty(prescriptionAsString.Trim())) return null;
+            var prescriptionFields = prescriptionAsString.Split("$");
+            var medicationId = prescriptionFields[0].Trim();
+            var medication = MedicationRepository.Instance.GetById(medicationId);
+            var amount = Convert.ToInt32(prescriptionFields[1]);
+            var dailyUsage = Convert.ToInt32(prescriptionFields[2]);
+            var medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionFields[3]);
+            return new Prescription(medication!, amount, dailyUsage, medicationTiming);
         }
     }
 

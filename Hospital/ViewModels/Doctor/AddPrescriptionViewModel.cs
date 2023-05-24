@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -16,30 +13,33 @@ namespace Hospital.ViewModels;
 
 public class AddPrescriptionViewModel : ViewModelBase
 {
+    private readonly NotificationService _notificationService;
     private int _amount;
     private int _dailyUsage;
 
-    private ObservableCollection<Medication> _medications;
+    private ObservableCollection<Medication> _medications = new();
 
-    private ObservableCollection<MedicationTiming> _medicationTimings;
+    private ObservableCollection<MedicationTiming> _medicationTimings = new();
 
     private Medication? _selectedMedication;
 
     private MedicationTiming? _selectedMedicationTiming;
 
-    private NotificationService _notificationService;
-
-    public AddPrescriptionViewModel(Patient patientOnExamination)
+    public AddPrescriptionViewModel(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
     {
+        ReferralToModify = referralToModify;
         PatientOnExamination = patientOnExamination;
         AddPrescriptionCommand = new RelayCommand<Window>(AddPrescription);
         Medications = new ObservableCollection<Medication>(MedicationRepository.Instance.GetAll());
-        MedicationTimings = new ObservableCollection<MedicationTiming>(Enum.GetValues(typeof(MedicationTiming)).Cast<MedicationTiming>().ToList());
+        MedicationTimings =
+            new ObservableCollection<MedicationTiming>(Enum.GetValues(typeof(MedicationTiming)).Cast<MedicationTiming>()
+                .ToList());
         _notificationService = new NotificationService();
         Amount = 1;
         DailyUsage = 1;
     }
 
+    public HospitalTreatmentReferral? ReferralToModify { get; set; }
     public Patient PatientOnExamination { get; set; }
 
     public int Amount
@@ -120,22 +120,28 @@ public class AddPrescriptionViewModel : ViewModelBase
 
         var prescriptionToAdd = new Prescription(SelectedMedication, Amount, DailyUsage,
             SelectedMedicationTiming.GetValueOrDefault());
-        PatientOnExamination.MedicalRecord.Prescriptions.Add(prescriptionToAdd);
 
-        GenerateNotificationsForPrescription(PatientOnExamination, prescriptionToAdd);
+        var prescriptionsToModify = ReferralToModify is null
+            ? PatientOnExamination.MedicalRecord.Prescriptions
+            : ReferralToModify.Prescriptions;
+
+        prescriptionsToModify.Add(prescriptionToAdd);
+
+        if (ReferralToModify is null)
+            GenerateNotificationsForPrescription(prescriptionToAdd);
 
         MessageBox.Show("Succeed");
         window.DialogResult = true;
     }
 
-    private void GenerateNotificationsForPrescription(Patient patient, Prescription prescription)
+    private void GenerateNotificationsForPrescription(Prescription prescription)
     {
-        DateTime startDate = prescription.IssuedDate;
-        DateTime endDate = prescription.IssuedDate.AddDays(prescription.Amount);
+        var startDate = prescription.IssuedDate;
+        var endDate = prescription.IssuedDate.AddDays(prescription.Amount);
 
         var notifications = Enumerable.Range(0, (endDate - startDate).Days)
             .Select(offset => startDate.AddDays(offset))
-            .Select(date => new Notification(patient, prescription, date))
+            .Select(date => new Notification(PatientOnExamination, prescription, date))
             .ToList();
 
         notifications.ForEach(notification => _notificationService.Send(notification));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,17 +11,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hospital.Models.Patient;
-using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
-    public partial class CreatePrescriptionDialog : Window
+    public partial class PrescriptionPage : Page
     {
-        public CreatePrescriptionDialog(Patient patientOnExamination)
+        public PrescriptionPage(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify=null)
         {
-            DataContext = new CreatePrescriptionViewModel(patientOnExamination);
+            DataContext = new PrescriptionViewModel(patientOnExamination, referralToModify);
             InitializeComponent();
         }
     }

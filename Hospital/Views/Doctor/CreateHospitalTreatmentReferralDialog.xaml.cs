@@ -16,12 +16,14 @@ using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
-    public partial class AddPrescriptionDialog : Window
+    public partial class CreateHospitalTreatmentReferralDialog : Window
     {
-        public AddPrescriptionDialog(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
+        public CreateHospitalTreatmentReferralDialog(Patient patientOnExamination)
         {
-            DataContext = new AddPrescriptionViewModel(patientOnExamination, referralToModify);
             InitializeComponent();
+            var referral = new HospitalTreatmentReferral();
+            DataContext = new CreateHospitalTreatmentReferralViewModel(patientOnExamination, referral);
+            PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination, referral));
         }
     }
 }

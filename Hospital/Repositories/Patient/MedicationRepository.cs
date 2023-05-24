@@ -1,7 +1,7 @@
 ﻿using Hospital.Serialization;
 using System.Collections.Generic;
 using Hospital.Models.Patient;
-using Hospital.Serialization.Mappers.Patient;
+using Hospital.Serialization.Mappers;
 
 namespace Hospital.Repositories.Patient;
 public class MedicationRepository
