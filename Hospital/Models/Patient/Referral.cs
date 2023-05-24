@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Hospital.Coordinators;
+﻿using Hospital.Coordinators;
 
 namespace Hospital.Models.Patient;
 using Doctor;
@@ -7,6 +6,8 @@ public class Referral
 {
     public string Specialization { get; set; }
     public Doctor? Doctor { get; set; }
+
+    public string ComboBoxString => $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
 
     public Referral()
     {
@@ -51,6 +52,12 @@ public class Referral
 
     public override string ToString()
     {
-        return $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
+        return $"{Specialization};{Doctor?.Id}";
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Referral objAsReferral) return false;
+        return objAsReferral.Doctor == Doctor && objAsReferral.Specialization == Specialization;
     }
 }
