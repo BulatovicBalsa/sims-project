@@ -3,6 +3,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Hospital.Services;
 
 namespace Hospital.ViewModels.Nurse.Referrals;
 
@@ -11,12 +12,24 @@ public class PatientReferralsViewModel : ViewModelBase
     private readonly PatientRepository _patientRepository;
     private ObservableCollection<Patient> _patients;
     private Patient? _selectedPatient;
+    private ObservableCollection<Referral>? _patientReferrals;
+    private Referral? _selectedReferral;
+    private DateTime? _selectedDate;
+    private TimeOnly? _selectedTime;
+    private ObservableCollection<TimeOnly>? _possibleTimeslots;
+    private readonly TimeslotService _timeslotService;
 
     public PatientReferralsViewModel()
     {
         _patientRepository = new PatientRepository();
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
         _selectedPatient = null;
+        _patientReferrals = null;
+        _selectedReferral = null;
+        _selectedDate = null;
+        _selectedTime = null;
+        _possibleTimeslots = null;
+        _timeslotService = new TimeslotService();
 
         UseReferralCommand = new ViewModelCommand(ExecuteUseReferralCommand, CanExecuteUseReferralCommand);
     }
@@ -28,6 +41,7 @@ public class PatientReferralsViewModel : ViewModelBase
         {
             _selectedPatient = value;
             OnPropertyChanged(nameof(SelectedPatient));
+            PatientReferrals = new ObservableCollection<Referral>(SelectedPatient.Referrals);
         }
     }
 
@@ -41,6 +55,61 @@ public class PatientReferralsViewModel : ViewModelBase
         }
     }
 
+    public Referral? SelectedReferral
+    {
+        get => _selectedReferral;
+        set
+        {
+            _selectedReferral = value;
+
+            if (SelectedReferral.Doctor == null)
+                SelectedReferral.AssignDoctor();
+
+            OnPropertyChanged(nameof(SelectedReferral));
+        }
+    }
+
+    public ObservableCollection<Referral>? PatientReferrals
+    {
+        get => _patientReferrals;
+        set
+        {
+            _patientReferrals = value;
+            OnPropertyChanged(nameof(PatientReferrals));
+        }
+    }
+
+    public DateTime? SelectedDate
+    {
+        get => _selectedDate;
+        set
+        {
+            _selectedDate = value;
+            OnPropertyChanged(nameof(SelectedDate));
+            PossibleTimeslots = new ObservableCollection<TimeOnly>(_timeslotService.GetFreeTimeslotsForDate(SelectedReferral.Doctor, (DateTime)SelectedDate));
+        }
+    }
+
+    public TimeOnly? SelectedTime
+    {
+        get => _selectedTime;
+        set
+        {
+            _selectedTime = value;
+            OnPropertyChanged(nameof(SelectedTime));
+        }
+    }
+
+    public ObservableCollection<TimeOnly>? PossibleTimeslots
+    {
+        get => _possibleTimeslots;
+        set
+        {
+            _possibleTimeslots = value;
+            OnPropertyChanged(nameof(PossibleTimeslots));
+        }
+    }
+
     public ICommand UseReferralCommand { get; }
 
     private void ExecuteUseReferralCommand(object obj)
@@ -50,7 +119,7 @@ public class PatientReferralsViewModel : ViewModelBase
 
     private bool CanExecuteUseReferralCommand(object obj)
     {
-        return SelectedPatient != null;
+        return SelectedPatient != null && SelectedReferral != null && SelectedDate != null && SelectedTime != null;
     }
 
 }
