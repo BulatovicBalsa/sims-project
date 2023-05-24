@@ -17,7 +17,7 @@ public class Prescription
         Medication = new Medication();
     }
 
-    public Prescription(Medication medication,int amount, int dailyUsage, MedicationTiming medicationTiming)
+    public Prescription(Medication medication, int amount, int dailyUsage, MedicationTiming medicationTiming)
     {
         Medication = medication;
         Amount = amount;
@@ -39,19 +39,21 @@ public class Prescription
 
     public override string ToString()
     {
-        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate.ToString("yyyy-MM-dd HH:mm:ss")}";
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate:yyyy-MM-dd HH:mm:ss}";
     }
+
     public string ToString(string separator)
     {
         return ToString().Replace(";", separator);
     }
+
     public override bool Equals(object? obj)
     {
         if (obj is not Prescription objAsPrescription) return false;
         return objAsPrescription.Amount == Amount &&
-            objAsPrescription.DailyUsage == DailyUsage &&
-            objAsPrescription.MedicationTiming == MedicationTiming &&
-            objAsPrescription.Medication.Equals(Medication);
+               objAsPrescription.DailyUsage == DailyUsage &&
+               objAsPrescription.MedicationTiming == MedicationTiming &&
+               objAsPrescription.Medication.Equals(Medication);
     }
 
     public override int GetHashCode()
