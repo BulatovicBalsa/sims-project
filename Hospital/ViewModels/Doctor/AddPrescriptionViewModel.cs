@@ -26,6 +26,7 @@ public class AddPrescriptionViewModel : ViewModelBase
     private Medication? _selectedMedication;
 
     private MedicationTiming? _selectedMedicationTiming;
+
     private NotificationService _notificationService;
 
     public AddPrescriptionViewModel(Patient patientOnExamination)

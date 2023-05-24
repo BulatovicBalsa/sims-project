@@ -63,14 +63,14 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             List<Prescription> prescriptions = new();
             if (string.IsNullOrEmpty(prescriptionStringList[0])) return prescriptions;
             prescriptions.AddRange(from item in prescriptionStringList
-                                   select item.Split(";") into prescriptionArgs
-                                   let medicationId = prescriptionArgs[0].Trim()
-                                   let medication = MedicationRepository.Instance.GetById(medicationId)
-                                   let amount = Convert.ToInt32(prescriptionArgs[1])
-                                   let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
-                                   let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
-                                   let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
-                                   select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate });
+                select item.Split(";") into prescriptionArgs
+                let medicationId = prescriptionArgs[0].Trim()
+                let medication = MedicationRepository.Instance.GetById(medicationId)
+                let amount = Convert.ToInt32(prescriptionArgs[1])
+                let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
+                let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
+                let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate });
 
             return prescriptions;
         }
