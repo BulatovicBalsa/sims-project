@@ -38,7 +38,7 @@ public class TimeslotService
         {
             startedIterating = true;
             if (!examinationsForDate.Any(examination =>
-                    AreTimesEqual(new TimeOnly(examination.Start.Minute, examination.Start.Second), start)))
+                    AreTimesEqual(new TimeOnly(examination.Start.Hour, examination.Start.Minute), start)))
             {
                 freeTimeslots.Add(start);
             }
@@ -65,8 +65,8 @@ public class TimeslotService
 
     public static bool AreTimesEqual(TimeOnly time1, TimeOnly time2)
     {
-        return time1.Minute == time2.Minute &&
-               time1.Second == time2.Second;
+        return time1.Hour == time2.Hour &&
+               time1.Minute == time2.Minute;
     }
 
     public bool IsIn2Hours(DateTime timeslot)
