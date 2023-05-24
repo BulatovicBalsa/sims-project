@@ -45,7 +45,8 @@ public class PatientReferralsViewModel : ViewModelBase
         {
             _selectedPatient = value;
             OnPropertyChanged(nameof(SelectedPatient));
-            PatientReferrals = new ObservableCollection<Referral>(SelectedPatient.Referrals);
+            if (value != null)
+                PatientReferrals = new ObservableCollection<Referral>(SelectedPatient.Referrals);
         }
     }
 
@@ -66,8 +67,8 @@ public class PatientReferralsViewModel : ViewModelBase
         {
             _selectedReferral = value;
 
-            if (SelectedReferral.Doctor == null)
-                SelectedReferral.AssignDoctor();
+            if (SelectedReferral?.Doctor == null)
+                SelectedReferral?.AssignDoctor();
 
             OnPropertyChanged(nameof(SelectedReferral));
         }
@@ -90,7 +91,8 @@ public class PatientReferralsViewModel : ViewModelBase
         {
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
-            PossibleTimeslots = new ObservableCollection<TimeOnly>(_timeslotService.GetUpcomingFreeTimeslotsForDate(SelectedReferral.Doctor, (DateTime)SelectedDate));
+            if (value != null) 
+                PossibleTimeslots = new ObservableCollection<TimeOnly>(_timeslotService.GetUpcomingFreeTimeslotsForDate(SelectedReferral.Doctor, (DateTime)SelectedDate));
         }
     }
 
