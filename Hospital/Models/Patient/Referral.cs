@@ -1,4 +1,7 @@
-﻿namespace Hospital.Models.Patient;
+﻿using System.Linq;
+using Hospital.Coordinators;
+
+namespace Hospital.Models.Patient;
 using Doctor;
 public class Referral
 {
@@ -25,6 +28,14 @@ public class Referral
     {
         Specialization = specialization;
         Doctor = doctor;
+    }
+
+    public void AssignDoctor()
+    {
+        var doctorService = new DoctorService();
+        var qualifiedDoctor = doctorService.GetQualifiedDoctors(Specialization)[0];
+
+        Doctor = qualifiedDoctor;
     }
 
     public void DeepCopy(Referral other)
