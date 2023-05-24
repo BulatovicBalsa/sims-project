@@ -6,8 +6,6 @@ namespace Hospital.Models.Manager;
 
 public class Room
 {
-    private bool _isDemolished = false;
-
     public Room()
     {
         Id = Guid.NewGuid().ToString();
@@ -38,11 +36,11 @@ public class Room
 
     public List<InventoryItem> Inventory { get; set; }
 
-    public bool IsDemolished
-    {
-        get => _isDemolished;
-        private set => _isDemolished = value;
-    }
+    public bool IsDemolished { get => DemolitionDate != null && DemolitionDate < DateTime.Now; };
+
+    public DateTime? CreationDate { get; set; }
+
+    public DateTime? DemolitionDate { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
@@ -163,8 +161,9 @@ public class Room
     {
         foreach (var inventoryItem in Inventory)
         {
-           destination.AddEquipment(inventoryItem.Equipment ?? throw new InvalidOperationException(), inventoryItem.Available); 
-           ExpendEquipment(inventoryItem.Equipment, inventoryItem.Available);
+            destination.AddEquipment(inventoryItem.Equipment ?? throw new InvalidOperationException(),
+                inventoryItem.Available);
+            ExpendEquipment(inventoryItem.Equipment, inventoryItem.Available);
         }
     }
 }
