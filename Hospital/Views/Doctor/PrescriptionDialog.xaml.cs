@@ -16,9 +16,9 @@ using Hospital.ViewModels;
 
 namespace Hospital.Views
 {
-    public partial class CreatePrescriptionDialog : Window
+    public partial class PrescriptionDialog : Window
     {
-        public CreatePrescriptionDialog(Patient patientOnExamination)
+        public PrescriptionDialog(Patient patientOnExamination)
         {
             InitializeComponent();
             PrescriptionsFrame.Navigate(new PrescriptionPage(patientOnExamination));
