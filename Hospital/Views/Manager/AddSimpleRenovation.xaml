@@ -1,0 +1,38 @@
+﻿<Window x:Class="Hospital.Views.Manager.AddRenovation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewModels="clr-namespace:Hospital.ViewModels.Manager"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hospital.Views.Manager"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Add renovation" Height="150" Width="300"
+        x:Name="AddRenovationWindow">
+    <Window.DataContext>
+        <viewModels:AddSimpleRenovationViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Room: " FontSize="15" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Rooms}" SelectedItem="{Binding Room}"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Begin time:" FontSize="15" VerticalAlignment="Center"/>
+        <xctk:DateTimePicker Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Value="{Binding StartTime, Mode=TwoWay}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="End time: " FontSize="15" VerticalAlignment="Center"/>
+        <xctk:DateTimePicker Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Value="{Binding EndTime, Mode=TwoWay}" />
+
+        <Button Grid.Row="3" Grid.Column="0" Content="Submit" Grid.ColumnSpan="2" FontSize="15" Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=AddRenovationWindow}"></Button>
+    </Grid>
+</Window>

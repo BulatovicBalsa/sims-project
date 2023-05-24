@@ -10,6 +10,7 @@ using CsvHelper.TypeConversion;
 using CsvHelper;
 using Models.Patient;
 using Repositories.Doctor;
+using System.Globalization;
 
 public sealed class PatientReadMapper : ClassMap<Patient>
 {
@@ -30,6 +31,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
         Map(patient => patient.IsBlocked).Index(10);
         Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
         Map(patient => patient.MedicalRecord.Prescriptions).Index(12).TypeConverter<PrescriptionTypeConverter>();
+        Map(patient => patient.NotificationTime).Index(13);
     }
 
     private static List<string> SplitColumnValues(string? columnValue)
@@ -67,7 +69,8 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 let amount = Convert.ToInt32(prescriptionArgs[1])
                 let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
                 let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
-                select new Prescription(medication, amount, dailyUsage, medicationTiming));
+                let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate });
 
             return prescriptions;
         }

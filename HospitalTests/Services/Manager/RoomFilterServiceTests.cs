@@ -2,7 +2,7 @@
 using Hospital.Repositories.Manager;
 using Hospital.Services.Manager;
 
-namespace HospitalTests.Models.Manager;
+namespace HospitalTests.Services.Manager;
 
 [TestClass]
 public class RoomFilterServiceTests

@@ -100,19 +100,24 @@ public class ExaminationService
         return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
     }
 
-    public void AddExamination(Examination examination)
+    public void AddExamination(Examination examination,bool isMadeByPatient)
     {
-        _examinationRepository.Add(examination, false);
+        _examinationRepository.Add(examination, isMadeByPatient);
     }
 
-    public void UpdateExamination(Examination examination)
+    public void UpdateExamination(Examination examination, bool isMadeByPatient)
     {
-        _examinationRepository.Update(examination, false);
+        _examinationRepository.Update(examination, isMadeByPatient);
     }
 
-    public void DeleteExamination(Examination examination)
+    public void DeleteExamination(Examination examination,bool isMadeByPatient)
     {
-        _examinationRepository.Delete(examination, false);
+        _examinationRepository.Delete(examination, isMadeByPatient);
+    }
+
+    public List<Examination> GetAllExaminations(Patient patient)
+    {
+        return _examinationRepository.GetAll(patient);
     }
 
     public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)

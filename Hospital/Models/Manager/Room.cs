@@ -105,7 +105,6 @@ public class Room
 
     private bool TryReserve(Equipment equipment, int amount)
     {
-
         if (!CanReserve(equipment, amount)) return false;
         var placement = GetInventoryItem(equipment);
         if (placement != null)
