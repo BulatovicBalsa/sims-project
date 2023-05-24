@@ -40,6 +40,6 @@ public class Referral
 
     public override string ToString()
     {
-        return $"{Doctor?.FirstName} {Doctor?.LastName} {Doctor?.Specialization}";
+        return $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
     }
 }
