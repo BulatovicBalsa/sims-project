@@ -18,9 +18,6 @@
             <Button x:Name="BtnAddPrescription"
                     Content="Add Prescription"
                     Margin="5" Command="{Binding AddPrescriptionCommand}"/>
-            <Button x:Name="BtnUpdatePrescription"
-                    Content="Update Prescription"
-                    Margin="5" Command="{Binding UpdatePrescriptionCommand}"/>
             <Button x:Name="BtnDeletePrescription"
                     Content="Delete Prescription"
                     Margin="5" Command="{Binding DeletePrescriptionCommand}"/>
