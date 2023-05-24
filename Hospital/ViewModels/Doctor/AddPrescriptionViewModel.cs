@@ -29,7 +29,7 @@ public class AddPrescriptionViewModel : ViewModelBase
 
     private NotificationService _notificationService;
 
-    public AddPrescriptionViewModel(Patient patientOnExamination)
+    public AddPrescriptionViewModel(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
     {
         ReferralToModify = referralToModify;
         PatientOnExamination = patientOnExamination;
