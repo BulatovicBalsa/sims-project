@@ -21,7 +21,7 @@ namespace Hospital.Views
     {
         public PrescriptionPage(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify=null)
         {
-            DataContext = new CreatePrescriptionViewModel(patientOnExamination, referralToModify);
+            DataContext = new PrescriptionViewModel(patientOnExamination, referralToModify);
             InitializeComponent();
         }
     }
