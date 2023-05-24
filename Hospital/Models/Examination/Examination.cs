@@ -39,7 +39,7 @@ public class Examination
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
 
-    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room room, bool urgent = false)
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false)
     {
          Doctor = doctor;
          Patient = patient;
@@ -47,8 +47,7 @@ public class Examination
          IsOperation = isOperation;
          Id = Guid.NewGuid().ToString();
          Anamnesis = "";
-        if (room == null) room = RoomRepository.Instance.GetAll()[0];
-        else Room = room;
+         Room = room ?? RoomRepository.Instance.GetAll()[0];
          Admissioned = false;
          Urgent = urgent;
     }
