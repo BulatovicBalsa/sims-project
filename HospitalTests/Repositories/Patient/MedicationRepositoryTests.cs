@@ -1,5 +1,6 @@
 ﻿using Hospital.Serialization;
 using Hospital.Models.Patient;
+using Hospital.Serialization.Mappers;
 using Hospital.Serialization.Mappers.Patient;
 
 namespace HospitalTests.Repositories.Patient;
