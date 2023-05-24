@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models.Doctor;
@@ -28,23 +29,33 @@ public class TimeslotService
         return earliestTimeslot;
     }
 
-    public List<TimeOnly> GetFreeTimeslotsForDate(Doctor doctor, DateTime date)
+    public List<TimeOnly> GetUpcomingFreeTimeslotsForDate(Doctor doctor, DateTime date)
     {
         var examinationsForDate = _examinationService.GetExaminationsForDate(doctor, date);
         var freeTimeslots = new List<TimeOnly>();
         var startedIterating = false;
+        var isToday = DateTime.Now.Date == date.Date;
 
         for (var start = TimeOnly.MinValue; start != TimeOnly.MinValue || !startedIterating; start = start.AddMinutes(15))
         {
             startedIterating = true;
+            
+            if (isToday && !IsUpcoming(start))
+                continue;
+
             if (!examinationsForDate.Any(examination =>
                     AreTimesEqual(new TimeOnly(examination.Start.Hour, examination.Start.Minute), start)))
-            {
                 freeTimeslots.Add(start);
-            }
         }
 
         return freeTimeslots;
+    }
+
+    private bool IsUpcoming(TimeOnly time)
+    {
+        var currentTime = new TimeOnly(DateTime.Now.Hour, DateTime.Now.Minute);
+
+        return time > currentTime;
     }
 
     private DateTime GetClosestTimeslot(DateTime time)

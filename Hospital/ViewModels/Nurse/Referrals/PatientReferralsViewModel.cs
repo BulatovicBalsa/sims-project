@@ -90,7 +90,7 @@ public class PatientReferralsViewModel : ViewModelBase
         {
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
-            PossibleTimeslots = new ObservableCollection<TimeOnly>(_timeslotService.GetFreeTimeslotsForDate(SelectedReferral.Doctor, (DateTime)SelectedDate));
+            PossibleTimeslots = new ObservableCollection<TimeOnly>(_timeslotService.GetUpcomingFreeTimeslotsForDate(SelectedReferral.Doctor, (DateTime)SelectedDate));
         }
     }
 
