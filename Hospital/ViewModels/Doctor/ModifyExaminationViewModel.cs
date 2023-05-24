@@ -166,7 +166,7 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
             else
             {
-                _examinationService.AddExamination(createdExamination);
+                _examinationService.AddExamination(createdExamination,false);
                 _examinationCollection.Add(createdExamination);
             }
         }
@@ -212,7 +212,7 @@ public class ModifyExaminationViewModel : ViewModelBase
     {
         if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
         else throw new InvalidOperationException("examination to change can't be null");
-        _examinationService.UpdateExamination(examination);
+        _examinationService.UpdateExamination(examination, false);
         _examinationCollection.Clear();
         _examinationService.GetExaminationsForNextThreeDays(_doctor)
             .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));
