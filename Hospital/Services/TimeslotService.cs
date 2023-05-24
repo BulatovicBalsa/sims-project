@@ -28,6 +28,25 @@ public class TimeslotService
         return earliestTimeslot;
     }
 
+    public List<TimeOnly> GetFreeTimeslotsForDate(Doctor doctor, DateTime date)
+    {
+        var examinationsForDate = _examinationService.GetExaminationsForDate(doctor, date);
+        var freeTimeslots = new List<TimeOnly>();
+        var startedIterating = false;
+
+        for (var start = TimeOnly.MinValue; start != TimeOnly.MinValue || !startedIterating; start = start.AddMinutes(15))
+        {
+            startedIterating = true;
+            if (!examinationsForDate.Any(examination =>
+                    AreTimesEqual(new TimeOnly(examination.Start.Minute, examination.Start.Second), start)))
+            {
+                freeTimeslots.Add(start);
+            }
+        }
+
+        return freeTimeslots;
+    }
+
     private DateTime GetClosestTimeslot(DateTime time)
     {
         var minuteStartTime = time.AddSeconds(-time.Second);
@@ -42,6 +61,12 @@ public class TimeslotService
                dateTime1.Hour == dateTime2.Hour &&
                dateTime1.Minute == dateTime2.Minute &&
                dateTime1.Second == dateTime2.Second;
+    }
+
+    public static bool AreTimesEqual(TimeOnly time1, TimeOnly time2)
+    {
+        return time1.Minute == time2.Minute &&
+               time1.Second == time2.Second;
     }
 
     public bool IsIn2Hours(DateTime timeslot)
