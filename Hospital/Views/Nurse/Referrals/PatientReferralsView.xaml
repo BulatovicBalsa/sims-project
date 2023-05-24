@@ -19,7 +19,8 @@
                   SelectedItem="{Binding SelectedPatient}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Referral</TextBlock>
         <ComboBox Height="30" ItemsSource="{Binding PatientReferrals}"
-                  SelectedItem="{Binding SelectedReferral}"/>
+                  SelectedItem="{Binding SelectedReferral}"
+                  DisplayMemberPath="ComboBoxString"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Date</TextBlock>
         <DatePicker Height="30" DisplayDateStart="{x:Static sys:DateTime.Today}" 
                     SelectedDate="{Binding SelectedDate}"/>
