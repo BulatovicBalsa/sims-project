@@ -12,33 +12,16 @@
         <viewModel:PatientReferralsViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="25"/>
-        </Grid.RowDefinitions>
-
-        <DataGrid Grid.Row="0" 
-                  ItemsSource="{Binding Path=Patients}" 
-                  x:Name="PatientsDataGrid" 
-                  Style="{DynamicResource DataGridStyle}" 
-                  CellStyle="{DynamicResource DataGridCellStyle}"
-                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
-                  RowStyle="{DynamicResource DataGridRowStyle}"
-                  SelectedItem="{Binding SelectedPatient}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last name" IsReadOnly="True" Width="*" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Jmbg}"/>
-                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal">
-            <Button Content="Use referral" Style="{StaticResource ActionButton}" 
-                    Margin="0,0,10,0"
-                    Command="{Binding UseReferralCommand}"/>
-        </StackPanel>
-    </Grid>
+    <StackPanel Margin="200,0,200,0">
+        <TextBlock Style="{StaticResource MainTextBlock}">Patient</TextBlock>
+        <ComboBox Height="30" ItemsSource="{Binding Patients}"
+                  SelectedItem="{Binding SelectedPatient}"/>
+        <TextBlock Style="{StaticResource MainTextBlock}">Referral</TextBlock>
+        <ComboBox Height="30" ItemsSource="{Binding PatientReferrals}"
+                  SelectedItem="{Binding SelectedReferral}"/>
+        <Button Style="{StaticResource ActionButton}" 
+                Content="Use referral"
+                Margin="0,20,0,0"
+                Command="{Binding UseReferralCommand}"/>
+    </StackPanel>
 </UserControl>
