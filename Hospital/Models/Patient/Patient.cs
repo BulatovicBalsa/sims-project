@@ -49,4 +49,9 @@ public class Patient : Person
     {
         return medication.Allergens.Any(allergen => MedicalRecord.Allergies.Conditions.Contains(allergen));
     }
+
+    public void RemoveReferral(Referral referral)
+    {
+        Referrals.Remove(referral);
+    }
 }
