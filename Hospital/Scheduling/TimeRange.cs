@@ -16,5 +16,15 @@ namespace Hospital.Scheduling
             StartTime = startTime;
             EndTime = endTime;
         }
+
+        public bool OverlapsWith(TimeRange other)
+        {
+            return other.StartTime < EndTime && other.EndTime > StartTime;
+        }
+
+        public bool OverlapsWith(DateTime start, DateTime end)
+        {
+            return OverlapsWith(new TimeRange(start, end));
+        }
     }
 }

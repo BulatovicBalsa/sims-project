@@ -24,5 +24,6 @@ public sealed class PatientWriteMapper : ClassMap<Patient>
         Map(patient => patient.Referrals).Index(11).Convert(row => string.Join("|", row.Value.Referrals)).Index(11);
         Map(patient => patient.HospitalTreatmentReferrals).Index(12).Convert(row => string.Join("|", row.Value.HospitalTreatmentReferrals)).Index(12);
         Map(patient => patient.MedicalRecord.Prescriptions).Index(13).Convert(row => string.Join("|", row.Value.MedicalRecord.Prescriptions)).Index(13);
+        Map(patient => patient.NotificationTime).Index(14);
     }
 }

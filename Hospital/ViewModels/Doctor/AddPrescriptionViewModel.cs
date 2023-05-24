@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Models;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
+using Hospital.Services;
 
 namespace Hospital.ViewModels;
 
@@ -25,13 +27,16 @@ public class AddPrescriptionViewModel : ViewModelBase
 
     private MedicationTiming? _selectedMedicationTiming;
 
-    public AddPrescriptionViewModel(Patient patientOnExamination, HospitalTreatmentReferral? referralToModify)
+    private NotificationService _notificationService;
+
+    public AddPrescriptionViewModel(Patient patientOnExamination)
     {
         ReferralToModify = referralToModify;
         PatientOnExamination = patientOnExamination;
         AddPrescriptionCommand = new RelayCommand<Window>(AddPrescription);
         Medications = new ObservableCollection<Medication>(MedicationRepository.Instance.GetAll());
         MedicationTimings = new ObservableCollection<MedicationTiming>(Enum.GetValues(typeof(MedicationTiming)).Cast<MedicationTiming>().ToList());
+        _notificationService = new NotificationService();
         Amount = 1;
         DailyUsage = 1;
     }
@@ -117,11 +122,30 @@ public class AddPrescriptionViewModel : ViewModelBase
 
         var prescriptionToAdd = new Prescription(SelectedMedication, Amount, DailyUsage,
             SelectedMedicationTiming.GetValueOrDefault());
+            
         var PrescriptionsToModify = ReferralToModify is null
             ? PatientOnExamination.MedicalRecord.Prescriptions
             : ReferralToModify.Prescriptions;
+            
         PrescriptionsToModify.Add(prescriptionToAdd);
+        
+        if (ReferralToModify is null)
+            GenerateNotificationsForPrescription(PatientOnExamination, prescriptionToAdd);
+        
         MessageBox.Show("Succeed");
         window.DialogResult = true;
+    }
+
+    private void GenerateNotificationsForPrescription(Patient patient, Prescription prescription)
+    {
+        DateTime startDate = prescription.IssuedDate;
+        DateTime endDate = prescription.IssuedDate.AddDays(prescription.Amount);
+
+        var notifications = Enumerable.Range(0, (endDate - startDate).Days)
+            .Select(offset => startDate.AddDays(offset))
+            .Select(date => new Notification(patient, prescription, date))
+            .ToList();
+
+        notifications.ForEach(notification => _notificationService.Send(notification));
     }
 }

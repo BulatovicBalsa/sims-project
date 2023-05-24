@@ -23,12 +23,14 @@ public class Prescription
         Amount = amount;
         DailyUsage = dailyUsage;
         MedicationTiming = medicationTiming;
+        IssuedDate = DateTime.Now;
     }
 
     public int Amount { get; set; }
     public int DailyUsage { get; set; }
     public MedicationTiming MedicationTiming { get; set; }
     public Medication Medication { get; set; }
+    public DateTime IssuedDate { get; set; }
 
     public Prescription DeepCopy()
     {
@@ -37,7 +39,7 @@ public class Prescription
 
     public override string ToString()
     {
-        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming}";
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate.ToString("yyyy-MM-dd HH:mm:ss")}";
     }
     public string ToString(string separator)
     {
