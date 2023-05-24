@@ -172,7 +172,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            if (ex is DoctorBusyException or PatientBusyException)
+            if (ex is DoctorBusyException or PatientBusyException or RoomBusyException)
             {
                 MessageBox.Show(ex.Message);
                 return;
