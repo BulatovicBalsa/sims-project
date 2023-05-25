@@ -48,7 +48,7 @@ namespace Hospital.ViewModels
             {
                 _firstNameSearchText = value;
                 OnPropertyChanged(nameof(FirstNameSearchText));
-                FilterDoctors();
+                UpdateFilteredDoctors();
             }
         }
         public string LastNameSearchText
@@ -58,7 +58,7 @@ namespace Hospital.ViewModels
             {
                 _lastNameSearchText = value;
                 OnPropertyChanged(nameof(LastNameSearchText));
-                FilterDoctors();
+                UpdateFilteredDoctors();
             }
         }
         public string SpecializationSearhText
@@ -68,7 +68,7 @@ namespace Hospital.ViewModels
             {
                 _specializationSearhText = value;
                 OnPropertyChanged(nameof(SpecializationSearhText));
-                FilterDoctors();
+                UpdateFilteredDoctors();
             }
         }
 
@@ -78,16 +78,10 @@ namespace Hospital.ViewModels
             _allDoctors = new ObservableCollection<Doctor>(_doctorSearchService.GetAllDoctors());
             FilteredDoctors = new ObservableCollection<Doctor>(_allDoctors);
         }
-        private void FilterDoctors()
+        private void UpdateFilteredDoctors()
         {
-            FilteredDoctors = new ObservableCollection<Doctor>(_allDoctors
-                .Where(DoctorMatchesSearch));
-        }
-        private bool DoctorMatchesSearch(Doctor doctor) 
-        {
-            return doctor.FirstName.ToLower().Contains(_firstNameSearchText.ToLower()) &&
-                doctor.LastName.ToLower().Contains(_lastNameSearchText.ToLower()) &&
-                doctor.Specialization.ToLower().Contains(_specializationSearhText.ToLower());
+            _doctorSearchService.FilterDoctors(FirstNameSearchText, LastNameSearchText, SpecializationSearhText);
+            FilteredDoctors = new ObservableCollection<Doctor>(_doctorSearchService.GetFilteredDoctors());
         }
     }
 }
