@@ -166,13 +166,13 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
             else
             {
-                _examinationService.AddExamination(createdExamination);
+                _examinationService.AddExamination(createdExamination,false);
                 _examinationCollection.Add(createdExamination);
             }
         }
         catch (Exception ex)
         {
-            if (ex is DoctorBusyException or PatientBusyException)
+            if (ex is DoctorBusyException or PatientBusyException or RoomBusyException)
             {
                 MessageBox.Show(ex.Message);
                 return;
@@ -212,7 +212,7 @@ public class ModifyExaminationViewModel : ViewModelBase
     {
         if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
         else throw new InvalidOperationException("examination to change can't be null");
-        _examinationService.UpdateExamination(examination);
+        _examinationService.UpdateExamination(examination, false);
         _examinationCollection.Clear();
         _examinationService.GetExaminationsForNextThreeDays(_doctor)
             .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));

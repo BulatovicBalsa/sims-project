@@ -157,7 +157,7 @@ namespace Hospital.ViewModels
             {
                 HandleException(ex);
             }
-            _patientViewModel.RefreshExaminations(_patient);
+            _patientViewModel.RefreshExaminations();
             Close();
         }
 
@@ -228,7 +228,7 @@ namespace Hospital.ViewModels
                 Application.Current.Shutdown();
             }
 
-            _patientViewModel.RefreshExaminations(_patient);
+            _patientViewModel.RefreshExaminations();
         }
     }
 }

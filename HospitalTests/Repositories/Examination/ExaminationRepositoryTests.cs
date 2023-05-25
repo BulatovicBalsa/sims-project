@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xaml;
 using Hospital.Models.Doctor;
-using Hospital.Models.Patient;
+ using Hospital.Models.Manager;
+ using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
@@ -33,6 +34,8 @@ namespace HospitalTests.Repositories.Examination
             ExaminationChangesTrackerRepository.DeleteAll();
             DoctorRepository.DeleteAll();
             PatientRepository.DeleteAll();
+            RoomRepository.Instance.DeleteAll();
+            RoomRepository.Instance.Add(new Room("53454351", "Examination room", RoomType.ExaminationRoom));
 
             CreateTestExaminationRepository();
             CreateTestExamination();

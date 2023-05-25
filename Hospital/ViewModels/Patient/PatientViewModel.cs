@@ -10,14 +10,24 @@ using Hospital.Models.Patient;
 using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
 using Hospital.Repositories.Examinaton;
-
+using Hospital.Services;
+using System.Windows;
+using Hospital.Models;
+using System.Windows.Threading;
 
 namespace Hospital.ViewModels
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
+        private const int NotificationIntervalMinutes = 1;
+
         private ObservableCollection<Examination> _examinations;
-        private readonly ExaminationRepository _examinationRepository;
+        private int _notificationTime;
+        private readonly ExaminationService _examinationService;
+        private readonly NotificationService _notificationService;
+        private readonly PatientService _patientService;
+        private Patient _patient;
+        private DispatcherTimer _notificationTimer;
 
 
         public ObservableCollection<Examination> Examinations
@@ -32,6 +42,16 @@ namespace Hospital.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public int NotificationTime
+        {
+            get { return _notificationTime; }
+            set
+            {
+                _notificationTime = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -41,15 +61,22 @@ namespace Hospital.ViewModels
 
         public PatientViewModel(Patient patient)
         {
-            _examinationRepository = ExaminationRepository.Instance;
             FirstName = patient.FirstName;
             LastName = patient.LastName;
-            LoadExaminations(patient);
+            _examinationService = new ExaminationService();
+            _notificationService = new NotificationService();
+            _patientService = new PatientService();
+            _patient = patient;
+            _notificationTime = patient.NotificationTime;
+
+            LoadExaminations();
+            DisplayPatientNotifications(this,EventArgs.Empty);
+            StartNotificationTimer();
         }
 
-        private void LoadExaminations(Patient patient)
+        public void LoadExaminations()
         {
-            var examinations = _examinationRepository.GetAll(patient);
+            var examinations = _examinationService.GetAllExaminations(_patient);
 
             Examinations = new ObservableCollection<Examination>(examinations);
         }
@@ -61,26 +88,60 @@ namespace Hospital.ViewModels
             return true;
         }
 
+        public void StartNotificationTimer()
+        {
+            _notificationTimer = new DispatcherTimer();
+            _notificationTimer.Tick += new EventHandler(DisplayPatientNotifications);
+            _notificationTimer.Interval = new TimeSpan(0, NotificationIntervalMinutes, 0);
+            _notificationTimer.Start();
+        }
+
         public void AddExamination(Examination examination)
         {
-            _examinationRepository.Add(examination, true);
+            _examinationService.AddExamination(examination, true);
             Examinations.Add(examination);
         }
 
         public void UpdateExamination(Examination examination)
         {
-            _examinationRepository.Update(examination, true);
+            _examinationService.UpdateExamination(examination, true);
         }
 
         public void DeleteExamination(Examination examination)
         {
-            _examinationRepository.Delete(examination, true);
+            _examinationService.DeleteExamination(examination, true);
             Examinations.Remove(examination);
         }
 
-        public void RefreshExaminations(Patient patient)
+        public void RefreshExaminations()
         {
-            Examinations = new ObservableCollection<Examination>(_examinationRepository.GetAll(patient));
+            Examinations = new ObservableCollection<Examination>(_examinationService.GetAllExaminations(_patient));
+        }
+        private void DisplayPatientNotifications(object sender, EventArgs e)
+        {
+            var notifications = _notificationService.GetAllUnsent(_patient.Id)
+             .Where(ShouldBeSent)
+             .ToList();
+
+            notifications.ForEach(async notification =>
+            {
+                MessageBox.Show(notification.Message,"Notification");
+                _notificationService.MarkSent(notification);
+                //await Task.Delay(10); // Delay to allow UI updates
+            });
+        }
+        private bool ShouldBeSent(Notification notification)
+        {
+            return !notification.Sent &&
+                   notification.NotifyTime.HasValue &&
+                   notification.NotifyTime <= DateTime.Now;
+        }
+
+        internal void SaveNotificationTime(int notificationTime)
+        {
+            NotificationTime = notificationTime;
+            _patient.NotificationTime = notificationTime;
+            _patientService.UpdatePatient(_patient);
         }
     }
 }

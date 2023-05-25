@@ -17,3 +17,4 @@ EquipmentId,RoomId,Amount,Id,Name,Type,Reserved
 1026,1002,2,1026,Injection,DynamicEquipment,0
 1021,1001,2,1021,Chair,Furniture,0
 1021,1003,1,1021,Chair,Furniture,0
+1021,1001,2,1021,Chair,Furniture,0

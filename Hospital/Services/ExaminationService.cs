@@ -6,6 +6,8 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Examinaton;
+using Hospital.Scheduling;
+using Hospital.Services.Manager;
 
 namespace Hospital.Services;
 
@@ -100,19 +102,28 @@ public class ExaminationService
         return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
     }
 
-    public void AddExamination(Examination examination)
+    public void AddExamination(Examination examination,bool isMadeByPatient)
     {
-        _examinationRepository.Add(examination, false);
+        var roomScheduleService = new RoomScheduleService();
+        if (!roomScheduleService.IsFree(examination.Room ?? throw new InvalidOperationException("Attempted to schedule examination in null room"), new TimeRange(examination.Start, examination.End)))
+            throw new RoomBusyException("Room is busy during the time of the examination.");
+
+        _examinationRepository.Add(examination, isMadeByPatient);
     }
 
-    public void UpdateExamination(Examination examination)
+    public void UpdateExamination(Examination examination, bool isMadeByPatient)
     {
-        _examinationRepository.Update(examination, false);
+        _examinationRepository.Update(examination, isMadeByPatient);
     }
 
-    public void DeleteExamination(Examination examination)
+    public void DeleteExamination(Examination examination,bool isMadeByPatient)
     {
-        _examinationRepository.Delete(examination, false);
+        _examinationRepository.Delete(examination, isMadeByPatient);
+    }
+
+    public List<Examination> GetAllExaminations(Patient patient)
+    {
+        return _examinationRepository.GetAll(patient);
     }
 
     public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
