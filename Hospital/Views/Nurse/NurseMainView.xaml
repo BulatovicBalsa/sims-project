@@ -10,6 +10,8 @@
         xmlns:patientAdmissionViews="clr-namespace:Hospital.Views.Nurse.PatientAdmission"
         xmlns:urgentExaminations="clr-namespace:Hospital.ViewModels.Nurse.UrgentExaminations"
         xmlns:urgentExaminationsViews="clr-namespace:Hospital.Views.Nurse.UrgentExaminations"
+        xmlns:referrals="clr-namespace:Hospital.ViewModels.Nurse.Referrals"
+        xmlns:referralsViews="clr-namespace:Hospital.Views.Nurse.Referrals"
         mc:Ignorable="d"
         Title="NurseMainView" Height="480" Width="1000"
         WindowStyle="None"
@@ -30,6 +32,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type urgentExaminations:UrgentExaminationsViewModel}">
             <urgentExaminationsViews:UrgentExaminationsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type referrals:PatientReferralsViewModel}">
+            <referralsViews:PatientReferralsView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -80,6 +85,12 @@
                                  Command="{Binding ShowUrgentExaminationsViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Urgent examinations" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientReferralsViewCommand}">
+                        <StackPanel>
+                            <TextBlock Text="Patient referrals" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>

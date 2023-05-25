@@ -1,9 +1,13 @@
-﻿namespace Hospital.Models.Patient;
+﻿using Hospital.Coordinators;
+
+namespace Hospital.Models.Patient;
 using Doctor;
 public class Referral
 {
     public string Specialization { get; set; }
     public Doctor? Doctor { get; set; }
+
+    public string ComboBoxString => $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
 
     public Referral()
     {
@@ -27,6 +31,14 @@ public class Referral
         Doctor = doctor;
     }
 
+    public void AssignDoctor()
+    {
+        var doctorService = new DoctorService();
+        var qualifiedDoctor = doctorService.GetQualifiedDoctors(Specialization)[0];
+
+        Doctor = qualifiedDoctor;
+    }
+
     public void DeepCopy(Referral other)
     {
         Doctor = other.Doctor;
@@ -41,5 +53,11 @@ public class Referral
     public override string ToString()
     {
         return $"{Specialization};{Doctor?.Id}";
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Referral objAsReferral) return false;
+        return objAsReferral.Doctor == Doctor && objAsReferral.Specialization == Specialization;
     }
 }

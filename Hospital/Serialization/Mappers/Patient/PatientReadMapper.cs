@@ -47,8 +47,8 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             var referralStringList = SplitColumnValues(inputText);
             List<Referral> referrals = new();
             if (string.IsNullOrEmpty(referralStringList[0])) return referrals;
-            referrals.AddRange(from item in referralStringList select item.Split(";") into referralArgs 
-                let doctorId = referralArgs[1].Trim() 
+            referrals.AddRange(from item in referralStringList select item.Split(";") into referralArgs
+                let doctorId = referralArgs.Length > 1 ? referralArgs[1].Trim() : null
                 let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId) 
                 let specialization = referralArgs[0].Trim() select new Referral(specialization, doctor));
 
