@@ -29,6 +29,8 @@ namespace Hospital.ViewModels
                 OnPropertyChanged();
             }
         }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -40,6 +42,8 @@ namespace Hospital.ViewModels
         public PatientViewModel(Patient patient)
         {
             _examinationRepository = ExaminationRepository.Instance;
+            FirstName = patient.FirstName;
+            LastName = patient.LastName;
             LoadExaminations(patient);
         }
 

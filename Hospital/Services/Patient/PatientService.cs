@@ -12,7 +12,7 @@ namespace Hospital.Services
 
         public PatientService()
         {
-            _patientRepository = new();
+            _patientRepository = PatientRepository.Instance;
         }
         
         public Patient GetPatient(Examination examination)
