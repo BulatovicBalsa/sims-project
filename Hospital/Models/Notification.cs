@@ -82,4 +82,10 @@ public class Notification
 
         return message;
     }
+    public bool ShouldBeSent()
+    {
+        return !Sent &&
+               NotifyTime.HasValue &&
+               NotifyTime <= DateTime.Now;
+    }
 }
