@@ -15,7 +15,7 @@ public class RoomScheduleService
 
     public RoomScheduleService()
     {
-        _examinations = new ExaminationRepository.Instance.GetAll();
+        _examinations = ExaminationRepository.Instance.GetAll();
         _renovations = RenovationRepository.Instance.GetAll();
     }
 

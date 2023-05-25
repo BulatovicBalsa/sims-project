@@ -104,12 +104,6 @@ public class ExaminationRepository
     private static ExaminationRepository? _instance;
 
     public static ExaminationRepository Instance => _instance ??= new ExaminationRepository();
-
-    public ExaminationRepository(ExaminationChangesTracker examinationChangesTracker)
-    {
-        _examinationChangesTracker = examinationChangesTracker;
-    }
-
     private ExaminationRepository()
     {
         _examinationChangesTracker = new ExaminationChangesTracker();
