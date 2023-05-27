@@ -41,7 +41,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestGetAll()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             var loadedPatients = patientRepository.GetAll();
 
             Assert.IsNotNull(loadedPatients);
@@ -63,13 +63,13 @@ namespace HospitalTests.Repositories.Patient
                 File.Delete(TestFilePath);
             }
 
-            Assert.AreEqual(0, new PatientRepository().GetAll().Count);
+            Assert.AreEqual(0, PatientRepository.Instance.GetAll().Count);
         }
 
         [TestMethod]
         public void TestGetById()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             var loadedPatients = patientRepository.GetAll();
 
             var testPatient = loadedPatients[0];
@@ -81,7 +81,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestUpdate()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             patientRepository.PatientAdded += _ => { };
             patientRepository.PatientUpdated += _ => { };
 
@@ -108,7 +108,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestDelete()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             var loadedPatients = patientRepository.GetAll();
 
             var testPatient = loadedPatients[1];
@@ -124,7 +124,7 @@ namespace HospitalTests.Repositories.Patient
         {
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             patientRepository.PatientAdded += _ => { };
             patientRepository.PatientUpdated += _ => { };
 
@@ -140,7 +140,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestUpdateNonExistent()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
 
@@ -150,7 +150,7 @@ namespace HospitalTests.Repositories.Patient
         [TestMethod]
         public void TestDeleteNonExistent()
         {
-            var patientRepository = new PatientRepository();
+            var patientRepository = PatientRepository.Instance;
             var newPatient = new Patient("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword", new MedicalRecord(179, 80));
 

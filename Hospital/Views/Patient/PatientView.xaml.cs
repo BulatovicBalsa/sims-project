@@ -28,7 +28,6 @@ namespace Hospital.Views
             InitializeComponent();
 
             _viewModel = new PatientViewModel(patient);
-
             _patient = patient;
             DataContext = _viewModel;
 
@@ -78,7 +77,7 @@ namespace Hospital.Views
                     if (ex.Message.Contains("Patient made too many changes in last 30 days"))
                     {
                         _patient.IsBlocked = true;
-                        new PatientRepository().Update(_patient);
+                        PatientRepository.Instance.Update(_patient);
                         MessageBox.Show("This user is now blocked due to too many changes made in the last 30 days.", "User Blocked");
                         Application.Current.Shutdown();
                     }
@@ -101,6 +100,12 @@ namespace Hospital.Views
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).WindowState = WindowState.Minimized;
+        }
+
+        private void BtnDoctorSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var doctorSearchWindow = new DoctorSearchView(_patient, _viewModel);
+            doctorSearchWindow.Show();
         }
 
         private void BtnCreateNotification_Click(object sender, RoutedEventArgs e)

@@ -8,13 +8,20 @@ using Hospital.Serialization.Mappers.Patient;
 namespace Hospital.Repositories.Patient;
 
 using Hospital.Models.Patient;
+using Hospital.Repositories.Doctor;
+
 public class PatientRepository
 {
     private const string FilePath = "../../../Data/patients.csv";
-    private readonly ExaminationRepository _examinationRepository = new ExaminationRepository();
+    private readonly ExaminationRepository _examinationRepository =ExaminationRepository.Instance;
+    private static PatientRepository? _instance;
 
     public event Action<Patient>? PatientAdded;
     public event Action<Patient>? PatientUpdated;
+
+    public static PatientRepository Instance => _instance ??= new PatientRepository();
+
+    private PatientRepository() { }
 
     public List<Patient> GetAll()
     {

@@ -39,6 +39,8 @@ namespace Hospital.ViewModels
                 OnPropertyChanged();
             }
         }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public int NotificationTime
         {
@@ -59,6 +61,8 @@ namespace Hospital.ViewModels
 
         public PatientViewModel(Patient patient)
         {
+            FirstName = patient.FirstName;
+            LastName = patient.LastName;
             _examinationService = new ExaminationService();
             _notificationService = new NotificationService();
             _patientService = new PatientService();
@@ -116,7 +120,7 @@ namespace Hospital.ViewModels
         private void DisplayPatientNotifications(object sender, EventArgs e)
         {
             var notifications = _notificationService.GetAllUnsent(_patient.Id)
-             .Where(ShouldBeSent)
+             .Where(notification => notification.ShouldBeSent())
              .ToList();
 
             notifications.ForEach(async notification =>
@@ -126,13 +130,6 @@ namespace Hospital.ViewModels
                 //await Task.Delay(10); // Delay to allow UI updates
             });
         }
-        private bool ShouldBeSent(Notification notification)
-        {
-            return !notification.Sent &&
-                   notification.NotifyTime.HasValue &&
-                   notification.NotifyTime <= DateTime.Now;
-        }
-
         internal void SaveNotificationTime(int notificationTime)
         {
             NotificationTime = notificationTime;

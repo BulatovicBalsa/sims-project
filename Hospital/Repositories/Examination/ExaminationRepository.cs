@@ -58,7 +58,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         {
             var patientId = inputText.Trim();
             // Retrieve the Patient object based on the ID
-            var patient = new PatientRepository().GetById(patientId) ??
+            var patient = PatientRepository.Instance.GetById(patientId) ??
                           throw new KeyNotFoundException($"Patient with ID {patientId} not found");
             return patient;
         }
@@ -101,13 +101,10 @@ public class ExaminationRepository
 {
     private const string FilePath = "../../../Data/examination.csv";
     private readonly ExaminationChangesTracker _examinationChangesTracker;
+    private static ExaminationRepository? _instance;
 
-    public ExaminationRepository(ExaminationChangesTracker examinationChangesTracker)
-    {
-        _examinationChangesTracker = examinationChangesTracker;
-    }
-
-    public ExaminationRepository()
+    public static ExaminationRepository Instance => _instance ??= new ExaminationRepository();
+    private ExaminationRepository()
     {
         _examinationChangesTracker = new ExaminationChangesTracker();
     }

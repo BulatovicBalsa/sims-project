@@ -40,7 +40,7 @@ public partial class App : Application
 
             if (role == "PATIENT")
             {
-                var patient = new PatientRepository().GetById(id);
+                var patient = PatientRepository.Instance.GetById(id);
                 if (patient == null)
                 {
                     MessageBox.Show(_unsuccessfulLoginMessage);

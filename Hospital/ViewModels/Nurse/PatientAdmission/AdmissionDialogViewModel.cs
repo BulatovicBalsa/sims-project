@@ -28,7 +28,7 @@ public class AdmissionDialogViewModel : ViewModelBase
     public AdmissionDialogViewModel(PatientRepository patientRepository, Patient selectedPatient,
         Examination examination)
     {
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _patientRepository = patientRepository;
         _selectedPatient = selectedPatient;
         _examination = examination;

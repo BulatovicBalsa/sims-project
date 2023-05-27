@@ -13,16 +13,16 @@ namespace Hospital.Views
 {
     public partial class ExaminationDialogView : Window
     {
-        private readonly ExaminationDialogViewModel _viewModel;
+        private readonly ExaminationViewModel _viewModel;
 
         public ExaminationDialogView(Patient patient,PatientViewModel patientViewModel, bool isUpdate, 
-             Examination examination = null, IEnumerable<Doctor> recommendedDoctors = null)
+             Examination examination = null,Doctor doctor = null)
         {
             InitializeComponent();
 
             _viewModel = examination != null
-                ? new ExaminationDialogViewModel( patient,patientViewModel,examination)
-                : new ExaminationDialogViewModel( patient,patientViewModel);
+                ? new ExaminationViewModel( patient,patientViewModel,examination)
+                : new ExaminationViewModel( patient,patientViewModel,doctor: doctor);
 
             _viewModel.IsUpdate = isUpdate;
             this.DataContext = _viewModel;
