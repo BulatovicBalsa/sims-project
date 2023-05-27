@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Net.Mime;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -16,17 +10,16 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels
 {
-    public class ExaminationDialogViewModel : INotifyPropertyChanged
+    public class ExaminationViewModel : INotifyPropertyChanged
     {
         private Examination _examination;
         private PatientViewModel _patientViewModel;
         private Patient _patient;
-        private IEnumerable<Models.Doctor.Doctor> _recommendedDoctors;
+        private IEnumerable<Doctor> _recommendedDoctors;
         private bool _isUpdate;
         private DateTime? _selectedDate;
 
@@ -106,7 +99,7 @@ namespace Hospital.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         
-        public ExaminationDialogViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null,Doctor doctor=null)
+        public ExaminationViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null,Doctor doctor=null)
         {
             _patientViewModel = patientViewModel;
             RecommendedDoctors = DoctorRepository.Instance.GetAll();
