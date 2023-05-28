@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Hospital.Scheduling;
 
 namespace Hospital.Models.Manager;
@@ -18,10 +19,6 @@ public class ComplexRenovation
         _leftoverEquipmentDestination = leftoverEquipmentDestination;
         TransfersFromOldToNewRooms = transfersFromOldToNewRooms;
         Completed = false;
-
-        foreach (var room in toDemolish) room.DemolitionDate = EndTime;
-
-        foreach (var room in toBuild) room.CreationDate = BeginTime;
     }
 
     public List<Transfer> TransfersFromOldToNewRooms { get; }
@@ -46,6 +43,17 @@ public class ComplexRenovation
 
     public bool Completed { get; private set; }
 
+    public static ComplexRenovation Schedule(List<Room> toDemolish, List<Room> toBuild, TimeRange time,
+        Room leftoverEquipmentDestination, List<Transfer> transfersFromOldToNewRooms)
+    {
+        foreach (var room in toDemolish) room.DemolitionDate = time.EndTime;
+        foreach (var transfer in transfersFromOldToNewRooms) transfer.Origin.TryReserveEquipment(transfer);
+        foreach (var room in toBuild) room.CreationDate = time.StartTime;
+
+        return new ComplexRenovation(toDemolish, toBuild, time, leftoverEquipmentDestination,
+            transfersFromOldToNewRooms);
+    }
+
     public bool TryComplete()
     {
         if (EndTime > DateTime.Now || Completed)
@@ -57,6 +65,13 @@ public class ComplexRenovation
 
         Completed = true;
         return true;
+    }
+
+    public List<Renovation> GetSimpleRenovations()
+    {
+        var renovations = ToDemolish.ToList().Select(room => new Renovation(BeginTime, EndTime, room)).ToList();
+        renovations.AddRange(ToBuild.Select(room => new Renovation(BeginTime, EndTime, room)));
+        return renovations;
     }
 
     private void MoveEquipmentToNewRooms()
