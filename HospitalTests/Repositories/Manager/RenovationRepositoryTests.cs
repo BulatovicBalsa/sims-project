@@ -24,9 +24,9 @@ public class RenovationRepositoryTests
     [TestCleanup]
     public void CleanUp()
     {
-        if(File.Exists(roomFilePath))
+        if (File.Exists(roomFilePath))
             File.Delete(roomFilePath);
-        if(File.Exists(renovationFilePath))
+        if (File.Exists(renovationFilePath))
             File.Delete(renovationFilePath);
     }
 
@@ -34,7 +34,7 @@ public class RenovationRepositoryTests
     public void TestGetAll()
     {
         File.WriteAllText(renovationFilePath,
-"Id,RoomId,BeginTime,EndTime,Completed,Id,Name,Type,IsDemolished,CreationDate,DemolitionDate\r\nb98e755f-0b31-4167-a851-84adabdb034c,1,05/28/2023 02:53:15,05/28/2023 02:53:15,False,1,Warehouse,Warehouse,False,,\r\n41cf0257-2048-4ffa-a72a-9b23fb83b3a7,2,05/28/2023 02:53:15,05/28/2023 02:53:15,False,2,Ward,Ward,False,,");
+            "Id,RoomId,BeginTime,EndTime,Completed,Id,Name,Type,IsDemolished,CreationDate,DemolitionDate\r\nb98e755f-0b31-4167-a851-84adabdb034c,1,05/28/2023 02:53:15,05/28/2023 02:53:15,False,1,Warehouse,Warehouse,False,,\r\n41cf0257-2048-4ffa-a72a-9b23fb83b3a7,2,05/28/2023 02:53:15,05/28/2023 02:53:15,False,2,Ward,Ward,False,,");
         Assert.AreEqual(2, RenovationRepository.Instance.GetAllFromFile().Count);
     }
 

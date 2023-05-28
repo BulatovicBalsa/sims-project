@@ -6,12 +6,12 @@ namespace Hospital.Services.Manager;
 
 public class ComplexRenovationService
 {
-    private List<ComplexRenovation> complexRenovations;
+    private readonly List<ComplexRenovation> _complexRenovations;
 
     public ComplexRenovationService(RoomScheduleService roomScheduleService)
     {
         RoomScheduleService = roomScheduleService;
-        complexRenovations = new List<ComplexRenovation>();
+        _complexRenovations = new List<ComplexRenovation>();
     }
 
     public RoomScheduleService RoomScheduleService { get; }
@@ -25,7 +25,7 @@ public class ComplexRenovationService
         RoomRepository.Instance.Add(complexRenovation.ToBuild);
         RenovationRepository.Instance.Add(complexRenovation.GetSimpleRenovations());
 
-        complexRenovations.Add(complexRenovation);
+        _complexRenovations.Add(complexRenovation);
         return true;
     }
 
@@ -39,7 +39,7 @@ public class ComplexRenovationService
 
     private bool IsSetForDemolition(Room room)
     {
-        return complexRenovations.Exists(complexRenovation => complexRenovation.WillDemolish(room));
+        return _complexRenovations.Exists(complexRenovation => complexRenovation.WillDemolish(room));
     }
 
     private bool AnySetForDemolition(List<Room> rooms)

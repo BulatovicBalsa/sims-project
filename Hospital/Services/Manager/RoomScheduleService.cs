@@ -26,6 +26,7 @@ public class RoomScheduleService
     {
         _examinations = examinations;
         _renovations = renovations;
+        _transfers = new List<Transfer>();
     }
 
     public RoomScheduleService(List<Examination> examinations, List<Renovation> renovations, List<Transfer> transfers)
@@ -67,7 +68,8 @@ public class RoomScheduleService
 
     public bool HasTransfersScheduledFrom(Room room, DateTime date)
     {
-        var transfersInRoom = _transfers.Where(transfer => transfer.Origin.Equals(room) || transfer.Destination.Equals(room)).ToList();
+        var transfersInRoom = _transfers
+            .Where(transfer => transfer.Origin.Equals(room) || transfer.Destination.Equals(room)).ToList();
         return transfersInRoom.Exists(transfer => transfer.DeliveryDateTime > date);
     }
 

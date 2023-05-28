@@ -36,8 +36,6 @@ public class Room
 
     public List<InventoryItem> Inventory { get; set; }
 
-    public bool IsDemolished { get => DemolitionDate != null && DemolitionDate < DateTime.Now; };
-
     public DateTime? CreationDate { get; set; }
 
     public DateTime? DemolitionDate { get; set; }

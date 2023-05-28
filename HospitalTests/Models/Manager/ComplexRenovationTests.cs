@@ -29,9 +29,11 @@ public class ComplexRenovationTests
 
         complexRenovation.Schedule();
 
-        foreach (var room in toDemolish) Assert.AreEqual(complexRenovation.EndTime, room.DemolitionDate, "Demolition date is not correct");
+        foreach (var room in toDemolish)
+            Assert.AreEqual(complexRenovation.EndTime, room.DemolitionDate, "Demolition date is not correct");
 
-        foreach (var room in toBuild) Assert.AreEqual(complexRenovation.EndTime, room.CreationDate, "Creation date is not correct");
+        foreach (var room in toBuild)
+            Assert.AreEqual(complexRenovation.EndTime, room.CreationDate, "Creation date is not correct");
     }
 
     [TestMethod]
@@ -65,7 +67,7 @@ public class ComplexRenovationTests
         Assert.AreEqual(0, toDemolish[0].GetAmount(equipment));
         Assert.AreEqual(0, toDemolish[1].GetAmount(otherEquipment));
     }
-    
+
     [TestMethod]
     public void TestTryCompleteNotScheduled()
     {
@@ -89,8 +91,8 @@ public class ComplexRenovationTests
             new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
             toBuild[0], new List<Transfer> { fromOldToNew });
 
-        Assert.IsFalse(complexRenovation.TryComplete(), "Renovation that has not been scheduled yey should not complete");
-
+        Assert.IsFalse(complexRenovation.TryComplete(),
+            "Renovation that has not been scheduled yey should not complete");
     }
 
     [TestMethod]
@@ -114,7 +116,7 @@ public class ComplexRenovationTests
             new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
             toBuild[0], new List<Transfer> { fromOldToNew });
         complexRenovation.Schedule();
-        
+
         var simpleRenovations = complexRenovation.GetSimpleRenovations();
 
         Assert.AreEqual(3, simpleRenovations.Count);
