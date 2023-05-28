@@ -34,7 +34,7 @@ public class RenovationRepositoryTests
     public void TestGetAll()
     {
         File.WriteAllText(renovationFilePath,
-            "Id,RoomId,BeginTime,EndTime,Completed,Id,Name,Type\r\n84d9612d-b5c8-4362-b446-294d49997119,1,05/22/2023 08:13:56,05/22/2023 08:13:56,False,1,Warehouse,Warehouse\r\n8fb9bdec-2662-42e0-a408-c4cedc86d1ba,2,05/22/2023 08:13:56,05/22/2023 08:13:56,False,2,Ward,Ward");
+"Id,RoomId,BeginTime,EndTime,Completed,Id,Name,Type,IsDemolished,CreationDate,DemolitionDate\r\nb98e755f-0b31-4167-a851-84adabdb034c,1,05/28/2023 02:53:15,05/28/2023 02:53:15,False,1,Warehouse,Warehouse,False,,\r\n41cf0257-2048-4ffa-a72a-9b23fb83b3a7,2,05/28/2023 02:53:15,05/28/2023 02:53:15,False,2,Ward,Ward,False,,");
         Assert.AreEqual(2, RenovationRepository.Instance.GetAllFromFile().Count);
     }
 
