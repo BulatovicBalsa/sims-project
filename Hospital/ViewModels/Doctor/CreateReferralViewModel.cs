@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.Coordinators;
+using Hospital.Services;
 using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
 

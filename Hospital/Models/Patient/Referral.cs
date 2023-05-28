@@ -1,4 +1,4 @@
-﻿using Hospital.Coordinators;
+﻿using Hospital.Services;
 
 namespace Hospital.Models.Patient;
 using Doctor;

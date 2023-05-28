@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Coordinators;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
