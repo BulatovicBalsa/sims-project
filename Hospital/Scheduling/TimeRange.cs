@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Scheduling
+namespace Hospital.Scheduling;
+
+public class TimeRange
 {
-    public class TimeRange
+    public TimeRange(DateTime startTime, DateTime endTime)
     {
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        StartTime = startTime;
+        EndTime = endTime;
+    }
 
-        public TimeRange(DateTime startTime, DateTime endTime)
-        {
-            StartTime = startTime;
-            EndTime = endTime;
-        }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
 
-        public bool OverlapsWith(TimeRange other)
-        {
-            return other.StartTime < EndTime && other.EndTime > StartTime;
-        }
+    public bool DoesOverlapWith(TimeRange other)
+    {
+        return other.StartTime < EndTime && other.EndTime > StartTime;
+    }
 
-        public bool OverlapsWith(DateTime start, DateTime end)
-        {
-            return OverlapsWith(new TimeRange(start, end));
-        }
+    public bool DoesOverlapWith(DateTime start, DateTime end)
+    {
+        return DoesOverlapWith(new TimeRange(start, end));
     }
 }

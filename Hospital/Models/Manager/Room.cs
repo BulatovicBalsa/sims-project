@@ -36,6 +36,10 @@ public class Room
 
     public List<InventoryItem> Inventory { get; set; }
 
+    public DateTime? CreationDate { get; set; }
+
+    public DateTime? DemolitionDate { get; set; }
+
     public int GetAmount(Equipment equipment)
     {
         var equipmentItem = Inventory.Find(equipmentItem => equipmentItem.EquipmentId == equipment.Id);
@@ -143,6 +147,21 @@ public class Room
 
     public void Receive(Transfer transfer)
     {
-        transfer.Items.ForEach(item => SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount));
+        transfer.Items.ForEach(item => AddEquipment(item.Equipment, item.Amount));
+    }
+
+    private void AddEquipment(Equipment equipment, int amount)
+    {
+        SetAmount(equipment, GetAmount(equipment) + amount);
+    }
+
+    public void SendAvailableInventory(Room destination)
+    {
+        foreach (var inventoryItem in Inventory)
+        {
+            destination.AddEquipment(inventoryItem.Equipment ?? throw new InvalidOperationException(),
+                inventoryItem.Available);
+            ExpendEquipment(inventoryItem.Equipment, inventoryItem.Available);
+        }
     }
 }
