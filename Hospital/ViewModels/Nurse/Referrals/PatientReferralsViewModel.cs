@@ -24,7 +24,7 @@ public class PatientReferralsViewModel : ViewModelBase
 
     public PatientReferralsViewModel()
     {
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
         _selectedPatient = null;
         _patientReferrals = null;
