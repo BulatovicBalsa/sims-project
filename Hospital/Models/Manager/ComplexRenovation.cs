@@ -48,7 +48,7 @@ public class ComplexRenovation
     {
         foreach (var room in toDemolish) room.DemolitionDate = time.EndTime;
         foreach (var transfer in transfersFromOldToNewRooms) transfer.Origin.TryReserveEquipment(transfer);
-        foreach (var room in toBuild) room.CreationDate = time.StartTime;
+        foreach (var room in toBuild) room.CreationDate = time.EndTime;
 
         return new ComplexRenovation(toDemolish, toBuild, time, leftoverEquipmentDestination,
             transfersFromOldToNewRooms);
