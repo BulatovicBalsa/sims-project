@@ -83,4 +83,9 @@ public class ComplexRenovation
     {
         foreach (var oldRoom in ToDemolish) oldRoom.SendAvailableInventory(_leftoverEquipmentDestination);
     }
+
+    public bool WillDemolish(Room room)
+    {
+        return ToDemolish.Contains(room);
+    }
 }
