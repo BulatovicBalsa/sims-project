@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Documents;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
@@ -20,6 +19,8 @@ public class ComplexRenovationService
     public bool AddComplexRenovation(ComplexRenovation complexRenovation)
     {
         if (!CanBePerformed(complexRenovation)) return false;
+
+        complexRenovation.Schedule();
 
         RoomRepository.Instance.Add(complexRenovation.ToBuild);
         RenovationRepository.Instance.Add(complexRenovation.GetSimpleRenovations());

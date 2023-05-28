@@ -19,7 +19,10 @@ public class ComplexRenovation
         _leftoverEquipmentDestination = leftoverEquipmentDestination;
         TransfersFromOldToNewRooms = transfersFromOldToNewRooms;
         Completed = false;
+        Scheduled = false;
     }
+
+    public bool Scheduled { get; private set; }
 
     public List<Transfer> TransfersFromOldToNewRooms { get; }
 
@@ -43,20 +46,17 @@ public class ComplexRenovation
 
     public bool Completed { get; private set; }
 
-    public static ComplexRenovation Schedule(List<Room> toDemolish, List<Room> toBuild, TimeRange time,
-        Room leftoverEquipmentDestination, List<Transfer> transfersFromOldToNewRooms)
+    public void Schedule()
     {
-        foreach (var room in toDemolish) room.DemolitionDate = time.EndTime;
-        foreach (var transfer in transfersFromOldToNewRooms) transfer.Origin.TryReserveEquipment(transfer);
-        foreach (var room in toBuild) room.CreationDate = time.EndTime;
-
-        return new ComplexRenovation(toDemolish, toBuild, time, leftoverEquipmentDestination,
-            transfersFromOldToNewRooms);
+        Scheduled = true;
+        foreach (var room in ToDemolish) room.DemolitionDate = EndTime;
+        foreach (var transfer in TransfersFromOldToNewRooms) transfer.Origin.TryReserveEquipment(transfer);
+        foreach (var room in ToBuild) room.CreationDate = EndTime;
     }
 
     public bool TryComplete()
     {
-        if (EndTime > DateTime.Now || Completed)
+        if (EndTime > DateTime.Now || Completed || !Scheduled)
             return false;
 
         MoveEquipmentToNewRooms();
