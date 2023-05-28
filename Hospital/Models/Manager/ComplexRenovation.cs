@@ -8,14 +8,14 @@ namespace Hospital.Models.Manager;
 public class ComplexRenovation
 {
     private readonly Room _leftoverEquipmentDestination;
-    private readonly TimeRange _time;
+    private readonly TimeRange _timeRange;
 
-    public ComplexRenovation(List<Room> toDemolish, List<Room> toBuild, TimeRange time,
+    public ComplexRenovation(List<Room> toDemolish, List<Room> toBuild, TimeRange timeRange,
         Room leftoverEquipmentDestination, List<Transfer> transfersFromOldToNewRooms)
     {
         ToDemolish = toDemolish;
         ToBuild = toBuild;
-        _time = time;
+        _timeRange = timeRange;
         _leftoverEquipmentDestination = leftoverEquipmentDestination;
         TransfersFromOldToNewRooms = transfersFromOldToNewRooms;
         Completed = false;
@@ -30,14 +30,14 @@ public class ComplexRenovation
 
     public DateTime BeginTime
     {
-        get => _time.StartTime;
-        set => _time.EndTime = value;
+        get => _timeRange.StartTime;
+        set => _timeRange.EndTime = value;
     }
 
     public DateTime EndTime
     {
-        get => _time.EndTime;
-        set => _time.EndTime = value;
+        get => _timeRange.EndTime;
+        set => _timeRange.EndTime = value;
     }
 
     public List<Room> ToDemolish { get; }
