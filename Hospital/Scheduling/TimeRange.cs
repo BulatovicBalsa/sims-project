@@ -13,13 +13,13 @@ public class TimeRange
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 
-    public bool OverlapsWith(TimeRange other)
+    public bool DoesOverlapWith(TimeRange other)
     {
         return other.StartTime < EndTime && other.EndTime > StartTime;
     }
 
-    public bool OverlapsWith(DateTime start, DateTime end)
+    public bool DoesOverlapWith(DateTime start, DateTime end)
     {
-        return OverlapsWith(new TimeRange(start, end));
+        return DoesOverlapWith(new TimeRange(start, end));
     }
 }

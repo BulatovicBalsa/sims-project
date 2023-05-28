@@ -22,18 +22,11 @@ public class RoomScheduleService
         _transfers = TransferRepository.Instance.GetAll();
     }
 
-    public RoomScheduleService(List<Examination> examinations, List<Renovation> renovations)
+    public RoomScheduleService(List<Examination> examinations, List<Renovation> renovations, List<Transfer>? transfers = null)
     {
         _examinations = examinations;
         _renovations = renovations;
-        _transfers = new List<Transfer>();
-    }
-
-    public RoomScheduleService(List<Examination> examinations, List<Renovation> renovations, List<Transfer> transfers)
-    {
-        _examinations = examinations;
-        _renovations = renovations;
-        _transfers = transfers;
+        _transfers = transfers ?? new List<Transfer>();
     }
 
     public bool IsFree(Room room, TimeRange range)
@@ -63,7 +56,7 @@ public class RoomScheduleService
     {
         var examinationsInRoom = _examinations
             .Where(examination => examination.Room != null && examination.Room.Equals(room)).ToList();
-        return examinationsInRoom.Exists(examination => range.OverlapsWith(examination.Start, examination.End));
+        return examinationsInRoom.Exists(examination => range.DoesOverlapWith(examination.Start, examination.End));
     }
 
     public bool HasTransfersScheduledFrom(Room room, DateTime date)
