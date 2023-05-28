@@ -9,7 +9,7 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
 using Hospital.Views.Nurse.UrgentExaminations;

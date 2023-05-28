@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models.Doctor;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 
 namespace Hospital.Services;
 
