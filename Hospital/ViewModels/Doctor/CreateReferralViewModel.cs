@@ -23,9 +23,10 @@ public class CreateReferralViewModel : ViewModelBase
 
     public CreateReferralViewModel(Referral? referralToCreate)
     {
+        _doctors = new ObservableCollection<Doctor>(_doctorService.GetAll());
+        _specializations = new ObservableCollection<string>(_doctorService.GetAllSpecializations());
+        
         ReferralToCreate = referralToCreate;
-        Doctors = new ObservableCollection<Doctor>(_doctorService.GetAll());
-        Specializations = new ObservableCollection<string>(_doctorService.GetAllSpecializations());
         CreateReferralCommand = new RelayCommand<Window>(CreateReferral);
     }
 
@@ -37,7 +38,7 @@ public class CreateReferralViewModel : ViewModelBase
             _selectedDoctor = value;
             OnPropertyChanged(nameof(SelectedDoctor));
 
-            TryChangeSelectedItemToNull(true);
+            TrySwitchOppositeFieldToNull(true);
         }
     }
 
@@ -49,7 +50,7 @@ public class CreateReferralViewModel : ViewModelBase
             _selectedSpecialization = value;
             OnPropertyChanged(nameof(SelectedSpecialization));
 
-            TryChangeSelectedItemToNull(false);
+            TrySwitchOppositeFieldToNull(false);
         }
     }
 
@@ -77,7 +78,7 @@ public class CreateReferralViewModel : ViewModelBase
 
     public ICommand CreateReferralCommand { get; set; }
 
-    private void TryChangeSelectedItemToNull(bool doesDoctorCalled)
+    private void TrySwitchOppositeFieldToNull(bool doesDoctorCalled)
     {
         if (_isSelectedItemChanged)
         {
