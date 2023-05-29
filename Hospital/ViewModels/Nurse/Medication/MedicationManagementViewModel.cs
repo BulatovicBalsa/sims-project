@@ -10,7 +10,7 @@ public class MedicationManagementViewModel : ViewModelBase
     private readonly PatientService _patientService;
     private ObservableCollection<Patient> _patients;
     private Patient? _selectedPatient;
-    private ObservableCollection<Prescription>? _prescriptions;
+    private ObservableCollection<Prescription>? _patientPrescriptions;
     private Prescription? _selectedPrescription;
 
     public MedicationManagementViewModel()
@@ -18,7 +18,7 @@ public class MedicationManagementViewModel : ViewModelBase
         _patientService = new PatientService();
         _patients = new ObservableCollection<Patient>(_patientService.GetAllPatients());
         _selectedPatient = null;
-        _prescriptions = null;
+        _patientPrescriptions = null;
         _selectedPrescription = null;
 
         GiveMedicationCommand = new ViewModelCommand(ExecuteGiveMedicationCommand, CanExecuteGiveMedicationCommand);
@@ -43,18 +43,18 @@ public class MedicationManagementViewModel : ViewModelBase
             OnPropertyChanged(nameof(SelectedPatient));
             if (value != null)
             {
-                Prescriptions = new ObservableCollection<Prescription>(SelectedPatient.MedicalRecord.Prescriptions);
+                PatientPrescriptions = new ObservableCollection<Prescription>(SelectedPatient.MedicalRecord.Prescriptions);
             }
         }
     }
 
-    public ObservableCollection<Prescription>? Prescriptions
+    public ObservableCollection<Prescription>? PatientPrescriptions
     {
-        get => _prescriptions;
+        get => _patientPrescriptions;
         set
         {
-            _prescriptions = value;
-            OnPropertyChanged(nameof(Prescriptions));
+            _patientPrescriptions = value;
+            OnPropertyChanged(nameof(PatientPrescriptions));
         }
     }
 
