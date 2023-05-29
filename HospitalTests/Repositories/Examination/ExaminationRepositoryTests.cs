@@ -8,8 +8,8 @@ using System.Xaml;
 using Hospital.Models.Doctor;
  using Hospital.Models.Manager;
  using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
-using Hospital.Repositories.Manager;
+ using Hospital.Repositories.Examination;
+ using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 
 namespace HospitalTests.Repositories.Examination

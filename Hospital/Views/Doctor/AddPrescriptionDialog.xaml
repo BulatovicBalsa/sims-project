@@ -8,34 +8,39 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
         mc:Ignorable="d"
-        Title="Add Prescription" Height="450" Width="800">
+        Title="Add Prescription" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Choose Medication:" />
-        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Medications}" SelectedItem="{Binding SelectedMedication, Mode=TwoWay}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="Choose Medication:" />
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Medications}" SelectedItem="{Binding SelectedMedication, Mode=TwoWay}" />
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Amount:" />
-        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" AllowTextInput="False" Value="{Binding Amount, Mode=TwoWay}" Minimum="1"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Amount:" />
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" AllowTextInput="False" Value="{Binding Amount, Mode=TwoWay}" Minimum="1"/>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Daily Usage:" />
-        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" AllowTextInput="False" Value="{Binding DailyUsage, Mode=TwoWay}" Minimum="1"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Daily Usage:" />
+            <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" AllowTextInput="False" Value="{Binding DailyUsage, Mode=TwoWay}" Minimum="1"/>
 
-        <Label Grid.Row="3" Grid.Column="0" Content="Medication Timing:" />
-        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding MedicationTimings}" SelectedItem="{Binding SelectedMedicationTiming, Mode=TwoWay}"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Medication Timing:" />
+            <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding MedicationTimings}" SelectedItem="{Binding SelectedMedicationTiming, Mode=TwoWay}"/>
+        </Grid>
 
-        <Button x:Name="ConfirmButton" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Content="Add Prescription" Command="{Binding AddPrescriptionCommand}" CommandParameter="{Binding ElementName=AddPrescriptionWindow}" />
+        <Button VerticalAlignment="Bottom" Grid.Row="1" Margin="0 10" Content="Add Prescription" Command="{Binding AddPrescriptionCommand}" CommandParameter="{Binding ElementName=AddPrescriptionWindow}"/>
 
     </Grid>
 </Window>

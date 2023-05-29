@@ -2,7 +2,6 @@
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
 using Hospital.Scheduling;
 using System;
@@ -12,6 +11,7 @@ using System.Net.Cache;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Repositories.Examination;
 
 
 namespace Hospital.Services

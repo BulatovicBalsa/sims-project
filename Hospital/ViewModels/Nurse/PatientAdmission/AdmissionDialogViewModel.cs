@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels.Nurse.PatientAdmission;

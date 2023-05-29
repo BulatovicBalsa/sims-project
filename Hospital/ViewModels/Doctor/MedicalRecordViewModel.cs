@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Hospital.Coordinators;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using Microsoft.VisualBasic;

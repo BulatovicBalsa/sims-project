@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Serialization;
 using Hospital.Serialization.Mappers.Patient;
 

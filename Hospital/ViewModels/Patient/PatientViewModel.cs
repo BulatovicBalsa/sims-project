@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Hospital.Models.Patient;
 using System.Runtime.CompilerServices;
 using Hospital.Models.Examination;
-using Hospital.Repositories.Examinaton;
 using Hospital.Services;
 using System.Windows;
 using Hospital.Models;

@@ -1,53 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Models.Patient
+namespace Hospital.Models.Patient;
+
+public class HospitalTreatmentReferral
 {
-    public class HospitalTreatmentReferral
+    public HospitalTreatmentReferral()
     {
-        public List<Prescription> Prescriptions { get; set; }
-        public int Duration { get; set; }
-        public List<string> AdditionalTests { get; set; }
+        Prescriptions = new List<Prescription>();
+        AdditionalTests = new List<string>();
+    }
 
-        public HospitalTreatmentReferral()
+    public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests)
+    {
+        Prescriptions = prescriptions;
+        Duration = duration;
+        AdditionalTests = additionalTests;
+    }
+
+    public List<Prescription> Prescriptions { get; set; }
+    public int Duration { get; set; }
+    public List<string> AdditionalTests { get; set; }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new();
+
+        sb.Append($"{Duration};");
+
+        for (var i = 0; i < Prescriptions.Count; i++)
         {
-            Prescriptions = new List<Prescription>();
-            AdditionalTests = new List<string>();
+            sb.Append(Prescriptions[i]?.ToString("$"));
+            if (i < Prescriptions.Count - 1)
+                sb.Append('#');
         }
 
-        public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests)
+        sb.Append(';');
+
+        for (var i = 0; i < AdditionalTests.Count; i++)
         {
-            Prescriptions = prescriptions;
-            Duration = duration;
-            AdditionalTests = additionalTests;
+            sb.Append(AdditionalTests[i]);
+            if (i < AdditionalTests.Count - 1)
+                sb.Append('#');
         }
 
-        public override string ToString()
-        {
-            StringBuilder sb = new();
-            
-            sb.Append($"{Duration};");
-            
-            for (int i = 0; i < Prescriptions.Count; i++)
-            {
-                sb.Append(Prescriptions[i]?.ToString("$"));
-                if (i < Prescriptions.Count - 1)
-                    sb.Append('#');
-            }
-
-            sb.Append(";");
-
-            for (int i = 0; i < AdditionalTests.Count; i++)
-            {
-                sb.Append(AdditionalTests[i]);
-                if (i < AdditionalTests.Count - 1)
-                    sb.Append('#');
-            }
-
-            return sb.ToString();
-        }
+        return sb.ToString();
     }
 }

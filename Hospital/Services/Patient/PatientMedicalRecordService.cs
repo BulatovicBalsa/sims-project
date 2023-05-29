@@ -1,11 +1,11 @@
 ﻿using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Repositories.Examination;
 
 namespace Hospital.Services
 {

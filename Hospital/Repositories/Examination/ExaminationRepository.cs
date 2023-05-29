@@ -1,20 +1,19 @@
-﻿using Hospital.Models.Examination;
-using Hospital.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-namespace Hospital.Repositories.Examinaton;
-
-using Models.Patient;
-using Models.Doctor;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using CsvHelper;
-using Doctor;
-using Patient;
-using Exceptions;
-using Manager;
+using Hospital.Exceptions;
+using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Manager;
+using Hospital.Repositories.Patient;
+using Hospital.Serialization;
+
+namespace Hospital.Repositories.Examination;
+using Hospital.Models.Examination;
+using Hospital.Models.Patient;
+using Hospital.Models.Doctor;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {
@@ -33,16 +32,11 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Urgent).Index(8);
     }
 
-    private List<string> SplitColumnValues(string? columnValue)
-    {
-        return columnValue?.Split("|").ToList() ?? new List<string>();
-    }
-
     public class DoctorTypeConverter : DefaultTypeConverter
     {
-        public override object? ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var doctorId = inputText.Trim();
+            var doctorId = inputText?.Trim();
             if (string.IsNullOrEmpty(doctorId))
                 return null;
             // Retrieve the Doctor object based on the ID
@@ -54,9 +48,9 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
 
     public class PatientTypeConverter : DefaultTypeConverter
     {
-        public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var patientId = inputText.Trim();
+            var patientId = inputText?.Trim();
             // Retrieve the Patient object based on the ID
             var patient = PatientRepository.Instance.GetById(patientId) ??
                           throw new KeyNotFoundException($"Patient with ID {patientId} not found");
@@ -66,9 +60,9 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
 
     public class RoomTypeConverter : DefaultTypeConverter
    {
-        public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var roomId = inputText.Trim();
+            var roomId = inputText?.Trim();
 
             if (string.IsNullOrEmpty(roomId))
                 return null;

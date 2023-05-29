@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Manager;
 using Hospital.Scheduling;
 

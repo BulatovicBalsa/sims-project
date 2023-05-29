@@ -1,4 +1,4 @@
-﻿using Hospital.Coordinators;
+﻿using Hospital.Services;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.ViewModels;
