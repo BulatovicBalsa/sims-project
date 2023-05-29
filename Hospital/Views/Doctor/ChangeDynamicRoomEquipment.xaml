@@ -9,7 +9,7 @@
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" 
         d:DataContext="{d:DesignInstance Type=viewmodels:RoomInventoryViewModel}"
         x:Name="ChangeDynamicRoomEquipmentWindow"
-        Title="Room Inventory" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Room Inventory" Height="450" Width="800" WindowStartupLocation="CenterScreen" SizeToContent="Height">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
