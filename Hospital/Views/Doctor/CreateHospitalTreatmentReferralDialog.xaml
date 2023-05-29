@@ -38,6 +38,8 @@
 
             <Frame Height="300" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
         </Grid>
-        <Button Grid.Row="1" Grid.Column="0" Content="Add Referral" Command="{Binding AddReferralCommand}" CommandParameter="{Binding ElementName=HospitalTreatmentWindow}"></Button>
+        <Grid Grid.Row="1">
+            <Button Content="Add Referral" Command="{Binding AddReferralCommand}" CommandParameter="{Binding ElementName=HospitalTreatmentWindow}"></Button>
+        </Grid>
     </Grid>
 </Window>

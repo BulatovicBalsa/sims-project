@@ -97,11 +97,13 @@ public class PerformExaminationViewModel : ViewModelBase
 
         PatientOnExamination.Referrals.Add(createdReferral);
         new PatientService().UpdatePatient(PatientOnExamination);
+        Referrals = new ObservableCollection<Referral>(PatientOnExamination.Referrals);
     }
 
     private void CreateHospitalTreatmentReferral()
     {
         var dialog = new CreateHospitalTreatmentReferralDialog(PatientOnExamination);
         dialog.ShowDialog();
+        HospitalTreatmentReferrals = new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
     }
 }
