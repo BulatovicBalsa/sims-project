@@ -40,7 +40,7 @@ public class Prescription
 
     public override string ToString()
     {
-        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate:yyyy-MM-dd HH:mm:ss}";
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate:yyyy-MM-dd HH:mm:ss};{LastUsed:yyyy-MM-dd HH:mm:ss}";
     }
 
     public string ToString(string separator)
