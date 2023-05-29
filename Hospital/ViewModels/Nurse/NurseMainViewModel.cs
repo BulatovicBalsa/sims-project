@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Hospital.ViewModels.Nurse.Medication;
 using Hospital.ViewModels.Nurse.PatientAdmission;
 using Hospital.ViewModels.Nurse.Patients;
 using Hospital.ViewModels.Nurse.Referrals;
@@ -15,6 +16,7 @@ public class NurseMainViewModel : ViewModelBase
         ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
         ShowUrgentExaminationsViewCommand = new ViewModelCommand(ExecuteShowUrgentExaminationsViewCommand);
         ShowPatientReferralsViewCommand = new ViewModelCommand(ExecuteShowPatientReferralsViewCommand);
+        ShowMedicationManagementViewCommand = new ViewModelCommand(ExecuteShowMedicationManagementViewCommand);
 
         ExecuteShowPatientsViewCommand(null);
     }
@@ -32,6 +34,7 @@ public class NurseMainViewModel : ViewModelBase
     public ICommand ShowPatientAdmissionViewCommand { get; }
     public ICommand ShowUrgentExaminationsViewCommand { get; }
     public ICommand ShowPatientReferralsViewCommand { get; }
+    public ICommand ShowMedicationManagementViewCommand { get; }
 
     private void ExecuteShowPatientsViewCommand(object? obj)
     {
@@ -51,5 +54,10 @@ public class NurseMainViewModel : ViewModelBase
     private void ExecuteShowPatientReferralsViewCommand(object obj)
     {
         CurrentChildView = new PatientReferralsViewModel();
+    }
+
+    private void ExecuteShowMedicationManagementViewCommand(object obj)
+    {
+        CurrentChildView = new MedicationManagementViewModel();
     }
 }
