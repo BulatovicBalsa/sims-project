@@ -14,8 +14,28 @@ public class PerformExaminationViewModel : ViewModelBase
 {
     private readonly ExaminationService _examinationService = new();
 
+    private readonly Examination _examinationToPerform;
+
     private string _anamnesis;
+
+    private ObservableCollection<HospitalTreatmentReferral> _hospitalTreatmentReferrals;
     private ObservableCollection<Referral> _referrals;
+
+    public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
+    {
+        _examinationToPerform = examinationToPerform;
+        PatientOnExamination = patientOnExamination;
+        Anamnesis = _examinationToPerform.Anamnesis;
+        Referrals = new ObservableCollection<Referral>(PatientOnExamination.Referrals);
+        HospitalTreatmentReferrals =
+            new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
+
+        UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
+        FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
+        CreateReferralCommand = new RelayCommand(CreateReferral);
+        CreateHospitalTreatmentReferralCommand = new RelayCommand(CreateHospitalTreatmentReferral);
+    }
+
     public ObservableCollection<Referral> Referrals
     {
         get => _referrals;
@@ -26,7 +46,6 @@ public class PerformExaminationViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<HospitalTreatmentReferral> _hospitalTreatmentReferrals;
     public ObservableCollection<HospitalTreatmentReferral> HospitalTreatmentReferrals
     {
         get => _hospitalTreatmentReferrals;
@@ -37,21 +56,6 @@ public class PerformExaminationViewModel : ViewModelBase
         }
     }
 
-    public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
-    {
-        _examinationToPerform = examinationToPerform;
-        PatientOnExamination = patientOnExamination;
-        Anamnesis = _examinationToPerform.Anamnesis;
-        Referrals = new ObservableCollection<Referral>(PatientOnExamination.Referrals);
-        HospitalTreatmentReferrals = new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
-
-        UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
-        FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
-        CreateReferralCommand = new RelayCommand(CreateReferral);
-        CreateHospitalTreatmentReferralCommand = new RelayCommand(CreateHospitalTreatmentReferral);
-    }
-
-    private readonly Examination _examinationToPerform;
     public Patient PatientOnExamination { get; }
 
     public string Anamnesis
@@ -73,7 +77,8 @@ public class PerformExaminationViewModel : ViewModelBase
     {
         _examinationToPerform.Anamnesis = Anamnesis;
         _examinationService.UpdateExamination(_examinationToPerform, false);
-        var result = MessageBox.Show("Anamnesis Saved, do you want to create prescriptions?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        var result = MessageBox.Show("Anamnesis Saved, do you want to create prescriptions?", "Confirmation",
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (result == MessageBoxResult.Yes)
         {
             var dialog = new PrescriptionDialog(PatientOnExamination);
@@ -104,6 +109,7 @@ public class PerformExaminationViewModel : ViewModelBase
     {
         var dialog = new CreateHospitalTreatmentReferralDialog(PatientOnExamination);
         dialog.ShowDialog();
-        HospitalTreatmentReferrals = new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
+        HospitalTreatmentReferrals =
+            new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
     }
 }
