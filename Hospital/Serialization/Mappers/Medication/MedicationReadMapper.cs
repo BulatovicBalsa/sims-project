@@ -11,7 +11,8 @@ public sealed class MedicationReadMapper : ClassMap<Medication>
     {
         Map(medication => medication.Id).Index(0);
         Map(medication => medication.Name).Index(1);
-        Map(medication => medication.Allergens).Index(2)
+        Map(medication => medication.Stock).Index(2);
+        Map(medication => medication.Allergens).Index(3)
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("Allergens")));
     }
 
