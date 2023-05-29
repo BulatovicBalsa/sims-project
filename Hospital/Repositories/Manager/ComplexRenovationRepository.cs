@@ -36,12 +36,14 @@ public class ComplexRenovationRepository
 
     private void JoinWithRoomsToDemolish(List<ComplexRenovation> complexRenovations)
     {
-        foreach (var renovation in complexRenovations) renovation.ToDemolish = GetRooms(renovation.ToDemolish);
+        foreach (var renovation in complexRenovations)
+            renovation.ToDemolish = RoomRepository.Instance.Get(renovation.ToDemolish);
     }
 
     private void JoinWithRoomsToBuild(List<ComplexRenovation> complexRenovations)
     {
-        foreach (var renovation in complexRenovations) renovation.ToBuild = GetRooms(renovation.ToBuild);
+        foreach (var renovation in complexRenovations)
+            renovation.ToBuild = RoomRepository.Instance.Get(renovation.ToBuild);
     }
 
     private void JoinWithLeftoverEquipmentDestination(List<ComplexRenovation> complexRenovations)
@@ -54,12 +56,6 @@ public class ComplexRenovationRepository
                 RoomRepository.Instance.GetById(leftoverEquipmentDestination.Id) ??
                 throw new InvalidOperationException("Could not find leftover equipment destination");
         }
-    }
-
-    private List<Room> GetRooms(List<Room> rooms)
-    {
-        return rooms.Select(room =>
-            RoomRepository.Instance.GetById(room.Id) ?? throw new InvalidOperationException()).ToList();
     }
 
     public List<ComplexRenovation> GetAllFromFile()
