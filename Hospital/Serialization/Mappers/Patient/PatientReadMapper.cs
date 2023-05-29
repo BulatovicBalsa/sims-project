@@ -102,7 +102,8 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
                 let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
                 let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
-                select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate });
+                let lastUsed = (string.IsNullOrEmpty(prescriptionArgs[5])) ? (DateTime?)null : DateTime.ParseExact(prescriptionArgs[5], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate, LastUsed = lastUsed});
 
             return prescriptions;
         }

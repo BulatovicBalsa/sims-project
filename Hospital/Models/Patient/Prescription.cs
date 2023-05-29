@@ -31,6 +31,7 @@ public class Prescription
     public MedicationTiming MedicationTiming { get; set; }
     public Medication Medication { get; set; }
     public DateTime IssuedDate { get; set; }
+    public DateTime? LastUsed { get; set; }
 
     public Prescription DeepCopy()
     {
