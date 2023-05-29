@@ -63,4 +63,17 @@ public class Prescription
     {
         return base.GetHashCode();
     }
+
+    public bool CanBeDispensed()
+    {
+        if (LastUsed == null)
+        {
+            return true;
+        }
+
+        var daysLasting = Amount / DailyUsage;
+        var daysSinceLastDose = (DateTime.Now - (DateTime)LastUsed).TotalDays;
+
+        return daysSinceLastDose >= daysLasting - 1;
+    }
 }
