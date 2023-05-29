@@ -36,8 +36,6 @@ public class InventoryItem
 
     public int Reserved { get; set; }
 
-    public int Available => Amount - Reserved;
-
     public override bool Equals(object? obj)
     {
         if (obj == null || obj.GetType() != typeof(InventoryItem)) return false;

@@ -64,11 +64,6 @@ public class RoomRepository
             InventoryItemRepository.Instance.Add(inventoryItem);
     }
 
-    public void Add(List<Room> rooms)
-    {
-        rooms.ForEach(Add);
-    }
-
     public void Update(Room room)
     {
         var rooms = GetAll();

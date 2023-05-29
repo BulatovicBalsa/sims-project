@@ -1,4 +1,7 @@
-Id,Name,Type,IsDemolished,CreationDate,DemolitionDate
-9a118639-1526-412a-8b2e-4f188aaa7272,Warehouse,Warehouse,False,,
-926f0ec6-ee24-4ea3-8d10-7a16d94f1ac0,Examination room 1,ExaminationRoom,False,,
-f658a363-dc12-4fc8-94b1-7690e9b9e9bd,Examination room 2,ExaminationRoom,False,,
+Id,Name,Type
+<<<<<<< HEAD
+=======
+20fe3d45-0566-417f-838f-e5df77e8ae72,Warehouse,Warehouse
+5d2c93c2-72df-4a27-a918-aa5b200e8076,Examination room 1,ExaminationRoom
+7aada1e1-63f5-475c-9afc-e2bd4fdb633e,Examination room 2,ExaminationRoom
+>>>>>>> 30a16aa76c2e4e4e4f03da78cb00c89fa1cdbc24

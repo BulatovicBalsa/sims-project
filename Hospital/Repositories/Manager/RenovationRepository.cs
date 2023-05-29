@@ -43,11 +43,6 @@ public class RenovationRepository
         Serializer<Renovation>.ToCSV(_renovations, FilePath);
     }
 
-    public void Add(List<Renovation> renovations)
-    {
-        renovations.ForEach(Add);
-    }
-
     public void Update(Renovation renovation)
     {
         var renovations = GetAll();
