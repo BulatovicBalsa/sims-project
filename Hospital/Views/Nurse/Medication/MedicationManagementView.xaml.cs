@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Hospital.Views.Nurse.Medication
 {
     /// <summary>
-    /// Interaction logic for MedicationManagement.xaml
+    /// Interaction logic for MedicationManagementView.xaml
     /// </summary>
-    public partial class MedicationManagement : UserControl
+    public partial class MedicationManagementView : UserControl
     {
-        public MedicationManagement()
+        public MedicationManagementView()
         {
             InitializeComponent();
         }
