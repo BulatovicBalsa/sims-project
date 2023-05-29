@@ -1,14 +1,11 @@
-﻿using Hospital.Coordinators;
+﻿using Hospital.Services;
 
 namespace Hospital.Models.Patient;
+
 using Doctor;
+
 public class Referral
 {
-    public string Specialization { get; set; }
-    public Doctor? Doctor { get; set; }
-
-    public string ComboBoxString => $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
-
     public Referral()
     {
         Specialization = "";
@@ -30,6 +27,11 @@ public class Referral
         Specialization = specialization;
         Doctor = doctor;
     }
+
+    public string Specialization { get; set; }
+    public Doctor? Doctor { get; set; }
+
+    public string ComboBoxString => $"{Doctor?.FirstName} {Doctor?.LastName} {Specialization}";
 
     public void AssignDoctor()
     {

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Create Hospital Treatment Referral" Height="450" Width="800" x:Name="HospitalTreatmentWindow">
+        Title="Create Hospital Treatment Referral" Height="450" Width="800" x:Name="HospitalTreatmentWindow" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:doctor="clr-namespace:Hospital.ViewModels"
         mc:Ignorable="d"
-        Title="Manage Prescriptions" Height="450" Width="800">
+        Title="Manage Prescriptions" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Frame x:Name="PrescriptionsFrame"></Frame>
     </Grid>
