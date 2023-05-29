@@ -11,7 +11,6 @@ namespace Hospital.ViewModels;
 
 public class PerformExaminationViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
     private readonly ExaminationService _examinationService = new();
 
     private string _anamnesis;
