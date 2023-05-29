@@ -77,7 +77,8 @@ public class PerformExaminationViewModel : ViewModelBase
         Referral createdReferral = new();
         var dialog = new CreateReferralDialog(createdReferral);
         dialog.ShowDialog();
-        if (!createdReferral.IsDefault()) IsReferralAdded = true;
+        if (createdReferral.IsDefault()) return;
+        IsReferralAdded = true;
         PatientOnExamination.Referrals.Add(createdReferral);
 
         new PatientService().UpdatePatient(PatientOnExamination);
