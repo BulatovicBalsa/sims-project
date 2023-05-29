@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace Hospital.Models.Manager;
 
@@ -37,13 +38,19 @@ public class Transfer : INotifyPropertyChanged
         Failed = false;
     }
 
-    public string Id { get; set; }
-    public Room Origin { get; set; }
-    public Room Destination { get; set; }
-    public string OriginId { get; set; }
-    public string DestinationId { get; set; }
-    public List<TransferItem> Items { get; set; }
+    [JsonProperty("Id")] public string Id { get; set; }
 
+    [JsonProperty("Origin")] public Room Origin { get; set; }
+
+    [JsonProperty("Destination")] public Room Destination { get; set; }
+
+    [JsonProperty("OriginId")] public string OriginId { get; set; }
+
+    [JsonProperty("DestinationId")] public string DestinationId { get; set; }
+
+    [JsonProperty("Items")] public List<TransferItem> Items { get; set; }
+
+    [JsonProperty("DeliveryDateTime")]
     public DateTime DeliveryDateTime
     {
         get => _deliveryDateTime;
@@ -55,6 +62,7 @@ public class Transfer : INotifyPropertyChanged
         }
     }
 
+    [JsonProperty("Delivered")]
     public bool Delivered
     {
         get => _delivered;
@@ -66,6 +74,7 @@ public class Transfer : INotifyPropertyChanged
         }
     }
 
+    [JsonProperty("Failed")]
     public bool Failed
     {
         get => _failed;
