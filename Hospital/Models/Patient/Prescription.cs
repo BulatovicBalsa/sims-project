@@ -47,6 +47,8 @@ public class Prescription
         return ToString().Replace(";", separator);
     }
 
+    public string ComboBoxString => $"{Medication.Name} {Amount}/{DailyUsage} {IssuedDate}";
+
     public override bool Equals(object? obj)
     {
         if (obj is not Prescription objAsPrescription) return false;
