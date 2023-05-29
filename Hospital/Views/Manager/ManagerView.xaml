@@ -136,6 +136,58 @@
                 </DockPanel>
 
             </TabItem>
+            <TabItem Header="Rooms" DataContext="{Binding Children[3]}">
+
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Merge rooms" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Split room" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Rooms, Mode=TwoWay}" SelectedItem="{Binding SelectedRoom}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type"
+                                                    Binding="{Binding Type, Mode=TwoWay}"
+                                                    Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="CreationDate" Binding="{Binding CreationDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="DemolitionDate" Binding="{Binding DemolitionDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                        Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedRoomInventory}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Equipment.Name}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type" Binding="{Binding Equipment.Type}" IsReadOnly="True"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
