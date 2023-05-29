@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
-        <TextBox Grid.Row="0" Grid.Column="1" >
+        <TextBox Grid.Row="0" Grid.Column="1" TextChanged="RoomNameChanged" >
             <TextBox.Style>
                 <Style>
                     <Setter Property="Validation.ErrorTemplate">
@@ -43,6 +43,6 @@
             </TextBox.Text>
         </TextBox>
         <Label Grid.Row="1" Grid.Column="0" Content="Type"/>
-        <ComboBox Grid.Row="1" Grid.Column="1"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" ItemsSource="{Binding Path=Types, ElementName=RoomFormElement}" SelectedItem="{Binding Path=Room.Type, ElementName=RoomFormElement}"/>
     </Grid>
 </UserControl>
