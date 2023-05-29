@@ -13,6 +13,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -57,19 +58,51 @@
                 <TextBox Grid.Row="0" x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150"/>
                 <Button Grid.Row="0" x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5" Command="{Binding UpdateAnamnesisCommand}" Height="25.96"/>
 
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="5" Content="Create Referral" Command="{Binding CreateReferralCommand}"></Button>
+                
+            </Grid>
 
-                <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Referrals}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Margin="5" Content="Create Referral" Command="{Binding CreateReferralCommand}"></Button>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Referrals}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" Width="Auto"/>
                         <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="5" Content="Create Hospital Treatment Referral" Command="{Binding CreateHospitalTreatmentReferralCommand}"></Button>
+                <DataGrid Grid.Row="3"  ItemsSource="{Binding HospitalTreatmentReferrals}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="Auto"/>
+                        <DataGridTemplateColumn Header="Additional Tests" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListBox ItemsSource="{Binding AdditionalTests}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Prescriptions" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListBox ItemsSource="{Binding Prescriptions}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Column="0" Grid.Row="2" Margin="5" Content="Create Hospital Treatment Referral" Command="{Binding CreateHospitalTreatmentReferralCommand}"></Button>
             </Grid>
 
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="4">
                 <Button Content="Finish" Margin="5" Command="{Binding FinishExaminationCommand}" CommandParameter="{Binding ElementName=PerformExaminationDialogWindow}"/>
             </Grid>
         </Grid>

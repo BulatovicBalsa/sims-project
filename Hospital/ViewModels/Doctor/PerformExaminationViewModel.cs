@@ -26,12 +26,24 @@ public class PerformExaminationViewModel : ViewModelBase
         }
     }
 
+    private ObservableCollection<HospitalTreatmentReferral> _hospitalTreatmentReferrals;
+    public ObservableCollection<HospitalTreatmentReferral> HospitalTreatmentReferrals
+    {
+        get => _hospitalTreatmentReferrals;
+        set
+        {
+            _hospitalTreatmentReferrals = value;
+            OnPropertyChanged(nameof(HospitalTreatmentReferrals));
+        }
+    }
+
     public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
     {
         _examinationToPerform = examinationToPerform;
         PatientOnExamination = patientOnExamination;
         Anamnesis = _examinationToPerform.Anamnesis;
         Referrals = new ObservableCollection<Referral>(PatientOnExamination.Referrals);
+        HospitalTreatmentReferrals = new ObservableCollection<HospitalTreatmentReferral>(PatientOnExamination.HospitalTreatmentReferrals);
 
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
