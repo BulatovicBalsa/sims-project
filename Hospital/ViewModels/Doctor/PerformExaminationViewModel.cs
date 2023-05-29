@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Services;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Hospital.ViewModels;
 
@@ -14,12 +15,23 @@ public class PerformExaminationViewModel : ViewModelBase
     private readonly ExaminationService _examinationService = new();
 
     private string _anamnesis;
+    private ObservableCollection<Referral> _referrals;
+    public ObservableCollection<Referral> Referrals
+    {
+        get => _referrals;
+        set
+        {
+            _referrals = value;
+            OnPropertyChanged(nameof(Referrals));
+        }
+    }
 
     public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
     {
         _examinationToPerform = examinationToPerform;
         PatientOnExamination = patientOnExamination;
         Anamnesis = _examinationToPerform.Anamnesis;
+        Referrals = new ObservableCollection<Referral>(PatientOnExamination.Referrals);
 
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);

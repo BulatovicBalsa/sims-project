@@ -44,6 +44,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -52,11 +54,19 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5"/>
-                <TextBox x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150"/>
-                <Button x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5" Command="{Binding UpdateAnamnesisCommand}" Height="25.96"/>
+                <TextBox Grid.Row="0" x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150"/>
+                <Button Grid.Row="0" x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5" Command="{Binding UpdateAnamnesisCommand}" Height="25.96"/>
 
                 <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="5" Content="Create Referral" Command="{Binding CreateReferralCommand}"></Button>
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="5" Content="Create Hospital Treatment Referral" Command="{Binding CreateHospitalTreatmentReferralCommand}"></Button>
+
+                <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Referrals}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" Width="Auto"/>
+                        <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="5" Content="Create Hospital Treatment Referral" Command="{Binding CreateHospitalTreatmentReferralCommand}"></Button>
             </Grid>
 
             <Grid Grid.Row="3">
