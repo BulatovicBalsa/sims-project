@@ -92,7 +92,7 @@
                         <DataGridTemplateColumn Header="Prescriptions" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ListBox ItemsSource="{Binding Prescriptions}" />
+                                    <ListBox ItemsSource="{Binding Prescriptions}" DisplayMemberPath="ListBoxString" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
