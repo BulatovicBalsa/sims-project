@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Patient;
+﻿using System.Collections.Generic;
+using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.Services;
@@ -22,5 +23,10 @@ public class MedicationService
     {
         medication.Stock--;
         _medicationRepository.Update(medication);
+    }
+
+    public List<Medication> GetLowStockMedication()
+    {
+        return _medicationRepository.GetLowStockMedication();
     }
 }
