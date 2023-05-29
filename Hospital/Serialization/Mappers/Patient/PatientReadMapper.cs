@@ -67,8 +67,8 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                                select item.Split(";") into referralArgs
                                let duration = Convert.ToInt32(referralArgs[0].Trim())
                                let prescriptions = referralArgs[1].Split("#").ToList()
-                                   .Select(PrescriptionFromString).ToList()
-                               let additionalTests = referralArgs[2].Trim().Split("#").ToList()
+                                   .Select(PrescriptionFromString).Where(prescription => prescription != null).ToList()
+                               let additionalTests = referralArgs[2].Trim().Split("#").Where(additionalTest => !string.IsNullOrEmpty(additionalTest)).ToList()
                                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
 
             return referrals;
