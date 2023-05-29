@@ -2,11 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Nurse.Medication;
+
+using Hospital.Models.Patient;
 public class MedicationManagementViewModel : ViewModelBase
 {
     private readonly PatientService _patientService;
@@ -16,6 +17,7 @@ public class MedicationManagementViewModel : ViewModelBase
     private Patient? _selectedPatient;
     private ObservableCollection<Prescription>? _patientPrescriptions;
     private Prescription? _selectedPrescription;
+    private ObservableCollection<Medication> _lowStockMedication;
 
     public MedicationManagementViewModel()
     {
@@ -26,6 +28,7 @@ public class MedicationManagementViewModel : ViewModelBase
         _selectedPatient = null;
         _patientPrescriptions = null;
         _selectedPrescription = null;
+        _lowStockMedication = new ObservableCollection<Medication>(_medicationService.GetLowStockMedication());
 
         GiveMedicationCommand = new ViewModelCommand(ExecuteGiveMedicationCommand, CanExecuteGiveMedicationCommand);
     }
@@ -71,6 +74,16 @@ public class MedicationManagementViewModel : ViewModelBase
         {
             _selectedPrescription = value;
             OnPropertyChanged(nameof(SelectedPrescription));
+        }
+    }
+
+    public ObservableCollection<Medication> LowStockMedication
+    {
+        get => _lowStockMedication;
+        set
+        {
+            _lowStockMedication = value;
+            OnPropertyChanged(nameof(LowStockMedication));
         }
     }
 
