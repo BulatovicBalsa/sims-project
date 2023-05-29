@@ -15,14 +15,12 @@ public class PerformExaminationViewModel : ViewModelBase
     private readonly ExaminationService _examinationService = new();
 
     private string _anamnesis;
-    public bool IsReferralAdded { get; set; }
 
     public PerformExaminationViewModel(Examination examinationToPerform, Patient patientOnExamination)
     {
         _examinationToPerform = examinationToPerform;
         PatientOnExamination = patientOnExamination;
         Anamnesis = _examinationToPerform.Anamnesis;
-        IsReferralAdded = false;
 
         UpdateAnamnesisCommand = new RelayCommand(UpdateAnamnesis);
         FinishExaminationCommand = new RelayCommand<Window>(FinishExamination);
@@ -69,18 +67,12 @@ public class PerformExaminationViewModel : ViewModelBase
 
     private void CreateReferral()
     {
-        if (IsReferralAdded) //Consider Allowing Referral Updates
-        {
-            MessageBox.Show("Referral is already added");
-            return;
-        }
         Referral createdReferral = new();
         var dialog = new CreateReferralDialog(createdReferral);
         dialog.ShowDialog();
         if (createdReferral.IsDefault()) return;
-        IsReferralAdded = true;
-        PatientOnExamination.Referrals.Add(createdReferral);
 
+        PatientOnExamination.Referrals.Add(createdReferral);
         new PatientService().UpdatePatient(PatientOnExamination);
     }
 

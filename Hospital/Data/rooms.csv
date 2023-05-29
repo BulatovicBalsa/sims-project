@@ -1,14 +1,14 @@
-Id,Name,Type,DemolitionDate,CreationDate,IsDemolished
-5000,Warehouse Room,Warehouse,,,False
-0001,Operating Room 1,OperatingRoom,,,False
-0002,Operating Room 2,OperatingRoom,,,False
-1001,Examination Room 1,ExaminationRoom,,,False
-1002,Examination Room 2,ExaminationRoom,,,False
-1003,Examination Room 3,ExaminationRoom,,,False
-1004,Examination Room 4,ExaminationRoom,,,False
-2001,Waiting Room 1,WaitingRoom,,,False
-2002,Waiting Room 2,WaitingRoom,,,False
-3001,Ward Room 101,Ward,,,False
-3002,Ward Room 102,Ward,,,False
-3003,Ward Room 103,Ward,,,False
-3004,Ward Room 104,Ward,,,False
+Id,Name,Type,CreationDate,DemolitionDate
+5000,Warehouse Room,Warehouse,,
+0001,Operating Room 1,OperatingRoom,,
+0002,Operating Room 2,OperatingRoom,,
+1001,Examination Room 1,ExaminationRoom,,
+1002,Examination Room 2,ExaminationRoom,,
+1003,Examination Room 3,ExaminationRoom,,
+1004,Examination Room 4,ExaminationRoom,,
+2001,Waiting Room 1,WaitingRoom,,
+2002,Waiting Room 2,WaitingRoom,,
+3001,Ward Room 101,Ward,,
+3002,Ward Room 102,Ward,,
+3003,Ward Room 103,Ward,,
+3004,Ward Room 104,Ward,,
