@@ -1,4 +1,6 @@
-﻿namespace Hospital.Models.Manager;
+﻿using Newtonsoft.Json;
+
+namespace Hospital.Models.Manager;
 
 public class InventoryItem
 {
@@ -27,14 +29,15 @@ public class InventoryItem
         Reserved = 0;
     }
 
-    public string EquipmentId { get; set; }
-    public string RoomId { get; set; }
+    [JsonProperty("EquipmentId")] public string EquipmentId { get; set; }
 
-    public int Amount { get; set; }
+    [JsonProperty("RoomId")] public string RoomId { get; set; }
 
-    public Equipment? Equipment { get; set; }
+    [JsonProperty("Amount")] public int Amount { get; set; }
 
-    public int Reserved { get; set; }
+    [JsonProperty("Equipment")] public Equipment? Equipment { get; set; }
+
+    [JsonProperty("Reserved")] public int Reserved { get; set; }
 
     public int Available => Amount - Reserved;
 

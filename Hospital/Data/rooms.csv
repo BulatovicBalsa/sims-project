@@ -12,3 +12,7 @@ Id,Name,Type,DemolitionDate,CreationDate,IsDemolished
 3002,Ward Room 102,Ward,,,False
 3003,Ward Room 103,Ward,,,False
 3004,Ward Room 104,Ward,,,False
+ecabc8ee-e80e-4bc5-8d2d-e32b19086dd7,Old Examination room,ExaminationRoom,,05/29/2023 15:00:26
+0157f774-aa32-4567-956d-5b5d48457c9b,Old Ward,Ward,,05/29/2023 15:00:26
+87448f43-9ac3-4563-8c53-b0afd65160d7,New Operating room,OperatingRoom,05/29/2023 15:00:26,
+

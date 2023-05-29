@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Hospital.Models.Manager;
 
@@ -29,16 +30,17 @@ public class Room
         Inventory = new List<InventoryItem>();
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
+    [JsonProperty("Id")] public string Id { get; set; }
 
-    public RoomType Type { get; set; }
+    [JsonProperty("Name")] public string Name { get; set; }
 
-    public List<InventoryItem> Inventory { get; set; }
+    [JsonProperty("Type")] public RoomType Type { get; set; }
 
-    public DateTime? CreationDate { get; set; }
+    [JsonProperty("Inventory")] public List<InventoryItem> Inventory { get; set; }
 
-    public DateTime? DemolitionDate { get; set; }
+    [JsonProperty("CreationDate")] public DateTime? CreationDate { get; set; }
+
+    [JsonProperty("DemolitionDate")] public DateTime? DemolitionDate { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
