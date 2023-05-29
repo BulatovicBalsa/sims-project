@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Repositories.Patient;
@@ -8,6 +11,26 @@ using Hospital.Services;
 namespace Hospital.ViewModels.Nurse.Medication;
 
 using Hospital.Models.Patient;
+
+public class MedicationOrderQuantityDto
+{
+    public string MedicationId { get; set; }
+    public string Name { get; set; }
+    public int Stock { get; set; }
+    public int OrderQuantity { get; set; }
+
+    public MedicationOrderQuantityDto()
+    {
+    }
+
+    public MedicationOrderQuantityDto(string medicationId, string name, int stock, int orderQuantity)
+    {
+        MedicationId = medicationId;
+        Name = name;
+        Stock = stock;
+        OrderQuantity = orderQuantity;  
+    }
+}
 public class MedicationManagementViewModel : ViewModelBase
 {
     private readonly PatientService _patientService;
@@ -17,7 +40,7 @@ public class MedicationManagementViewModel : ViewModelBase
     private Patient? _selectedPatient;
     private ObservableCollection<Prescription>? _patientPrescriptions;
     private Prescription? _selectedPrescription;
-    private ObservableCollection<Medication> _lowStockMedication;
+    private ObservableCollection<MedicationOrderQuantityDto> _medicationOrderQuantities;
 
     public MedicationManagementViewModel()
     {
@@ -28,9 +51,12 @@ public class MedicationManagementViewModel : ViewModelBase
         _selectedPatient = null;
         _patientPrescriptions = null;
         _selectedPrescription = null;
-        _lowStockMedication = new ObservableCollection<Medication>(_medicationService.GetLowStockMedication());
+        _medicationOrderQuantities = new ObservableCollection<MedicationOrderQuantityDto>(_medicationService
+            .GetLowStockMedication().Select(medication =>
+                new MedicationOrderQuantityDto(medication.Id, medication.Name, medication.Stock, 0)));
 
         GiveMedicationCommand = new ViewModelCommand(ExecuteGiveMedicationCommand, CanExecuteGiveMedicationCommand);
+        OrderMedicationCommand = new ViewModelCommand(ExecuteOrderMedicationCommand, CanExecuteOrderMedicationCommand);
     }
 
     public ObservableCollection<Patient> Patients
@@ -77,17 +103,18 @@ public class MedicationManagementViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<Medication> LowStockMedication
+    public ObservableCollection<MedicationOrderQuantityDto> MedicationOrderQuantities
     {
-        get => _lowStockMedication;
+        get => _medicationOrderQuantities;
         set
         {
-            _lowStockMedication = value;
-            OnPropertyChanged(nameof(LowStockMedication));
+            _medicationOrderQuantities = value;
+            OnPropertyChanged(nameof(MedicationOrderQuantities));
         }
     }
 
     public ICommand GiveMedicationCommand { get; }
+    public ICommand OrderMedicationCommand { get; }
 
     private void ExecuteGiveMedicationCommand(object obj)
     {
@@ -96,7 +123,7 @@ public class MedicationManagementViewModel : ViewModelBase
             MessageBox.Show("Selected medication is out of stock!", "Error");
             return;
         }
-        else if (!SelectedPrescription.CanBeDispensed())
+        if (!SelectedPrescription.CanBeDispensed())
         {
             MessageBox.Show("It is still too early to dispense selected medicine!", "Error");
             return;
@@ -120,5 +147,17 @@ public class MedicationManagementViewModel : ViewModelBase
         SelectedPatient = null;
         PatientPrescriptions = null;
         SelectedPrescription = null;
+    }
+
+    private void ExecuteOrderMedicationCommand(object obj)
+    {
+        var medicationToOrder = MedicationOrderQuantities.Where(elem => elem.OrderQuantity > 0);
+
+        Trace.WriteLine(medicationToOrder.Count());
+    }
+
+    private bool CanExecuteOrderMedicationCommand(object obj)
+    {
+        return !_medicationOrderQuantities.Any(elem => elem.OrderQuantity < 0);
     }
 }

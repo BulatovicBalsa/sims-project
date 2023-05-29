@@ -21,7 +21,25 @@
                   DisplayMemberPath="ComboBoxString"/>
         <Button Style="{StaticResource ActionButton}" 
                 Content="Give medication"
-                Margin="0,20,0,0"
+                Margin="0,20,0,30"
                 Command="{Binding GiveMedicationCommand}"/>
+        <DataGrid ItemsSource="{Binding MedicationOrderQuantities}"
+                  x:Name="MedicationOrderQuantitiesDataGrid"
+                  Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{DynamicResource DataGridCellStyle}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{DynamicResource DataGridRowStyle}"
+                  ScrollViewer.CanContentScroll="True"
+                  Height="160">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Stock" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Stock}"/>
+                <DataGridTextColumn Header="Order quantity" IsReadOnly="False" Width="SizeToCells" Binding="{Binding OrderQuantity, Mode=TwoWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Style="{StaticResource ActionButton}" 
+                Content="Order medication"
+                Margin="0,20,0,0"
+                Command="{Binding OrderMedicationCommand}"/>
     </StackPanel>
 </UserControl>
