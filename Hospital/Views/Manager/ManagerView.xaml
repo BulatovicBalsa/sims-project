@@ -148,7 +148,7 @@
                             </StackPanel>
                         </Button>
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
-                                Command="">
+                                Command="{Binding SplitRoomCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
                                 <TextBlock Text="Split room" VerticalAlignment="Center" Margin="2 0 0 0" />

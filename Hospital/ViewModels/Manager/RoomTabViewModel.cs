@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Views.Manager;
 
 namespace Hospital.ViewModels.Manager;
 
@@ -9,12 +12,14 @@ public class RoomTabViewModel : ViewModelBase
     private BindingList<Room> _rooms;
     private Room? _selectedRoom;
     private BindingList<InventoryItem> _selectedRoomInventory;
+    private ICommand _splitRoomCommand;
 
     public RoomTabViewModel()
     {
         _rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
         _selectedRoomInventory = new BindingList<InventoryItem>();
         _selectedRoom = null;
+        SplitRoomCommand = new RelayCommand(SplitRoom);
     }
 
     public BindingList<Room> Rooms
@@ -51,5 +56,22 @@ public class RoomTabViewModel : ViewModelBase
                 : new BindingList<InventoryItem>();
             OnPropertyChanged(nameof(SelectedRoom));
         }
+    }
+
+    public ICommand SplitRoomCommand
+    {
+        get => _splitRoomCommand;
+        set
+        {
+            if (Equals(value, _splitRoomCommand)) return;
+            _splitRoomCommand = value;
+            OnPropertyChanged(nameof(SplitRoomCommand));
+        }
+    }
+
+    public void SplitRoom()
+    {
+        var dialog = new SplitRoom();
+        dialog.Show();
     }
 }
