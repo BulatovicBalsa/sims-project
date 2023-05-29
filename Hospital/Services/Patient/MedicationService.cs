@@ -17,4 +17,10 @@ public class MedicationService
 
         return requestedMedication?.Stock ?? 0;
     }
+
+    public void DecrementMedicationStock(Medication medication)
+    {
+        medication.Stock--;
+        _medicationRepository.Update(medication);
+    }
 }
