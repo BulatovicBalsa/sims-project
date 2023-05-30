@@ -101,7 +101,7 @@ public class SplitRoomViewModel : ViewModelBase
     private ComplexRenovation GetRenovation()
     {
         return new ComplexRenovation(new List<Room> { _roomToSplit }, _newRooms.ToList(),
-            new TimeRange(DateTime.Now, DateTime.Now), RoomRepository.Instance.GetWarehouse(),
+            TimeRange, RoomRepository.Instance.GetWarehouse(),
             TransfersToNewRooms.ToList());
     }
 
