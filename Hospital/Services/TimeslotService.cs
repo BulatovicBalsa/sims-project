@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models.Doctor;
-using Hospital.Repositories.Examination;
 
 namespace Hospital.Services;
 
 public class TimeslotService
 {
-    private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
 
     public TimeslotService()
     {
-        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
     }
 
