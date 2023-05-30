@@ -163,6 +163,11 @@ public class Room
         return inventoryItem?.Available ?? 0;
     }
 
+    public bool WillExistOn(DateTime date)
+    {
+        return (CreationDate == null || CreationDate <= date) && (DemolitionDate == null || date <= DemolitionDate);
+    }
+
     public void SendAvailableInventory(Room destination)
     {
         foreach (var inventoryItem in Inventory)

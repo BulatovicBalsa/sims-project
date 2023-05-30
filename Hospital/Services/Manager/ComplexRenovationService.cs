@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Timers;
+using System.Windows.Controls.Ribbon.Primitives;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
@@ -6,6 +8,13 @@ namespace Hospital.Services.Manager;
 
 public class ComplexRenovationService
 {
+    private static Timer Timer = new Timer(1000);
+    static ComplexRenovationService() {
+         Timer.Enabled = true;
+        Timer.AutoReset = true;
+        Timer.Elapsed += ((sender, args) => TryCompleteAll());
+
+    }
     private readonly List<ComplexRenovation> _complexRenovations;
 
     public ComplexRenovationService(RoomScheduleService roomScheduleService)
@@ -46,5 +55,15 @@ public class ComplexRenovationService
     private bool AnySetForDemolition(List<Room> rooms)
     {
         return rooms.Exists(IsSetForDemolition);
+    }
+
+    public static void TryCompleteAll()
+    {
+        foreach (var complexRenovation in ComplexRenovationRepository.Instance.GetAll())
+        {
+            if (!complexRenovation.TryComplete()) continue;
+            complexRenovation.ToBuild.ForEach(room => RoomRepository.Instance.Update(room));
+            complexRenovation.ToDemolish.ForEach(room => RoomRepository.Instance.Update(room));
+        }
     }
 }

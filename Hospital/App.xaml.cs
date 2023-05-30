@@ -20,6 +20,7 @@ public partial class App : Application
     {
         EquipmentOrderService.AttemptPickUpOfAllOrders();
         TransferService.AttemptDeliveryOfAllTransfers();
+        ComplexRenovationService.TryCompleteAll();
     }
 
     protected void ApplicationStart(object sender, EventArgs e)
