@@ -93,14 +93,14 @@ public class RoomTabViewModel : ViewModelBase
         if (SelectedRoom == null) return;
         var dialog = new SplitRoom(SelectedRoom);
         dialog.Show();
-        dialog.Closed += RefershRoomsOnFormClose;
+        dialog.Closed += RefreshRoomsOnFormClose;
     }
 
     private void MergeRooms(object selectedRooms)
     {
         var dialog = new MergeRooms(ConvertCommandParameter(selectedRooms));
         dialog.Show();
-        dialog.Closed += RefershRoomsOnFormClose;
+        dialog.Closed += RefreshRoomsOnFormClose;
     }
 
     private bool IsWarehouseSelected(IList<object> selectedRooms)
@@ -125,7 +125,7 @@ public class RoomTabViewModel : ViewModelBase
         return selectedRoomsList.Count == 2 && !IsWarehouseSelected(selectedRoomsList) && !AreAnyRoomsSetForDemolitionSelected(selectedRoomsList);
 
     }
-    private void RefershRoomsOnFormClose(object? sender, EventArgs e)
+    private void RefreshRoomsOnFormClose(object? sender, EventArgs e)
     {
         Rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
     }
