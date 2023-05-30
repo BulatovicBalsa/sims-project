@@ -183,11 +183,29 @@ public class AddTransferViewModelBase : ViewModelBase
 
     private bool TrySendTransfer()
     {
+        if (!DoRoomsExistOnSelectedDate()) return false;
+
         if (TransferService.TrySendTransfer(SelectedOrigin, SelectedDestination, Items.ToList(),
                 Date)) return true;
         MessageBox.Show(
             "Can not send more equipment than there are available for transfers. (Some equipment may have been reserved)");
         return false;
+    }
 
+    private bool DoRoomsExistOnSelectedDate()
+    {
+        if (!SelectedOrigin.WillExist(Date))
+        {
+            MessageBox.Show("Origin room won't exist on the date of the transfer");
+            return false;
+        }
+
+        if (!SelectedDestination.WillExist(Date))
+        {
+            MessageBox.Show("Destination room won't exist on the date of the transfer");
+            return false;
+        }
+
+        return true;
     }
 }

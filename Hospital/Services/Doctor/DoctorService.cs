@@ -26,15 +26,11 @@ public class DoctorService
 
     public List<string> GetAllSpecializations()
     {
-        var allDoctors = _doctorRepository.GetAll();
-
-        return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
+        return _doctorRepository.GetAllSpecializations();
     }
 
     public List<Doctor> GetQualifiedDoctors(string specialization)
     {
-        var allDoctors = _doctorRepository.GetAll();
-
-        return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
+        return _doctorRepository.GetQualifiedDoctors(specialization);
     }
 }

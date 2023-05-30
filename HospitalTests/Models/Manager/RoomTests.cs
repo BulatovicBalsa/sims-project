@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Manager;
+using Hospital.Scheduling;
 
 namespace HospitalTests.Models.Manager;
 
@@ -36,5 +37,44 @@ public class RoomTests
 
         room.ExpendEquipment(equipment, 6);
         Assert.AreEqual(4, room.GetAmount(equipment));
+    }
+
+    [TestMethod]
+    public void TestWillExist()
+    {
+        var room = new Room();
+        room.CreationDate = DateTime.Now.AddDays(-1);
+        room.DemolitionDate = DateTime.Now.AddDays(2);
+        Assert.IsFalse(room.WillExist(DateTime.Now.AddDays(-2)));
+    }
+
+    [TestMethod]
+    public void TestWillExistDuring()
+    {
+        var room = new Room();
+        room.CreationDate = DateTime.Now.AddDays(-1);
+        room.DemolitionDate = DateTime.Now.AddDays(2);
+
+        Assert.IsTrue(room.WillExistDuring(new TimeRange(DateTime.Now, DateTime.Now.AddDays(1))));
+    }
+
+    [TestMethod]
+    public void TestWillExistDuringDemolishedBeforeEnd()
+    {
+        var room = new Room();
+        room.CreationDate = DateTime.Now.AddDays(-1);
+        room.DemolitionDate = DateTime.Now.AddDays(2);
+
+        Assert.IsFalse(room.WillExistDuring(new TimeRange(DateTime.Now, DateTime.Now.AddDays(10))));
+    }
+
+    [TestMethod]
+    public void TestWillExistDuringCreatedAfterBegin()
+    {
+        var room = new Room();
+        room.CreationDate = DateTime.Now.AddDays(-1);
+        room.DemolitionDate = DateTime.Now.AddDays(2);
+
+        Assert.IsFalse(room.WillExistDuring(new TimeRange(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(1))));
     }
 }

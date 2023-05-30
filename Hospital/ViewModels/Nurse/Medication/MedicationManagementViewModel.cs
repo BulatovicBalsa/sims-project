@@ -119,17 +119,22 @@ public class MedicationManagementViewModel : ViewModelBase
 
         if (MessageBox.Show("Medication successfully dispensed!\nIs the patient feeling better?", "Success", MessageBoxButton.YesNo) == MessageBoxResult.No)
         {
-            var prescriptionExaminationViewModel =
-                new PrescriptionExaminationViewModel(SelectedPrescription.DoctorId, SelectedPatient.Id);
-            var scheduleExaminationDialog = new PrescriptionExaminationDialogView()
-            {
-                DataContext = prescriptionExaminationViewModel
-            };
-
-            scheduleExaminationDialog.ShowDialog();
+            OpenScheduleExaminationDialog();
         }
 
         ResetInput();
+    }
+
+    private void OpenScheduleExaminationDialog()
+    {
+        var prescriptionExaminationViewModel =
+            new PrescriptionExaminationViewModel(SelectedPrescription.DoctorId, SelectedPatient.Id);
+        var scheduleExaminationDialog = new PrescriptionExaminationDialogView()
+        {
+            DataContext = prescriptionExaminationViewModel
+        };
+
+        scheduleExaminationDialog.ShowDialog();
     }
 
     private bool CanExecuteGiveMedicationCommand(object obj)
