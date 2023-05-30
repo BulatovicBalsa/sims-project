@@ -32,6 +32,7 @@ public class PrescriptionExaminationViewModel : ViewModelBase
         _timeslotService = new TimeslotService();
         _examinationService = new ExaminationService();
         _doctor = _doctorService.GetById(doctorId);
+        DoctorName = $"{_doctor?.FirstName} {_doctor?.LastName}";
         _patient = _patientService.GetPatientById(patientId);
         _selectedDate = null;
         _selectedTime = null;
@@ -39,6 +40,8 @@ public class PrescriptionExaminationViewModel : ViewModelBase
         ScheduleExaminationCommand =
             new ViewModelCommand(ExecuteScheduleExaminationCommand, CanExecuteScheduleExaminationCommand);
     }
+
+    public string DoctorName { get; set; }
 
     public ObservableCollection<TimeOnly>? PossibleTimeslots
     {

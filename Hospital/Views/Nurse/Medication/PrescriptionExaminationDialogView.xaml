@@ -68,7 +68,7 @@
 
             <StackPanel Grid.Row="2"
                         Margin="20, 20, 20, 0">
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="Doctor:"/>
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding DoctorName, StringFormat='Doctor: {0}'}"/>
                 <TextBlock Style="{StaticResource MainTextBlock}">Date</TextBlock>
                 <DatePicker Height="30" DisplayDateStart="{x:Static sys:DateTime.Today}" 
                             SelectedDate="{Binding SelectedDate}"/>
