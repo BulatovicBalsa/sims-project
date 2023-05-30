@@ -30,7 +30,8 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             .Convert(row => SplitColumnValues(row.Row.GetField<string>("MedicalHistory")));
         Map(patient => patient.IsBlocked).Index(10);
         Map(patient => patient.Referrals).Index(11).TypeConverter<ReferralTypeConverter>();
-        Map(patient => patient.HospitalTreatmentReferrals).Index(12).TypeConverter<HospitalTreatmentReferralTypeConverter>();
+        Map(patient => patient.HospitalTreatmentReferrals).Index(12)
+            .TypeConverter<HospitalTreatmentReferralTypeConverter>();
         Map(patient => patient.MedicalRecord.Prescriptions).Index(13).TypeConverter<PrescriptionTypeConverter>();
         Map(patient => patient.NotificationTime).Index(14);
     }
@@ -47,10 +48,13 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             var referralStringList = SplitColumnValues(inputText);
             List<Referral> referrals = new();
             if (string.IsNullOrEmpty(referralStringList[0])) return referrals;
-            referrals.AddRange(from item in referralStringList select item.Split(";") into referralArgs
+            referrals.AddRange(from item in referralStringList
+                select item.Split(";")
+                into referralArgs
                 let doctorId = referralArgs.Length > 1 ? referralArgs[1].Trim() : null
-                let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId) 
-                let specialization = referralArgs[0].Trim() select new Referral(specialization, doctor));
+                let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId)
+                let specialization = referralArgs[0].Trim()
+                select new Referral(specialization, doctor));
 
             return referrals;
         }
@@ -64,12 +68,14 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             List<HospitalTreatmentReferral> referrals = new();
             if (string.IsNullOrEmpty(referralStringList[0])) return referrals;
             referrals.AddRange(from item in referralStringList
-                               select item.Split(";") into referralArgs
-                               let duration = Convert.ToInt32(referralArgs[0].Trim())
-                               let prescriptions = referralArgs[1].Split("#").ToList()
-                                   .Select(PrescriptionFromString).ToList()
-                               let additionalTests = referralArgs[2].Trim().Split("#").ToList()
-                               select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
+                select item.Split(";")
+                into referralArgs
+                let duration = Convert.ToInt32(referralArgs[0].Trim())
+                let prescriptions = referralArgs[1].Split("#").ToList()
+                    .Select(PrescriptionFromString).Where(prescription => prescription != null).ToList()
+                let additionalTests = referralArgs[2].Trim().Split("#")
+                    .Where(additionalTest => !string.IsNullOrEmpty(additionalTest)).ToList()
+                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
 
             return referrals;
         }
@@ -95,13 +101,15 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             List<Prescription> prescriptions = new();
             if (string.IsNullOrEmpty(prescriptionStringList[0])) return prescriptions;
             prescriptions.AddRange(from item in prescriptionStringList
-                select item.Split(";") into prescriptionArgs
+                select item.Split(";")
+                into prescriptionArgs
                 let medicationId = prescriptionArgs[0].Trim()
                 let medication = MedicationRepository.Instance.GetById(medicationId)
                 let amount = Convert.ToInt32(prescriptionArgs[1])
                 let dailyUsage = Convert.ToInt32(prescriptionArgs[2])
                 let medicationTiming = (MedicationTiming)Enum.Parse(typeof(MedicationTiming), prescriptionArgs[3])
-                let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss",
+                    CultureInfo.InvariantCulture)
                 select new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate });
 
             return prescriptions;

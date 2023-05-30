@@ -7,37 +7,41 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Create Hospital Treatment Referral" Height="450" Width="800" x:Name="HospitalTreatmentWindow" WindowStartupLocation="CenterScreen">
+        Title="Create Hospital Treatment Referral" Width="800" x:Name="HospitalTreatmentWindow" WindowStartupLocation="CenterScreen" SizeToContent="Height">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Label Content="Duration:" Grid.Row="0" Grid.Column="0" Margin="5"/>
-            <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration, Mode=TwoWay}"></xctk:IntegerUpDown>
+                <Label Content="Duration:" Grid.Row="0" Grid.Column="0" Margin="5"/>
+                <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Minimum="0" Value="{Binding Duration, Mode=TwoWay}"></xctk:IntegerUpDown>
 
-            <Label Content="Additional Tests:" Grid.Row="1" Grid.Column="0" Margin="5"/>
-            <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedTest}" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                <Label Content="Additional Tests:" Grid.Row="1" Grid.Column="0" Margin="5"/>
+                <ListBox ItemsSource="{Binding AdditionalTests, Mode=TwoWay}" SelectedItem="{Binding SelectedTest}" Grid.Row="1" Grid.Column="1" Margin="5"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5">
-                <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddAdditionalTestCommand}"/>
-                <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Command="{Binding DeleteAdditionalTestCommand}"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5">
+                    <Button x:Name="AddAllergyButton" Content="Add" Margin="10 0" Width="50" Height="25.96" Command="{Binding AddAdditionalTestCommand}"/>
+                    <Button x:Name="DeleteAllergyButton" Content="Delete" Margin="10 0" Width="50" Height="25.96" Command="{Binding DeleteAdditionalTestCommand}"/>
+                </StackPanel>
 
-            <Frame Height="300" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
+                <Frame Height="300" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PrescriptionsFrame"></Frame>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Content="Add Referral" Command="{Binding AddReferralCommand}" CommandParameter="{Binding ElementName=HospitalTreatmentWindow}"></Button>
+            </Grid>
         </Grid>
-        <Button Grid.Row="1" Grid.Column="0" Content="Add Referral" Command="{Binding AddReferralCommand}" CommandParameter="{Binding ElementName=HospitalTreatmentWindow}"></Button>
     </Grid>
 </Window>
