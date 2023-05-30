@@ -25,8 +25,8 @@ public class SplitRoomViewModel : ViewModelBase
         _room = new Room();
         _newRooms = new BindingList<Room>
         {
-            new(),
-            new()
+            new Room(),
+            new Room()
         };
         _newRooms[0].Type = RoomType.ExaminationRoom;
         _newRooms[1].Type = RoomType.ExaminationRoom;
