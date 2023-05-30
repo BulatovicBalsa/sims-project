@@ -113,7 +113,7 @@ public class RoomTabViewModel : ViewModelBase
         return ((IList<object>)selectedRooms).ToList().ConvertAll(room => ((Room)room));
     }
 
-    private bool AreAnyRoomsSetForDemolitonSelected(IList<object> selectedRooms)
+    private bool AreAnyRoomsSetForDemolitionSelected(IList<object> selectedRooms)
     {
         return selectedRooms.Any(room => (((Room)(room)).DemolitionDate) != null);
     }
@@ -122,7 +122,7 @@ public class RoomTabViewModel : ViewModelBase
     {
         if (selectedRooms == null) return false;
         var selectedRoomsList = (IList<object>)selectedRooms;
-        return selectedRoomsList.Count == 2 && !IsWarehouseSelected(selectedRoomsList) && !AreAnyRoomsSetForDemolitonSelected(selectedRoomsList);
+        return selectedRoomsList.Count == 2 && !IsWarehouseSelected(selectedRoomsList) && !AreAnyRoomsSetForDemolitionSelected(selectedRoomsList);
 
     }
     private void RefershRoomsOnFormClose(object? sender, EventArgs e)
