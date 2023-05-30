@@ -7,15 +7,6 @@ namespace Hospital.Services.Manager;
 
 public class EquipmentOrderService
 {
-    private static readonly Timer Timer = new(1000);
-
-    static EquipmentOrderService()
-    {
-        Timer.Enabled = true;
-        Timer.AutoReset = true;
-        Timer.Elapsed += (sender, _) => AttemptPickUpOfAllOrders();
-    }
-
     public static void SendOrder(List<EquipmentOrderItem> items)
     {
         var order = EquipmentOrder.CreateBlankOrder();

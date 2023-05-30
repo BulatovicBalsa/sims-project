@@ -1,17 +1,21 @@
-Id,Name,Type,DemolitionDate,CreationDate,IsDemolished
-5000,Warehouse Room,Warehouse,,,False
-0001,Operating Room 1,OperatingRoom,,,False
-0002,Operating Room 2,OperatingRoom,,,False
-1001,Examination Room 1,ExaminationRoom,,,False
-1002,Examination Room 2,ExaminationRoom,,,False
-1003,Examination Room 3,ExaminationRoom,,,False
-1004,Examination Room 4,ExaminationRoom,,,False
-2001,Waiting Room 1,WaitingRoom,,,False
-2002,Waiting Room 2,WaitingRoom,,,False
-3001,Ward Room 101,Ward,,,False
-3002,Ward Room 102,Ward,,,False
-3003,Ward Room 103,Ward,,,False
-3004,Ward Room 104,Ward,,,False
-ecabc8ee-e80e-4bc5-8d2d-e32b19086dd7,Old Examination room,ExaminationRoom,,05/29/2023 15:00:26
-0157f774-aa32-4567-956d-5b5d48457c9b,Old Ward,Ward,,05/29/2023 15:00:26
-87448f43-9ac3-4563-8c53-b0afd65160d7,New Operating room,OperatingRoom,05/29/2023 15:00:26,
+Id,Name,Type,CreationDate,DemolitionDate
+5000,Warehouse Room,Warehouse,,
+0001,Operating Room 1,OperatingRoom,,
+0002,Operating Room 2,OperatingRoom,,
+1001,Examination Room 1,ExaminationRoom,,05/30/2023 08:03:06
+1002,Examination Room 2,ExaminationRoom,,
+1003,Examination Room 3,ExaminationRoom,,
+1004,Examination Room 4,ExaminationRoom,,
+2001,Waiting Room 1,WaitingRoom,,05/29/2023 08:38:34
+2002,Waiting Room 2,WaitingRoom,,
+3001,Ward Room 101,Ward,,
+3002,Ward Room 102,Ward,,
+3003,Ward Room 103,Ward,,
+3004,Ward Room 104,Ward,,
+ecabc8ee-e80e-4bc5-8d2d-e32b19086dd7,Old Examination room,ExaminationRoom,05/29/2023 15:00:26,
+0157f774-aa32-4567-956d-5b5d48457c9b,Old Ward,Ward,05/29/2023 15:00:26,
+87448f43-9ac3-4563-8c53-b0afd65160d7,New Operating room,OperatingRoom,,05/29/2023 15:00:26
+45d0e0a3-0b15-4a63-a96f-f001e845e300,Examination room 1.5,ExaminationRoom,05/30/2023 08:03:06,
+3f1e4032-0b4d-468a-bf2f-444f4fee7994,Examintaion room 1.75,ExaminationRoom,05/30/2023 08:03:06,
+744b8c2f-f54e-4f8b-ad00-3e2613efd005,Waiting room 3,WaitingRoom,05/29/2023 08:38:34,
+e68199ca-35c5-46df-83d1-0f55bc54b429,Waiting room 4,WaitingRoom,05/29/2023 08:38:34,

@@ -26,6 +26,7 @@ public class ComplexRenovationService
         RenovationRepository.Instance.Add(complexRenovation.GetSimpleRenovations());
 
         _complexRenovations.Add(complexRenovation);
+        ComplexRenovationRepository.Instance.Add(complexRenovation);
         return true;
     }
 
@@ -45,5 +46,15 @@ public class ComplexRenovationService
     private bool AnySetForDemolition(List<Room> rooms)
     {
         return rooms.Exists(IsSetForDemolition);
+    }
+
+    public static void TryCompleteAll()
+    {
+        foreach (var complexRenovation in ComplexRenovationRepository.Instance.GetAll())
+        {
+            if (!complexRenovation.TryComplete()) continue;
+            complexRenovation.ToBuild.ForEach(room => RoomRepository.Instance.Update(room));
+            complexRenovation.ToDemolish.ForEach(room => RoomRepository.Instance.Update(room));
+        }
     }
 }
