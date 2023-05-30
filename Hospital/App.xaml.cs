@@ -29,10 +29,10 @@ public partial class App : Application
     protected void ApplicationStart(object sender, EventArgs e)
     {
         CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
-
         ProcessEventsThatOccurredBeforeAppStart();
         _medicationOrderTimer.Elapsed += ExecuteMedicationOrders;
         _medicationOrderTimer.Enabled = true;
+        RoomOperationCompleter.TryCompleteAll();
 
         var loginView = new LoginView();
         loginView.Show();
@@ -85,6 +85,7 @@ public partial class App : Application
                     MessageBox.Show(_unsuccessfulLoginMessage);
                     return;
                 }
+
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
 

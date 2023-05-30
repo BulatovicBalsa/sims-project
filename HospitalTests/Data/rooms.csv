@@ -1,4 +1,4 @@
-Id,Name,Type,IsDemolished,CreationDate,DemolitionDate
-9a118639-1526-412a-8b2e-4f188aaa7272,Warehouse,Warehouse,False,,
-926f0ec6-ee24-4ea3-8d10-7a16d94f1ac0,Examination room 1,ExaminationRoom,False,,
-f658a363-dc12-4fc8-94b1-7690e9b9e9bd,Examination room 2,ExaminationRoom,False,,
+Id,Name,Type,CreationDate,DemolitionDate
+2d98a2e6-d049-47cc-a803-76f3280822be,Warehouse,Warehouse,,
+ff750368-0399-4f02-bd79-e1788591008f,Examination room 1,ExaminationRoom,,
+194ab793-9c60-44a7-b174-1495bd2c0dce,Examination room 2,ExaminationRoom,,

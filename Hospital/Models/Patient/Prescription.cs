@@ -35,6 +35,9 @@ public class Prescription
     public DateTime? LastUsed { get; set; }
     public string DoctorId { get; set; }
 
+    public string ListBoxString =>
+        $"{Medication.Name}, Amount: {Amount}, Daily Usage: {DailyUsage}, Timing: {MedicationTiming}";
+
     public Prescription DeepCopy()
     {
         return new Prescription(Medication, Amount, DailyUsage, MedicationTiming, DoctorId);

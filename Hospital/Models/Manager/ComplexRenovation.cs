@@ -2,49 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Scheduling;
+using Newtonsoft.Json;
 
 namespace Hospital.Models.Manager;
 
 public class ComplexRenovation
 {
-    private readonly Room _leftoverEquipmentDestination;
-    private readonly TimeRange _timeRange;
-
     public ComplexRenovation(List<Room> toDemolish, List<Room> toBuild, TimeRange timeRange,
         Room leftoverEquipmentDestination, List<Transfer> transfersFromOldToNewRooms)
     {
         ToDemolish = toDemolish;
         ToBuild = toBuild;
-        _timeRange = timeRange;
-        _leftoverEquipmentDestination = leftoverEquipmentDestination;
+        Time = timeRange;
+        LeftoverEquipmentDestination = leftoverEquipmentDestination;
         TransfersFromOldToNewRooms = transfersFromOldToNewRooms;
         Completed = false;
         Scheduled = false;
+        Id = Guid.NewGuid().ToString();
     }
 
-    public bool Scheduled { get; private set; }
+    public Room LeftoverEquipmentDestination { get; set; }
 
+    public string Id { get; }
+
+    [JsonProperty("Scheduled")] public bool Scheduled { get; private set; }
+
+    [JsonProperty("TransfersFromOldToNewRooms")]
     public List<Transfer> TransfersFromOldToNewRooms { get; }
 
-    public TimeRange Time { get; set; }
+    [JsonProperty("Time")] public TimeRange Time { get; private set; }
 
+    [JsonProperty("BeginTime")]
     public DateTime BeginTime
     {
-        get => _timeRange.StartTime;
-        set => _timeRange.EndTime = value;
+        get => Time.StartTime;
+        set => Time.EndTime = value;
     }
 
+    [JsonProperty("EndTime")]
     public DateTime EndTime
     {
-        get => _timeRange.EndTime;
-        set => _timeRange.EndTime = value;
+        get => Time.EndTime;
+        set => Time.EndTime = value;
     }
 
-    public List<Room> ToDemolish { get; }
+    [JsonProperty("ToDemolish")] public List<Room> ToDemolish { get; set; }
 
-    public List<Room> ToBuild { get; }
+    [JsonProperty("ToBuild")] public List<Room> ToBuild { get; set; }
 
-    public bool Completed { get; private set; }
+    [JsonProperty("Completed")] public bool Completed { get; private set; }
 
     public void Schedule()
     {
@@ -81,7 +87,7 @@ public class ComplexRenovation
 
     private void MoveLeftoverEquipment()
     {
-        foreach (var oldRoom in ToDemolish) oldRoom.SendAvailableInventory(_leftoverEquipmentDestination);
+        foreach (var oldRoom in ToDemolish) oldRoom.SendAvailableInventory(LeftoverEquipmentDestination);
     }
 
     public bool WillDemolish(Room room)

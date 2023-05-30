@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hospital.Exceptions;
 using Hospital.Models.Manager;
@@ -50,6 +51,11 @@ public class RoomRepository
     public Room? GetById(string id)
     {
         return GetAll().Find(equipment => equipment.Id == id);
+    }
+
+    public List<Room> Get(List<Room> rooms)
+    {
+        return rooms.Select(room => GetById(room.Id) ?? throw new InvalidOperationException()).ToList();
     }
 
     public void Add(Room room)

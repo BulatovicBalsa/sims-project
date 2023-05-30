@@ -25,7 +25,7 @@ public class CreateReferralViewModel : ViewModelBase
     {
         _doctors = new ObservableCollection<Doctor>(_doctorService.GetAll());
         _specializations = new ObservableCollection<string>(_doctorService.GetAllSpecializations());
-        
+
         ReferralToCreate = referralToCreate;
         CreateReferralCommand = new RelayCommand<Window>(CreateReferral);
     }
