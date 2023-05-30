@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Manager"
         xmlns:customControls="clr-namespace:Hospital.CustomControls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         x:Name="MergeRoomsWindow"
         mc:Ignorable="d"
         Title="MergeRooms" Height="450" Width="800">
@@ -13,9 +14,21 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <customControls:RoomForm Grid.Row="0" Grid.Column="0" Room="{Binding NewRoom}" x:Name="NewRoomForm"/>
-        <Button Grid.Row="1" Content="Submit" Command="{Binding MergeRoomsCommand}" CommandParameter="{Binding ElementName=MergeRoomsWindow}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <customControls:RoomForm Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Room="{Binding NewRoom}" x:Name="NewRoomForm"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Start date" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="End date" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Bottom"/>
+        <xctk:DateTimePicker Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Value="{Binding TimeRange.StartTime, Mode=TwoWay}" />
+        <xctk:DateTimePicker Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Value="{Binding TimeRange.EndTime, Mode=TwoWay}" />
+        <Button Grid.Row="3" Content="Submit" Grid.ColumnSpan="2" Command="{Binding MergeRoomsCommand}" CommandParameter="{Binding ElementName=MergeRoomsWindow}">
+
+
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="False"/>
