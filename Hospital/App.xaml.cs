@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using System.Timers;
 using System.Windows;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
@@ -15,11 +16,22 @@ namespace Hospital;
 public partial class App : Application
 {
     private const string _unsuccessfulLoginMessage = "Login was not successful.";
+    private readonly MedicationOrderService _medicationOrderService = new();
+    private readonly System.Timers.Timer _medicationOrderTimer = new(60000);
+
+    private void ProcessEventsThatOccurredBeforeAppStart()
+    {
+        EquipmentOrderService.AttemptPickUpOfAllOrders();
+        TransferService.AttemptDeliveryOfAllTransfers();
+        _medicationOrderService.ExecuteMedicationOrders();
+    }
 
     protected void ApplicationStart(object sender, EventArgs e)
     {
         CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
-
+        ProcessEventsThatOccurredBeforeAppStart();
+        _medicationOrderTimer.Elapsed += ExecuteMedicationOrders;
+        _medicationOrderTimer.Enabled = true;
         RoomOperationCompleter.TryCompleteAll();
 
         var loginView = new LoginView();
@@ -94,5 +106,10 @@ public partial class App : Application
             MessageBox.Show(notification.Message, "Notification");
             notificationService.MarkSent(notification);
         });
+    }
+
+    private void ExecuteMedicationOrders(object? source, ElapsedEventArgs e)
+    {
+        _medicationOrderService.ExecuteMedicationOrders();
     }
 }

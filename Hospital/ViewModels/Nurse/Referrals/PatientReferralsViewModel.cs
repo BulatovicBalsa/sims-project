@@ -89,6 +89,8 @@ public class PatientReferralsViewModel : ViewModelBase
         get => _selectedDate;
         set
         {
+            if (SelectedReferral == null)
+                return;
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
             if (value != null) 

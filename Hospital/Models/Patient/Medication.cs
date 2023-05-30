@@ -11,6 +11,15 @@ public class Medication
         Id = Guid.NewGuid().ToString();
         Allergens = new List<string>();
         Name = "";
+        Stock = 0;
+    }
+
+    public Medication(string id, string name, int stock, List<string> allergens)
+    {
+        Id = id;
+        Name = name;
+        Stock = stock;
+        Allergens = allergens;
     }
 
     public Medication(string id, string name, List<string> allergens)
@@ -18,6 +27,7 @@ public class Medication
         Id = id;
         Name = name;
         Allergens = allergens;
+        Stock = 0;
     }
 
     public Medication(string name, List<string> allergens)
@@ -25,10 +35,12 @@ public class Medication
         Id = Guid.NewGuid().ToString();
         Name = name;
         Allergens = allergens;
+        Stock = 0;
     }
 
     public string Id { get; set; }
     public string Name { get; set; }
+    public int Stock { get; set; }
     public List<string> Allergens { get; set; }
 
     public Medication DeepCopy()

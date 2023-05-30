@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -118,8 +119,9 @@ public class AddPrescriptionViewModel : ViewModelBase
             return;
         }
 
+        var doctorId = Thread.CurrentPrincipal.Identity.Name.Split("|")[0];
         var prescriptionToAdd = new Prescription(SelectedMedication, Amount, DailyUsage,
-            SelectedMedicationTiming.GetValueOrDefault());
+            SelectedMedicationTiming.GetValueOrDefault(), doctorId);
 
         var prescriptionsToModify = ReferralToModify is null
             ? PatientOnExamination.MedicalRecord.Prescriptions

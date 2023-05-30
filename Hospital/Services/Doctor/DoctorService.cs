@@ -19,6 +19,11 @@ public class DoctorService
         return _doctorRepository.GetAll(); 
     }
 
+    public Doctor? GetById(string id)
+    {
+        return _doctorRepository.GetById(id);
+    }
+
     public List<string> GetAllSpecializations()
     {
         var allDoctors = _doctorRepository.GetAll();

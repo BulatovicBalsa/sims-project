@@ -74,9 +74,10 @@ namespace Hospital.Serialization.Mappers
             var dailyUsage = int.Parse(prescriptionArgs[2].Trim());
             var medicationTiming = Enum.Parse<MedicationTiming>(prescriptionArgs[3].Trim());
             var issuedDate = DateTime.ParseExact(prescriptionArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            var doctorId = prescriptionArgs[5].Trim();
 
 
-            return new Prescription(medication, amount, dailyUsage, medicationTiming) { IssuedDate = issuedDate };
+            return new Prescription(medication, amount, dailyUsage, medicationTiming, doctorId) { IssuedDate = issuedDate };
         }
 
         public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)

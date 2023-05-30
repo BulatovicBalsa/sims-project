@@ -1,5 +1,6 @@
 ﻿using Hospital.Serialization;
 using System.Collections.Generic;
+using System.Linq;
 using Hospital.Models.Patient;
 using Hospital.Serialization.Mappers;
 
@@ -60,5 +61,11 @@ public class MedicationRepository
     {
         var emptyMedicationList = new List<Medication>();
         Serializer<Medication>.ToCSV(emptyMedicationList, FilePath, new MedicationWriteMapper());
+    }
+
+    public List<Medication> GetLowStockMedication()
+    {
+        var allMedication = GetAll();
+        return allMedication.Where(medication => medication.Stock < 5).ToList();
     }
 }
