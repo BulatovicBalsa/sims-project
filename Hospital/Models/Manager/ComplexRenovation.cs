@@ -80,6 +80,16 @@ public class ComplexRenovation
         return renovations;
     }
 
+    public bool IsEquipmentProperlyRedistributed()
+    {
+        var transferItems = TransfersFromOldToNewRooms.Select(transfer => transfer.Items).SelectMany(x => x).ToList();
+        var transferItemsByEquipment = from transferItem in transferItems
+            group transferItem by transferItem.Equipment
+            into equipmentGroup select equipmentGroup;
+        return transferItemsByEquipment.All(grouping => grouping.Sum(item => item.Amount) <= ToDemolish.Sum(room => room.GetAvailableAmount(grouping.Key)));
+    }
+
+
     private void MoveEquipmentToNewRooms()
     {
         foreach (var transfer in TransfersFromOldToNewRooms) transfer.TryDeliver();
