@@ -45,7 +45,6 @@ public class TransferServiceTests
     [TestMethod]
     public void TestTrySendTransferAllEquipmentReserved()
     {
-        TransferService.DisableAutomaticDelivery();
         var origin = new Room("Warehouse", RoomType.Warehouse);
         var destination1 = new Room("Examination room 1", RoomType.ExaminationRoom);
         var destination2 = new Room("Examination room 2", RoomType.ExaminationRoom);

@@ -14,3 +14,4 @@ Amount,EquipmentId,OrderId,Id,Name,Type
 4,1024,3c60e1ff-c91e-43b1-9b63-5a39222228ef,1024,Pencil,DynamicEquipment
 5,1026,3c60e1ff-c91e-43b1-9b63-5a39222228ef,1026,Injection,DynamicEquipment
 6,1027,3c60e1ff-c91e-43b1-9b63-5a39222228ef,1027,Band-Aid,DynamicEquipment
+123,d857fac2-64e3-4d7c-a4c5-3bb7fbd66adf,5ca0ec74-df26-4bdd-b55d-616e7e29823b,d857fac2-64e3-4d7c-a4c5-3bb7fbd66adf,Something 1,DynamicEquipment

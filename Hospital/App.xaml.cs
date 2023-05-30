@@ -16,18 +16,11 @@ public partial class App : Application
 {
     private const string _unsuccessfulLoginMessage = "Login was not successful.";
 
-    private void ProcessEventsThatOccurredBeforeAppStart()
-    {
-        EquipmentOrderService.AttemptPickUpOfAllOrders();
-        TransferService.AttemptDeliveryOfAllTransfers();
-        ComplexRenovationService.TryCompleteAll();
-    }
-
     protected void ApplicationStart(object sender, EventArgs e)
     {
         CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
 
-        ProcessEventsThatOccurredBeforeAppStart();
+        RoomOperationCompleter.TryCompleteAll();
 
         var loginView = new LoginView();
         loginView.Show();
@@ -80,6 +73,7 @@ public partial class App : Application
                     MessageBox.Show(_unsuccessfulLoginMessage);
                     return;
                 }
+
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
 

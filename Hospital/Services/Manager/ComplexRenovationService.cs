@@ -8,13 +8,6 @@ namespace Hospital.Services.Manager;
 
 public class ComplexRenovationService
 {
-    private static Timer Timer = new Timer(1000);
-    static ComplexRenovationService() {
-         Timer.Enabled = true;
-        Timer.AutoReset = true;
-        Timer.Elapsed += ((sender, args) => TryCompleteAll());
-
-    }
     private readonly List<ComplexRenovation> _complexRenovations;
 
     public ComplexRenovationService(RoomScheduleService roomScheduleService)

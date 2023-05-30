@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Timers;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
@@ -10,20 +9,6 @@ namespace Hospital.Services.Manager;
 
 public class TransferService
 {
-    private static readonly Timer Timer = new(1000);
-
-    static TransferService()
-    {
-        Timer.Enabled = true;
-        Timer.AutoReset = true;
-        Timer.Elapsed += (sender, _) => AttemptDeliveryOfAllTransfers();
-    }
-
-    public static void DisableAutomaticDelivery()
-    {
-        Timer.Enabled = false;
-    }
-
     public static bool TrySendTransfer(Room origin, Room destination, List<TransferItem> items,
         DateTime deliveryDateTime)
     {
