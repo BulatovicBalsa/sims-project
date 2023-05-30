@@ -1,6 +1,8 @@
-﻿using Hospital.Models.Patient;
+﻿using System;
+using Hospital.Models.Patient;
 using Hospital.Serialization;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Repositories.Patient;
 public class MedicationOrderRepository
@@ -15,6 +17,13 @@ public class MedicationOrderRepository
     public List<MedicationOrder> GetAll()
     {
         return Serializer<MedicationOrder>.FromCSV(FilePath);
+    }
+
+    public List<MedicationOrder> GetAllExecutable()
+    {
+        var allMedicationOrders = GetAll();
+
+        return allMedicationOrders.Where(order => (DateTime.Now - order.CreatedDate).TotalDays >= 1).ToList();
     }
 
     public MedicationOrder? GetById(string id)
