@@ -30,11 +30,13 @@
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
                   RowStyle="{DynamicResource DataGridRowStyle}"
                   ScrollViewer.CanContentScroll="True"
-                  Height="160">
+                  Height="160"
+                  VirtualizingPanel.IsVirtualizing="False"
+                  CanUserSortColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Stock" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Stock}"/>
-                <DataGridTextColumn Header="Order quantity" IsReadOnly="False" Width="SizeToCells" Binding="{Binding OrderQuantity, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Stock" IsReadOnly="True" Width="*" Binding="{Binding Stock}"/>
+                <DataGridTextColumn Header="Order quantity" IsReadOnly="False" Width="*" Binding="{Binding OrderQuantity, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Style="{StaticResource ActionButton}" 

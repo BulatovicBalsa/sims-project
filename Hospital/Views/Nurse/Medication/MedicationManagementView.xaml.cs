@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Hospital.DTOs;
 
 namespace Hospital.Views.Nurse.Medication
 {
@@ -23,6 +24,24 @@ namespace Hospital.Views.Nurse.Medication
         public MedicationManagementView()
         {
             InitializeComponent();
+
+            MedicationOrderQuantitiesDataGrid.Loaded += (sender, args) =>
+            {
+                foreach (var item in MedicationOrderQuantitiesDataGrid.ItemContainerGenerator.Items.Cast<MedicationOrderQuantityDto>())
+                {
+                    if (item.Stock != 0) continue;
+
+                    var row = MedicationOrderQuantitiesDataGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+
+                    if (row == null)
+                    {
+                        MedicationOrderQuantitiesDataGrid.ScrollIntoView(item);
+                        row = MedicationOrderQuantitiesDataGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                    }
+
+                    row.Background = Brushes.Red;
+                }
+            };
         }
     }
 }
