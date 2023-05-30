@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Hospital.Scheduling;
 
@@ -10,8 +11,9 @@ public class TimeRange
         EndTime = endTime;
     }
 
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    [JsonProperty("StarTime")] public DateTime StartTime { get; set; }
+
+    [JsonProperty("EndTime")] public DateTime EndTime { get; set; }
 
     public bool DoesOverlapWith(TimeRange other)
     {
