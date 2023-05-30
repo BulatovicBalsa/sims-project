@@ -36,4 +36,9 @@ public class MedicationService
     {
         return _medicationRepository.GetLowStockMedication();
     }
+
+    public List<Medication> GetAllMedications()
+    {
+        return _medicationRepository.GetAll();
+    }
 }
