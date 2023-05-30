@@ -105,7 +105,7 @@ public class AddSimpleRenovationViewModel : ViewModelBase
         var roomScheduleService = new RoomScheduleService();
         if (roomScheduleService.IsFree(Room, new TimeRange((DateTime)StartTime, (DateTime)EndTime))) return false;
 
-        MessageBox.Show("Room is in use during the specified time.", "Error", MessageBoxButton.OK,
+        MessageBox.Show("Room is not free during the specified time.", "Error", MessageBoxButton.OK,
             MessageBoxImage.Error, MessageBoxResult.None);
         return true;
     }
