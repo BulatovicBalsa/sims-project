@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xaml;
 using Hospital.Models.Doctor;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
-using Hospital.Repositories.Manager;
+ using Hospital.Models.Manager;
+ using Hospital.Models.Patient;
+ using Hospital.Repositories.Examination;
+ using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 
 namespace HospitalTests.Repositories.Examination
@@ -33,6 +34,8 @@ namespace HospitalTests.Repositories.Examination
             ExaminationChangesTrackerRepository.DeleteAll();
             DoctorRepository.DeleteAll();
             PatientRepository.DeleteAll();
+            RoomRepository.Instance.DeleteAll();
+            RoomRepository.Instance.Add(new Room("53454351", "Examination room", RoomType.ExaminationRoom));
 
             CreateTestExaminationRepository();
             CreateTestExamination();
@@ -40,9 +43,9 @@ namespace HospitalTests.Repositories.Examination
         }
         private void CreateTestExaminationRepository()
         {
-            _examinationRepository = new ExaminationRepository();
+            _examinationRepository = ExaminationRepository.Instance;
             _doctorRepository = DoctorRepository.Instance;
-            _patientRepository = new PatientRepository();
+            _patientRepository = PatientRepository.Instance;
 
             _patientRepository.PatientAdded += _ => { };
             _patientRepository.PatientUpdated += _ => { };

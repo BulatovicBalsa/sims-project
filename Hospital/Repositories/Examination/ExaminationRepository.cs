@@ -1,20 +1,19 @@
-﻿using Hospital.Models.Examination;
-using Hospital.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-namespace Hospital.Repositories.Examinaton;
-
-using Models.Patient;
-using Models.Doctor;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using CsvHelper;
-using Doctor;
-using Patient;
-using Exceptions;
-using Manager;
+using Hospital.Exceptions;
+using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Manager;
+using Hospital.Repositories.Patient;
+using Hospital.Serialization;
+
+namespace Hospital.Repositories.Examination;
+using Hospital.Models.Examination;
+using Hospital.Models.Patient;
+using Hospital.Models.Doctor;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {
@@ -33,16 +32,11 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Urgent).Index(8);
     }
 
-    private List<string> SplitColumnValues(string? columnValue)
-    {
-        return columnValue?.Split("|").ToList() ?? new List<string>();
-    }
-
     public class DoctorTypeConverter : DefaultTypeConverter
     {
-        public override object? ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var doctorId = inputText.Trim();
+            var doctorId = inputText?.Trim();
             if (string.IsNullOrEmpty(doctorId))
                 return null;
             // Retrieve the Doctor object based on the ID
@@ -54,11 +48,11 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
 
     public class PatientTypeConverter : DefaultTypeConverter
     {
-        public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var patientId = inputText.Trim();
+            var patientId = inputText?.Trim();
             // Retrieve the Patient object based on the ID
-            var patient = new PatientRepository().GetById(patientId) ??
+            var patient = PatientRepository.Instance.GetById(patientId) ??
                           throw new KeyNotFoundException($"Patient with ID {patientId} not found");
             return patient;
         }
@@ -66,9 +60,9 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
 
     public class RoomTypeConverter : DefaultTypeConverter
    {
-        public override object ConvertFromString(string inputText, IReaderRow rowData, MemberMapData mappingData)
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
-            var roomId = inputText.Trim();
+            var roomId = inputText?.Trim();
 
             if (string.IsNullOrEmpty(roomId))
                 return null;
@@ -101,13 +95,10 @@ public class ExaminationRepository
 {
     private const string FilePath = "../../../Data/examination.csv";
     private readonly ExaminationChangesTracker _examinationChangesTracker;
+    private static ExaminationRepository? _instance;
 
-    public ExaminationRepository(ExaminationChangesTracker examinationChangesTracker)
-    {
-        _examinationChangesTracker = examinationChangesTracker;
-    }
-
-    public ExaminationRepository()
+    public static ExaminationRepository Instance => _instance ??= new ExaminationRepository();
+    private ExaminationRepository()
     {
         _examinationChangesTracker = new ExaminationChangesTracker();
     }
@@ -256,22 +247,22 @@ public class ExaminationRepository
 
     private void ValidateExaminationTiming(DateTime start)
     {
-        if (start < DateTime.Now.AddDays(Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION))
+        if (start < DateTime.Now.AddDays(Patient.MinimumDaysToChangeOrDeleteExamination))
             throw new InvalidOperationException(
-                $"It is not possible to update an examination less than {Patient.MINIMUM_DAYS_TO_CHANGE_OR_DELETE_EXAMINATION * 24} hours in advance.");
+                $"It is not possible to update an examination less than {Patient.MinimumDaysToChangeOrDeleteExamination * 24} hours in advance.");
     }
 
     private void ValidateMaxChangesOrDeletesLast30Days(Patient patient)
     {
         if (_examinationChangesTracker.GetNumberOfChangeLogsForPatientInLast30Days(patient) + 1 >
-            Patient.MAX_CHANGES_OR_DELETES_LAST_30_DAYS)
+            Patient.MaxChangesOrDeletesLast30Days)
             throw new InvalidOperationException("Patient made too many changes in last 30 days");
     }
 
     private void ValidateMaxAllowedExaminationsLast30Days(Patient patient)
     {
         if (_examinationChangesTracker.GetNumberOfCreationLogsForPatientInLast30Days(patient) + 1 >
-            Patient.MAX_ALLOWED_EXAMINATIONS_LAST_30_DAYS)
+            Patient.MaxAllowedExaminationsLast30Days)
             throw new InvalidOperationException("Patient made too many examinations in last 30 days");
     }
 

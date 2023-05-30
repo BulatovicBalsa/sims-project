@@ -1,9 +1,10 @@
-﻿<Window x:Class="Hospital.Views.Manager.ManagerView"
+<Window x:Class="Hospital.Views.Manager.ManagerView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Manager"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="ManagerView" Height="450" Width="800">
     <Window.DataContext>
@@ -107,6 +108,92 @@
                         </DataGrid>
                     </Grid>
                 </DockPanel>
+            </TabItem>
+            <TabItem Header="Renovations" DataContext="{Binding Children[2]}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddSimpleRenovationFormCommand }">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Add renovation" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Renovations, Mode=TwoWay}" 
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Room" Binding="{Binding Room.Name}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Begins" Binding="{Binding BeginTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Ends" Binding="{Binding EndTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="*"/>
+                                <DataGridCheckBoxColumn Header="Completed" Binding="{Binding Completed}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Rooms" DataContext="{Binding Children[3]}">
+
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                CommandParameter="{Binding Path=SelectedItems, ElementName=RoomDataGrid}"
+                                Command="{Binding MergeRoomsCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Merge rooms" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding SplitRoomCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="../../Images/PlusIcon.png" />
+                                <TextBlock Text="Split room" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="RoomDataGrid" ItemsSource="{Binding Rooms, Mode=TwoWay}" SelectedItem="{Binding SelectedRoom}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
+                                  <Behaviors:Interaction.Triggers>
+                                <Behaviors:EventTrigger EventName="SelectedCellsChanged" SourceObject="{Binding ElementName=RoomDataGrid}">
+                                    <Behaviors:InvokeCommandAction Command="{Binding CheckIfMergingIsEnabled}"></Behaviors:InvokeCommandAction>
+                                </Behaviors:EventTrigger>
+                                  </Behaviors:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type"
+                                                    Binding="{Binding Type, Mode=TwoWay}"
+                                                    Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="CreationDate" Binding="{Binding CreationDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="DemolitionDate" Binding="{Binding DemolitionDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                        Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedRoomInventory}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Equipment.Name}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type" Binding="{Binding Equipment.Type}" IsReadOnly="True"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+
             </TabItem>
         </TabControl>
     </Grid>

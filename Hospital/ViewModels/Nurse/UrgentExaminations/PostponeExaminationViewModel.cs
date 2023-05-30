@@ -7,7 +7,7 @@ using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Nurse.UrgentExaminations;
@@ -32,7 +32,7 @@ public class PostponeExaminationViewModel : ViewModelBase
         Examinations = examinations;
         _selectedExamination = null;
         _doctorEarliestFreeTimeslot = earliestFreeTimeslotDoctor.ToDictionary(pair => pair.Value, pair => pair.Key);
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
         _notificationService = new NotificationService();
         _selectedPatient = selectedPatient;

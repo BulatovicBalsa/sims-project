@@ -4,13 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Coordinators;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
 using Hospital.Views.Nurse.UrgentExaminations;
@@ -34,10 +33,10 @@ public class UrgentExaminationsViewModel : ViewModelBase
     public UrgentExaminationsViewModel()
     {
         _doctorService = new DoctorService();
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
         _doctorRepository = DoctorRepository.Instance;
         _timeslotService = new TimeslotService();
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
         _notificationService = new NotificationService();
 

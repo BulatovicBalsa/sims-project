@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.ViewModels.Nurse.PatientAdmission;
@@ -28,7 +28,7 @@ public class AdmissionDialogViewModel : ViewModelBase
     public AdmissionDialogViewModel(PatientRepository patientRepository, Patient selectedPatient,
         Examination examination)
     {
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository = ExaminationRepository.Instance;
         _patientRepository = patientRepository;
         _selectedPatient = selectedPatient;
         _examination = examination;

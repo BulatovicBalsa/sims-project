@@ -1,0 +1,14 @@
+﻿<Window x:Class="Hospital.Views.PrescriptionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PrescriptionViewModel}"
+        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:doctor="clr-namespace:Hospital.ViewModels"
+        mc:Ignorable="d"
+        Title="Manage Prescriptions" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Frame x:Name="PrescriptionsFrame"></Frame>
+    </Grid>
+</Window>

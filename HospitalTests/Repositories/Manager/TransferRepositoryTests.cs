@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Manager;
+﻿using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
-namespace HospitalTests.Models.Manager;
+namespace HospitalTests.Repositories.Manager;
 
 [TestClass]
 public class TransferRepositoryTests
@@ -10,13 +9,12 @@ public class TransferRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
+        var transferItemsFile = "../../../Data/transferItems.csv";
+        var transfersFile = "../../../Data/transfers.csv";
 
-        string transferItemsFile = "../../../Data/transferItems.csv";
-        string transfersFile = "../../../Data/transfers.csv";
-
-        if(File.Exists(transferItemsFile))
+        if (File.Exists(transferItemsFile))
             File.Delete(transferItemsFile);
-        if(File.Exists(transfersFile))
+        if (File.Exists(transfersFile))
             File.Delete(transfersFile);
 
         TransferItemRepository.Instance.DeleteAll();
@@ -54,13 +52,14 @@ public class TransferRepositoryTests
         Assert.IsNotNull(TransferRepository.Instance.GetAll()[0].Origin);
         Assert.AreEqual("Injection", TransferRepository.Instance.GetAll()[1].Items[0].Equipment.Name);
     }
+
     public void TestAdd()
     {
         TransferRepository.Instance.Add(new Transfer());
         Assert.AreEqual(1, TransferRepository.Instance.GetAll().Count);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void TestUpdate()
     {
         var origin = new Room("Warehouse", RoomType.Warehouse);

@@ -1,0 +1,9 @@
+Id,Name,Stock,Allergens
+36b3dffd-ae5d-41a7-8623-460a28854c6b,Ibuprofen,6,brufen
+b843b51d-5e50-4b64-ab22-5c77dac1f05c,Acetaminophen,0,Aspirin
+3c273691-d294-4dc9-bfe8-8404035cf041,Amoxicillin,4,Penicillin|Codeine|Sulfonamide
+d5741ce8-f3d2-4d9e-a02b-103aa575e74c,Penicillin,7,Penicillin G|Amoxicillin
+13ae5610-4f02-4d94-833b-2e6ceae7de6a,Sulfamethoxazole,3,Sulfonamides
+fa14ed1a-bc44-4598-866f-e61102b69440,Metronidazole,4,Nitroimidazoles
+c2499fb6-bbf1-4e7f-895e-6f180845093a,Cephalexin,4,Cephalosporins
+7a449e6b-2c5a-4ef4-ad8d-f8576269adfb,Diphenhydramine,4,Antihistamines

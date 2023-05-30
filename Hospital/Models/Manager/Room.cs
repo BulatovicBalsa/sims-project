@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.Scheduling;
+using Newtonsoft.Json;
 
 namespace Hospital.Models.Manager;
 
@@ -29,12 +31,17 @@ public class Room
         Inventory = new List<InventoryItem>();
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
+    [JsonProperty("Id")] public string Id { get; set; }
 
-    public RoomType Type { get; set; }
+    [JsonProperty("Name")] public string Name { get; set; }
 
-    public List<InventoryItem> Inventory { get; set; }
+    [JsonProperty("Type")] public RoomType Type { get; set; }
+
+    [JsonProperty("Inventory")] public List<InventoryItem> Inventory { get; set; }
+
+    [JsonProperty("CreationDate")] public DateTime? CreationDate { get; set; }
+
+    [JsonProperty("DemolitionDate")] public DateTime? DemolitionDate { get; set; }
 
     public int GetAmount(Equipment equipment)
     {
@@ -81,6 +88,16 @@ public class Room
         return Id == objAsRoom.Id;
     }
 
+    public bool WillExist(DateTime date)
+    {
+        return (CreationDate == null || CreationDate <= date) && (DemolitionDate == null || date <= DemolitionDate);
+    }
+
+    public bool WillExistDuring(TimeRange timeRange)
+    {
+        return (CreationDate == null || CreationDate <= timeRange.StartTime) &&
+               (DemolitionDate == null || DemolitionDate >= timeRange.EndTime);
+    }
 
     private InventoryItem? GetInventoryItem(Equipment equipment)
     {
@@ -105,7 +122,6 @@ public class Room
 
     private bool TryReserve(Equipment equipment, int amount)
     {
-
         if (!CanReserve(equipment, amount)) return false;
         var placement = GetInventoryItem(equipment);
         if (placement != null)
@@ -144,6 +160,27 @@ public class Room
 
     public void Receive(Transfer transfer)
     {
-        transfer.Items.ForEach(item => SetAmount(item.Equipment, GetAmount(item.Equipment) + item.Amount));
+        transfer.Items.ForEach(item => AddEquipment(item.Equipment, item.Amount));
+    }
+
+    private void AddEquipment(Equipment equipment, int amount)
+    {
+        SetAmount(equipment, GetAmount(equipment) + amount);
+    }
+
+    public int GetAvailableAmount(Equipment equipment)
+    {
+        var inventoryItem = GetInventoryItem(equipment);
+        return inventoryItem?.Available ?? 0;
+    }
+
+    public void SendAvailableInventory(Room destination)
+    {
+        foreach (var inventoryItem in Inventory)
+        {
+            destination.AddEquipment(inventoryItem.Equipment ?? throw new InvalidOperationException(),
+                inventoryItem.Available);
+            ExpendEquipment(inventoryItem.Equipment, inventoryItem.Available);
+        }
     }
 }

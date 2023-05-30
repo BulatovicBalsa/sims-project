@@ -23,7 +23,7 @@ namespace HospitalTests.Repositories.Patient
         public void TestInitialize()
         {
 
-            _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository();
+            _examinationChangesTrackerRepository = ExaminationChangesTrackerRepository.Instance;
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
 
             ExaminationChangesTrackerRepository.DeleteAll();

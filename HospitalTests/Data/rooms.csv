@@ -1,2 +1,4 @@
-Id,Name,Type
-1,Warehouse,Warehouse
+Id,Name,Type,CreationDate,DemolitionDate
+c9e59198-20be-46fb-bfad-e267643ca30b,Warehouse,Warehouse,,
+0c946b65-9aa9-491b-bc0b-20b83e0c5b17,Examination room 1,ExaminationRoom,,
+0eb725f7-f940-42f5-b819-6b690986b900,Examination room 2,ExaminationRoom,,

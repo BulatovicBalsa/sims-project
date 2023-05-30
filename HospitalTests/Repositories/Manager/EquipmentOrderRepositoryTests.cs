@@ -10,6 +10,7 @@ public class EquipmentOrderRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
+        DeleteData();
         EquipmentOrderRepository.Instance.DeleteAll();
         var orders = new List<EquipmentOrder>
         {
@@ -28,6 +29,11 @@ public class EquipmentOrderRepositoryTests
 
         Serializer<EquipmentOrderItem>.ToCSV(orderItems, "../../../Data/equipmentOrderItems.csv");
     }
+    private static void DeleteData()
+    {
+        Directory.GetFiles("../../../Data/").ToList().ForEach(File.Delete);
+    }
+
 
     [TestMethod]
     public void TestGetAll()

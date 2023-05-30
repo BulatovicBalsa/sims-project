@@ -12,6 +12,10 @@ namespace Hospital.Repositories.Patient
     {
         private const string FilePath = "../../../Data/examinationChangesTrackerLogs.csv";
 
+        private static ExaminationChangesTrackerRepository? _instance;
+        public static ExaminationChangesTrackerRepository Instance => _instance ??= new ExaminationChangesTrackerRepository();
+        private ExaminationChangesTrackerRepository() { }
+
         public List<PatientExaminationLog> GetAll()
         {
             return Serializer<PatientExaminationLog>.FromCSV(FilePath);

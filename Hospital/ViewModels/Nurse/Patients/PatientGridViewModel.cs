@@ -14,7 +14,7 @@ public class PatientGridViewModel : ViewModelBase
 
     public PatientGridViewModel()
     {
-        _patientRepository = new PatientRepository();
+        _patientRepository = PatientRepository.Instance;
         _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
 
         _patientRepository.PatientAdded += (patient) =>

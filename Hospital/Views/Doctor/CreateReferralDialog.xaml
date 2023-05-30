@@ -1,0 +1,29 @@
+﻿<Window x:Class="Hospital.Views.CreateReferralDialog"
+        x:Name="CreateReferralWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hospital.Views"
+        mc:Ignorable="d"
+        Title="Create Referral" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Doctor:"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DoctorComboBox" Margin="0 0 0 10" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor}"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Specializations:"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="SpecializationComboBox" Margin="0 0 0 10" ItemsSource="{Binding Specializations}" SelectedItem="{Binding SelectedSpecialization}"/>
+
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Create Referral" Command="{Binding CreateReferralCommand}" CommandParameter="{Binding  ElementName=CreateReferralWindow}" Margin="0 10 0 0"/>
+    </Grid>
+</Window>

@@ -5,7 +5,9 @@ using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
+using Hospital.Repositories.Examination;
+using Hospital.Scheduling;
+using Hospital.Services.Manager;
 
 namespace Hospital.Services;
 
@@ -15,7 +17,7 @@ public class ExaminationService
 
     public ExaminationService()
     {
-        _examinationRepository = new ExaminationRepository();
+        _examinationRepository =ExaminationRepository.Instance;
     }
 
     public Examination? GetAdmissibleExamination(Patient patient)
@@ -86,5 +88,46 @@ public class ExaminationService
             doctorExaminations.Where(examination => examination.Start > DateTime.Now).ToList();
 
         return upcomingDoctorExaminations;
+    }
+
+    public List<Patient> GetViewedPatients(Doctor doctor)
+    {
+        var finishedExaminations = _examinationRepository.GetFinishedExaminations(doctor);
+        var viewedPatients = finishedExaminations.Select(examination => examination.Patient).Distinct().ToList();
+        return viewedPatients!;
+    }
+
+    public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
+    {
+        return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
+    }
+
+    public void AddExamination(Examination examination,bool isMadeByPatient)
+    {
+        var roomScheduleService = new RoomScheduleService();
+        if (!roomScheduleService.IsFree(examination.Room ?? throw new InvalidOperationException("Attempted to schedule examination in null room"), new TimeRange(examination.Start, examination.End)))
+            throw new RoomBusyException("Room is busy during the time of the examination.");
+
+        _examinationRepository.Add(examination, isMadeByPatient);
+    }
+
+    public void UpdateExamination(Examination examination, bool isMadeByPatient)
+    {
+        _examinationRepository.Update(examination, isMadeByPatient);
+    }
+
+    public void DeleteExamination(Examination examination,bool isMadeByPatient)
+    {
+        _examinationRepository.Delete(examination, isMadeByPatient);
+    }
+
+    public List<Examination> GetAllExaminations(Patient patient)
+    {
+        return _examinationRepository.GetAll(patient);
+    }
+
+    public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime selectedDate)
+    {
+        return _examinationRepository.GetExaminationsForDate(doctor, selectedDate);
     }
 }

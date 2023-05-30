@@ -1,9 +1,8 @@
-﻿using Hospital.Coordinators;
+﻿using Hospital.Services;
 using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Examinaton;
 using Hospital.Repositories.Patient;
 using Hospital.ViewModels;
 using System;

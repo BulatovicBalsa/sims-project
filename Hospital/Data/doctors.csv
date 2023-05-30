@@ -1,3 +1,3 @@
-Id,FirstName,LastName,Jmbg,Username,Password,Specialization
-96479d8b-a993-4cfe-a987-2e08dfb66269,Balsa,Bulatovic,381902312,balsaDoctor,balsaDoctor,Cardiologist
-4c6439c5-beb7-46db-9622-02e2e46e8557,Vladimir,Popov,381902311,vladaDoctor,vladaDoctor,Cardiologist
+Id,FirstName,LastName,Jmbg,Username,Password,Specialization,AverageRating
+96479d8b-a993-4cfe-a987-2e08dfb66269,Balsa,Bulatovic,381902312,balsaDoctor,balsaDoctor,Cardiologist,4.5
+4c6439c5-beb7-46db-9622-02e2e46e8557,Vladimir,Popov,381902311,vladaDoctor,vladaDoctor,Microbiologist,6.2

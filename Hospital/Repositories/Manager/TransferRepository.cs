@@ -90,7 +90,16 @@ public class TransferRepository
 
     public void DeleteAll()
     {
-        GetAll();
+        try
+        {
+            _transfers = GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        _transfers ??= new List<Transfer>();
         _transfers.Clear();
         Serializer<Transfer>.ToCSV(_transfers, FilePath);
         _transfers = null;
