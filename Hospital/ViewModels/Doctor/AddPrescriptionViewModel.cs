@@ -7,7 +7,6 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Patient;
 using Hospital.Services;
 
 namespace Hospital.ViewModels;
@@ -15,6 +14,7 @@ namespace Hospital.ViewModels;
 public class AddPrescriptionViewModel : ViewModelBase
 {
     private readonly NotificationService _notificationService;
+    private readonly MedicationService _medicationService = new();
     private int _amount;
     private int _dailyUsage;
 
@@ -31,7 +31,7 @@ public class AddPrescriptionViewModel : ViewModelBase
         ReferralToModify = referralToModify;
         PatientOnExamination = patientOnExamination;
         AddPrescriptionCommand = new RelayCommand<Window>(AddPrescription);
-        Medications = new ObservableCollection<Medication>(MedicationRepository.Instance.GetAll());
+        Medications = new ObservableCollection<Medication>(_medicationService.GetAllMedications());
         MedicationTimings =
             new ObservableCollection<MedicationTiming>(Enum.GetValues(typeof(MedicationTiming)).Cast<MedicationTiming>()
                 .ToList());
