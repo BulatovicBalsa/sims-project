@@ -64,7 +64,7 @@ public class RoomTabViewModel : ViewModelBase
 
     private bool IsRoomSplittingEnabled()
     {
-        return SelectedRoom != null && SelectedRoom.Type != RoomType.Warehouse;
+        return SelectedRoom != null && SelectedRoom.Type != RoomType.Warehouse && SelectedRoom.DemolitionDate == null;
     }
 
     public void SplitRoom()
