@@ -36,6 +36,7 @@ public class MedicationManagementViewModel : ViewModelBase
     private readonly PatientService _patientService;
     private readonly MedicationService _medicationService;
     private readonly PatientRepository _patientRepository;
+    private readonly MedicationOrderService _medicationOrderService;
     private ObservableCollection<Patient> _patients;
     private Patient? _selectedPatient;
     private ObservableCollection<Prescription>? _patientPrescriptions;
@@ -47,6 +48,7 @@ public class MedicationManagementViewModel : ViewModelBase
         _patientService = new PatientService();
         _medicationService = new MedicationService();
         _patientRepository = PatientRepository.Instance;
+        _medicationOrderService = new MedicationOrderService();
         _patients = new ObservableCollection<Patient>(_patientService.GetAllPatients());
         _selectedPatient = null;
         _patientPrescriptions = null;
@@ -151,9 +153,10 @@ public class MedicationManagementViewModel : ViewModelBase
 
     private void ExecuteOrderMedicationCommand(object obj)
     {
-        var medicationToOrder = MedicationOrderQuantities.Where(elem => elem.OrderQuantity > 0);
+        var medicationToOrder = MedicationOrderQuantities.Where(elem => elem.OrderQuantity > 0).ToList();
+        medicationToOrder.ForEach(order => _medicationOrderService.AddNewOrder(order));
 
-        Trace.WriteLine(medicationToOrder.Count());
+        MessageBox.Show("Medication successfully ordered!", "Success");
     }
 
     private bool CanExecuteOrderMedicationCommand(object obj)
