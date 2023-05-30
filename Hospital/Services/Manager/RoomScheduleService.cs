@@ -31,13 +31,13 @@ public class RoomScheduleService
 
     public bool IsFree(Room room, TimeRange range)
     {
-        return !HasExaminationsScheduled(room, range) && !HasRenovationsScheduled(room, range);
+        return !HasExaminationsScheduled(room, range) && !HasRenovationsScheduled(room, range) && room.WillExistDuring(range);
     }
 
     public bool IsFreeFrom(Room room, DateTime date)
     {
         var untilEndOfTime = new TimeRange(date, DateTime.MaxValue);
-        return !HasExaminationsScheduled(room, untilEndOfTime) && !HasRenovationsScheduled(room, untilEndOfTime);
+        return IsFree(room, untilEndOfTime);
     }
 
     public bool AreFreeFrom(List<Room> rooms, DateTime date)
