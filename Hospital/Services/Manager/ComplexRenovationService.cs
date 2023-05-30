@@ -26,6 +26,7 @@ public class ComplexRenovationService
         RenovationRepository.Instance.Add(complexRenovation.GetSimpleRenovations());
 
         _complexRenovations.Add(complexRenovation);
+        ComplexRenovationRepository.Instance.Add(complexRenovation);
         return true;
     }
 
