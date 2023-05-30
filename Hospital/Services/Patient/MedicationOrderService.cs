@@ -1,4 +1,5 @@
 ﻿using System;
+using Hospital.DTOs;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using Hospital.ViewModels.Nurse.Medication;

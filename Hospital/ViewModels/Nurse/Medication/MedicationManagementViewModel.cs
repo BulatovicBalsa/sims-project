@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.DTOs;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
 using Hospital.Views.Nurse.Medication;
@@ -12,26 +13,6 @@ using Hospital.Views.Nurse.Medication;
 namespace Hospital.ViewModels.Nurse.Medication;
 
 using Hospital.Models.Patient;
-
-public class MedicationOrderQuantityDto
-{
-    public string MedicationId { get; set; }
-    public string Name { get; set; }
-    public int Stock { get; set; }
-    public int OrderQuantity { get; set; }
-
-    public MedicationOrderQuantityDto()
-    {
-    }
-
-    public MedicationOrderQuantityDto(string medicationId, string name, int stock, int orderQuantity)
-    {
-        MedicationId = medicationId;
-        Name = name;
-        Stock = stock;
-        OrderQuantity = orderQuantity;  
-    }
-}
 public class MedicationManagementViewModel : ViewModelBase
 {
     private readonly PatientService _patientService;
