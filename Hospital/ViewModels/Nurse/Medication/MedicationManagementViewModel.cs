@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
+using Hospital.Views.Nurse.Medication;
 
 namespace Hospital.ViewModels.Nurse.Medication;
 
@@ -134,7 +135,18 @@ public class MedicationManagementViewModel : ViewModelBase
         SelectedPrescription.LastUsed = DateTime.Now;
         _patientRepository.Update(SelectedPatient);
         _medicationService.DecrementMedicationStock(SelectedPrescription.Medication);
-        MessageBox.Show("Medication successfully dispensed!", "Success");
+
+        if (MessageBox.Show("Medication successfully dispensed!\nIs the patient feeling better?", "Success", MessageBoxButton.YesNo) == MessageBoxResult.No)
+        {
+            var prescriptionExaminationViewModel =
+                new PrescriptionExaminationViewModel(SelectedPrescription.DoctorId, SelectedPatient.Id);
+            var scheduleExaminationDialog = new PrescriptionExaminationDialogView()
+            {
+                DataContext = prescriptionExaminationViewModel
+            };
+
+            scheduleExaminationDialog.ShowDialog();
+        }
 
         ResetInput();
     }
