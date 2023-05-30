@@ -5,6 +5,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Scheduling;
+using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels.Manager;
 
@@ -49,15 +50,20 @@ public class MergeRoomsViewModel : ViewModelBase
 
     public ICommand MergeRoomsCommand => _mergeRoomsCommand;
 
-    private ComplexRenovation GetComplexRenovation()
+    private ComplexRenovation GetRenovation()
     {
         return new ComplexRenovation(ToMerge, new List<Room> { NewRoom }, TimeRange, NewRoom, new List<Transfer>());
     }
 
     private void MergeRooms(IClosable window)
     {
-        if (!Validate()) return;
-        window.Close();
+        if (!Validate()) return; 
+        var renovation = GetRenovation();
+        var complexRenovationService = new ComplexRenovationService(new RoomScheduleService());
+        if (!complexRenovationService.AddComplexRenovation(renovation))
+            MessageBox.Show("The renovation can not be performed at the specified time");
+        else
+            window.Close();
     }
 
     private bool Validate()
