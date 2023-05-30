@@ -63,7 +63,7 @@ namespace Hospital.Serialization.Mappers
             }
 
             var prescriptionArgs = text.Split(';');
-            if (prescriptionArgs.Length != 5)
+            if (prescriptionArgs.Length != 6)
             {
                 throw new FormatException("Invalid prescription format.");
             }
