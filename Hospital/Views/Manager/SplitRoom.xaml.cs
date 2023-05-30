@@ -11,17 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Manager;
+using Hospital.ViewModels;
+using Hospital.ViewModels.Manager;
 
 namespace Hospital.Views.Manager
 {
-    /// <summary>
-    /// Interaction logic for SplitRoom.xaml
-    /// </summary>
-    public partial class SplitRoom : Window
+    public partial class SplitRoom : Window, IClosable
     {
-        public SplitRoom()
+        public SplitRoom(Room toSplit)
         {
             InitializeComponent();
+            DataContext = new SplitRoomViewModel(toSplit);
         }
     }
 }

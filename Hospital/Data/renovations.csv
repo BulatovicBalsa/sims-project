@@ -2,5 +2,4 @@ Id,RoomId,BeginTime,EndTime,Completed,Id,Name,Type,CreationDate,DemolitionDate
 84d9612d-b5c8-4362-b446-294d49997119,1003,05/22/2023 08:13:56,05/22/2023 08:13:56,False,1003,Examination Room 3,ExaminationRoom,,
 8fb9bdec-2662-42e0-a408-c4cedc86d1ba,1004,05/22/2023 08:13:56,05/22/2023 08:13:56,False,1004,Examination Room 4,ExaminationRoom,,
 0cd5f6c9-e538-4437-a475-db0dd367fe02,1003,05/28/2023 08:49:35,05/29/2023 08:49:38,False,1003,Examination Room 3,ExaminationRoom,,
-8f0c3aea-0356-4ffb-9a9d-812f541f2a56,1001,05/19/2023 08:55:18,05/22/2023 08:55:22,False,1001,Examination Room 1,ExaminationRoom,,
 8d570618-b58b-417f-821d-1c3f069d2a87,1002,07/08/2023 09:07:43,07/22/2023 09:07:47,False,1002,Examination Room 2,ExaminationRoom,,

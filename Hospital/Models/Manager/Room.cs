@@ -157,6 +157,12 @@ public class Room
         SetAmount(equipment, GetAmount(equipment) + amount);
     }
 
+    public int GetAvailableAmount(Equipment equipment)
+    {
+        var inventoryItem = GetInventoryItem(equipment);
+        return inventoryItem?.Available ?? 0;
+    }
+
     public void SendAvailableInventory(Room destination)
     {
         foreach (var inventoryItem in Inventory)
