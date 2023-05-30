@@ -17,12 +17,13 @@ public partial class App : Application
 {
     private const string _unsuccessfulLoginMessage = "Login was not successful.";
     private readonly MedicationOrderService _medicationOrderService = new();
-    private readonly System.Timers.Timer _medicationOrderTimer = new System.Timers.Timer(60000);
+    private readonly System.Timers.Timer _medicationOrderTimer = new(60000);
 
     private void ProcessEventsThatOccurredBeforeAppStart()
     {
         EquipmentOrderService.AttemptPickUpOfAllOrders();
         TransferService.AttemptDeliveryOfAllTransfers();
+        _medicationOrderService.ExecuteMedicationOrders();
     }
 
     protected void ApplicationStart(object sender, EventArgs e)
