@@ -7,12 +7,14 @@
         xmlns:customControls="clr-namespace:Hospital.CustomControls"
         mc:Ignorable="d"
         xmlns:viewModels="clr-namespace:Hospital.ViewModels.Manager"
+        xmlns:validationRules="clr-namespace:Hospital.ValidationRules"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="SplitRoom" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModels:SplitRoomViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -20,13 +22,81 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            
+
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="First new room" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Grid.Row="0" Grid.Column="1" Content="Second new room" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <customControls:RoomForm Grid.Row="1" Grid.Column="0" Room="{Binding NewRooms[0]}" x:Name="LeftRoom"/>
         <customControls:RoomForm Grid.Row="1" Grid.Column="1" Room="{Binding NewRooms[1]}" x:Name="RightRoom"/>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Submit" FontSize="30">
+        <DataGrid ItemsSource="{Binding TransfersToNewRooms[0].Items, Mode=TwoWay}" Grid.Row="2" Grid.Column="0"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
+                <DataGridTextColumn Header="Amount" Width="*" >
+
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Validation.ErrorTemplate">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="placeholder" />
+                                            <TextBlock Background="Red" Foreground="White" x:Name="ErrorTextBlock" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" />
+
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:IntRangeRule Min="1" Max="1000" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding TransfersToNewRooms[1].Items, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipment" Binding="{Binding Equipment}" Width="*" IsReadOnly="True" />
+                <DataGridTextColumn Header="Amount" Width="*">
+
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Validation.ErrorTemplate">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="placeholder" />
+                                            <TextBlock Background="Red" Foreground="White" x:Name="ErrorTextBlock" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" />
+
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:IntRangeRule Min="1" Max="1000" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.Row="3" Grid.Column="0" Content="Start date" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="End date" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Bottom"/>
+        <xctk:DateTimePicker Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Value="{Binding TimeRange.StartTime, Mode=TwoWay}" />
+        <xctk:DateTimePicker Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" Value="{Binding TimeRange.EndTime, Mode=TwoWay}" />
+        <Button Grid.Row="5" Grid.ColumnSpan="2" Content="Submit" FontSize="30">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="False"/>

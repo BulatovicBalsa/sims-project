@@ -12,14 +12,14 @@ public class RoomTabViewModel : ViewModelBase
     private BindingList<Room> _rooms;
     private Room? _selectedRoom;
     private BindingList<InventoryItem> _selectedRoomInventory;
-    private ICommand _splitRoomCommand;
+    private RelayCommand _splitRoomCommand;
 
     public RoomTabViewModel()
     {
         _rooms = new BindingList<Room>(RoomRepository.Instance.GetAll());
         _selectedRoomInventory = new BindingList<InventoryItem>();
         _selectedRoom = null;
-        SplitRoomCommand = new RelayCommand(SplitRoom);
+        _splitRoomCommand = new RelayCommand(SplitRoom, IsRoomSplittingEnabled);
     }
 
     public BindingList<Room> Rooms
@@ -54,24 +54,22 @@ public class RoomTabViewModel : ViewModelBase
             SelectedRoomInventory = _selectedRoom != null
                 ? new BindingList<InventoryItem>(_selectedRoom.Inventory)
                 : new BindingList<InventoryItem>();
+            _splitRoomCommand.RaiseCanExecuteChanged();
             OnPropertyChanged(nameof(SelectedRoom));
         }
     }
 
-    public ICommand SplitRoomCommand
+    public ICommand SplitRoomCommand => _splitRoomCommand;
+
+    private bool IsRoomSplittingEnabled()
     {
-        get => _splitRoomCommand;
-        set
-        {
-            if (Equals(value, _splitRoomCommand)) return;
-            _splitRoomCommand = value;
-            OnPropertyChanged(nameof(SplitRoomCommand));
-        }
+        return SelectedRoom != null && SelectedRoom.Type != RoomType.Warehouse;
     }
 
     public void SplitRoom()
     {
-        var dialog = new SplitRoom();
+        if (SelectedRoom == null) return;
+        var dialog = new SplitRoom(SelectedRoom);
         dialog.Show();
     }
 }
