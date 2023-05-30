@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Manager;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hospital.Models.Manager;
 using Hospital.Scheduling;
 
 namespace HospitalTests.Models.Manager;
@@ -127,4 +128,66 @@ public class ComplexRenovationTests
             Assert.AreEqual(complexRenovation.EndTime, renovation.EndTime);
         }
     }
+
+    [TestMethod()]
+    public void TestIsEquipmentProperlyRedistributed()
+    {
+        var toDemolish = new List<Room>
+        {
+            new("Examination room", RoomType.ExaminationRoom),
+            new("Ward", RoomType.Ward)
+        };
+        var toBuild = new List<Room>
+        {
+            new("Operating room", RoomType.OperatingRoom),
+            new("Another room", RoomType.OperatingRoom)
+        };
+        var equipment = new Equipment("Something", EquipmentType.DynamicEquipment);
+        var otherEquipment = new Equipment("Something else", EquipmentType.DynamicEquipment);
+        toDemolish[0].SetAmount(equipment, 10);
+        toDemolish[1].SetAmount(equipment, 10);
+        toDemolish[1].SetAmount(otherEquipment, 10);
+        var fromOldToNew = new Transfer(toDemolish[0], toBuild[0], DateTime.Now);
+        fromOldToNew.AddItem(new TransferItem(equipment, 8));
+        fromOldToNew.AddItem(new TransferItem(otherEquipment, 6));
+        var fromOldToSecondNew = new Transfer(toDemolish[1], toBuild[1], DateTime.Now);
+        fromOldToSecondNew.AddItem(new TransferItem(equipment, 12));
+        fromOldToSecondNew.AddItem(new TransferItem(otherEquipment, 4));
+        var complexRenovation = new ComplexRenovation(toDemolish, toBuild,
+            new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
+            toBuild[0], new List<Transfer> { fromOldToNew, fromOldToSecondNew });
+
+        Assert.IsTrue(complexRenovation.IsEquipmentProperlyRedistributed());
+    }
+    [TestMethod()]
+    public void TestIsEquipmentProperlyRedistributedAttemptToRedistributeMoreThanAvailable()
+    {
+        var toDemolish = new List<Room>
+        {
+            new("Examination room", RoomType.ExaminationRoom),
+            new("Ward", RoomType.Ward)
+        };
+        var toBuild = new List<Room>
+        {
+            new("Operating room", RoomType.OperatingRoom),
+            new("Another room", RoomType.OperatingRoom)
+        };
+        var equipment = new Equipment("Something", EquipmentType.DynamicEquipment);
+        var otherEquipment = new Equipment("Something else", EquipmentType.DynamicEquipment);
+        toDemolish[0].SetAmount(equipment, 10);
+        toDemolish[1].SetAmount(equipment, 10);
+        toDemolish[1].SetAmount(otherEquipment, 10);
+        var fromOldToNew = new Transfer(toDemolish[0], toBuild[0], DateTime.Now);
+        fromOldToNew.AddItem(new TransferItem(equipment, 8));
+        fromOldToNew.AddItem(new TransferItem(otherEquipment, 6));
+        var fromOldToSecondNew = new Transfer(toDemolish[1], toBuild[1], DateTime.Now);
+        fromOldToSecondNew.AddItem(new TransferItem(equipment, 16)); // Offending item
+        fromOldToSecondNew.AddItem(new TransferItem(otherEquipment, 4));
+        var complexRenovation = new ComplexRenovation(toDemolish, toBuild,
+            new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
+            toBuild[0], new List<Transfer> { fromOldToNew, fromOldToSecondNew });
+
+        Assert.IsFalse(complexRenovation.IsEquipmentProperlyRedistributed());
+    }
+
 }

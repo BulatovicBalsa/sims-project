@@ -15,10 +15,10 @@ namespace Hospital.ViewModels.Manager;
 public class SplitRoomViewModel : ViewModelBase
 {
     private readonly Room _roomToSplit;
+    private readonly BindingList<Transfer> _transfersToNewRooms;
     private BindingList<Room> _newRooms;
     private Room _room;
     private TimeRange _timeRange;
-    private readonly BindingList<Transfer> _transfersToNewRooms;
 
     public SplitRoomViewModel(Room roomToSplit)
     {
@@ -103,9 +103,10 @@ public class SplitRoomViewModel : ViewModelBase
 
     private void SplitRoom(IClosable window)
     {
-        if (!Validate())
-            return;
+
         var renovation = GetRenovation();
+        if (!Validate(renovation))
+            return;
         var complexRenovationService = new ComplexRenovationService(new RoomScheduleService());
         if (!complexRenovationService.AddComplexRenovation(renovation))
             MessageBox.Show("The renovation can not be performed at the specified time");
@@ -113,11 +114,11 @@ public class SplitRoomViewModel : ViewModelBase
             window.Close();
     }
 
-    private bool Validate()
+    private bool Validate(ComplexRenovation renovation)
     {
         if (!ValidateTimeRange()) return false;
 
-        if (!IsEquipmentProperlyRedistributed()) return false;
+        if (!IsEquipmentProperlyRedistributed(renovation)) return false;
 
         return true;
     }
@@ -129,19 +130,13 @@ public class SplitRoomViewModel : ViewModelBase
         return false;
     }
 
-    private bool IsEquipmentProperlyRedistributed()
+    private bool IsEquipmentProperlyRedistributed(ComplexRenovation renovation)
     {
-        for (var i = 0; i < TransfersToNewRooms[0].Items.Count; i++)
-        {
-            var leftRoomItem = TransfersToNewRooms[0].Items[i];
-            var rightRoomItem = TransfersToNewRooms[1].Items[i];
-            if (leftRoomItem.Amount + rightRoomItem.Amount <=
-                _roomToSplit.GetAvailableAmount(leftRoomItem.Equipment)) continue;
-            MessageBox.Show(
-                $"Attempted to redistribute more of {leftRoomItem.Equipment.Name} than there are available");
-            return false;
-        }
+        if (renovation.IsEquipmentProperlyRedistributed())
+            return true;
 
-        return true;
+        MessageBox.Show(
+            $"Attempted to redistribute more of some equipment than there are available");
+        return false;
     }
 }
