@@ -68,4 +68,16 @@ public class DoctorRepository
         var emptyDoctorList = new List<Doctor>();
         Serializer<Doctor>.ToCSV(emptyDoctorList, FilePath);
     }
+
+    public List<string> GetAllSpecializations()
+    {
+        var allDoctors = GetAll();
+        return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
+    }
+
+    public List<Doctor> GetQualifiedDoctors(string specialization)
+    {
+        var allDoctors = GetAll();
+        return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
+    }
 }
