@@ -157,8 +157,16 @@ public class MedicationManagementViewModel : ViewModelBase
         medicationToOrder.ForEach(order => _medicationOrderService.AddNewOrder(order));
 
         MessageBox.Show("Medication successfully ordered!", "Success");
+        ResetOrderQuantities();
     }
 
+    private void ResetOrderQuantities()
+    {
+        foreach (var medicationOrderQuantityDto in MedicationOrderQuantities)
+        {
+            medicationOrderQuantityDto.OrderQuantity = 0;
+        }
+    }
     private bool CanExecuteOrderMedicationCommand(object obj)
     {
         return !_medicationOrderQuantities.Any(elem => elem.OrderQuantity < 0);
