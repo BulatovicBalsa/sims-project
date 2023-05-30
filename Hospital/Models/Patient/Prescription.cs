@@ -17,13 +17,14 @@ public class Prescription
         Medication = new Medication();
     }
 
-    public Prescription(Medication medication, int amount, int dailyUsage, MedicationTiming medicationTiming)
+    public Prescription(Medication medication, int amount, int dailyUsage, MedicationTiming medicationTiming, string doctorId)
     {
         Medication = medication;
         Amount = amount;
         DailyUsage = dailyUsage;
         MedicationTiming = medicationTiming;
         IssuedDate = DateTime.Now;
+        DoctorId = doctorId;
     }
 
     public int Amount { get; set; }
@@ -32,15 +33,16 @@ public class Prescription
     public Medication Medication { get; set; }
     public DateTime IssuedDate { get; set; }
     public DateTime? LastUsed { get; set; }
+    public string DoctorId { get; set; }
 
     public Prescription DeepCopy()
     {
-        return new Prescription(Medication, Amount, DailyUsage, MedicationTiming);
+        return new Prescription(Medication, Amount, DailyUsage, MedicationTiming, DoctorId);
     }
 
     public override string ToString()
     {
-        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate:yyyy-MM-dd HH:mm:ss};{LastUsed:yyyy-MM-dd HH:mm:ss}";
+        return $"{Medication.Id};{Amount};{DailyUsage};{MedicationTiming};{IssuedDate:yyyy-MM-dd HH:mm:ss};{LastUsed:yyyy-MM-dd HH:mm:ss};{DoctorId}";
     }
 
     public string ToString(string separator)
