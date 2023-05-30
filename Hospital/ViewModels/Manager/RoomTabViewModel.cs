@@ -13,7 +13,7 @@ public class RoomTabViewModel : ViewModelBase
     private BindingList<Room> _rooms;
     private Room? _selectedRoom;
     private BindingList<InventoryItem> _selectedRoomInventory;
-    private RelayCommand _splitRoomCommand;
+    private readonly RelayCommand _splitRoomCommand;
 
     public RoomTabViewModel()
     {

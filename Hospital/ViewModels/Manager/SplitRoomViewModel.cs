@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using CsvHelper;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
@@ -19,8 +17,8 @@ public class SplitRoomViewModel : ViewModelBase
     private readonly Room _roomToSplit;
     private BindingList<Room> _newRooms;
     private Room _room;
-    private BindingList<Transfer> _transfersToNewRooms;
     private TimeRange _timeRange;
+    private readonly BindingList<Transfer> _transfersToNewRooms;
 
     public SplitRoomViewModel(Room roomToSplit)
     {
@@ -92,9 +90,7 @@ public class SplitRoomViewModel : ViewModelBase
             new(_roomToSplit, _newRooms[1], DateTime.Now)
         };
         foreach (var equipment in _roomToSplit.GetEquipment())
-        {
-            transfersToNewRooms.ForEach(transfer => transfer.AddItem(new TransferItem(equipment, 0)));    
-        }
+            transfersToNewRooms.ForEach(transfer => transfer.AddItem(new TransferItem(equipment, 0)));
         return new BindingList<Transfer>(transfersToNewRooms);
     }
 
@@ -131,16 +127,15 @@ public class SplitRoomViewModel : ViewModelBase
         if (TimeRange.StartTime <= TimeRange.EndTime) return true;
         MessageBox.Show("Start time can not be after end time");
         return false;
-
     }
 
     private bool IsEquipmentProperlyRedistributed()
     {
-        for (int i = 0; i < TransfersToNewRooms[0].Items.Count; i++)
+        for (var i = 0; i < TransfersToNewRooms[0].Items.Count; i++)
         {
             var leftRoomItem = TransfersToNewRooms[0].Items[i];
             var rightRoomItem = TransfersToNewRooms[1].Items[i];
-            if ((leftRoomItem.Amount + rightRoomItem.Amount) <=
+            if (leftRoomItem.Amount + rightRoomItem.Amount <=
                 _roomToSplit.GetAvailableAmount(leftRoomItem.Equipment)) continue;
             MessageBox.Show(
                 $"Attempted to redistribute more of {leftRoomItem.Equipment.Name} than there are available");

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Timers;
-using System.Windows.Controls.Ribbon.Primitives;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
 
