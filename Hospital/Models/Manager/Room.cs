@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.Scheduling;
 using Newtonsoft.Json;
 
 namespace Hospital.Models.Manager;
@@ -87,6 +88,16 @@ public class Room
         return Id == objAsRoom.Id;
     }
 
+    public bool WillExist(DateTime date)
+    {
+        return (CreationDate == null || CreationDate <= date) && (DemolitionDate == null || date <= DemolitionDate);
+    }
+
+    public bool WillExistDuring(TimeRange timeRange)
+    {
+        return (CreationDate == null || CreationDate <= timeRange.StartTime) &&
+               (DemolitionDate == null || DemolitionDate >= timeRange.EndTime);
+    }
 
     private InventoryItem? GetInventoryItem(Equipment equipment)
     {
