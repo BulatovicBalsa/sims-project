@@ -7,10 +7,12 @@ namespace Hospital.Services;
 public class MedicationOrderService
 {
     private readonly MedicationOrderRepository _medicationOrderRepository;
+    private readonly MedicationService _medicationService;
 
     public MedicationOrderService()
     {
         _medicationOrderRepository = MedicationOrderRepository.Instance;
+        _medicationService = new MedicationService();
     }
 
     public void AddNewOrder(MedicationOrderQuantityDto medicationOrderQuantityDto)
@@ -23,5 +25,16 @@ public class MedicationOrderService
         };
 
         _medicationOrderRepository.Add(medicationOrder);
+    }
+
+    public void ExecuteMedicationOrders()
+    {
+        var executableOrders = _medicationOrderRepository.GetAllExecutable();
+
+        foreach (var executableOrder in executableOrders)
+        {
+            _medicationService.IncrementMedicationStock(executableOrder.MedicationId, executableOrder.Quantity);
+            _medicationOrderRepository.Delete(executableOrder);
+        }
     }
 }
