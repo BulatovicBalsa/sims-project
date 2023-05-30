@@ -98,12 +98,19 @@ public class RoomTabViewModel : ViewModelBase
 
     private void MergeRooms(object selectedRooms)
     {
-        return;
+        var dialog = new MergeRooms(ConvertCommandParameter(selectedRooms));
+        dialog.Show();
+        dialog.Closed += RefershRoomsOnFormClose;
     }
 
     private bool IsWarehouseSelected(IList<object> selectedRooms)
     {
         return selectedRooms.Any(room => ((Room)room).Type == RoomType.Warehouse);
+    }
+
+    private List<Room> ConvertCommandParameter(object selectedRooms)
+    {
+        return ((IList<object>)selectedRooms).ToList().ConvertAll(room => ((Room)room));
     }
 
     private bool AreAnyRoomsSetForDemolitonSelected(IList<object> selectedRooms)
