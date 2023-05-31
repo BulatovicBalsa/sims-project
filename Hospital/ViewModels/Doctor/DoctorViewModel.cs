@@ -57,6 +57,7 @@ public class DoctorViewModel : ViewModelBase
     {
         var dialog = new AddTimeOffRequestDialog(_doctor);
         dialog.ShowDialog();
+        TimeOffRequests = new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
     }
 
     private void DefaultExaminationView()
