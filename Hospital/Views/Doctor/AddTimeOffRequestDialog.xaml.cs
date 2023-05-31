@@ -11,16 +11,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Doctor;
 
-namespace Hospital.Views.Doctor
+namespace Hospital.Views
 {
-    /// <summary>
-    /// Interaction logic for AddTimeOffRequestDialog.xaml
-    /// </summary>
     public partial class AddTimeOffRequestDialog : Window
     {
-        public AddTimeOffRequestDialog()
+        public AddTimeOffRequestDialog(Doctor doctor)
         {
+            DataContext = new AddTimeOffRequestViewModel(doctor);
             InitializeComponent();
         }
     }
