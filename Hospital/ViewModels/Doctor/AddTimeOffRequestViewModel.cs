@@ -12,81 +12,86 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
 using Hospital.Services.Requests;
 
-namespace Hospital.ViewModels
+namespace Hospital.ViewModels;
+
+public class AddTimeOffRequestViewModel : ViewModelBase
 {
-    public class AddTimeOffRequestViewModel: ViewModelBase
+    private readonly DoctorTimeOffRequestService _requestService = new();
+    private readonly Doctor _doctor;
+
+    private string? _reason;
+
+    private DateTime? _selectedEnd;
+
+    private DateTime? _selectedStart;
+
+    public AddTimeOffRequestViewModel(Doctor doctor)
     {
-        private readonly DoctorTimeOffRequestService _requestService = new();
-        private Doctor _doctor;
-        
-        private DateTime? _selectedStart;
-        public DateTime? SelectedStart
+        _doctor = doctor;
+        _selectedStart = DateTime.Today.AddDays(2);
+        _selectedEnd = SelectedStart;
+        AddRequestCommand = new RelayCommand<Window>(AddRequest);
+    }
+
+    public DateTime? SelectedStart
+    {
+        get => _selectedStart;
+        set
         {
-            get => _selectedStart;
-            set
-            {
-                _selectedStart = value;
-                OnPropertyChanged(nameof(SelectedStart));
-            }
+            _selectedStart = value;
+            OnPropertyChanged(nameof(SelectedStart));
+        }
+    }
+
+    public DateTime? SelectedEnd
+    {
+        get => _selectedEnd;
+        set
+        {
+            _selectedEnd = value;
+            OnPropertyChanged(nameof(SelectedEnd));
+        }
+    }
+
+    public string? Reason
+    {
+        get => _reason;
+        set
+        {
+            _reason = value;
+            OnPropertyChanged(nameof(Reason));
+        }
+    }
+
+    public ICommand AddRequestCommand { get; set; }
+
+    private void AddRequest(Window window)
+    {
+        DoctorTimeOffRequest request = null;
+        if (SelectedStart is null || SelectedEnd is null)
+        {
+            MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
         }
 
-        private DateTime? _selectedEnd;
-        public DateTime? SelectedEnd
+        try
         {
-            get => _selectedEnd;
-            set
-            {
-                _selectedEnd = value;
-                OnPropertyChanged(nameof(SelectedEnd));
-            }
+            request = new DoctorTimeOffRequest(_doctor.Id, Reason, SelectedStart.GetValueOrDefault(),
+                SelectedEnd.GetValueOrDefault());
         }
-
-        private string? _reason;
-        public string? Reason
+        catch (Exception e)
         {
-            get => _reason;
-            set
+            if (e is InvalidOperationException or UndefinedTimeOffReasonException)
             {
-                _reason = value;
-                OnPropertyChanged(nameof(Reason));
-            }
-        }
-
-        public ICommand AddRequestCommand { get; set; }
-
-        public AddTimeOffRequestViewModel(Doctor doctor)
-        {
-            _doctor = doctor;
-            _selectedStart = DateTime.Today.AddDays(2);
-            _selectedEnd = SelectedStart;
-            AddRequestCommand = new RelayCommand<Window>(AddRequest);
-        }
-
-        private void AddRequest(Window window)
-        {
-            DoctorTimeOffRequest request = null;
-            if (SelectedStart is null || SelectedEnd is null)
-            {
-                MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
                 return;
             }
-            try
-            {
-                request = new DoctorTimeOffRequest(_doctor.Id, Reason, SelectedStart.GetValueOrDefault(),
-                    SelectedEnd.GetValueOrDefault());
-            }
-            catch (Exception e)
-            {
-                if (e is InvalidOperationException or UndefinedTimeOffReasonException)
-                {
-                    MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-
-            _requestService.Add(request!);
-            MessageBox.Show("Succeed");
-            window.DialogResult = true;
         }
+
+        _requestService.Add(request!);
+        MessageBox.Show("Succeed");
+        window.DialogResult = true;
     }
 }
