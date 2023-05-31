@@ -51,6 +51,13 @@ public class DoctorViewModel : ViewModelBase
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalTreatmentPatientsCommand = new RelayCommand(VisitHospitalTreatmentPatients);
+    }
+
+    private void VisitHospitalTreatmentPatients()
+    {
+        var dialog = new VisitHospitalTreatmentPatientsDialog(_doctor);
+        dialog.ShowDialog();
     }
 
     private void AddTimeOffRequest()
@@ -148,6 +155,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
     public ICommand AddTimeOffRequestCommand { get; set; }
+    public ICommand VisitHospitalTreatmentPatientsCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {

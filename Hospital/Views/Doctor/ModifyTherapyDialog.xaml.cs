@@ -11,14 +11,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Patient;
 
 namespace Hospital.Views
 {
-    public partial class VisitHospitalTreatmentPatients : Window
+    public partial class ModifyTherapyDialog : Window
     {
-        public VisitHospitalTreatmentPatients()
+        public ModifyTherapyDialog(Patient hospitalizedPatient, HospitalTreatmentReferral activeReferral)
         {
             InitializeComponent();
+            PrescriptionsFrame.Navigate(new PrescriptionPage(hospitalizedPatient, activeReferral));
         }
     }
 }
