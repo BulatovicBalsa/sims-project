@@ -84,7 +84,7 @@ namespace Hospital.Serialization.Mappers
         {
             if (value is Prescription prescription)
             {
-                return $"{prescription.Medication.Id};{prescription.Amount};{prescription.DailyUsage};{prescription.MedicationTiming};{prescription.IssuedDate.ToString("yyyy-MM-dd HH:mm:ss")}";
+                return $"{prescription.Medication.Id};{prescription.Amount};{prescription.DailyUsage};{prescription.MedicationTiming};{prescription.IssuedDate.ToString("yyyy-MM-dd HH:mm:ss")};{prescription.DoctorId}";
             }
 
             return string.Empty;
