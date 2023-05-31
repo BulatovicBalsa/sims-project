@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Hospital.DTOs;
 using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
 using Hospital.Services;
@@ -7,23 +8,23 @@ namespace Hospital.ViewModels
 {
     public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
     {
-        private readonly PatientService _patientService = new();
+        private readonly HospitalTreatmentService _hospitalTreatmentService= new();
         private Doctor _doctor;
-        private ObservableCollection<HospitalTreatmentReferral> _patientsReferrals;
-        public ObservableCollection<HospitalTreatmentReferral> PatientsReferrals
+        private ObservableCollection<MedicalVisitDto> _medicalVisits;
+        public ObservableCollection<MedicalVisitDto> MedicalVisits
         {
-            get => _patientsReferrals;
+            get => _medicalVisits;
             set
             {
-                _patientsReferrals = value;
-                OnPropertyChanged(nameof(PatientsReferrals));
+                _medicalVisits = value;
+                OnPropertyChanged(nameof(MedicalVisits));
             }
         }
 
         public VisitHospitalTreatmentPatientsViewModel(Doctor doctor)
         {
             _doctor = doctor;
-            _patientsReferrals = new ObservableCollection<HospitalTreatmentReferral>(_patientService.GetHospitalizedPatients(_doctor));
+            _medicalVisits = new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
         }
     }
 }
