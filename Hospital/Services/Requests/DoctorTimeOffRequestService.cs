@@ -19,4 +19,9 @@ public class DoctorTimeOffRequestService
     {
         return _requestRepository.GetNonExpiredDoctorTimeOffRequests(doctor);
     }
+
+    public void Add(DoctorTimeOffRequest request)
+    {
+        _requestRepository.Add(request);
+    }
 }
