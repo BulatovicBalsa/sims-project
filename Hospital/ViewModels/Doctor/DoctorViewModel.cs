@@ -9,13 +9,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models.Requests;
 using Hospital.Services;
+using Hospital.Views.Doctor;
 
 namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
 
@@ -25,6 +26,7 @@ public class DoctorViewModel : ViewModelBase
     private ObservableCollection<Examination> _examinations;
 
     private ObservableCollection<Patient> _patients;
+    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     private string _searchBoxText;
 
@@ -46,12 +48,12 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
-        ManageTimeOffRequestsCommand = new RelayCommand(ManageTimeOffRequests);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
     }
 
-    private void ManageTimeOffRequests()
+    private void AddTimeOffRequest()
     {
-        var dialog = new ManageTimeOffRequestsDialog();
+        var dialog = new AddTimeOffRequestDialog(_doctor);
         dialog.ShowDialog();
     }
 
@@ -78,6 +80,15 @@ public class DoctorViewModel : ViewModelBase
         {
             _patients = value;
             OnPropertyChanged(nameof(Patients));
+        }
+    }
+    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests 
+    {
+        get => _timeOffRequests;
+        set
+        {
+            _timeOffRequests = value;
+            OnPropertyChanged(nameof(TimeOffRequests));
         }
     }
 
@@ -133,7 +144,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
-    public ICommand ManageTimeOffRequestsCommand { get; set; }
+    public ICommand AddTimeOffRequestCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {
