@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Hospital.Models.Requests;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Requests;
+using Hospital.Models.Doctor;
 
 public class DoctorTimeOffRequestRepository
 {
@@ -58,5 +61,20 @@ public class DoctorTimeOffRequestRepository
     {
         var emptyDoctorTimeOffRequestList = new List<DoctorTimeOffRequest>();
         Serializer<DoctorTimeOffRequest>.ToCSV(emptyDoctorTimeOffRequestList, FilePath);
+    }
+
+    public List<DoctorTimeOffRequest> GetDoctorTimeOffRequests(Doctor doctor)
+    {
+        return GetAll().Where(request => request.DoctorId == doctor.Id).ToList();
+    }
+
+    public List<DoctorTimeOffRequest> GetAllNonExpiredDoctorTimeOffRequests()
+    {
+        return GetAll().Where(request => request.Start > DateTime.Today).ToList();
+    }
+
+    public List<DoctorTimeOffRequest> GetNonExpiredDoctorTimeOffRequests(Doctor doctor)
+    {
+        return GetAll().Where(request => request.Start > DateTime.Today && request.DoctorId == doctor.Id).ToList();
     }
 }
