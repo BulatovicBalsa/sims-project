@@ -105,6 +105,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
@@ -137,6 +139,15 @@
                         <DataGridTextColumn Header="Room"  Binding="{Binding Room}" IsReadOnly="True" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <TextBlock Grid.Row="3" Text="Other operations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                    <Button Content="Manage Time Off Requests"
+                            Margin="5" Command="{Binding ManageTimeOffRequestsCommand}"/>
+                    <Button Content="Visit Patients On Hospital Treatments"
+                            Margin="5" Command="{Binding UpdateExaminationCommand}"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>
