@@ -3,10 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddTimeOffRequestViewModel}"
         xmlns:local="clr-namespace:Hospital.Views"
         mc:Ignorable="d"
-        Title="Add Time Off Request" Height="450" Width="800">
+        Name="AddDoctorTimeOffRequestWindow"
+        WindowStartupLocation="CenterScreen"
+        Title="Add Time Off Request" Height="350" Width="400">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Start Date:" Margin="0 10"/>
+            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding SelectedStart, Mode=TwoWay}" Margin="0 10"></DatePicker>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="End Date:" Margin="0 10"/>
+            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding SelectedEnd, Mode=TwoWay}" Margin="0 10"></DatePicker>
+
+            <Label Grid.Row="2" Grid.Column="0" Content="Reason:" Margin="0 10"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Reason, Mode=TwoWay}" Margin="0 10"></TextBox>
+
+        </Grid>
+
+        <Button VerticalAlignment="Bottom" Grid.Row="1" Margin="0 10" Content="Add Request" Command="{Binding AddRequestCommand}" CommandParameter="{Binding ElementName=AddDoctorTimeOffRequestWindow}"/>
+
     </Grid>
 </Window>
