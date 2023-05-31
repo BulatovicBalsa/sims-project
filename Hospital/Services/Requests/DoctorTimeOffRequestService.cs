@@ -4,22 +4,19 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
 using Hospital.Repositories.Requests;
 
-namespace Hospital.Services.Requests
+namespace Hospital.Services.Requests;
+
+public class DoctorTimeOffRequestService
 {
-    public class DoctorTimeOffRequestService
+    private readonly DoctorTimeOffRequestRepository _requestRepository = DoctorTimeOffRequestRepository.Instance;
+
+    public List<DoctorTimeOffRequest> GetAll()
     {
-        private readonly DoctorTimeOffRequestRepository _requestRepository = DoctorTimeOffRequestRepository.Instance;
+        return _requestRepository.GetAll();
+    }
 
-        public DoctorTimeOffRequestService() { }
-
-        public List<DoctorTimeOffRequest> GetAll()
-        {
-            return _requestRepository.GetAll();
-        }
-
-        public List<DoctorTimeOffRequest> GetNonExpiredDoctorTimeOffRequests(Doctor doctor)
-        {
-            return _requestRepository.GetNonExpiredDoctorTimeOffRequests(doctor);
-        }
+    public List<DoctorTimeOffRequest> GetNonExpiredDoctorTimeOffRequests(Doctor doctor)
+    {
+        return _requestRepository.GetNonExpiredDoctorTimeOffRequests(doctor);
     }
 }
