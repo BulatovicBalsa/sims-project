@@ -1,9 +1,10 @@
-﻿<Window x:Class="Hospital.Views.Doctor.VisitHospitalTreatmentPatients"
+﻿<Window x:Class="Hospital.Views.VisitHospitalTreatmentPatients"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views.Doctor"
+        xmlns:local="clr-namespace:Hospital.Views"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:VisitHospitalTreatmentPatientsViewModel}"
         mc:Ignorable="d"
         Title="Hospital Treatment Patients" Height="450" Width="800">
     <Grid>
@@ -13,6 +14,34 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="22" Margin="0 10">Patients</TextBlock>
-        <DataGrid Grid.Row="1" Margin="0 10" ItemsSource="{}"></DataGrid>
+        <DataGrid Grid.Row="1" Margin="0 10" ItemsSource="{Binding MedicalVisits}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Referral.Duration}" Width="*"/>
+                <DataGridTemplateColumn Header="Additional Tests" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Referral.AdditionalTests}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Prescriptions" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Referral.Prescriptions}" DisplayMemberPath="ListBoxString" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Modify Therapy" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Modify" Command="{Binding ModifyTherapyCommand}" CommandParameter="{Binding Patient.Id}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
