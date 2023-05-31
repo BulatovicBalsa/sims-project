@@ -5,7 +5,6 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -47,6 +46,13 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        ManageTimeOffRequestsCommand = new RelayCommand(ManageTimeOffRequests);
+    }
+
+    private void ManageTimeOffRequests()
+    {
+        var dialog = new ManageTimeOffRequestsDialog();
+        dialog.ShowDialog();
     }
 
     private void DefaultExaminationView()
@@ -127,6 +133,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
+    public ICommand ManageTimeOffRequestsCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {
