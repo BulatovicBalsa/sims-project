@@ -7,17 +7,19 @@ public class DoctorTimeOffRequest
 {
     public DoctorTimeOffRequest()
     {
+        Id = Guid.NewGuid().ToString();
         Reason = "";
+        DoctorId = "";
     }
 
-    public DoctorTimeOffRequest(string reason, DateTime start, DateTime end, bool isApproved = false)
+    public DoctorTimeOffRequest(string doctorId, string reason, DateTime start, DateTime end, bool isApproved = false)
     {
-        if (string.IsNullOrEmpty(reason))
-            throw new UndefinedTimeOffReasonException("Reason can't be empty");
+        Id = Guid.NewGuid().ToString();
         Reason = reason.Trim();
         Start = start.Date;
         End = end.Date;
         IsApproved = isApproved;
+        DoctorId = doctorId;
         CheckValidity();
     }
 
@@ -25,6 +27,8 @@ public class DoctorTimeOffRequest
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public bool IsApproved { get; set; }
+    public string DoctorId { get; set; }
+    public string Id { get; set; }
 
     private void CheckValidity()
     {
