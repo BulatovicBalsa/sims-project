@@ -64,7 +64,7 @@ namespace Hospital.ViewModels
 
         private void AddRequest(Window window)
         {
-            DoctorTimeOffRequest request;
+            DoctorTimeOffRequest request = null;
             if (SelectedStart is null || SelectedEnd is null)
             {
                 MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -77,7 +77,7 @@ namespace Hospital.ViewModels
             }
             catch (Exception e)
             {
-                if (e is InvalidOperationException || e is UndefinedTimeOffReasonException)
+                if (e is InvalidOperationException or UndefinedTimeOffReasonException)
                 {
                     MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;

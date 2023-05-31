@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Hospital.Models.Doctor;
+using Hospital.ViewModels;
 
 namespace Hospital.Views
 {

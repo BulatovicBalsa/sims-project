@@ -12,7 +12,6 @@ using System.Windows.Input;
 using Hospital.Models.Requests;
 using Hospital.Services;
 using Hospital.Services.Requests;
-using Hospital.Views.Doctor;
 
 namespace Hospital.ViewModels;
 
