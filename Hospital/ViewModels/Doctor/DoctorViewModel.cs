@@ -11,12 +11,14 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Requests;
 using Hospital.Services;
+using Hospital.Services.Requests;
 using Hospital.Views.Doctor;
 
 namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
+    private readonly DoctorTimeOffRequestService _requestService = new();
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
 
@@ -39,6 +41,7 @@ public class DoctorViewModel : ViewModelBase
         _doctor = doctor;
         _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_examinationService.GetViewedPatients(doctor));
+        TimeOffRequests = new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
         Examinations = new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
