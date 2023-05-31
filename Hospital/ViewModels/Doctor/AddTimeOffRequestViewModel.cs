@@ -85,6 +85,7 @@ namespace Hospital.ViewModels
             }
 
             _requestService.Add(request);
+            window.DialogResult = true;
         }
     }
 }
