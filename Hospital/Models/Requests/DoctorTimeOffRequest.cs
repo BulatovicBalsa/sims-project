@@ -1,12 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hospital.Exceptions;
 
 namespace Hospital.Models.Requests
 {
-    internal class DoctorTimeOffRequest
+    public class DoctorTimeOffRequest
     {
+        public string Reason { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public bool IsApproved { get; set; }
+
+        public DoctorTimeOffRequest()
+        {
+            Reason = "";
+        }
+
+        public DoctorTimeOffRequest(string reason, DateTime start, DateTime end, bool isApproved=false)
+        {
+            if (string.IsNullOrEmpty(reason))
+                throw new UndefinedTimeOffReasonException("Reason can't be empty");
+            Reason = reason.Trim();
+            Start = start.Date;
+            End = end.Date;
+            IsApproved = isApproved;
+            CheckValidity();
+        }
+
+        private void CheckValidity()
+        {
+            if (string.IsNullOrEmpty(Reason))
+                throw new UndefinedTimeOffReasonException("Reason must be defined");
+            var difference = Start - DateTime.Today;
+            if (difference.TotalDays < 2)
+                throw new InvalidOperationException("The start date must be at least 2 days away from today.");
+        }
     }
 }
