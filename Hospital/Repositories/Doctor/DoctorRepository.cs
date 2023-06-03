@@ -80,4 +80,14 @@ public class DoctorRepository
         var allDoctors = GetAll();
         return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
     }
+
+    public List<Doctor> GetDoctorsByFilter(string firstName, string lastName, string specialization)
+    {
+        return GetAll()
+            .Where(doctor =>
+                doctor.FirstName.ToLower().Contains(firstName.ToLower()) &&
+                doctor.LastName.ToLower().Contains(lastName.ToLower()) &&
+                doctor.Specialization.ToLower().Contains(specialization.ToLower()))
+            .ToList();
+    }
 }
