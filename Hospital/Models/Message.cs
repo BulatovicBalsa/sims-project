@@ -10,6 +10,7 @@ namespace Hospital.Models
 {
     public class Message
     {
+        public string Id { get; set; }
         public PersonDTO Sender { get; set; }
         public PersonDTO Recipient { get; set; }
         public string Text { get; set; }
@@ -17,6 +18,7 @@ namespace Hospital.Models
 
         public Message(PersonDTO sender, PersonDTO recipient, string text, DateTime timestamp)
         {
+            Id = Guid.NewGuid().ToString();
             Sender = sender;
             Recipient = recipient;
             Text = text;
