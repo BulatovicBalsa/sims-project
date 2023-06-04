@@ -10,7 +10,8 @@ namespace Hospital.Services
 {
     public class EmailMessageService
     {
-        private DoctorService doctorService;
+        private DoctorService _doctorService;
+        private NurseService _nurseService;
         private EmailMessageRepository _emailMessageRepository;
         public List<EmailMessage> GetAllEmailMessagesByParticipant(string id)
         {

@@ -10,7 +10,9 @@ using Hospital.Models.Nurse;
 public class NurseRepository
 {
     private const string FilePath = "../../../Data/nurses.csv";
-
+    private static NurseRepository? _instance;
+    public static NurseRepository Instance => _instance ??= new NurseRepository();
+    private NurseRepository() { }
     public List<Nurse> GetAll()
     {
         return Serializer<Nurse>.FromCSV(FilePath);
