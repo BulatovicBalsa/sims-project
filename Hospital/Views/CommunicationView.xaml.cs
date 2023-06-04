@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.DTOs;
+using Hospital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,20 @@ namespace Hospital.Views
     /// </summary>
     public partial class CommunicationView : Window
     {
-        public CommunicationView()
+        public CommunicationView(PersonDTO loggedUser)
         {
             InitializeComponent();
+            DataContext = new CommunicationViewModel(loggedUser);
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

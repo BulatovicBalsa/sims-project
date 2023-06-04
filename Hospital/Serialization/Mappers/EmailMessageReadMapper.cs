@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace Hospital.Serialization.Mappers
 {
-    public class MessageReadMapper : ClassMap<Message>
+    public class EmailMessageReadMapper : ClassMap<EmailMessage>
     {
-        public MessageReadMapper()
+        public EmailMessageReadMapper()
         {
             Map(m => m.Id).Index(0);
             Map(m => m.Sender).Index(1).TypeConverter<PersonDTOConverter>();
             Map(m => m.Recipient).Index(2).TypeConverter<PersonDTOConverter>();
             Map(m => m.Text).Index(3);
             Map(m => m.Timestamp).Index(4).TypeConverter<DateTimeConverter>();
+            Map(m => m.Subject).Index(5);
         }
     }
 }

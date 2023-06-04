@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Hospital.Models
 {
-    public class Message
+    public abstract class Message
     {
         public string Id { get; set; }
         public PersonDTO Sender { get; set; }

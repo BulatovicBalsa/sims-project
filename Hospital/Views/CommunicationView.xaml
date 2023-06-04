@@ -94,7 +94,8 @@
                 <Button x:Name="BtnSend"
                         Grid.Column="2"
                         Content="Send"
-                        Margin="5,5,5,5"/>
+                        Margin="5,5,5,5"
+                        Command="{Binding SendMessageCommand}"/>
 
                 <!-- Your code-behind logic for the BtnSend_Click event handler goes here -->
             </Grid>
@@ -120,9 +121,9 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Add the event handlers for these buttons in your code-behind -->
-                <RadioButton x:Name="AllMessagesRadio" Content="All Messages" IsChecked="True" Grid.Column="0" Checked="AllMessagesRadio_Checked" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="SentMessagesRadio" Content="Sent Messages" Grid.Column="1" Checked="SentMessagesRadio_Checked" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="ReceivedMessagesRadio" Content="Received Messages" Grid.Column="2" Checked="ReceivedMessagesRadio_Checked" HorizontalAlignment="Center"/>
+                <RadioButton Content="All Messages" IsChecked="{Binding IsAllMessagesSelected, Mode=TwoWay}" Grid.Column="0" HorizontalAlignment="Center"/>
+                <RadioButton Content="Sent Messages" IsChecked="{Binding IsSentMessagesSelected, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Center"/>
+                <RadioButton Content="Received Messages" IsChecked="{Binding IsReceivedMessagesSelected, Mode=TwoWay}" Grid.Column="2" HorizontalAlignment="Center"/>
             </Grid>
 
             <!-- Messages DataGrid -->

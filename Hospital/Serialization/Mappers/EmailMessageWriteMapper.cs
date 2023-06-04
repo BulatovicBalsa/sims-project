@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 
 namespace Hospital.Serialization.Mappers
 {
-    public class MessageWriteMapper : ClassMap<Message>
+    public class EmailMessageWriteMapper : ClassMap<EmailMessage>
     {
-        public MessageWriteMapper()
+        public EmailMessageWriteMapper()
         {
             Map(m => m.Id).Index(0);
             Map(m => m.Sender).Index(1).TypeConverter<PersonDTOConverter>();
             Map(m => m.Recipient).Index(2).TypeConverter<PersonDTOConverter>();
             Map(m => m.Text).Index(3);
             Map(m => m.Timestamp).Index(4).TypeConverter<DateTimeConverter>();
+            Map(m => m.Subject).Index(5);
         }
     }
 
