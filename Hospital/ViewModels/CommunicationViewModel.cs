@@ -166,7 +166,7 @@ namespace Hospital.ViewModels
             }
             else
             {
-                MessageBox.Show("Please select a medical staff member before sending a message.", "No Medical Staff Selected", MessageBoxButton.OK, MessageBoxImage.Information)
+                MessageBox.Show("Please select a medical staff member before sending a message.", "No Medical Staff Selected", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
             }

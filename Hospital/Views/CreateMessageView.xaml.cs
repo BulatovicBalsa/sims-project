@@ -24,7 +24,16 @@ namespace Hospital.Views
         public CreateMessageView(PersonDTO sender,PersonDTO recipient)
         {
             InitializeComponent();
-            DataContext = new CreateMessageViewModel(sender,recipient);
+            this.DataContext = new CreateMessageViewModel(sender,recipient);
+        }
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
