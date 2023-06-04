@@ -101,7 +101,7 @@
             </Grid>
 
             <!-- Medical Staff DataGrid -->
-            <DataGrid Grid.Row="2" x:Name="MedicalStaffDataGrid" ItemsSource="{Binding MedicalStaff}" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="2" x:Name="MedicalStaffDataGrid" ItemsSource="{Binding MedicalStaff}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedMedicalStaff}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
                     <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />

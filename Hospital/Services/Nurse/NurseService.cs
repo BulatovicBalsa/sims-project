@@ -1,12 +1,11 @@
-﻿using Hospital.Repositories.Nurse;
-using System;
+﻿using Hospital.Models.Nurse;
+using Hospital.Repositories.Nurse;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hospital.Services
+
 {
+
     public class NurseService
     {
         private readonly NurseRepository _nurseRepository;

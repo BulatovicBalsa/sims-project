@@ -1,12 +1,16 @@
-﻿using Hospital.DTOs;
+﻿using GalaSoft.MvvmLight.Command;
+using Hospital.DTOs;
 using Hospital.Models;
 using Hospital.Services;
+using Hospital.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Hospital.ViewModels
 {
@@ -14,6 +18,7 @@ namespace Hospital.ViewModels
     {
         private EmailMessageService _emailMessageService;
         private PersonDTO _loggedUser;
+        private PersonDTO _selectedMedicalStaff;
         private ObservableCollection<EmailMessage> _emailMessages;
         public ObservableCollection<EmailMessage> EmailMessages
         {
@@ -21,7 +26,7 @@ namespace Hospital.ViewModels
             set
             {
                 _emailMessages = value;
-                OnPropertyChanged(nameof(EmailMessage);
+                OnPropertyChanged(nameof(EmailMessage));
             }
         }
         private ObservableCollection<PersonDTO> _medicalStaff;
@@ -113,10 +118,21 @@ namespace Hospital.ViewModels
                 }
             }
         }
+        public PersonDTO SelectedMedicalStaff
+        {
+            get => _selectedMedicalStaff;
+            set
+            {
+                _selectedMedicalStaff = value;
+                OnPropertyChanged(nameof(SelectedMedicalStaff));
+            }
+        }
+        public ICommand SendMessageCommand { get; }
         public CommunicationViewModel(PersonDTO user)
         {
             _emailMessageService = new EmailMessageService();
             _loggedUser = user;
+            SendMessageCommand = new RelayCommand(SendMessage);
             LoadAllEmailMessages();
             LoadMedicalStaff();
         }
@@ -138,12 +154,22 @@ namespace Hospital.ViewModels
         }
         private void LoadMedicalStaff()
         {
-            var allDoctorsAndNurses = PersonRepository.Instance.GetAll()
-                .Where(person => person.Role == Role.Doctor || person.Role == Role.Nurse)
-                .Where(person => person.Id != _loggedUser.Id)
-                .Select(person => new PersonDTO(person.Id, person.FirstName, person.LastName, person.Role));
-
+            var allDoctorsAndNurses = _emailMessageService.GetFilteredMedicalStaff(_loggedUser.Id);
             MedicalStaff = new ObservableCollection<PersonDTO>(allDoctorsAndNurses);
+        }
+        private void SendMessage()
+        {
+            if (SelectedMedicalStaff != null)
+            {
+                CreateMessageView createMessageView = new CreateMessageView(_loggedUser, SelectedMedicalStaff);
+                createMessageView.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a medical staff member before sending a message.", "No Medical Staff Selected", MessageBoxButton.OK, MessageBoxImage.Information)
+
+
+            }
         }
 
     }

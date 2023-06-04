@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hospital.ViewModels;
 
-namespace Hospital.Services.Nurse
+namespace Hospital.Services
 {
     class PatientDialogService
     {

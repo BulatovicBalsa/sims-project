@@ -24,6 +24,14 @@ namespace Hospital.Models
             Text = text;
             Timestamp = timestamp;
         }
+        public Message(PersonDTO sender, PersonDTO recipient, string text)
+        {
+            Id = Guid.NewGuid().ToString();
+            Sender = sender;
+            Recipient = recipient;
+            Text = text;
+            Timestamp = DateTime.Now;
+        }
 
         public Message() {}
     }
