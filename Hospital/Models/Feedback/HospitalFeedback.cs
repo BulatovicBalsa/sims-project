@@ -10,19 +10,19 @@ namespace Hospital.Models.Feedback
     {
         public int ServiceQualityRating { get; set; }
         public int CleanlinessRating { get; set; }
-        public int PatientSatisfactionRating { get; set; }
+        public int SatisfactionRating { get; set; }
         
         public HospitalFeedback(int rating, int recommendationRating, string comment, DateTime dateSubmitted, int serviceQualityRating, int cleanlinessRating, int patientSatisfactionRating) : base(rating, recommendationRating, comment, dateSubmitted)
         {
             ServiceQualityRating = serviceQualityRating;
             CleanlinessRating = cleanlinessRating;
-            PatientSatisfactionRating = patientSatisfactionRating;
+            SatisfactionRating = patientSatisfactionRating;
         }
         public HospitalFeedback(int rating, int recommendationRating, string comment, int serviceQualityRating, int cleanlinessRating, int patientSatisfactionRating) : base(rating, recommendationRating, comment)
         {
             ServiceQualityRating = serviceQualityRating;
             CleanlinessRating = cleanlinessRating;
-            PatientSatisfactionRating = patientSatisfactionRating;
+            SatisfactionRating = patientSatisfactionRating;
         }
     }
 }
