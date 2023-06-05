@@ -128,9 +128,10 @@
             <!-- Messages DataGrid -->
             <DataGrid Grid.Row="4" x:Name="MessagesDataGrid" ItemsSource="{Binding EmailMessages}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Sender" Binding="{Binding Sender}" Width="200" />
-                    <DataGridTextColumn Header="Recipient" Binding="{Binding Recipient}"  Width="200" />
-                    <DataGridTextColumn Header="Message" Binding="{Binding Message}"  Width="*" />
+                    <DataGridTextColumn Header="Sender" Binding="{Binding Sender}" Width="150" />
+                    <DataGridTextColumn Header="Recipient" Binding="{Binding Recipient}"  Width="150" />
+                    <DataGridTextColumn Header="Subject" Binding="{Binding Subject}"  Width="150" />
+                    <DataGridTextColumn Header="Message" Binding="{Binding Text}"  Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

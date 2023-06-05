@@ -26,7 +26,7 @@ namespace Hospital.ViewModels
             set
             {
                 _emailMessages = value;
-                OnPropertyChanged(nameof(EmailMessage));
+                OnPropertyChanged(nameof(EmailMessages));
             }
         }
         private ObservableCollection<PersonDTO> _medicalStaff;
@@ -56,20 +56,11 @@ namespace Hospital.ViewModels
             get => _isAllMessagesSelected;
             set
             {
-                if (_isAllMessagesSelected != value)
+                _isAllMessagesSelected = value;
+                if (_isAllMessagesSelected)
                 {
-                    _isAllMessagesSelected = value;
                     OnPropertyChanged(nameof(IsAllMessagesSelected));
-
-                    if (_isAllMessagesSelected)
-                    {
-                        _isSentMessagesSelected = false;
-                        _isReceivedMessagesSelected = false;
-                        OnPropertyChanged(nameof(IsSentMessagesSelected));
-                        OnPropertyChanged(nameof(IsReceivedMessagesSelected));
-
-                        LoadAllEmailMessages();
-                    }
+                    LoadAllEmailMessages();
                 }
             }
         }
@@ -79,20 +70,11 @@ namespace Hospital.ViewModels
             get => _isSentMessagesSelected;
             set
             {
-                if (_isSentMessagesSelected != value)
+                _isSentMessagesSelected = value;
+                if (_isSentMessagesSelected)
                 {
-                    _isSentMessagesSelected = value;
                     OnPropertyChanged(nameof(IsSentMessagesSelected));
-
-                    if (_isSentMessagesSelected)
-                    {
-                        _isAllMessagesSelected = false;
-                        _isReceivedMessagesSelected = false;
-                        OnPropertyChanged(nameof(IsAllMessagesSelected));
-                        OnPropertyChanged(nameof(IsReceivedMessagesSelected));
-
-                        LoadSentEmailMessages();
-                    }
+                    LoadSentEmailMessages();
                 }
             }
         }
@@ -102,20 +84,11 @@ namespace Hospital.ViewModels
             get => _isReceivedMessagesSelected;
             set
             {
-                if (_isReceivedMessagesSelected != value)
+                _isReceivedMessagesSelected = value;
+                if (_isReceivedMessagesSelected)
                 {
-                    _isReceivedMessagesSelected = value;
                     OnPropertyChanged(nameof(IsReceivedMessagesSelected));
-
-                    if (_isReceivedMessagesSelected)
-                    {
-                        _isAllMessagesSelected = false;
-                        _isSentMessagesSelected = false;
-                        OnPropertyChanged(nameof(IsAllMessagesSelected));
-                        OnPropertyChanged(nameof(IsSentMessagesSelected));
-
-                        LoadReceivedEmailMessages();
-                    }
+                    LoadReceivedEmailMessages();
                 }
             }
         }
