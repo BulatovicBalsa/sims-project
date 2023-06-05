@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Services;
+using Hospital.DTOs;
 
 namespace Hospital.ViewModels;
 
@@ -47,6 +48,7 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        SendMessageCommand = new RelayCommand(SendMessage);
     }
 
     private void DefaultExaminationView()
@@ -127,6 +129,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
+    public ICommand SendMessageCommand { get; set; }
 
     private void ViewMedicalRecord(string patientId)
     {
@@ -224,5 +227,11 @@ public class DoctorViewModel : ViewModelBase
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();
+    }
+    private void SendMessage()
+    {
+        PersonDTO loggedUser = new PersonDTO(_doctor.Id,_doctor.FirstName,_doctor.LastName,Role.Doctor);
+        var communicationView = new CommunicationView(loggedUser);
+        communicationView.ShowDialog();
     }
 }
