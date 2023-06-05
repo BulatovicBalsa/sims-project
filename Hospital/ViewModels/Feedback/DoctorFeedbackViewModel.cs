@@ -23,7 +23,7 @@ namespace Hospital.ViewModels.Feedback
         }
 
         public Doctor Doctor { get; set; }
-        public int Rating { get; set; }
+        public int OverallRating { get; set; }
         public int DoctorQualityRating { get; set; }
         public int RecommendationRating { get; set; }
         public string Comment { get; set; }
@@ -32,7 +32,7 @@ namespace Hospital.ViewModels.Feedback
 
         private void SubmitFeedback()
         {
-            DoctorFeedback feedback = new DoctorFeedback(Doctor.Id, Rating, RecommendationRating, Comment, DoctorQualityRating);
+            DoctorFeedback feedback = new DoctorFeedback(Doctor.Id, OverallRating, RecommendationRating, Comment, DoctorQualityRating);
             _feedbackService.SubmitDoctorFeedback(feedback);
             MessageBox.Show("Feedback submitted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }

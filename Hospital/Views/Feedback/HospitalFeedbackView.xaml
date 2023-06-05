@@ -1,0 +1,44 @@
+﻿<Window x:Class="Hospital.Views.Feedback.HospitalFeedbackView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hospital.Views.Feedback" xmlns:feedback="clr-namespace:Hospital.ViewModels.Feedback" d:DataContext="{d:DesignInstance Type=feedback:HospitalFeedbackViewModel}"
+        mc:Ignorable="d"
+        Title="HospitalFeedbackView" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="793*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="13,20,20,20" Grid.Column="1">
+            <TextBlock Text="Hospital Feedback" FontWeight="Bold" FontSize="20" Margin="0 0 0 20"/>
+
+            <TextBlock Text=" Overall Rating" Margin="0 0 0 10"/>
+            <Slider Minimum="1" Maximum="5" Value="{Binding OverallRating}"/>
+
+            <TextBlock Text="Service Quality Rating" Margin="0 0 0 10"/>
+            <Slider Minimum="1" Maximum="5" Value="{Binding ServiceQualityRating}"/>
+
+            <TextBlock Text="Cleanliness Rating" Margin="0 0 0 10"/>
+            <Slider Minimum="1" Maximum="5" Value="{Binding CleanlinessRating}"/>
+
+            <TextBlock Text="Patient Satisfaction Rating" Margin="0 0 0 10"/>
+            <Slider Minimum="1" Maximum="5" Value="{Binding SatisfactionRating}"/>
+
+            <TextBlock Text="Would You Recommend the Hospital?" Margin="0 0 0 10"/>
+            <ComboBox SelectedItem="{Binding RecommendationRating}">
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+            </ComboBox>
+
+            <TextBlock Text="Comments" Margin="0 0 0 10"/>
+            <TextBox Text="{Binding Comment}" Height="100" VerticalScrollBarVisibility="Auto"/>
+
+            <Button Content="Submit" Margin="0 20 0 0" Command="{Binding SubmitCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

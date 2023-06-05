@@ -21,7 +21,7 @@ namespace Hospital.ViewModels.Feedback
             SubmitCommand = new RelayCommand(SubmitFeedback);
         }
 
-        public int Rating { get; set; }
+        public int OverallRating { get; set; }
         public int RecommendationRating { get; set; }
         public int ServiceQualityRating { get; set; }
         public int CleanlinessRating { get; set; }
@@ -32,7 +32,7 @@ namespace Hospital.ViewModels.Feedback
 
         private void SubmitFeedback()
         {
-            HospitalFeedback feedback = new HospitalFeedback(Rating, RecommendationRating, Comment, ServiceQualityRating, CleanlinessRating, SatisfactionRating);
+            HospitalFeedback feedback = new HospitalFeedback(OverallRating, RecommendationRating, Comment, ServiceQualityRating, CleanlinessRating, SatisfactionRating);
             _feedbackService.SubmitHospitalFeedback(feedback);
             MessageBox.Show("Feedback submitted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
