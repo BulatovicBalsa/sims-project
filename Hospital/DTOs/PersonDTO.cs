@@ -26,6 +26,10 @@ namespace Hospital.DTOs
             LastName=lastName;
             Role=role;
         }
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 
 

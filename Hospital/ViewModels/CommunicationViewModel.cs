@@ -132,6 +132,7 @@ namespace Hospital.ViewModels
         {
             _emailMessageService = new EmailMessageService();
             _loggedUser = user;
+            _isAllMessagesSelected = true;
             SendMessageCommand = new RelayCommand(SendMessage);
             LoadAllEmailMessages();
             LoadMedicalStaff();
