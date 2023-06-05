@@ -5,7 +5,9 @@ using Hospital.Serialization;
 
 namespace Hospital.Repositories.Nurse;
 
+using Hospital.DTOs;
 using Hospital.Models.Nurse;
+using System;
 
 public class NurseRepository
 {
@@ -55,5 +57,27 @@ public class NurseRepository
             throw new ObjectNotFoundException($"Nurse with id {nurse.Id} was not found.");
 
         Serializer<Nurse>.ToCSV(allNurses, FilePath);
+    }
+
+    public List<PersonDTO> GetNursesByFilter(string id, string searchText)
+    {
+        var allNurses = GetAll();
+        var filteredNurses = allNurses.Where(nurse => IsNurseMatchingFilter(nurse, id, searchText)).ToList();
+
+        var nurseDTOs = filteredNurses.Select(nurse => new PersonDTO
+        {
+            Id = nurse.Id,
+            FirstName = nurse.FirstName,
+            LastName = nurse.LastName,
+            Role = Role.Nurse
+        }).ToList();
+
+        return nurseDTOs;
+    }
+    private bool IsNurseMatchingFilter(Nurse nurse, string id, string searchText)
+    {
+        return nurse.Id != id &&
+               (nurse.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                nurse.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
     }
 }

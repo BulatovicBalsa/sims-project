@@ -4,7 +4,9 @@ using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
+using Hospital.DTOs;
 using Models.Doctor;
+using System;
 
 public class DoctorRepository
 {
@@ -89,5 +91,26 @@ public class DoctorRepository
                 doctor.LastName.ToLower().Contains(lastName.ToLower()) &&
                 doctor.Specialization.ToLower().Contains(specialization.ToLower()))
             .ToList();
+    }
+    public List<PersonDTO> GetDoctorsByFilter(string id, string searchText)
+    {
+        var allDoctors = GetAll();
+        var filteredDoctors = allDoctors.Where(doctor => IsDoctorMatchingFilter(doctor, id, searchText)).ToList();
+
+        var doctorDTOs = filteredDoctors.Select(doctor => new PersonDTO
+        {
+            Id = doctor.Id,
+            FirstName = doctor.FirstName,
+            LastName = doctor.LastName,
+            Role = Role.Doctor
+        }).ToList();
+
+        return doctorDTOs;
+    }
+    private bool IsDoctorMatchingFilter(Doctor doctor, string id, string searchText)
+    {
+        return doctor.Id != id &&
+               (doctor.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                doctor.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
     }
 }

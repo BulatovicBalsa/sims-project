@@ -34,26 +34,22 @@ namespace Hospital.Services
         {
             return _emailMessageRepository.GetSentMessagesByParticipant(id);
         }
-        public List<PersonDTO> GetFilteredMedicalStaff(string id)
+        public List<PersonDTO> GetMedicalStaffByFilter(string id, string searchText)
         {
-            var allDoctors = _doctorService.GetAll();
-            var allNurses = _nurseService.GetAllNurses();
-
-            var filteredDoctors = allDoctors.Where(doctor => doctor.Id != id);
-            var filteredNurses = allNurses.Where(nurse => nurse.Id != id);
-
-            var medicalStaff = filteredDoctors
-            .Select(doctor => new PersonDTO(doctor.Id, doctor.FirstName, doctor.LastName, Role.Doctor))
-            .Concat(filteredNurses
-                    .Select(nurse => new PersonDTO(nurse.Id, nurse.FirstName, nurse.LastName, Role.Nurse)))
-            .ToList();
-
-            return medicalStaff;
+            var filteredDoctors = _doctorService.GetDoctorsByFilter(id, searchText);
+            var filteredNurses = _nurseService.GetNursesByFilter(id, searchText);
+            return ConcatenateDoctorsAndNurses(filteredDoctors, filteredNurses);
         }
 
         public void SendMessage(EmailMessage message)
         {
             _emailMessageRepository.Add(message);
+        }
+
+        private List<PersonDTO> ConcatenateDoctorsAndNurses(List<PersonDTO> filteredDoctors, List<PersonDTO> filteredNurses)
+        {
+            var medicalStaff = filteredDoctors.Concat(filteredNurses).ToList();
+            return medicalStaff;
         }
     }
 }

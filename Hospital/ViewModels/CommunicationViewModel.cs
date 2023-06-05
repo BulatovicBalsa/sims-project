@@ -47,6 +47,7 @@ namespace Hospital.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
+                LoadMedicalStaff();
             }
         }
         private bool _isAllMessagesSelected;
@@ -133,6 +134,7 @@ namespace Hospital.ViewModels
             _emailMessageService = new EmailMessageService();
             _loggedUser = user;
             _isAllMessagesSelected = true;
+            SearchText = string.Empty;
             SendMessageCommand = new RelayCommand(SendMessage);
             LoadAllEmailMessages();
             LoadMedicalStaff();
@@ -155,7 +157,7 @@ namespace Hospital.ViewModels
         }
         private void LoadMedicalStaff()
         {
-            var allDoctorsAndNurses = _emailMessageService.GetFilteredMedicalStaff(_loggedUser.Id);
+            var allDoctorsAndNurses = _emailMessageService.GetMedicalStaffByFilter(_loggedUser.Id,SearchText);
             MedicalStaff = new ObservableCollection<PersonDTO>(allDoctorsAndNurses);
         }
         private void SendMessage()
@@ -168,8 +170,6 @@ namespace Hospital.ViewModels
             else
             {
                 MessageBox.Show("Please select a medical staff member before sending a message.", "No Medical Staff Selected", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
             }
         }
 

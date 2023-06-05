@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Nurse;
+﻿using Hospital.DTOs;
+using Hospital.Models.Nurse;
 using Hospital.Repositories.Nurse;
 using System.Collections.Generic;
 
@@ -13,9 +14,13 @@ namespace Hospital.Services
         {
             _nurseRepository = NurseRepository.Instance;
         }
-        public List<Nurse> GetAllNurses()
+        public List<Nurse> GetAll()
         {
             return _nurseRepository.GetAll();
+        }
+        public List<PersonDTO> GetNursesByFilter(string id, string searchText)
+        {
+            return _nurseRepository.GetNursesByFilter(id, searchText);
         }
     }
 }
