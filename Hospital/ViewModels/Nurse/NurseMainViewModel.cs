@@ -1,17 +1,23 @@
-﻿using System.Windows.Input;
+﻿using System.Threading;
+using System.Windows.Input;
+using Hospital.DTOs;
+using Hospital.Services;
 using Hospital.ViewModels.Nurse.Medication;
 using Hospital.ViewModels.Nurse.PatientAdmission;
 using Hospital.ViewModels.Nurse.Patients;
 using Hospital.ViewModels.Nurse.Referrals;
 using Hospital.ViewModels.Nurse.UrgentExaminations;
+using Hospital.Views;
 
 namespace Hospital.ViewModels.Nurse;
 
 public class NurseMainViewModel : ViewModelBase
 {
     private ViewModelBase _currentChildView;
+    private NurseService _nurseService;
     public NurseMainViewModel()
     {
+        _nurseService = new NurseService();
         ShowPatientsViewCommand = new ViewModelCommand(ExecuteShowPatientsViewCommand);
         ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
         ShowUrgentExaminationsViewCommand = new ViewModelCommand(ExecuteShowUrgentExaminationsViewCommand);
@@ -64,6 +70,8 @@ public class NurseMainViewModel : ViewModelBase
     }
     private void ExecuteShowCommunicationViewCommand(object obj)
     {
-        //CurrentChildView = new CommunicationViewModel();
+        PersonDTO loggedUser = _nurseService.GetLoggedInNurse();
+        CommunicationView communicationView = new CommunicationView(loggedUser);
+        communicationView.Show();
     }
 }

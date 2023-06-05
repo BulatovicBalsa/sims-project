@@ -138,12 +138,19 @@ namespace Hospital.ViewModels
             if (SelectedMedicalStaff != null)
             {
                 CreateMessageView createMessageView = new CreateMessageView(_loggedUser, SelectedMedicalStaff);
+                createMessageView.ViewModel.MessageSent += CreateMessageView_MessageSent;
                 createMessageView.Show();
             }
             else
             {
                 MessageBox.Show("Please select a medical staff member before sending a message.", "No Medical Staff Selected", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+        private void CreateMessageView_MessageSent(object sender, EventArgs e)
+        {
+            if(IsAllMessagesSelected) LoadAllEmailMessages();
+            else if(IsSentMessagesSelected) LoadSentEmailMessages();
+            else if(IsReceivedMessagesSelected) LoadReceivedEmailMessages();
         }
 
     }

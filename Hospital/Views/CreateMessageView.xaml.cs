@@ -21,10 +21,12 @@ namespace Hospital.Views
     /// </summary>
     public partial class CreateMessageView : Window
     {
+        public CreateMessageViewModel ViewModel;
         public CreateMessageView(PersonDTO sender,PersonDTO recipient)
         {
             InitializeComponent();
-            this.DataContext = new CreateMessageViewModel(sender,recipient);
+            ViewModel = new CreateMessageViewModel(sender,recipient);
+            DataContext = ViewModel;
         }
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
         {

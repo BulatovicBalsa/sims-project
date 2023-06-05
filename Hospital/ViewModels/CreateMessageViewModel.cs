@@ -18,30 +18,11 @@ namespace Hospital.ViewModels
         private PersonDTO _sender;
         private PersonDTO _recipient;
         private EmailMessageService _emailMessageService;
-        private string _from;
-        private string _to;
         private string _subject;
         private string _message;
-
-        public string From
-        {
-            get => _from;
-            set
-            {
-                _from = value;
-                OnPropertyChanged(nameof(From));
-            }
-        }
-
-        public string To
-        {
-            get => _to;
-            set
-            {
-                _to = value;
-                OnPropertyChanged(nameof(To));
-            }
-        }
+        public event EventHandler MessageSent;
+        public string SenderDisplayName => _sender?.ToString();
+        public string RecipientDisplayName => _recipient?.ToString();
 
         public string Subject
         {
@@ -71,9 +52,6 @@ namespace Hospital.ViewModels
             _recipient = recipient;
             _emailMessageService = new EmailMessageService();
 
-            From = _sender.FirstName+ " " + _sender.LastName;
-            To = _recipient.FirstName + " " + _recipient.LastName;
-
             SendCommand = new RelayCommand(Send);
         }
 
@@ -82,12 +60,14 @@ namespace Hospital.ViewModels
             EmailMessage message = new EmailMessage(_sender, _recipient, _subject, _message);
             _emailMessageService.SendMessage(message);
 
+            MessageSent?.Invoke(this, EventArgs.Empty);
+
             CloseWindow();
         }
 
         private void CloseWindow()
         {
-            CreateMessageView? createMessageView = Application.Current.MainWindow as CreateMessageView;
+            Window createMessageView = Application.Current.Windows.OfType<CreateMessageView>().FirstOrDefault();
             createMessageView?.Close();
         }
     }
