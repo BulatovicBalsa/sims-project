@@ -17,6 +17,7 @@ public class NurseMainViewModel : ViewModelBase
         ShowUrgentExaminationsViewCommand = new ViewModelCommand(ExecuteShowUrgentExaminationsViewCommand);
         ShowPatientReferralsViewCommand = new ViewModelCommand(ExecuteShowPatientReferralsViewCommand);
         ShowMedicationManagementViewCommand = new ViewModelCommand(ExecuteShowMedicationManagementViewCommand);
+        ShowCommunicationViewCommand = new ViewModelCommand(ExecuteShowCommunicationViewCommand);
 
         ExecuteShowPatientsViewCommand(null);
     }
@@ -35,6 +36,7 @@ public class NurseMainViewModel : ViewModelBase
     public ICommand ShowUrgentExaminationsViewCommand { get; }
     public ICommand ShowPatientReferralsViewCommand { get; }
     public ICommand ShowMedicationManagementViewCommand { get; }
+    public ICommand ShowCommunicationViewCommand { get; }
 
     private void ExecuteShowPatientsViewCommand(object? obj)
     {
@@ -59,5 +61,9 @@ public class NurseMainViewModel : ViewModelBase
     private void ExecuteShowMedicationManagementViewCommand(object obj)
     {
         CurrentChildView = new MedicationManagementViewModel();
+    }
+    private void ExecuteShowCommunicationViewCommand(object obj)
+    {
+        //CurrentChildView = new CommunicationViewModel();
     }
 }

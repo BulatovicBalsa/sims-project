@@ -12,7 +12,7 @@ namespace Hospital.Repositories
 {
     public class EmailMessageRepository
     {
-        private const string FilePath = "../../Data/messages.csv";
+        private const string FilePath = "../../../Data/messages.csv";
         private static EmailMessageRepository? _instance;
 
         public static EmailMessageRepository Instance => _instance ??= new EmailMessageRepository();

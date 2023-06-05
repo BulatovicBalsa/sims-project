@@ -13,7 +13,7 @@ namespace Hospital.Serialization;
 
 public class Serializer<T>
 {
-    private const string DirectoryPath = "../../../Data/";
+    private const string DirectoryPath = "../../Data/";
 
     public static List<T> FromCSV(string filePath, ClassMap<T>? mapper = null)
     {
