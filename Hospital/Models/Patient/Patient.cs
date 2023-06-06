@@ -65,4 +65,11 @@ public class Patient : Person
     {
         return HospitalTreatmentReferrals.FirstOrDefault(referral => referral.IsActive())!;
     }
+
+    public void ReleaseHospitalTreatmentReferral(HospitalTreatmentReferral selectedVisitReferral)
+    {
+        var referralToRelease =
+            HospitalTreatmentReferrals.FirstOrDefault(referral => referral.Equals(selectedVisitReferral));
+        referralToRelease!.Release = DateTime.Today;
+    }
 }
