@@ -84,7 +84,7 @@ public class AddTimeOffRequestViewModel : ViewModelBase
         {
             if (e is InvalidOperationException or UndefinedTimeOffReasonException)
             {
-                MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK,
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 return;
             }
