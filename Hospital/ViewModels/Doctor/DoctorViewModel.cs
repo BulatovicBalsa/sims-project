@@ -142,7 +142,7 @@ public class DoctorViewModel : ViewModelBase
 
     private void VisitHospitalTreatmentPatients()
     {
-        var dialog = new VisitHospitalTreatmentPatientsDialog(_doctor);
+        var dialog = new VisitHospitalizedPatientsDialog(_doctor);
         dialog.ShowDialog();
     }
 
