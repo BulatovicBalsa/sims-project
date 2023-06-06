@@ -81,11 +81,12 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
         MedicalVisits =
             new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
 
-        var dialogResult = MessageBox.Show("Patient released, do you want to create examination?", "Confirmation",
+        var dialogResult = MessageBox.Show("Patient released, do you want to create examination in 10 days?", "Confirmation",
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (dialogResult == MessageBoxResult.No) return;
 
-        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>());
+        var examinationInTenDays = new Examination(_doctor, patient, false, DateTime.Today.AddDays(10), null);
+        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), examinationInTenDays);
         createExaminationDialog.ShowDialog();
     }
 
