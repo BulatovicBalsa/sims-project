@@ -48,4 +48,11 @@ public class HospitalTreatmentReferral
 
         return sb.ToString();
     }
+
+    internal bool IsActive()
+    {
+        if (Addmisson is null) return false;
+        if (Release is null) return true;
+        return false;
+    }
 }
