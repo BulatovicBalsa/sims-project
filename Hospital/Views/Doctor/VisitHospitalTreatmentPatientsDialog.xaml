@@ -15,8 +15,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ProgressBar Grid.Row="2" Width="200" x:Name="FlowProgressBar" Value="100" Minimum="0" Maximum="100"  Height="20" IsIndeterminate="True" Visibility="{Binding ProgressVisibility}"/>
-        <TextBlock Grid.Row="2" Text="Loading..." FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ProgressVisibility}"/>
+        <ProgressBar Grid.Row="1" Width="200" x:Name="FlowProgressBar" Value="100" Minimum="0" Maximum="100"  Height="20" IsIndeterminate="True" Visibility="{Binding ProgressVisibility}"/>
+        <TextBlock Grid.Row="1" Text="Loading..." FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ProgressVisibility}"/>
 
 
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="22" Margin="0 10">Patients</TextBlock>
