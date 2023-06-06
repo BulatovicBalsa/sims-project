@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.ViewModels.Feedback;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Hospital.Views.Feedback
         public HospitalFeedbackView()
         {
             InitializeComponent();
+            DataContext = new HospitalFeedbackViewModel();
         }
     }
 }

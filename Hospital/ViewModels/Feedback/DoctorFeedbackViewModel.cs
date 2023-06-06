@@ -16,10 +16,11 @@ namespace Hospital.ViewModels.Feedback
     {
         private readonly FeedbackService _feedbackService;
 
-        public DoctorFeedbackViewModel()
+        public DoctorFeedbackViewModel(Doctor doctor)
         {
             _feedbackService = new FeedbackService();
             SubmitCommand = new RelayCommand(SubmitFeedback);
+            Doctor = doctor;
         }
 
         public Doctor Doctor { get; set; }

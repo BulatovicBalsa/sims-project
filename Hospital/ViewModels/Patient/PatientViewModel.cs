@@ -13,6 +13,9 @@ using Hospital.Services;
 using System.Windows;
 using Hospital.Models;
 using System.Windows.Threading;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
+using Hospital.Views.Feedback;
 
 namespace Hospital.ViewModels
 {
@@ -27,8 +30,13 @@ namespace Hospital.ViewModels
         private readonly PatientService _patientService;
         private Patient _patient;
         private DispatcherTimer _notificationTimer;
+        private Examination _selectedExamination;
 
-
+        public Examination SelectedExamination
+        {
+            get { return _selectedExamination; }
+            set { SetField(ref _selectedExamination, value); }
+        }
         public ObservableCollection<Examination> Examinations
         {
             get { return _examinations; }
@@ -50,6 +58,8 @@ namespace Hospital.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand HospitalSurveyCommand { get; }
+        public ICommand DoctorSurveyCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -67,6 +77,8 @@ namespace Hospital.ViewModels
             _patientService = new PatientService();
             _patient = patient;
             _notificationTime = patient.NotificationTime;
+            HospitalSurveyCommand = new RelayCommand(HospitalSurvey);
+            DoctorSurveyCommand = new RelayCommand(DoctorSurvey);
 
             LoadExaminations();
             DisplayPatientNotifications(this,EventArgs.Empty);
@@ -129,11 +141,30 @@ namespace Hospital.ViewModels
                 //await Task.Delay(10); // Delay to allow UI updates
             });
         }
-        internal void SaveNotificationTime(int notificationTime)
+        public void SaveNotificationTime(int notificationTime)
         {
             NotificationTime = notificationTime;
             _patient.NotificationTime = notificationTime;
             _patientService.UpdatePatient(_patient);
+        }
+
+        private void HospitalSurvey()
+        {
+            HospitalFeedbackView feedbackView = new HospitalFeedbackView();
+            feedbackView.ShowDialog();
+        }
+
+        private void DoctorSurvey()
+        {
+            if (SelectedExamination != null)
+            {
+                DoctorFeedbackView feedbackView = new DoctorFeedbackView(SelectedExamination.Doctor);
+                feedbackView.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please select an examination to submit a doctor survey.", "Information");
+            }
         }
     }
 }

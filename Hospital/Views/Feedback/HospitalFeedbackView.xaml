@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Feedback" xmlns:feedback="clr-namespace:Hospital.ViewModels.Feedback" d:DataContext="{d:DesignInstance Type=feedback:HospitalFeedbackViewModel}"
         mc:Ignorable="d"
-        Title="HospitalFeedbackView" Height="500" Width="800">
+        Title="HospitalFeedbackView" Height="536" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>

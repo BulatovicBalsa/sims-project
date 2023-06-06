@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Models.Doctor;
+using Hospital.ViewModels.Feedback;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace Hospital.Views.Feedback
     /// </summary>
     public partial class DoctorFeedbackView : Window
     {
-        public DoctorFeedbackView()
+        public DoctorFeedbackView(Doctor doctor)
         {
             InitializeComponent();
+            DataContext = new DoctorFeedbackViewModel(doctor);
         }
     }
 }
