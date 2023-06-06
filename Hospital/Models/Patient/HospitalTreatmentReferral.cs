@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hospital.Models.Patient;
@@ -58,5 +59,14 @@ public class HospitalTreatmentReferral
     {
         if (Admission is null) return false;
         return Release is null;
+    }
+
+    public bool Equals(HospitalTreatmentReferral? otherReferral)
+    {
+        if (otherReferral == null) return false;
+        var areTestsEqual = otherReferral.AdditionalTests.SequenceEqual(AdditionalTests);
+        var arePrescriptionsEqual = otherReferral.Prescriptions.SequenceEqual(Prescriptions);
+        return otherReferral.Admission == Admission && otherReferral.Release == Release &&
+               otherReferral.Duration == Duration && arePrescriptionsEqual && areTestsEqual;
     }
 }

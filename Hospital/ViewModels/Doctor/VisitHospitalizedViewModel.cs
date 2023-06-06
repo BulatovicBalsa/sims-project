@@ -72,11 +72,9 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
     private void ReleasePatient(string patientId)
     {
         var selectedVisit = GetMedicalVisitDto(patientId);
-
-        selectedVisit.Referral.Release = DateTime.Today;
-
         var patient = _patientService.GetPatientById(patientId);
-        //patient.ReplaceHospitalTreatmentReferral(selectedVisit.Referral);
+        
+        patient!.ReleaseHospitalTreatmentReferral(selectedVisit.Referral);
         _patientService.UpdatePatient(patient!);
 
         MedicalVisits =
