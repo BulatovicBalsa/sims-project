@@ -60,4 +60,9 @@ public class Patient : Person
     {
         return HospitalTreatmentReferrals.Any(referral => referral.IsActive());
     }
+
+    public HospitalTreatmentReferral GetActiveHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.FirstOrDefault(referral => referral.IsActive())!;
+    }
 }
