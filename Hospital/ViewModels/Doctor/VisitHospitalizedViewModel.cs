@@ -74,7 +74,7 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
     {
         var selectedVisit = GetMedicalVisitDto(patientId);
         var patient = _patientService.GetPatientById(patientId);
-        
+
         patient!.ReleaseHospitalTreatmentReferral(selectedVisit.Referral);
         _patientService.UpdatePatient(patient!);
 
@@ -85,7 +85,7 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (dialogResult == MessageBoxResult.No) return;
 
-        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new());
+        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>());
         createExaminationDialog.ShowDialog();
     }
 
