@@ -5,6 +5,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.DTOs;
 using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Services;
 using Hospital.Views;
@@ -79,6 +80,13 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
 
         MedicalVisits =
             new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
+
+        var dialogResult = MessageBox.Show("Patient released, do you want to create examination?", "Confirmation",
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
+        if (dialogResult == MessageBoxResult.No) return;
+
+        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new());
+        createExaminationDialog.ShowDialog();
     }
 
     private void ModifyTherapy(string patientId)
