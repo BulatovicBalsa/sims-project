@@ -37,5 +37,7 @@ public class DoctorTimeOffRequest
         var difference = Start - DateTime.Today;
         if (difference.TotalDays < 2)
             throw new InvalidOperationException("The start date must be at least 2 days away from today.");
+        if (Start > End)
+            throw new InvalidOperationException("Start needs to be after End");
     }
 }
