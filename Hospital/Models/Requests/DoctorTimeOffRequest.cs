@@ -12,10 +12,10 @@ public class DoctorTimeOffRequest
         DoctorId = "";
     }
 
-    public DoctorTimeOffRequest(string doctorId, string reason, DateTime start, DateTime end, bool isApproved = false)
+    public DoctorTimeOffRequest(string doctorId, string? reason, DateTime start, DateTime end, bool isApproved = false)
     {
         Id = Guid.NewGuid().ToString();
-        Reason = reason.Trim();
+        Reason = reason?.Trim();
         Start = start.Date;
         End = end.Date;
         IsApproved = isApproved;
@@ -23,7 +23,7 @@ public class DoctorTimeOffRequest
         CheckValidity();
     }
 
-    public string Reason { get; set; }
+    public string? Reason { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public bool IsApproved { get; set; }
