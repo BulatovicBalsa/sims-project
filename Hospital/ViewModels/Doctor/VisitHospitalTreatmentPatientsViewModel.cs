@@ -12,11 +12,11 @@ namespace Hospital.ViewModels;
 
 public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
 {
-    private readonly HospitalTreatmentService _hospitalTreatmentService = new();
-    private ObservableCollection<MedicalVisitDto> _medicalVisits;
     private readonly Doctor _doctor;
-    private Visibility _progressVisibility;
+    private readonly HospitalTreatmentService _hospitalTreatmentService = new();
     private Visibility _dataGridVisibility;
+    private ObservableCollection<MedicalVisitDto> _medicalVisits;
+    private Visibility _progressVisibility;
 
     public VisitHospitalTreatmentPatientsViewModel(Doctor doctor)
     {
@@ -43,10 +43,15 @@ public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
         {
             _progressVisibility = value;
             OnPropertyChanged(nameof(ProgressVisibility));
-            if (value == Visibility.Collapsed) DataGridVisibility = Visibility.Visible;
-            if (value == Visibility.Visible) DataGridVisibility = Visibility.Collapsed;
+            DataGridVisibility = value switch
+            {
+                Visibility.Hidden => Visibility.Visible,
+                Visibility.Visible => Visibility.Hidden,
+                _ => DataGridVisibility
+            };
         }
     }
+
     public Visibility DataGridVisibility
     {
         get => _dataGridVisibility;
@@ -56,6 +61,7 @@ public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
             OnPropertyChanged(nameof(DataGridVisibility));
         }
     }
+
     public ICommand ModifyTherapyCommand { get; set; }
 
     private void ModifyTherapy(string patientId)
@@ -67,11 +73,13 @@ public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
 
         if (selectedVisit is null) throw new InvalidOperationException();
 
+        ProgressVisibility = Visibility.Visible;
+        
         var dialog = new ModifyTherapyDialog(selectedVisit!.Patient, selectedVisit.Referral);
         dialog.ShowDialog();
 
-        ProgressVisibility = Visibility.Visible;
-        MedicalVisits = new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
-        _progressVisibility = Visibility.Collapsed;
+        MedicalVisits =
+            new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
+        ProgressVisibility = Visibility.Hidden;
     }
 }
