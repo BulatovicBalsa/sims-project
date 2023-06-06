@@ -5,6 +5,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.DTOs;
 using Hospital.Models.Doctor;
+using Hospital.Models.Patient;
 using Hospital.Services;
 using Hospital.Views;
 
@@ -12,6 +13,7 @@ namespace Hospital.ViewModels;
 
 public class VisitHospitalizedPatientsViewModel : ViewModelBase
 {
+    private readonly PatientService _patientService = new();
     private readonly Doctor _doctor;
     private readonly HospitalTreatmentService _hospitalTreatmentService = new();
     private Visibility _dataGridVisibility;
@@ -24,6 +26,21 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
         _medicalVisits =
             new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(doctor));
         ModifyTherapyCommand = new RelayCommand<string>(ModifyTherapy);
+        ReleasePatientCommand = new RelayCommand<string>(ReleasePatient);
+    }
+
+    private void ReleasePatient(string patientId)
+    {
+        var selectedVisit = GetMedicalVisitDto(patientId);
+
+        selectedVisit.Referral.Release = DateTime.Today;
+
+        var patient = _patientService.GetPatientById(patientId);
+        patient.ReplaceHospitalTreatmentReferral(selectedVisit.Referral);
+        _patientService.UpdatePatient(patient!);
+
+        MedicalVisits =
+            new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
     }
 
     public ObservableCollection<MedicalVisitDto> MedicalVisits
@@ -33,6 +50,7 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
         {
             _medicalVisits = value;
             OnPropertyChanged(nameof(MedicalVisits));
+            ProgressVisibility = Visibility.Hidden;
         }
     }
 
@@ -63,8 +81,20 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
     }
 
     public ICommand ModifyTherapyCommand { get; set; }
+    public ICommand ReleasePatientCommand { get; set; }
 
     private void ModifyTherapy(string patientId)
+    {
+        var selectedVisit = GetMedicalVisitDto(patientId);
+
+        var dialog = new ModifyTherapyDialog(selectedVisit.Patient, selectedVisit.Referral);
+        dialog.ShowDialog();
+
+        MedicalVisits =
+            new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
+    }
+
+    private MedicalVisitDto GetMedicalVisitDto(string patientId)
     {
         MedicalVisitDto selectedVisit = null;
         foreach (var medicalVisit in MedicalVisits)
@@ -74,12 +104,6 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
         if (selectedVisit is null) throw new InvalidOperationException();
 
         ProgressVisibility = Visibility.Visible;
-        
-        var dialog = new ModifyTherapyDialog(selectedVisit!.Patient, selectedVisit.Referral);
-        dialog.ShowDialog();
-
-        MedicalVisits =
-            new ObservableCollection<MedicalVisitDto>(_hospitalTreatmentService.GetHospitalizedPatients(_doctor));
-        ProgressVisibility = Visibility.Hidden;
+        return selectedVisit;
     }
 }
