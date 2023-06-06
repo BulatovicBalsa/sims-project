@@ -10,7 +10,7 @@ using Hospital.Views;
 
 namespace Hospital.ViewModels;
 
-public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
+public class VisitHospitalizedPatientsViewModel : ViewModelBase
 {
     private readonly Doctor _doctor;
     private readonly HospitalTreatmentService _hospitalTreatmentService = new();
@@ -18,7 +18,7 @@ public class VisitHospitalTreatmentPatientsViewModel : ViewModelBase
     private ObservableCollection<MedicalVisitDto> _medicalVisits;
     private Visibility _progressVisibility;
 
-    public VisitHospitalTreatmentPatientsViewModel(Doctor doctor)
+    public VisitHospitalizedPatientsViewModel(Doctor doctor)
     {
         _doctor = doctor;
         _medicalVisits =

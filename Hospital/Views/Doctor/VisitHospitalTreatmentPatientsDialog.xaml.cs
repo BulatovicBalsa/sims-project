@@ -20,7 +20,7 @@ namespace Hospital.Views
     {
         public VisitHospitalTreatmentPatientsDialog(Doctor doctor)
         {
-            DataContext = new VisitHospitalTreatmentPatientsViewModel(doctor);
+            DataContext = new VisitHospitalizedPatientsViewModel(doctor);
             InitializeComponent();
         }
     }
