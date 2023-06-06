@@ -85,8 +85,7 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (dialogResult == MessageBoxResult.No) return;
 
-        var examinationInTenDays = new Examination(_doctor, patient, false, DateTime.Today.AddDays(10), null);
-        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), examinationInTenDays);
+        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, true, patient);
         createExaminationDialog.ShowDialog();
     }
 
