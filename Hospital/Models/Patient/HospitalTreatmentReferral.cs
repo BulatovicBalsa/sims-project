@@ -22,8 +22,9 @@ public class HospitalTreatmentReferral
     public List<Prescription> Prescriptions { get; set; }
     public int Duration { get; set; }
     public List<string> AdditionalTests { get; set; }
-    public DateTime? Addmisson { get; set; }
+    public DateTime? Admission { get; set; }
     public DateTime? Release { get; set; }
+
     public override string ToString()
     {
         StringBuilder sb = new();
@@ -46,13 +47,18 @@ public class HospitalTreatmentReferral
                 sb.Append('#');
         }
 
+        sb.Append(';');
+        sb.Append(Admission);
+
+        sb.Append(';');
+        sb.Append(Release);
+
         return sb.ToString();
     }
 
     internal bool IsActive()
     {
-        if (Addmisson is null) return false;
-        if (Release is null) return true;
-        return false;
+        if (Admission is null) return false;
+        return Release is null;
     }
 }
