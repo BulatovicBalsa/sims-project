@@ -17,31 +17,32 @@ namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
-    private readonly DoctorTimeOffRequestService _requestService = new();
+    private const string Placeholder = "Search...";
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
-
-    private const string Placeholder = "Search...";
+    private readonly DoctorTimeOffRequestService _requestService = new();
 
     private Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
 
     private ObservableCollection<Patient> _patients;
-    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     private string _searchBoxText;
 
-    private object _selectedPatient;
-
     private DateTime _selectedDate;
+
+    private object _selectedPatient;
+    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
         _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_examinationService.GetViewedPatients(doctor));
-        TimeOffRequests = new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
-        Examinations = new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
+        Examinations =
+            new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
         ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
@@ -52,25 +53,6 @@ public class DoctorViewModel : ViewModelBase
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
         VisitHospitalTreatmentPatientsCommand = new RelayCommand(VisitHospitalTreatmentPatients);
-    }
-
-    private void VisitHospitalTreatmentPatients()
-    {
-        var dialog = new VisitHospitalTreatmentPatientsDialog(_doctor);
-        dialog.ShowDialog();
-    }
-
-    private void AddTimeOffRequest()
-    {
-        var dialog = new AddTimeOffRequestDialog(_doctor);
-        dialog.ShowDialog();
-        TimeOffRequests = new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
-    }
-
-    private void DefaultExaminationView()
-    {
-        Examinations.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -92,7 +74,8 @@ public class DoctorViewModel : ViewModelBase
             OnPropertyChanged(nameof(Patients));
         }
     }
-    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests 
+
+    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests
     {
         get => _timeOffRequests;
         set
@@ -156,6 +139,26 @@ public class DoctorViewModel : ViewModelBase
     public ICommand DefaultExaminationViewCommand { get; set; }
     public ICommand AddTimeOffRequestCommand { get; set; }
     public ICommand VisitHospitalTreatmentPatientsCommand { get; set; }
+
+    private void VisitHospitalTreatmentPatients()
+    {
+        var dialog = new VisitHospitalTreatmentPatientsDialog(_doctor);
+        dialog.ShowDialog();
+    }
+
+    private void AddTimeOffRequest()
+    {
+        var dialog = new AddTimeOffRequestDialog(_doctor);
+        dialog.ShowDialog();
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+    }
 
     private void ViewMedicalRecord(string patientId)
     {
