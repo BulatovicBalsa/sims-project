@@ -26,9 +26,9 @@ namespace Hospital.Views
 {
     public partial class ModifyExaminationDialog : Window
     {
-        public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null, bool isForTenDays=false)
+        public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null, bool isForTenDays=false, Patient patientInTenDays=null)
         {
-            DataContext = new ModifyExaminationViewModel(doctor, examinationCollection, examinationToChange, isForTenDays);
+            DataContext = new ModifyExaminationViewModel(doctor, examinationCollection, examinationToChange, isForTenDays, patientInTenDays);
             InitializeComponent();
             ConfigWindow();
         }
