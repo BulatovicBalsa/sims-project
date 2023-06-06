@@ -24,7 +24,7 @@ namespace Hospital.Views.Feedback
         public DoctorFeedbackView(Doctor doctor)
         {
             InitializeComponent();
-            DataContext = new DoctorFeedbackViewModel(doctor);
+            DataContext = new DoctorFeedbackViewModel(doctor,this);
         }
     }
 }

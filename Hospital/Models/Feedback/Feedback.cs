@@ -8,24 +8,34 @@ namespace Hospital.Models.Feedback
 {
     public abstract class Feedback
     {
-        public int Id { get; set; }
-        public int Rating { get; set; }
+        public string Id { get; set; }
+        public int OverallRating { get; set; }
         public int RecommendationRating { get; set; }
         public string Comment { get; set; }
         public DateTime DateSubmitted { get; set; }
 
-        public Feedback(int rating, int recommendationRating, string comment, DateTime dateSubmitted)
+        public Feedback(string id,int overallRating, int recommendationRating, string comment, DateTime dateSubmitted)
         {
-            Rating = rating;
+            Id = id;
+            OverallRating = overallRating;
             RecommendationRating = recommendationRating;
             Comment = comment;
             DateSubmitted = dateSubmitted;
         }
-        public Feedback(int rating, int recommendationRating, string comment)
+        public Feedback(int overallRating, int recommendationRating, string comment)
         {
-            Rating = rating;
+            Id = Guid.NewGuid().ToString();
+            OverallRating = overallRating;
             RecommendationRating = recommendationRating;
             Comment = comment;
+            DateSubmitted = DateTime.Now;
+        }
+        public Feedback() 
+        {
+            Id = Guid.NewGuid().ToString();
+            OverallRating = 0;
+            RecommendationRating = 0;
+            Comment = "";
             DateSubmitted = DateTime.Now;
         }
 

@@ -158,13 +158,15 @@ namespace Hospital.ViewModels
         {
             if (SelectedExamination != null)
             {
-                DoctorFeedbackView feedbackView = new DoctorFeedbackView(SelectedExamination.Doctor);
-                feedbackView.ShowDialog();
+                if (SelectedExamination.Start <= DateTime.Now)
+                {
+                    DoctorFeedbackView feedbackView = new DoctorFeedbackView(SelectedExamination.Doctor);
+                    feedbackView.ShowDialog();
+                }
+                else MessageBox.Show("You can only submit a doctor survey for past examinations.", "Information");
+                
             }
-            else
-            {
-                MessageBox.Show("Please select an examination to submit a doctor survey.", "Information");
-            }
+            else MessageBox.Show("Please select an examination to submit a doctor survey.", "Information");
         }
     }
 }

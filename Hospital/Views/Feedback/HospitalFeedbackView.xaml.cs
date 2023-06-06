@@ -23,7 +23,7 @@ namespace Hospital.Views.Feedback
         public HospitalFeedbackView()
         {
             InitializeComponent();
-            DataContext = new HospitalFeedbackViewModel();
+            DataContext = new HospitalFeedbackViewModel(this);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Hospital.Repositories.Feedback
 {
     public class DoctorFeedbackRepository
     {
-        private const string FilePath = "../../../Data/doctor_feedback.csv";
+        private const string FilePath = "../../../Data/doctor_feedbacks.csv";
         private static DoctorFeedbackRepository? _instance;
 
         public static DoctorFeedbackRepository Instance => _instance ??= new DoctorFeedbackRepository();

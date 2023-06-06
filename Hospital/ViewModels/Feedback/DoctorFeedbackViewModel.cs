@@ -15,12 +15,18 @@ namespace Hospital.ViewModels.Feedback
     public class DoctorFeedbackViewModel : ViewModelBase
     {
         private readonly FeedbackService _feedbackService;
+        private readonly Window _view;
 
-        public DoctorFeedbackViewModel(Doctor doctor)
+        public DoctorFeedbackViewModel(Doctor doctor, Window window)
         {
             _feedbackService = new FeedbackService();
             SubmitCommand = new RelayCommand(SubmitFeedback);
+            _view = window;
             Doctor = doctor;
+            OverallRating = 1;
+            RecommendationRating = 1;
+            DoctorQualityRating = 1;
+            Comment = "";
         }
 
         public Doctor Doctor { get; set; }
@@ -36,6 +42,7 @@ namespace Hospital.ViewModels.Feedback
             DoctorFeedback feedback = new DoctorFeedback(Doctor.Id, OverallRating, RecommendationRating, Comment, DoctorQualityRating);
             _feedbackService.SubmitDoctorFeedback(feedback);
             MessageBox.Show("Feedback submitted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            _view.Close();
         }
     }
 }

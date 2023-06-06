@@ -141,7 +141,7 @@
                 </StackPanel>
 
                 <!-- Examinations DataGrid -->
-                <DataGrid Grid.Row="4" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="4" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedExamination}" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"/>
