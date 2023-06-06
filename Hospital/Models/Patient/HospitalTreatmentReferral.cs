@@ -12,11 +12,13 @@ public class HospitalTreatmentReferral
         AdditionalTests = new List<string>();
     }
 
-    public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests)
+    public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests, DateTime? admission=null, DateTime? release=null)
     {
         Prescriptions = prescriptions;
         Duration = duration;
         AdditionalTests = additionalTests;
+        Admission = admission;
+        Release = release;
     }
 
     public List<Prescription> Prescriptions { get; set; }
@@ -47,11 +49,7 @@ public class HospitalTreatmentReferral
                 sb.Append('#');
         }
 
-        sb.Append(';');
-        sb.Append(Admission);
-
-        sb.Append(';');
-        sb.Append(Release);
+        sb.Append($";{Admission:yyyy-MM-dd HH:mm:ss};{Release:yyyy-MM-dd HH:mm:ss}");
 
         return sb.ToString();
     }
