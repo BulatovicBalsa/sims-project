@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Hospital.Models.Patient;
@@ -21,7 +22,8 @@ public class HospitalTreatmentReferral
     public List<Prescription> Prescriptions { get; set; }
     public int Duration { get; set; }
     public List<string> AdditionalTests { get; set; }
-
+    public DateTime? Addmisson { get; set; }
+    public DateTime? Release { get; set; }
     public override string ToString()
     {
         StringBuilder sb = new();
