@@ -16,7 +16,6 @@ namespace Hospital.ViewModels;
 
 public class ModifyExaminationViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
     private readonly RoomFilterService _roomFilterService = new();
@@ -41,7 +40,7 @@ public class ModifyExaminationViewModel : ViewModelBase
 
     private TimeOnly? _selectedTime;
 
-    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null)
+    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null, bool isForTenDays=false)
     {
         _isUpdate = examinationToChange is not null;
         _doctor = doctor;
@@ -54,6 +53,9 @@ public class ModifyExaminationViewModel : ViewModelBase
 
         ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         FillForm();
+
+        if (isForTenDays)
+            SelectedDate = DateTime.Today.AddDays(10);
     }
 
     public bool IsOperation
