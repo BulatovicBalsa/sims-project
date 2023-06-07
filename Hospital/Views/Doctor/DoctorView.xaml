@@ -160,7 +160,7 @@
                     <Button Content="Add Time Off Requests"
                             Margin="5" Command="{Binding AddTimeOffRequestCommand}"/>
                     <Button Content="Visit Patients On Hospital Treatments"
-                            Margin="5" Command="{Binding VisitHospitalTreatmentPatientsCommand}"/>
+                            Margin="5" Command="{Binding VisitHospitalizedPatientsCommand}"/>
                 </StackPanel>
             </Grid>
         </Grid>
