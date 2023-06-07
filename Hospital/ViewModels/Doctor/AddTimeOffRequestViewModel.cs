@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -16,8 +11,8 @@ namespace Hospital.ViewModels;
 
 public class AddTimeOffRequestViewModel : ViewModelBase
 {
-    private readonly DoctorTimeOffRequestService _requestService = new();
     private readonly Doctor _doctor;
+    private readonly DoctorTimeOffRequestService _requestService = new();
 
     private string? _reason;
 
@@ -67,12 +62,22 @@ public class AddTimeOffRequestViewModel : ViewModelBase
 
     private void AddRequest(Window window)
     {
-        DoctorTimeOffRequest request = null;
+        var request = TryGetTimeOffRequest();
+        if (request is null) return;
+
+        _requestService.Add(request!);
+        MessageBox.Show("Succeed");
+        window.DialogResult = true;
+    }
+
+    private DoctorTimeOffRequest? TryGetTimeOffRequest()
+    {
+        DoctorTimeOffRequest? request = null;
         if (SelectedStart is null || SelectedEnd is null)
         {
             MessageBox.Show("You must enter Start and End Date for Time Off Request", "Error", MessageBoxButton.OK,
                 MessageBoxImage.Error);
-            return;
+            return request;
         }
 
         try
@@ -86,12 +91,10 @@ public class AddTimeOffRequestViewModel : ViewModelBase
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButton.OK,
                     MessageBoxImage.Error);
-                return;
+                return request;
             }
         }
 
-        _requestService.Add(request!);
-        MessageBox.Show("Succeed");
-        window.DialogResult = true;
+        return request;
     }
 }
