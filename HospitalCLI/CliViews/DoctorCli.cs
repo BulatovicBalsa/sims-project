@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hospital.Models.Doctor;
-using Hospital.Models.Patient;
-using Hospital.Services;
+﻿using Hospital.Services;
 using Hospital.ViewModels;
 
 namespace HospitalCLI.CliViews
@@ -18,7 +9,7 @@ namespace HospitalCLI.CliViews
 
         public DoctorCli() : base(DoctorService.GetById(Thread.CurrentPrincipal!.Identity!.Name!.Split('|')[0])!)
         {
-            
+            Menu();
         }
 
         public void Menu()

@@ -27,7 +27,7 @@ public class App
         }
 
         Console.WriteLine(Thread.CurrentPrincipal?.Identity?.Name);
-        
+        OpenUserCli();
     }
 
     private static void OpenUserCli()
@@ -80,8 +80,7 @@ public class App
                     return;
                 }
 
-                var doctorView = new DoctorCli(doctor);
-                doctorView.Show();
+                var doctorView = new DoctorCli();
 
                 //ShowNotifications(id);
                 break;
