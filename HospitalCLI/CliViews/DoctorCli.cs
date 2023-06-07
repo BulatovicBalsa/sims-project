@@ -1,4 +1,6 @@
-﻿using Hospital.Services;
+﻿using System.Collections.ObjectModel;
+using Hospital.Models.Examination;
+using Hospital.Services;
 using Hospital.ViewModels;
 
 namespace HospitalCLI.CliViews
@@ -28,7 +30,7 @@ namespace HospitalCLI.CliViews
                 switch (dialogResult)
                 {
                     case "1":
-                        Examinations.ToList().ForEach(Console.WriteLine);
+                        ViewExaminationsForNextThreeDays();
                         break;
                     case "2":
                         ViewExaminationsForSelectedDate();
@@ -44,6 +46,13 @@ namespace HospitalCLI.CliViews
                         return;
                 }
             }
+        }
+
+        private void ViewExaminationsForNextThreeDays()
+        {
+            Examinations =
+                new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(_doctor));
+            Examinations.ToList().ForEach(Console.WriteLine);
         }
 
         private void ViewExaminationsForSelectedDate()
