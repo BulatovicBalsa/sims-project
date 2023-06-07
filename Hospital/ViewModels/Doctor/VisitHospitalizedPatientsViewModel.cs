@@ -93,8 +93,9 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
 
         var createExaminationDialog =
             new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, DateTime.Today.AddDays(10), patient);
-        createExaminationDialog.ShowDialog();
+        var result = createExaminationDialog.ShowDialog();
 
+        if (!result.GetValueOrDefault()) return;
         MessageBox.Show("Successfully added examination", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
