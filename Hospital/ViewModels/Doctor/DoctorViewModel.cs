@@ -22,7 +22,7 @@ public class DoctorViewModel : ViewModelBase
     protected readonly PatientService _patientService = new();
     protected readonly DoctorTimeOffRequestService _requestService = new();
 
-    private Doctor _doctor;
+    protected Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
 
     private ObservableCollection<Patient> _patients;
