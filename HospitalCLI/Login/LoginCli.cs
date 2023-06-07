@@ -15,7 +15,7 @@ namespace HospitalCLI.Login
         private string? _username;
         private string? _password;
 
-        public void LoginUser()
+        public bool LoginUser()
         {
             Console.Write("Username: ");
             _username = Console.ReadLine()?.Trim();
@@ -23,12 +23,13 @@ namespace HospitalCLI.Login
             Console.Write("Password: ");
             _password = ReadPassword();
 
-            ExecuteLogin();
+            if (!TryLogin()) return false;
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
+            return true;
         }
 
-        public string ReadPassword()
+        public static string ReadPassword()
         {
             var password = "";
             ConsoleKeyInfo key;
@@ -55,15 +56,17 @@ namespace HospitalCLI.Login
             return password;
         }
 
-        private void ExecuteLogin()
+        private bool TryLogin()
         {
             if (_loginService.AuthenticateUser(new NetworkCredential(_username, _password)))
             {
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
+                return true;
             }
             else
             {
                 _loginService.LoggedUser = null;
+                return false;
             }
         }
 

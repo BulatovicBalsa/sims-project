@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Security.Principal;
 using Hospital.Exceptions;
 using HospitalCLI.Login;
@@ -10,7 +11,13 @@ public class App
     private static void Main()
     {
         var loginCli = new LoginCli();
-        loginCli.LoginUser();
+        var isLoginSucceed = loginCli.LoginUser();
+        if (!isLoginSucceed)
+        {
+            Console.WriteLine("Login failed");
+            return;
+        }
+
         Console.WriteLine(Thread.CurrentPrincipal?.Identity?.Name);
     }
 }
