@@ -41,7 +41,7 @@ public class ModifyExaminationViewModel : ViewModelBase
     private TimeOnly? _selectedTime;
 
     public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection,
-        Examination? examinationToChange = null, bool isForTenDays = false, Patient patientInTenDays = null)
+        Examination? examinationToChange = null, DateTime? examinationDate = null, Patient patientInTenDays = null)
     {
         _isUpdate = examinationToChange is not null;
         _doctor = doctor;
@@ -55,7 +55,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         FillForm();
 
-        if (!isForTenDays) return;
+        if (examinationDate is null) return;
         SelectedDate = DateTime.Today.AddDays(10);
         SelectedPatient = patientInTenDays;
     }
