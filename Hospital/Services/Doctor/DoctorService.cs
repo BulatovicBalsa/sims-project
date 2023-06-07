@@ -34,8 +34,8 @@ public class DoctorService
     {
         return _doctorRepository.GetQualifiedDoctors(specialization);
     }
-    public List<PersonDTO> GetDoctorsByFilter(string id,string searchText)
+    public List<PersonDTO> GetDoctorsAsPersonDTOsByFilter(string id,string searchText)
     {
-        return _doctorRepository.GetDoctorsByFilter(id, searchText);
+        return _doctorRepository.GetDoctorsAsPersonDTOsByFilter(id, searchText);
     }
 }

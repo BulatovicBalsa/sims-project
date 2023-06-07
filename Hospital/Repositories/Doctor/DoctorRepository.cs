@@ -92,7 +92,7 @@ public class DoctorRepository
                 doctor.Specialization.ToLower().Contains(specialization.ToLower()))
             .ToList();
     }
-    public List<PersonDTO> GetDoctorsByFilter(string id, string searchText)
+    public List<PersonDTO> GetDoctorsAsPersonDTOsByFilter(string id, string searchText)
     {
         var allDoctors = GetAll();
         var filteredDoctors = allDoctors.Where(doctor => IsDoctorMatchingFilter(doctor, id, searchText)).ToList();

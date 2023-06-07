@@ -25,7 +25,7 @@ namespace Hospital.Services
             return _nurseRepository.GetNursesByFilter(id, searchText);
         }
 
-        internal PersonDTO GetLoggedInNurse()
+        public PersonDTO GetLoggedInNurse()
         {
             var identityName = Thread.CurrentPrincipal.Identity.Name;
             var id = identityName.Split("|")[0];

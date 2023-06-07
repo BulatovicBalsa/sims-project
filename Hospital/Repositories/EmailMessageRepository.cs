@@ -62,7 +62,7 @@ namespace Hospital.Repositories
             return allMessages.Where(message => message.Recipient.Id == id).ToList();
         }
 
-        internal List<EmailMessage> GetSentMessagesByParticipant(string id)
+        public List<EmailMessage> GetSentMessagesByParticipant(string id)
         {
             var allMessages = GetAll();
             return allMessages.Where(message => message.Sender.Id == id).ToList();

@@ -14,10 +14,9 @@ namespace Hospital.ViewModels.Nurse;
 public class NurseMainViewModel : ViewModelBase
 {
     private ViewModelBase _currentChildView;
-    private NurseService _nurseService;
+    private NurseService _nurseService = new();
     public NurseMainViewModel()
     {
-        _nurseService = new NurseService();
         ShowPatientsViewCommand = new ViewModelCommand(ExecuteShowPatientsViewCommand);
         ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
         ShowUrgentExaminationsViewCommand = new ViewModelCommand(ExecuteShowUrgentExaminationsViewCommand);
