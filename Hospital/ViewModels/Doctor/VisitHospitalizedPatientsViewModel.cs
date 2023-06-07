@@ -83,9 +83,16 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
 
         var dialogResult = MessageBox.Show("Patient released, do you want to create examination in 10 days?", "Confirmation",
             MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+        CreateExaminationInTenDays(dialogResult, patient);
+    }
+
+    private void CreateExaminationInTenDays(MessageBoxResult dialogResult, Patient patient)
+    {
         if (dialogResult == MessageBoxResult.No) return;
 
-        var createExaminationDialog = new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, true, patient);
+        var createExaminationDialog =
+            new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, true, patient);
         createExaminationDialog.ShowDialog();
 
         MessageBox.Show("Successfully added examination", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
