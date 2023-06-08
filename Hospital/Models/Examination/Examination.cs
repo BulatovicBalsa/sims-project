@@ -38,10 +38,10 @@ public class Examination
     public Room? Room { get; set; }
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
-    public List<string>? ProcedureDoctorIds { get; set; }
-    public List<string>? ProcedureNurseIds { get; set; }
+    public List<Doctor>? ProcedureDoctorIds { get; set; }
+    public List<Nurse>? ProcedureNurseIds { get; set; }
 
-    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<string>? procedureDoctorIds = null, List<string>? procedureNursesIds = null)
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<Doctor>? procedureDoctorIds = null, List<Nurse>? procedureNursesIds = null)
     {
          Doctor = doctor;
          Patient = patient;
