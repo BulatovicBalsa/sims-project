@@ -1,12 +1,12 @@
 ﻿using Hospital.Models.Manager;
 using System;
-using System.Windows.Navigation;
+using System.Collections.Generic;
 
 namespace Hospital.Models.Examination;
 using Doctor;
 using Hospital.Repositories.Manager;
 using Patient;
-
+using Nurse;
 public class UpdateExaminationDto
 {
     public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient patient,
@@ -38,8 +38,10 @@ public class Examination
     public Room? Room { get; set; }
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
+    public List<string>? ProcedureDoctorIds { get; set; }
+    public List<string>? ProcedureNurseIds { get; set; }
 
-    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false)
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<string>? procedureDoctorIds = null, List<string>? procedureNursesIds = null)
     {
          Doctor = doctor;
          Patient = patient;
@@ -50,6 +52,8 @@ public class Examination
          Room = room ?? RoomRepository.Instance.GetAll()[0];
          Admissioned = false;
          Urgent = urgent;
+         ProcedureDoctorIds = procedureDoctorIds;
+         ProcedureNurseIds = procedureNursesIds;
     }
 
     public Examination()
