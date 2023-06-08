@@ -107,7 +107,7 @@ public class Examination
         {
             var indent = "\t\t";
             var builder = new StringBuilder();
-            builder.Append(ToString());
+            builder.Append($"Examination data: Patient: {Patient.FirstName} {Patient.LastName} {Patient.Jmbg}, Start: {Start}, Operation?: {IsOperation}");
             if (ProcedureDoctors?.Count > 0)
             {
                 builder.Append($"\n{indent}Doctors: ");
