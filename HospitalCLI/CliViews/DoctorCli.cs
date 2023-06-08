@@ -58,15 +58,50 @@ public class DoctorCli
                     AddExaminationCli();
                     break;
                 case "4":
-                    DeleteExaminationCli();
+                    UpdateExaminationCli();
                     break;
                 case "5":
+                    DeleteExaminationCli();
                     break;
                 case "X":
                     Console.WriteLine("Good Bye!!!!!!");
                     return;
             }
         }
+    }
+
+    private void UpdateExaminationCli()
+    {
+        var upcoming = _examinationService.GetUpcomingExaminations(_doctor);
+        var i = 0;
+
+        if (upcoming.Count == 0)
+        {
+            Console.WriteLine("You have no examinations to delete");
+            return;
+        }
+
+        upcoming.ForEach(examination => Console.WriteLine($"{i++} {examination}"));
+        Console.Write("Examination index to update: ");
+        i = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Choose new date and time (yyyy-MM-dd HH:mm)");
+        var dateAsString = Console.ReadLine();
+        if (!DateTime.TryParseExact(dateAsString, "yyyy-MM-dd HH:mm", null, DateTimeStyles.None,
+                out var selectedDate)) return;
+
+        upcoming[i].Start = selectedDate;
+
+        try
+        {
+            _examinationService.UpdateExamination(upcoming[i], false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        Console.WriteLine("Succeed");
     }
 
     private void DeleteExaminationCli()
