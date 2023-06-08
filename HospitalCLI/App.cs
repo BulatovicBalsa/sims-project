@@ -26,7 +26,6 @@ public class App
             return;
         }
 
-        Console.WriteLine(Thread.CurrentPrincipal?.Identity?.Name);
         OpenUserCli();
     }
 
