@@ -33,12 +33,16 @@ public class DoctorCli
     {
         while (true)
         {
+            Console.WriteLine();
+            Console.WriteLine("Operations");
+            Console.WriteLine("===============================================");
             Console.WriteLine("1 - View Examinations for next 3 days");
             Console.WriteLine("2 - View Examinations for selected date");
             Console.WriteLine("3 - Add Examination");
             Console.WriteLine("4 - Update Examination");
             Console.WriteLine("5 - Delete Examination");
             Console.WriteLine("X - Exit");
+            Console.Write("Choose operation: ");
 
             var dialogResult = Console.ReadLine();
 
@@ -54,6 +58,7 @@ public class DoctorCli
                     AddExaminationCli();
                     break;
                 case "4":
+                    DeleteExaminationCli();
                     break;
                 case "5":
                     break;
@@ -62,6 +67,33 @@ public class DoctorCli
                     return;
             }
         }
+    }
+
+    private void DeleteExaminationCli()
+    {
+        var upcoming= _examinationService.GetUpcomingExaminations(_doctor);
+        var i = 0;
+
+        if (upcoming.Count == 0)
+        {
+            Console.WriteLine("You have no examinations to delete");
+            return;
+        }
+
+        upcoming.ForEach(examination => Console.WriteLine($"{i++} {examination}"));
+        Console.Write("Examination index to delete: ");
+        i = Convert.ToInt32(Console.ReadLine());
+
+        try
+        {
+            _examinationService.DeleteExamination(upcoming[i], false);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        Console.WriteLine("Succeed");
     }
 
     private void AddExaminationCli()
