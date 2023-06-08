@@ -110,12 +110,12 @@ public class Examination
             builder.Append($"Examination data: Patient: {Patient.FirstName} {Patient.LastName} {Patient.Jmbg}, Start: {Start}, Operation?: {IsOperation}");
             if (ProcedureDoctors?.Count > 0)
             {
-                builder.Append($"\n{indent}Doctors: ");
+                builder.Append($"\n{indent}Procedure Doctors: ");
                 ProcedureDoctors.ForEach(doctor => builder.Append($"\n\t{indent}{doctor}"));
             }
 
             if (!(ProcedureNurses?.Count > 0)) return builder.ToString();
-            builder.Append($"\n{indent}Nurses: ");
+            builder.Append($"\n{indent}Procedure Nurses: ");
             ProcedureNurses.ForEach(nurse => builder.Append($"\n\t{indent}{nurse}"));
 
             return builder.ToString();

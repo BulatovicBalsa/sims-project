@@ -228,7 +228,7 @@ public class DoctorCli
     {
         _examinations = _examinationService.GetExaminationsForNextThreeDays(_doctor);
         Console.WriteLine("\nExaminations: ");
-        _examinations.ForEach(examination => Console.WriteLine($"\t{examination.ToStringCli}"));
+        _examinations.ForEach(examination => Console.WriteLine($"\t{examination.ToStringCli}\n"));
     }
 
     private void ViewExaminationsForSelectedDate()
@@ -240,6 +240,6 @@ public class DoctorCli
 
         _examinations = _examinationService.GetExaminationsForDate(_doctor, selectedDate);
         Console.WriteLine("\nExaminations: ");
-        _examinations.ForEach(examination => Console.WriteLine($"\t{examination.ToStringCli}"));
+        _examinations.ForEach(examination => Console.WriteLine($"\t{examination.ToStringCli}\n"));
     }
 }
