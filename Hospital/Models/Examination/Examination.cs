@@ -105,18 +105,18 @@ public class Examination
     {
         get
         {
-            var indent = "\t";
+            var indent = "\t\t";
             var builder = new StringBuilder();
             builder.Append(ToString());
             if (ProcedureDoctors?.Count > 0)
             {
                 builder.Append($"\n{indent}Doctors: ");
-                ProcedureDoctors.ForEach(doctor => builder.Append($"\t{indent}{doctor}"));
+                ProcedureDoctors.ForEach(doctor => builder.Append($"\n\t{indent}{doctor}"));
             }
 
             if (!(ProcedureNurses?.Count > 0)) return builder.ToString();
             builder.Append($"\n{indent}Nurses: ");
-            ProcedureNurses.ForEach(nurse => builder.Append($"\t{indent}{nurse}"));
+            ProcedureNurses.ForEach(nurse => builder.Append($"\n\t{indent}{nurse}"));
 
             return builder.ToString();
         }
