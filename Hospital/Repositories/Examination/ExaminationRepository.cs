@@ -33,7 +33,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
         Map(examination => examination.ProcedureDoctors).Index(9).TypeConverter<DoctorListTypeConverter>();
-        Map(examination => examination.ProcedureNurses).Index(10);
+        Map(examination => examination.ProcedureNurses).Index(10).TypeConverter<NurseListTypeConverter>();
     }
 
     public class DoctorTypeConverter : DefaultTypeConverter
