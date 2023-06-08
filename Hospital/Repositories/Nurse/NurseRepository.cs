@@ -6,10 +6,14 @@ using Hospital.Serialization;
 namespace Hospital.Repositories.Nurse;
 
 using Hospital.Models.Nurse;
+using Hospital.Repositories.Doctor;
 
 public class NurseRepository
 {
     private const string FilePath = "../../../Data/nurses.csv";
+    private static NurseRepository? _instance;
+
+    public static NurseRepository Instance => _instance ??= new NurseRepository();
 
     public List<Nurse> GetAll()
     {
