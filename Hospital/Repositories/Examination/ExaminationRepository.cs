@@ -130,6 +130,8 @@ public sealed class ExaminationWriteMapper : ClassMap<Examination>
         Map(examination => examination.Room!.Id).Index(6);
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
+        Map(examination => examination.ProcedureDoctors).Index(9).Convert(row => string.Join("|", row.Value.Id)).Index(9);
+        Map(examination => examination.ProcedureNurses).Index(10).Convert(row => string.Join("|", row.Value.Id)).Index(10);
     }
 }
 
