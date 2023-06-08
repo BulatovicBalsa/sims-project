@@ -1,6 +1,7 @@
 ﻿using Hospital.Models.Manager;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Hospital.Models.Examination;
 using Doctor;
@@ -99,7 +100,28 @@ public class Examination
     {
         return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
     }
-      
+    
+    public string ToStringCli
+    {
+        get
+        {
+            var indent = "\t";
+            var builder = new StringBuilder();
+            builder.Append(ToString());
+            if (ProcedureDoctors?.Count > 0)
+            {
+                builder.Append($"\n{indent}Doctors: ");
+                ProcedureDoctors.ForEach(doctor => builder.Append($"\t{indent}{doctor}"));
+            }
+
+            if (!(ProcedureNurses?.Count > 0)) return builder.ToString();
+            builder.Append($"\n{indent}Nurses: ");
+            ProcedureNurses.ForEach(nurse => builder.Append($"\t{indent}{nurse}"));
+
+            return builder.ToString();
+        }
+    }
+
     public void Update(UpdateExaminationDto examinationDto)
     {
         Start = examinationDto.Start;
