@@ -1,91 +1,88 @@
-﻿using Hospital.Exceptions;
+﻿using System.Net;
+using System.Security.Principal;
+using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
 using Hospital.Models.Nurse;
 using Hospital.Models.Patient;
 using Hospital.Services;
-using System.Net;
-using System.Security.Principal;
 
-namespace HospitalCLI.Login
+namespace HospitalCLI.Login;
+
+public class LoginCli
 {
-    public class LoginCli
+    private readonly LoginService _loginService = new();
+    private string? _password;
+    private string? _username;
+
+    public bool LoginUser()
     {
-        private readonly LoginService _loginService = new();
-        private string? _username;
-        private string? _password;
+        Console.Write("Username: ");
+        _username = Console.ReadLine()?.Trim();
 
-        public bool LoginUser()
+        Console.Write("Password: ");
+        _password = ReadPassword();
+
+        if (!TryLogin()) return false;
+
+        Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
+        return true;
+    }
+
+    public static string ReadPassword()
+    {
+        var password = "";
+        ConsoleKeyInfo key;
+
+        do
         {
-            Console.Write("Username: ");
-            _username = Console.ReadLine()?.Trim();
+            key = Console.ReadKey(true);
 
-            Console.Write("Password: ");
-            _password = ReadPassword();
+            if (!char.IsLetterOrDigit(key.KeyChar) && key.Key != ConsoleKey.Backspace) continue;
 
-            if (!TryLogin()) return false;
+            if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password.Remove(password.Length - 1);
+                Console.Write("\b \b");
+            }
+            else if (char.IsLetterOrDigit(key.KeyChar))
+            {
+                password += key.KeyChar;
+                Console.Write("*");
+            }
+        } while (key.Key != ConsoleKey.Enter);
 
+        Console.WriteLine();
+        return password;
+    }
+
+    private bool TryLogin()
+    {
+        if (_loginService.AuthenticateUser(new NetworkCredential(_username, _password)))
+        {
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
             return true;
         }
 
-        public static string ReadPassword()
-        {
-            var password = "";
-            ConsoleKeyInfo key;
+        _loginService.LoggedUser = null;
+        return false;
+    }
 
-            do
-            {
-                key = Console.ReadKey(true);
+    private string GetIdentity()
+    {
+        if (_loginService.LoggedUser == null) return "";
 
-                if (!char.IsLetterOrDigit(key.KeyChar) && key.Key != ConsoleKey.Backspace) continue;
+        var userId = _loginService.LoggedUser.Id;
+        return $"{userId}|{GetUserType()}";
+    }
 
-                if (key.Key == ConsoleKey.Backspace && password.Length > 0)
-                {
-                    password = password.Remove(password.Length - 1);
-                    Console.Write("\b \b");
-                }
-                else if (char.IsLetterOrDigit(key.KeyChar))
-                {
-                    password += key.KeyChar;
-                    Console.Write("*");
-                }
-            } while (key.Key != ConsoleKey.Enter);
+    private string GetUserType()
+    {
+        if (_loginService.LoggedUser?.GetType() == typeof(Patient)) return "PATIENT";
+        if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
+        if (_loginService.LoggedUser?.GetType() == typeof(Nurse)) return "NURSE";
+        if (_loginService.LoggedUser?.GetType() == typeof(Manager)) return "MANAGER";
 
-            Console.WriteLine();
-            return password;
-        }
-
-        private bool TryLogin()
-        {
-            if (_loginService.AuthenticateUser(new NetworkCredential(_username, _password)))
-            {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(GetIdentity()), null);
-                return true;
-            }
-            else
-            {
-                _loginService.LoggedUser = null;
-                return false;
-            }
-        }
-
-        private string GetIdentity()
-        {
-            if (_loginService.LoggedUser == null) return "";
-
-            var userId = _loginService.LoggedUser.Id;
-            return $"{userId}|{GetUserType()}";
-        }
-
-        private string GetUserType()
-        {
-            if (_loginService.LoggedUser?.GetType() == typeof(Patient)) return "PATIENT";
-            if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
-            if (_loginService.LoggedUser?.GetType() == typeof(Nurse)) return "NURSE";
-            if (_loginService.LoggedUser?.GetType() == typeof(Manager)) return "MANAGER";
-
-            throw new UnrecognizedUserTypeException();
-        }
+        throw new UnrecognizedUserTypeException();
     }
 }

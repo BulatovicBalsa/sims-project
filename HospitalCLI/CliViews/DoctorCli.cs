@@ -42,6 +42,7 @@ public class DoctorCli
             Console.WriteLine("4 - Update Examination");
             Console.WriteLine("5 - Delete Examination");
             Console.WriteLine("X - Exit");
+            Console.WriteLine();
             Console.Write("Choose operation: ");
 
             var dialogResult = Console.ReadLine();
@@ -77,15 +78,15 @@ public class DoctorCli
 
         if (upcoming.Count == 0)
         {
-            Console.WriteLine("You have no examinations to delete");
+            Console.WriteLine("\nYou have no examinations to delete");
             return;
         }
 
-        upcoming.ForEach(examination => Console.WriteLine($"{i++} {examination}"));
-        Console.Write("Examination index to update: ");
+        upcoming.ForEach(examination => Console.WriteLine($"\t{i++} {examination}"));
+        Console.Write("\nExamination index to update: ");
         i = Convert.ToInt32(Console.ReadLine());
 
-        Console.Write("Choose new date and time (yyyy-MM-dd HH:mm)");
+        Console.Write("\nChoose new date and time (yyyy-MM-dd HH:mm): ");
         var dateAsString = Console.ReadLine();
         if (!DateTime.TryParseExact(dateAsString, "yyyy-MM-dd HH:mm", null, DateTimeStyles.None,
                 out var selectedDate)) return;
@@ -98,25 +99,26 @@ public class DoctorCli
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine("\n" + e.Message);
+            return;
         }
 
-        Console.WriteLine("Succeed");
+        Console.WriteLine("\nSucceed");
     }
 
     private void DeleteExaminationCli()
     {
-        var upcoming= _examinationService.GetUpcomingExaminations(_doctor);
+        var upcoming = _examinationService.GetUpcomingExaminations(_doctor);
         var i = 0;
 
         if (upcoming.Count == 0)
         {
-            Console.WriteLine("You have no examinations to delete");
+            Console.WriteLine("\nYou have no examinations to delete");
             return;
         }
 
-        upcoming.ForEach(examination => Console.WriteLine($"{i++} {examination}"));
-        Console.Write("Examination index to delete: ");
+        upcoming.ForEach(examination => Console.WriteLine($"\t{i++} {examination}"));
+        Console.Write("\nExamination index to delete: ");
         i = Convert.ToInt32(Console.ReadLine());
 
         try
@@ -125,10 +127,11 @@ public class DoctorCli
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine("\n" + ex.Message);
+            return;
         }
 
-        Console.WriteLine("Succeed");
+        Console.WriteLine("\nSucceed");
     }
 
     private void AddExaminationCli()
@@ -136,27 +139,27 @@ public class DoctorCli
         var i = 0;
         var j = 0;
 
-        Console.Write("Date and time: (yyyy-MM-dd HH:mm)");
+        Console.Write("\nDate and time: (yyyy-MM-dd HH:mm): ");
         var dateAsString = Console.ReadLine();
         if (!DateTime.TryParseExact(dateAsString, "yyyy-MM-dd HH:mm", null, DateTimeStyles.None,
                 out var selectedDate)) return;
 
-        Console.WriteLine("Patients: ");
-        _allPatients.ForEach(patient => Console.WriteLine($"{i++}, {patient}"));
+        Console.WriteLine("\nPatients: ");
+        _allPatients.ForEach(patient => Console.WriteLine($"\t{i++}, {patient}"));
 
-        Console.Write("Enter patient index: ");
+        Console.Write("\nEnter patient index: ");
         var index = Convert.ToInt32(Console.ReadLine());
         var selectedPatient = _allPatients[index];
 
-        Console.WriteLine("Rooms: ");
-        _allRooms.ForEach(room => Console.WriteLine($"{j++} {room}"));
+        Console.WriteLine("\nRooms: ");
+        _allRooms.ForEach(room => Console.WriteLine($"\t{j++} {room}"));
 
-        Console.Write("Enter room index: ");
+        Console.Write("\nEnter room index: ");
         index = Convert.ToInt32(Console.ReadLine());
         var selectedRoom = _allRooms[index];
 
         var isOperation = false;
-        Console.WriteLine("Is operation?: ");
+        Console.Write("\nIs operation?: ");
         if (Console.ReadLine() == "yes") isOperation = true;
 
         var examination =
@@ -168,24 +171,29 @@ public class DoctorCli
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine("\n" + e.Message);
+            return;
         }
+
+        Console.WriteLine("\nSucceed");
     }
 
     private void ViewExaminationsForNextThreeDays()
     {
         _examinations = _examinationService.GetExaminationsForNextThreeDays(_doctor);
-        _examinations.ForEach(Console.WriteLine);
+        Console.WriteLine("\nExaminations: ");
+        _examinations.ForEach(examination => Console.WriteLine($"\t{examination}"));
     }
 
     private void ViewExaminationsForSelectedDate()
     {
-        Console.WriteLine("Enter date you want to see (yyyy MM dd): ");
+        Console.Write("\nEnter date you want to see (yyyy MM dd): ");
         var dateAsString = Console.ReadLine();
         if (!DateTime.TryParseExact(dateAsString, "yyyy MM dd", null, DateTimeStyles.None,
                 out var selectedDate)) return;
 
         _examinations = _examinationService.GetExaminationsForDate(_doctor, selectedDate);
-        _examinations.ForEach(Console.WriteLine);
+        Console.WriteLine("\nExaminations: ");
+        _examinations.ForEach(examination => Console.WriteLine($"\t{examination}"));
     }
 }
