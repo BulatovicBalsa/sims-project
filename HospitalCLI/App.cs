@@ -52,8 +52,7 @@ public class App
                     return;
                 }
 
-                var patientView = new PatientView(patient);
-                patientView.Show();
+                var patientView = new PatientCli(patient);
 
                 //ShowNotifications(id);
                 break;

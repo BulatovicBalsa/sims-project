@@ -147,21 +147,25 @@ namespace HospitalCLI.CliViews
 
         private bool TryParseInput(string input, out int value, int minValue, int maxValue)
         {
+            input = input.Trim();
             return int.TryParse(input, out value) && value >= minValue && value <= maxValue;
         }
 
         private bool TryParseDateTime(string input, string format, out DateTime value)
         {
+            input = input.Trim();
             return DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
         }
 
         private bool TryParseTimeSpan(string input, string format, out TimeSpan value)
         {
+            input = input.Trim();
             return TimeSpan.TryParseExact(input, format, CultureInfo.InvariantCulture, out value);
         }
 
         private bool TryParseEnum<TEnum>(string input, bool ignoreCase, out TEnum value) where TEnum : struct
         {
+            input = input.Trim();
             return Enum.TryParse(input, ignoreCase, out value) && Enum.IsDefined(typeof(TEnum), value);
         }
         private Examination GetExaminationSelection(List<Examination> availableExaminations)
