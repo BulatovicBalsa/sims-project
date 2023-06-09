@@ -1,4 +1,5 @@
 ﻿using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Services;
 using System;
@@ -70,8 +71,13 @@ namespace HospitalCLI.CliViews
             var options = new ExaminationSearchOptions(selectedDoctor, latestDate.Value, startTime.Value, endTime.Value, priority.Value);
 
             var availableExaminations = _examinationRecommenderService.FindAvailableExaminations(_patient, options);
-            Console.WriteLine("\nAvailable Examinations:");
-            availableExaminations.ForEach(examination => Console.WriteLine($"\t{examination}"));
+            PrintAvailableExaminations(availableExaminations);
+
+            var selectedExamination = GetExaminationSelection(availableExaminations);
+            if (selectedExamination == null) return;
+
+            _examinationRecommenderService.AddExamination(selectedExamination);
+            Console.WriteLine("\nExamination added successfully!");
         }
 
         private Doctor GetSelectedDoctor()
@@ -157,6 +163,22 @@ namespace HospitalCLI.CliViews
         private bool TryParseEnum<TEnum>(string input, bool ignoreCase, out TEnum value) where TEnum : struct
         {
             return Enum.TryParse(input, ignoreCase, out value) && Enum.IsDefined(typeof(TEnum), value);
+        }
+        private Examination GetExaminationSelection(List<Examination> availableExaminations)
+        {
+            Console.Write("Enter the number of the examination you want to select: ");
+            if (!int.TryParse(Console.ReadLine(), out var examinationSelection) || examinationSelection < 1 || examinationSelection > availableExaminations.Count)
+            {
+                Console.WriteLine("Invalid examination selection. Please enter a valid number.");
+                return null;
+            }
+
+            return availableExaminations[examinationSelection - 1]; ;
+        }
+        private void PrintAvailableExaminations(IEnumerable<Examination> examinations)
+        {
+            Console.WriteLine("\nAvailable Examinations:");
+            examinations.Select((examination, index) => $"{index + 1}. {examination}").ToList().ForEach(Console.WriteLine);
         }
     }
 }
