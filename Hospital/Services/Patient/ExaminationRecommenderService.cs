@@ -84,7 +84,23 @@ namespace Hospital.Services
 
         private List<Examination> SearchByDoctorPriority(Patient patient,ExaminationSearchOptions options)
         {
-            return SearchExaminations(patient, options, options.PreferredDoctor, currentDate => new TimeRange(currentDate, currentDate.AddDays(1)));
+            List<Examination> examinations = new List<Examination>();
+
+            // Search from options.EndTime to 2 hours in the future
+            var futureEndTime = options.EndTime.Add(TimeSpan.FromHours(2));
+            TimeRange futureTimeRange = new TimeRange(DateTime.Now.Date.Add(options.EndTime).AddDays(1), DateTime.Now.Date.Add(futureEndTime).AddDays(1));
+            examinations = SearchExaminations(patient, options, options.PreferredDoctor, _ => futureTimeRange);
+            if (examinations.Count >= NumberOfSuggestedExaminations)
+                return examinations;
+            // Search from options.StartTime to 2 hours in the past
+            var pastStartTime = options.StartTime.Add(TimeSpan.FromHours(-2));
+            TimeRange pastTimeRange = new TimeRange(DateTime.Now.Date.Add(pastStartTime).AddDays(1), DateTime.Now.Date.Add(options.StartTime).AddDays(1));
+            examinations = SearchExaminations(patient, options, options.PreferredDoctor, _ => pastTimeRange);
+            if (examinations.Count >= NumberOfSuggestedExaminations)
+                return examinations;
+
+
+            return examinations;
         }
 
         private List<Examination> SearchByTimeRangePriority(Patient patient,ExaminationSearchOptions options)
