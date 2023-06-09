@@ -18,8 +18,9 @@ namespace Hospital.Services
 {
     public class ExaminationRecommenderService
     {
-        private const int NUMBER_OF_SUGGESTED_EXAMINATIONS = 3;
-        private const int MAX_NUMBER_OF_CLOSEST_EXAMINATIONS = 10;
+        private const int NumberOfSuggestedExaminations = 3;
+        private const int MaxNumberOfClosestExaminations = 6;
+        private const int TimeIntervalInMinutes = 10;
 
         private DoctorRepository _doctorRepository;
         private ExaminationRepository _examinationRepository;
@@ -71,7 +72,7 @@ namespace Hospital.Services
             {
                 TimeRange timeRange = getSearchRangeForDay(currentDate);
                 examinations = SearchInTimeRange(doctor, patient, timeRange, examinations);
-                if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
+                if (examinations.Count >= NumberOfSuggestedExaminations) return examinations;
             }
             return examinations;
         }
@@ -97,7 +98,7 @@ namespace Hospital.Services
                 for(var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
                 {
                     examinations = SearchExaminations(patient, options, doctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
-                    if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
+                    if (examinations.Count >= NumberOfSuggestedExaminations) return examinations;
                 }
             }
             return examinations;
@@ -114,19 +115,19 @@ namespace Hospital.Services
         private List<Examination> GetClosestExaminations(List<Examination> examinations, ExaminationSearchOptions options)
         {
             var examinationRankings = examinations
-           .Select(examination => new
-           {
-               Examination = examination,
-               Difference = Math.Abs((examination.Start.TimeOfDay - options.StartTime).TotalMinutes),
-               IsPreferredDoctor = examination.Doctor == options.PreferredDoctor
-           });
+            .Select(examination => new
+            {
+                Examination = examination,
+                Difference = Math.Abs((examination.Start.TimeOfDay - options.StartTime).TotalMinutes),
+                IsPreferredDoctor = examination.Doctor == options.PreferredDoctor
+            });
 
             List<Examination> closestExaminations = examinationRankings
-            .OrderByDescending(item => item.IsPreferredDoctor)
-            .ThenBy(item => item.Difference)
-            .Take(NUMBER_OF_SUGGESTED_EXAMINATIONS)
-            .Select(item => item.Examination)
-            .ToList();
+                .OrderBy(item => item.Difference)
+                .ThenByDescending(item => item.IsPreferredDoctor)
+                .Select(item => item.Examination)
+                .Take(NumberOfSuggestedExaminations)
+                .ToList();
 
             return closestExaminations;
         }
@@ -148,9 +149,9 @@ namespace Hospital.Services
                 foreach (Doctor doctor in doctors)
                 {
                     examinations = SearchInTimeRange(doctor, patient, beforeRange, examinations);
-                    if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
+                    if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
                     examinations = SearchInTimeRange(doctor, patient, afterRange, examinations);
-                    if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
+                    if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
                 }
                 currentDate = currentDate.AddDays(1);
             }
@@ -177,8 +178,8 @@ namespace Hospital.Services
             while (currentTime <= timeRange.EndTime)
             {
                 AddExaminationIfTimeFree(doctor, patient, currentTime, examinations);
-                if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
-                currentTime = currentTime.AddMinutes(1);
+                if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
+                currentTime = currentTime.AddMinutes(TimeIntervalInMinutes);
             }
             return examinations;
         }
