@@ -6,6 +6,7 @@ using Hospital.Serialization;
 namespace Hospital.Repositories.Nurse;
 
 using Hospital.DTOs;
+using Hospital.Filter;
 using Hospital.Models.Nurse;
 using System;
 
@@ -59,10 +60,10 @@ public class NurseRepository
         Serializer<Nurse>.ToCSV(allNurses, FilePath);
     }
 
-    public List<PersonDTO> GetNursesByFilter(string id, string searchText)
+    public List<PersonDTO> GetNursesAsPersonDTOsByFilter(string id, string searchText)
     {
         var allNurses = GetAll();
-        var filteredNurses = allNurses.Where(nurse => IsNurseMatchingFilter(nurse, id, searchText)).ToList();
+        var filteredNurses = allNurses.Where(nurse => SearchFilter.IsPersonMatchingFilter(nurse, id, searchText)).ToList();
 
         var nurseDTOs = filteredNurses.Select(nurse => new PersonDTO
         {
@@ -73,11 +74,5 @@ public class NurseRepository
         }).ToList();
 
         return nurseDTOs;
-    }
-    private bool IsNurseMatchingFilter(Nurse nurse, string id, string searchText)
-    {
-        return nurse.Id != id &&
-               (nurse.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                nurse.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
     }
 }

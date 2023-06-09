@@ -37,7 +37,7 @@ namespace Hospital.Services
         public List<PersonDTO> GetMedicalStaffByFilter(string id, string searchText)
         {
             var filteredDoctors = _doctorService.GetDoctorsAsPersonDTOsByFilter(id, searchText);
-            var filteredNurses = _nurseService.GetNursesByFilter(id, searchText);
+            var filteredNurses = _nurseService.GetNursesAsPersonDTOsByFilter(id, searchText);
             return ConcatenateDoctorsAndNurses(filteredDoctors, filteredNurses);
         }
 

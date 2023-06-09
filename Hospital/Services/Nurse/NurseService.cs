@@ -20,9 +20,9 @@ namespace Hospital.Services
         {
             return _nurseRepository.GetAll();
         }
-        public List<PersonDTO> GetNursesByFilter(string id, string searchText)
+        public List<PersonDTO> GetNursesAsPersonDTOsByFilter(string id, string searchText)
         {
-            return _nurseRepository.GetNursesByFilter(id, searchText);
+            return _nurseRepository.GetNursesAsPersonDTOsByFilter(id, searchText);
         }
 
         public PersonDTO GetLoggedInNurse()
