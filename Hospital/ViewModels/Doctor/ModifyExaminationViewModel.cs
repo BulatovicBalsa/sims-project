@@ -16,18 +16,17 @@ namespace Hospital.ViewModels;
 
 public class ModifyExaminationViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
+    private readonly Doctor _doctor;
+    private readonly ObservableCollection<Examination> _examinationCollection;
     private readonly ExaminationService _examinationService = new();
+    private readonly Examination? _examinationToChange;
+    private readonly bool _isUpdate;
     private readonly PatientService _patientService = new();
     private readonly RoomFilterService _roomFilterService = new();
 
     private string _buttonContent;
-    private readonly Doctor _doctor;
-    private readonly ObservableCollection<Examination> _examinationCollection;
-    private readonly Examination? _examinationToChange;
 
     private bool _isOperation;
-    private readonly bool _isUpdate;
 
     private ObservableCollection<Patient> _patients;
 
@@ -41,7 +40,8 @@ public class ModifyExaminationViewModel : ViewModelBase
 
     private TimeOnly? _selectedTime;
 
-    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination? examinationToChange = null)
+    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection,
+        Examination? examinationToChange = null, DateTime? examinationDate = null, Patient patientInTenDays = null)
     {
         _isUpdate = examinationToChange is not null;
         _doctor = doctor;
@@ -54,6 +54,10 @@ public class ModifyExaminationViewModel : ViewModelBase
 
         ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
         FillForm();
+
+        if (examinationDate is null) return;
+        SelectedDate = DateTime.Today.AddDays(10);
+        SelectedPatient = patientInTenDays;
     }
 
     public bool IsOperation
@@ -165,7 +169,7 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
             else
             {
-                _examinationService.AddExamination(createdExamination,false);
+                _examinationService.AddExamination(createdExamination, false);
                 _examinationCollection.Add(createdExamination);
             }
         }
@@ -195,7 +199,8 @@ public class ModifyExaminationViewModel : ViewModelBase
         var startDate = CreateDateFromForm();
 
         var createdExamination = _isUpdate ? _examinationToChange : new Examination();
-        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient, _doctor));
+        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient,
+            _doctor));
         return createdExamination;
     }
 
