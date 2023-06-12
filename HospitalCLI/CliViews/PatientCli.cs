@@ -62,11 +62,13 @@ namespace HospitalCLI.CliViews
             var startTime = GetStartTime();
             if (startTime == null) return;
 
-            var endTime = GetEndTime();
+            var endTime = GetEndTime(startTime);
             if (endTime == null) return;
 
             var priority = GetPriority();
             if (priority == null) return;
+
+            Console.WriteLine("\nSearching for examinations...");
 
             var options = new ExaminationSearchOptions(selectedDoctor, latestDate.Value, startTime.Value, endTime.Value, priority.Value);
 
@@ -87,62 +89,82 @@ namespace HospitalCLI.CliViews
             Console.WriteLine("Available Doctors:");
             allDoctors.Select((doctor, index) => $"{index + 1}. {doctor.FirstName} {doctor.LastName}").ToList().ForEach(Console.WriteLine);
 
-            Console.Write("Enter the number of the doctor you want to select: ");
-            if (!TryParseInput(Console.ReadLine(), out var doctorSelection, 1, allDoctors.Count))
+            while (true)
             {
-                Console.WriteLine("Invalid doctor selection. Please enter a valid number.");
-                return null;
-            }
+                Console.Write("Enter the number of the doctor you want to select: ");
+                if (!TryParseInput(Console.ReadLine(), out var doctorSelection, 1, allDoctors.Count))
+                {
+                    Console.WriteLine("Invalid doctor selection. Please enter a valid number.");
+                    continue;
+                }
 
-            return allDoctors[doctorSelection - 1];
+                return allDoctors[doctorSelection - 1];
+            }
         }
 
         private DateTime? GetLatestDate()
         {
-            Console.Write("Latest date (MM/dd/yyyy): ");
-            if (!TryParseDateTime(Console.ReadLine(), "MM/dd/yyyy", out var latestDate))
+            while(true)
             {
-                Console.WriteLine("Invalid date format. Please enter the date in the format MM/dd/yyyy.");
-                return null;
-            }
+                Console.Write("Latest date (MM/dd/yyyy): ");
+                if (!TryParseDateTime(Console.ReadLine(), "MM/dd/yyyy", out var latestDate))
+                {
+                    Console.WriteLine("Invalid date format. Please enter the date in the format MM/dd/yyyy.");
+                    continue;
+                }
 
-            return latestDate;
+                return latestDate;
+            }
         }
 
         private TimeSpan? GetStartTime()
         {
-            Console.Write("Start time (HH:mm): ");
-            if (!TryParseTimeSpan(Console.ReadLine(), "HH:mm", out var startTime))
+            while (true)
             {
-                Console.WriteLine("Invalid time format. Please enter the time in the format HH:mm.");
-                return null;
-            }
+                Console.Write("Start time (HH:mm): ");
+                if (!TryParseTimeSpan(Console.ReadLine(), "hh\\:mm", out var startTime))
+                {
+                    Console.WriteLine("Invalid time format. Please enter the time in the format HH:mm.");
+                    continue;
+                }
 
-            return startTime;
+                return startTime;
+            }
         }
 
-        private TimeSpan? GetEndTime()
+        private TimeSpan? GetEndTime(TimeSpan? startTime)
         {
-            Console.Write("End time (HH:mm): ");
-            if (!TryParseTimeSpan(Console.ReadLine(), "HH:mm", out var endTime))
+            while (true)
             {
-                Console.WriteLine("Invalid time format. Please enter the time in the format HH:mm.");
-                return null;
-            }
+                Console.Write("End time (HH:mm): ");
+                if (!TryParseTimeSpan(Console.ReadLine(), "hh\\:mm", out var endTime))
+                {
+                    Console.WriteLine("Invalid time format. Please enter the time in the format HH:mm.");
+                    continue;
+                }
+                if (endTime <= startTime)
+                {
+                    Console.WriteLine("End time must be after the start time. Please try again.");
+                    continue;
+                }
 
-            return endTime;
+                return endTime;
+            }
         }
 
         private Priority? GetPriority()
         {
-            Console.Write("Priority (Doctor/Time Range): ");
-            if (!TryParseEnum<Priority>(Console.ReadLine(), true, out var priority))
+            while (true)
             {
-                Console.WriteLine("Invalid priority. Please enter either 'Doctor' or 'Time Range'.");
-                return null;
-            }
+                Console.Write("Priority (Doctor/Time Range): ");
+                if (!TryParseEnum<Priority>(Console.ReadLine(), true, out var priority))
+                {
+                    Console.WriteLine("Invalid priority. Please enter either 'Doctor' or 'Time Range'.");
+                    continue;
+                }
 
-            return priority;
+                return priority;
+            }
         }
 
         private bool TryParseInput(string input, out int value, int minValue, int maxValue)
@@ -160,7 +182,7 @@ namespace HospitalCLI.CliViews
         private bool TryParseTimeSpan(string input, string format, out TimeSpan value)
         {
             input = input.Trim();
-            return TimeSpan.TryParseExact(input, format, CultureInfo.InvariantCulture, out value);
+            return TimeSpan.TryParseExact(input, format, CultureInfo.CurrentCulture, out value);
         }
 
         private bool TryParseEnum<TEnum>(string input, bool ignoreCase, out TEnum value) where TEnum : struct
