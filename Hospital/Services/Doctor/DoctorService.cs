@@ -2,6 +2,7 @@ using Hospital.Models.Doctor;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Repositories.Doctor;
+using Hospital.DTOs;
 
 namespace Hospital.Services;
 
@@ -32,5 +33,9 @@ public class DoctorService
     public List<Doctor> GetQualifiedDoctors(string specialization)
     {
         return _doctorRepository.GetQualifiedDoctors(specialization);
+    }
+    public List<PersonDTO> GetDoctorsAsPersonDTOsByFilter(string id,string searchText)
+    {
+        return _doctorRepository.GetDoctorsAsPersonDTOsByFilter(id, searchText);
     }
 }
