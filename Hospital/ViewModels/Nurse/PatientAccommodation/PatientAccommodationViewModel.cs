@@ -26,7 +26,7 @@ public class PatientAccommodationViewModel : ViewModelBase
         }
     }
 
-    public Patient SelectedPatient
+    public Patient? SelectedPatient
     {
         get => _selectedPatient;
         set
