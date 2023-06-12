@@ -14,6 +14,8 @@
         xmlns:referralsViews="clr-namespace:Hospital.Views.Nurse.Referrals"
         xmlns:medicationManagement="clr-namespace:Hospital.ViewModels.Nurse.Medication"
         xmlns:medicationManagementViews="clr-namespace:Hospital.Views.Nurse.Medication"
+        xmlns:patientAccommodation="clr-namespace:Hospital.ViewModels.Nurse.PatientAccommodation"
+        xmlns:patientAccommodationViews="clr-namespace:Hospital.Views.Nurse.PatientAccommodation"
         mc:Ignorable="d"
         Title="NurseMainView" Height="500" Width="1000"
         WindowStyle="None"
@@ -40,6 +42,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type medicationManagement:MedicationManagementViewModel}">
             <medicationManagementViews:MedicationManagementView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type patientAccommodation:PatientAccommodationViewModel}">
+            <patientAccommodationViews:PatientAccommodationView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -111,7 +116,7 @@
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowCommunicationViewCommand}">
+                                 Command="{Binding ShowPatientAccommodationViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Patient accommodation" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
