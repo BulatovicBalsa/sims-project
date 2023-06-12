@@ -14,7 +14,7 @@
 
     <StackPanel Margin="200,0,200,0">
         <TextBlock Style="{StaticResource MainTextBlock}">Patient</TextBlock>
-        <ComboBox Height="30" ItemsSource="{Binding Patients}"
+        <ComboBox Height="30" ItemsSource="{Binding AccommodablePatients}"
                   SelectedItem="{Binding SelectedPatient}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Room</TextBlock>
         <ComboBox Height="30" ItemsSource="{Binding PatientReferrals}"
