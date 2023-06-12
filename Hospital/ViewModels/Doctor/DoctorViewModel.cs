@@ -5,23 +5,23 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models.Requests;
 using Hospital.Services;
 using Hospital.DTOs;
+using Hospital.Services.Requests;
 
 namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
+    private const string Placeholder = "Search...";
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
-
-    private const string Placeholder = "Search...";
+    private readonly DoctorTimeOffRequestService _requestService = new();
 
     private Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
@@ -30,16 +30,20 @@ public class DoctorViewModel : ViewModelBase
 
     private string _searchBoxText;
 
-    private object _selectedPatient;
-
     private DateTime _selectedDate;
+
+    private object _selectedPatient;
+    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
         _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_examinationService.GetViewedPatients(doctor));
-        Examinations = new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
+        Examinations =
+            new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
         ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
@@ -55,6 +59,8 @@ public class DoctorViewModel : ViewModelBase
     {
         Examinations.Clear();
         _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -74,6 +80,16 @@ public class DoctorViewModel : ViewModelBase
         {
             _patients = value;
             OnPropertyChanged(nameof(Patients));
+        }
+    }
+
+    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests
+    {
+        get => _timeOffRequests;
+        set
+        {
+            _timeOffRequests = value;
+            OnPropertyChanged(nameof(TimeOffRequests));
         }
     }
 
@@ -130,6 +146,28 @@ public class DoctorViewModel : ViewModelBase
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
     public ICommand SendMessageCommand { get; set; }
+    public ICommand AddTimeOffRequestCommand { get; set; }
+    public ICommand VisitHospitalizedPatientsCommand { get; set; }
+
+    private void VisitHospitalizedPatients()
+    {
+        var dialog = new VisitHospitalizedPatientsDialog(_doctor);
+        dialog.ShowDialog();
+    }
+
+    private void AddTimeOffRequest()
+    {
+        var dialog = new AddTimeOffRequestDialog(_doctor);
+        dialog.ShowDialog();
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+    }
 
     private void ViewMedicalRecord(string patientId)
     {
