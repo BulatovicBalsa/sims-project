@@ -85,6 +85,6 @@ public class PatientRepository
     {
         var allPatients = GetAll();
 
-        return allPatients.Where(patient => patient.HasUnusedHospitalTreatmentReferral()).ToList();
+        return allPatients.Where(patient => patient.HasUnusedHospitalTreatmentReferral() && !patient.IsHospitalized()).ToList();
     }
 }
