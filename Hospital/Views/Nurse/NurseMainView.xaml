@@ -104,6 +104,12 @@
                             <TextBlock Text="Medication management" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowCommunicationViewCommand}">
+                        <StackPanel>
+                            <TextBlock Text="Send Message" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
                 </StackPanel>
             </Border>
 

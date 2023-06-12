@@ -4,6 +4,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Nurse;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
 using Hospital.Services.Manager;
@@ -61,8 +62,6 @@ public partial class App : Application
 
                 var patientView = new PatientView(patient);
                 patientView.Show();
-
-                //ShowNotifications(id);
             }
 
             else if (role == "NURSE")
