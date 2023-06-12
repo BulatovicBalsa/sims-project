@@ -79,12 +79,12 @@ public class Serializer<T> : ISerializer<T>
         csvWriter.Flush();
     }
 
-    List<T> ISerializer<T>.Load(string filePath, ClassMap<T>? mapper = null)
+    public List<T> Load(string filePath, ClassMap<T>? mapper = null)
     {
         return FromCSV(filePath, mapper);
     }
 
-    void ISerializer<T>.Save(List<T> records, string filePath, ClassMap<T>? mapper = null)
+    public void Save(List<T> records, string filePath, ClassMap<T>? mapper = null)
     {
         ToCSV(records, filePath, mapper);
     }

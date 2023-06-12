@@ -13,6 +13,7 @@ public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
     private static DoctorRepository? _instance;
+    private readonly ISerializer<Doctor> _serializer = new Serializer<Doctor>();
 
     public static DoctorRepository Instance => _instance ??=new DoctorRepository();
 
