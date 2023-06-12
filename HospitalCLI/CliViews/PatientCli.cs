@@ -192,14 +192,17 @@ namespace HospitalCLI.CliViews
         }
         private Examination GetExaminationSelection(List<Examination> availableExaminations)
         {
-            Console.Write("Enter the number of the examination you want to select: ");
-            if (!int.TryParse(Console.ReadLine(), out var examinationSelection) || examinationSelection < 1 || examinationSelection > availableExaminations.Count)
+            while (true)
             {
-                Console.WriteLine("Invalid examination selection. Please enter a valid number.");
-                return null;
+                Console.Write("Enter the number of the examination you want to select: ");
+                if (!int.TryParse(Console.ReadLine(), out var examinationSelection) || examinationSelection < 1 || examinationSelection > availableExaminations.Count)
+                {
+                    Console.WriteLine("Invalid examination selection. Please enter a valid number.");
+                    continue;
+                }
+                return availableExaminations[examinationSelection - 1]; ;
             }
 
-            return availableExaminations[examinationSelection - 1]; ;
         }
         private void PrintAvailableExaminations(IEnumerable<Examination> examinations)
         {
