@@ -72,4 +72,9 @@ public class Patient : Person
             HospitalTreatmentReferrals.FirstOrDefault(referral => referral.Equals(selectedVisitReferral));
         referralToRelease!.Release = DateTime.Today;
     }
+
+    public bool HasUnusedHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.Any(referral => referral.Admission == null && referral.Release == null);
+    }
 }
