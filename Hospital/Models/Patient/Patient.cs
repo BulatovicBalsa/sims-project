@@ -61,9 +61,9 @@ public class Patient : Person
         return HospitalTreatmentReferrals.Any(referral => referral.IsActive());
     }
 
-    public HospitalTreatmentReferral GetActiveHospitalTreatmentReferral()
+    public HospitalTreatmentReferral? GetActiveHospitalTreatmentReferral()
     {
-        return HospitalTreatmentReferrals.FirstOrDefault(referral => referral.IsActive())!;
+        return HospitalTreatmentReferrals.FirstOrDefault(referral => referral!.IsActive(), null);
     }
 
     public void ReleaseHospitalTreatmentReferral(HospitalTreatmentReferral selectedVisitReferral)
