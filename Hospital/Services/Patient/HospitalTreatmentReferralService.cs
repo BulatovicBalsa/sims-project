@@ -3,7 +3,7 @@ using System.Linq;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 
-namespace Hospital.Services.Patient;
+namespace Hospital.Services;
 public class HospitalTreatmentReferralService
 {
     private readonly PatientRepository _patientRepository;
