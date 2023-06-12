@@ -1,8 +1,6 @@
-﻿
-using Hospital.Models.Examination;
+﻿using Hospital.Models.Examination;
 using Hospital.Repositories.Patient;
 using System.Collections.Generic;
-using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
 
 namespace Hospital.Services
@@ -34,6 +32,11 @@ namespace Hospital.Services
         public Patient? GetPatientById(string patientId)
         {
             return _patientRepository.GetById(patientId);
+        }
+
+        public List<Patient> GetAllAccommodablePatients()
+        {
+            return _patientRepository.GetAllAccommodable();
         }
     }
 }

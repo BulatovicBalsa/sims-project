@@ -80,4 +80,11 @@ public class PatientRepository
         var emptyPatientList = new List<Patient>();
         Serializer<Patient>.ToCSV(emptyPatientList, FilePath);
     }
+
+    public List<Patient> GetAllAccommodable()
+    {
+        var allPatients = GetAll();
+
+        return allPatients.Where(patient => patient.HasUnusedHospitalTreatmentReferral()).ToList();
+    }
 }
