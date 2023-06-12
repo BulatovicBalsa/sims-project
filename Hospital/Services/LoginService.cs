@@ -15,7 +15,7 @@ public class LoginService
     public LoginService()
     {
         _doctorRepository = DoctorRepository.Instance;
-        _nurseRepository = new NurseRepository();
+        _nurseRepository = NurseRepository.Instance;
         _patientRepository = PatientRepository.Instance;
     }
 

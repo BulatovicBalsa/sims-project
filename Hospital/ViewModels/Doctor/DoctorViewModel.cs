@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Requests;
 using Hospital.Services;
+using Hospital.DTOs;
 using Hospital.Services.Requests;
 
 namespace Hospital.ViewModels;
@@ -51,6 +52,13 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        SendMessageCommand = new RelayCommand(SendMessage);
+    }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
         VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
     }
@@ -137,6 +145,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
+    public ICommand SendMessageCommand { get; set; }
     public ICommand AddTimeOffRequestCommand { get; set; }
     public ICommand VisitHospitalizedPatientsCommand { get; set; }
 
@@ -152,12 +161,6 @@ public class DoctorViewModel : ViewModelBase
         dialog.ShowDialog();
         TimeOffRequests =
             new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
-    }
-
-    private void DefaultExaminationView()
-    {
-        Examinations.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
     }
 
     private void ViewMedicalRecord(string patientId)
@@ -256,5 +259,11 @@ public class DoctorViewModel : ViewModelBase
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();
+    }
+    private void SendMessage()
+    {
+        PersonDTO loggedUser = new PersonDTO(_doctor.Id,_doctor.FirstName,_doctor.LastName,Role.Doctor);
+        var communicationView = new CommunicationView(loggedUser);
+        communicationView.ShowDialog();
     }
 }
