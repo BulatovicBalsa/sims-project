@@ -2,6 +2,7 @@
 using Hospital.Models.Examination;
 using Hospital.Repositories.Patient;
 using System.Collections.Generic;
+using Hospital.Models.Doctor;
 using Hospital.Models.Patient;
 
 namespace Hospital.Services

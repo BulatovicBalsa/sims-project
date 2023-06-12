@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hospital.Models.Patient;
@@ -53,5 +54,22 @@ public class Patient : Person
     public void RemoveReferral(Referral referral)
     {
         Referrals.Remove(referral);
+    }
+
+    public bool IsHospitalized()
+    {
+        return HospitalTreatmentReferrals.Any(referral => referral.IsActive());
+    }
+
+    public HospitalTreatmentReferral GetActiveHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.FirstOrDefault(referral => referral.IsActive())!;
+    }
+
+    public void ReleaseHospitalTreatmentReferral(HospitalTreatmentReferral selectedVisitReferral)
+    {
+        var referralToRelease =
+            HospitalTreatmentReferrals.FirstOrDefault(referral => referral.Equals(selectedVisitReferral));
+        referralToRelease!.Release = DateTime.Today;
     }
 }

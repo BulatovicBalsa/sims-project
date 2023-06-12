@@ -71,11 +71,16 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 select item.Split(";")
                 into referralArgs
                 let duration = Convert.ToInt32(referralArgs[0].Trim())
+
                 let prescriptions = referralArgs[1].Split("#").ToList()
                     .Select(PrescriptionFromString).Where(prescription => prescription != null).ToList()
                 let additionalTests = referralArgs[2].Trim().Split("#")
                     .Where(additionalTest => !string.IsNullOrEmpty(additionalTest)).ToList()
-                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
+
+                let admission = (string.IsNullOrEmpty(referralArgs[3])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[3], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let release = (string.IsNullOrEmpty(referralArgs[4])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+
+                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests, admission, release));
 
             return referrals;
         }
