@@ -66,12 +66,6 @@ public partial class App : Application
 
             else if (role == "NURSE")
             {
-                var nurse = NurseRepository.Instance.GetById(id);
-                if(nurse == null)
-                {
-                    MessageBox.Show(_unsuccessfulLoginMessage);
-                    return;
-                }
                 var nurseView = new NurseMainView();
                 nurseView.Show();
             }
