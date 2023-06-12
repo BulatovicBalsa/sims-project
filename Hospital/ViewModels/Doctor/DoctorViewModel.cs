@@ -163,12 +163,6 @@ public class DoctorViewModel : ViewModelBase
             new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
     }
 
-    private void DefaultExaminationView()
-    {
-        Examinations.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
-    }
-
     private void ViewMedicalRecord(string patientId)
     {
         var patient = _patientService.GetPatientById(patientId);
