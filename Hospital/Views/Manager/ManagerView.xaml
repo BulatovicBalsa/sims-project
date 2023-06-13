@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Manager"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         Title="ManagerView" Height="450" Width="800">
     <Window.DataContext>
@@ -135,7 +136,6 @@
                         </DataGrid>
                     </Grid>
                 </DockPanel>
-
             </TabItem>
             <TabItem Header="Rooms" DataContext="{Binding Children[3]}">
 
@@ -164,11 +164,11 @@
                         </Grid.ColumnDefinitions>
                         <DataGrid x:Name="RoomDataGrid" ItemsSource="{Binding Rooms, Mode=TwoWay}" SelectedItem="{Binding SelectedRoom}"
                                   CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
-                                  <Behaviors:Interaction.Triggers>
+                            <Behaviors:Interaction.Triggers>
                                 <Behaviors:EventTrigger EventName="SelectedCellsChanged" SourceObject="{Binding ElementName=RoomDataGrid}">
                                     <Behaviors:InvokeCommandAction Command="{Binding CheckIfMergingIsEnabled}"></Behaviors:InvokeCommandAction>
                                 </Behaviors:EventTrigger>
-                                  </Behaviors:Interaction.Triggers>
+                            </Behaviors:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Type"
@@ -193,6 +193,20 @@
                         </DataGrid>
                     </Grid>
                 </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Hospital survey">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ScottPlot:WpfPlot x:Name="WpfPlot"/>
+                </Grid>
 
             </TabItem>
         </TabControl>
