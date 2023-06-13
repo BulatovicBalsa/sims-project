@@ -10,14 +10,14 @@ public class ManagerViewModel : ViewModelBase
         TransferTabViewModel = new TransferTabViewModel();
         RenovationTabViewModel = new RenovationTabViewModel();
         RoomTabViewModel = new RoomTabViewModel();
+        HospitalSurveyTabViewModel = new HospitalSurveyTabViewModel();
     }
 
-
-    public ObservableCollection<object> Children { get; }
 
     public OrderTabViewModel OrderTabViewModel { get; }
     public TransferTabViewModel TransferTabViewModel { get; }
     public RenovationTabViewModel RenovationTabViewModel { get; }
     public RoomTabViewModel RoomTabViewModel { get; }
+    public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; } 
 
 }

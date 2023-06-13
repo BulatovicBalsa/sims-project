@@ -7,7 +7,7 @@
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="ManagerView" Height="450" Width="800">
+        Title="ManagerView" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewModel:ManagerViewModel />
     </Window.DataContext>
@@ -194,7 +194,7 @@
                 </DockPanel>
 
             </TabItem>
-            <TabItem Header="Hospital survey">
+            <TabItem Header="Hospital survey" DataContext="{Binding HospitalSurveyTabViewModel}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -209,6 +209,16 @@
                         <ComboBox DockPanel.Dock="Top"/>
                         <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot"/>
                     </DockPanel>
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding AllHospitalFeedback}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Overall rating" Binding="{Binding OverallRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Service quality" Binding="{Binding ServiceQualityRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Cleanliness" Binding="{Binding CleanlinessRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Patient satisfaction" Binding="{Binding SatisfactionRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Would recommend to a friend" Binding="{Binding RecommendationRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
             </TabItem>
