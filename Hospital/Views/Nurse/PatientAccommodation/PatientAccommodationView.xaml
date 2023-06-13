@@ -17,12 +17,11 @@
         <ComboBox Height="30" ItemsSource="{Binding AccommodablePatients}"
                   SelectedItem="{Binding SelectedPatient}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Room</TextBlock>
-        <ComboBox Height="30" ItemsSource="{Binding PatientReferrals}"
-                  SelectedItem="{Binding SelectedReferral}"
-                  DisplayMemberPath="ComboBoxString"/>
+        <ComboBox Height="30" ItemsSource="{Binding AvailableRooms}"
+                  SelectedItem="{Binding SelectedRoom}"/>
         <Button Style="{StaticResource ActionButton}" 
                 Content="Accommodate patient"
                 Margin="0,20,0,0"
-                Command="{Binding UseReferralCommand}"/>
+                Command="{Binding AccommodatePatientCommand}"/>
     </StackPanel>
 </UserControl>
