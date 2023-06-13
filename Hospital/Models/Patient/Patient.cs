@@ -82,4 +82,14 @@ public class Patient : Person
     {
         return HospitalTreatmentReferrals.First(referral => referral.Admission == null && referral.Release == null);
     }
+
+    public void UpdateHospitalTreatmentReferral(HospitalTreatmentReferral referral)
+    {
+        var indexToUpdate = HospitalTreatmentReferrals.IndexOf(referral);
+
+        if (indexToUpdate == -1)
+            throw new KeyNotFoundException();
+
+        HospitalTreatmentReferrals[indexToUpdate] = referral;
+    }
 }
