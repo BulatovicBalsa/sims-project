@@ -79,8 +79,9 @@ public sealed class PatientReadMapper : ClassMap<Patient>
 
                 let admission = (string.IsNullOrEmpty(referralArgs[3])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[3], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
                 let release = (string.IsNullOrEmpty(referralArgs[4])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let roomId = (string.IsNullOrEmpty(referralArgs[5])) ? null : referralArgs[5]
 
-                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests, admission, release));
+                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests, admission, release, roomId));
 
             return referrals;
         }
