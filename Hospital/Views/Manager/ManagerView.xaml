@@ -5,12 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Manager"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="ManagerView" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:ManagerViewModel />
-    </Window.DataContext>
-
+        Title="ManagerView" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Inventory">
@@ -21,7 +18,7 @@
                     </ToolBar>
                 </DockPanel>
             </TabItem>
-            <TabItem DataContext="{Binding Children[0]}" Header="Orders" Margin="-2,0,-2,0">
+            <TabItem DataContext="{Binding OrderTabViewModel}" Header="Orders" Margin="-2,0,-2,0">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -62,7 +59,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Transfers" DataContext="{Binding Children[1]}">
+            <TabItem Header="Transfers" DataContext="{Binding TransferTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -109,7 +106,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Renovations" DataContext="{Binding Children[2]}">
+            <TabItem Header="Renovations" DataContext="{Binding RenovationTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -135,10 +132,8 @@
                         </DataGrid>
                     </Grid>
                 </DockPanel>
-
             </TabItem>
-            <TabItem Header="Rooms" DataContext="{Binding Children[3]}">
-
+            <TabItem Header="Rooms" DataContext="{Binding RoomTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -164,11 +159,11 @@
                         </Grid.ColumnDefinitions>
                         <DataGrid x:Name="RoomDataGrid" ItemsSource="{Binding Rooms, Mode=TwoWay}" SelectedItem="{Binding SelectedRoom}"
                                   CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False" >
-                                  <Behaviors:Interaction.Triggers>
+                            <Behaviors:Interaction.Triggers>
                                 <Behaviors:EventTrigger EventName="SelectedCellsChanged" SourceObject="{Binding ElementName=RoomDataGrid}">
                                     <Behaviors:InvokeCommandAction Command="{Binding CheckIfMergingIsEnabled}"></Behaviors:InvokeCommandAction>
                                 </Behaviors:EventTrigger>
-                                  </Behaviors:Interaction.Triggers>
+                            </Behaviors:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn Header="Type"
@@ -193,6 +188,34 @@
                         </DataGrid>
                     </Grid>
                 </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Hospital survey" DataContext="{Binding HospitalSurveyTabViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ScottPlot:WpfPlot x:Name="AverageHospitalFeedbackRatingByAreaWpfPlot"/>
+                    <DockPanel Grid.Row="0" Grid.Column="1">
+                        <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding RatingFrequenciesByArea}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedRatingFrequencies}"/>
+                        <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot"/>
+                    </DockPanel>
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding AllHospitalFeedback}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Overall rating" Binding="{Binding OverallRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Service quality" Binding="{Binding ServiceQualityRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Cleanliness" Binding="{Binding CleanlinessRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Patient satisfaction" Binding="{Binding SatisfactionRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Would recommend to a friend" Binding="{Binding RecommendationRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
 
             </TabItem>
         </TabControl>
