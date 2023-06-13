@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.DTOs;
 
 namespace Hospital.Repositories.Feedback
 {
@@ -29,6 +30,15 @@ namespace Hospital.Repositories.Feedback
             allFeedbacks.Add(feedback);
 
             Serializer<HospitalFeedback>.ToCSV(allFeedbacks, FilePath);
+        }
+
+        public AverageHospitalFeedbackGradeByAreaDTO GetAverageGrades()
+        {
+            var allFeedbacks = GetAll();
+
+            return new AverageHospitalFeedbackGradeByAreaDTO(allFeedbacks.Average(e => e.ServiceQualityRating),
+                allFeedbacks.Average(e => e.OverallRating), allFeedbacks.Average(e => e.RecommendationRating),
+                allFeedbacks.Average(e => e.CleanlinessRating), allFeedbacks.Average(e => e.SatisfactionRating));
         }
     }
 }
