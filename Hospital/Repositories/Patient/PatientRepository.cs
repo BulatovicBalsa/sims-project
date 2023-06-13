@@ -87,4 +87,10 @@ public class PatientRepository
 
         return allPatients.Where(patient => patient.HasUnusedHospitalTreatmentReferral() && !patient.IsHospitalized()).ToList();
     }
+
+    public void UpdateHospitalTreatmentReferral(Patient patient, HospitalTreatmentReferral referral)
+    {
+        patient.UpdateHospitalTreatmentReferral(referral);
+        Update(patient);
+    }
 }

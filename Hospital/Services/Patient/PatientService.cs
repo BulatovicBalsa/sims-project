@@ -38,5 +38,10 @@ namespace Hospital.Services
         {
             return _patientRepository.GetAllAccommodable();
         }
+
+        public void UpdateHospitalTreatmentReferral(Patient patient, HospitalTreatmentReferral referral)
+        {
+            _patientRepository.UpdateHospitalTreatmentReferral(patient, referral);
+        }
     }
 }
