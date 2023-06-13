@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Hospital.DTOs;
 using Hospital.Services;
 using Hospital.ViewModels.Nurse.Medication;
+using Hospital.ViewModels.Nurse.PatientAccommodation;
 using Hospital.ViewModels.Nurse.PatientAdmission;
 using Hospital.ViewModels.Nurse.Patients;
 using Hospital.ViewModels.Nurse.Referrals;
@@ -23,6 +24,7 @@ public class NurseMainViewModel : ViewModelBase
         ShowPatientReferralsViewCommand = new ViewModelCommand(ExecuteShowPatientReferralsViewCommand);
         ShowMedicationManagementViewCommand = new ViewModelCommand(ExecuteShowMedicationManagementViewCommand);
         ShowCommunicationViewCommand = new ViewModelCommand(ExecuteShowCommunicationViewCommand);
+        ShowPatientAccommodationViewCommand = new ViewModelCommand(ExecuteShowPatientAccommodationViewCommand);
 
         ExecuteShowPatientsViewCommand(null);
     }
@@ -42,6 +44,7 @@ public class NurseMainViewModel : ViewModelBase
     public ICommand ShowPatientReferralsViewCommand { get; }
     public ICommand ShowMedicationManagementViewCommand { get; }
     public ICommand ShowCommunicationViewCommand { get; }
+    public ICommand ShowPatientAccommodationViewCommand { get; }
 
     private void ExecuteShowPatientsViewCommand(object? obj)
     {
@@ -72,5 +75,10 @@ public class NurseMainViewModel : ViewModelBase
         PersonDTO loggedUser = _nurseService.GetLoggedInNurse();
         CommunicationView communicationView = new CommunicationView(loggedUser);
         communicationView.Show();
+    }
+
+    private void ExecuteShowPatientAccommodationViewCommand(object obj)
+    {
+        CurrentChildView = new PatientAccommodationViewModel();
     }
 }
