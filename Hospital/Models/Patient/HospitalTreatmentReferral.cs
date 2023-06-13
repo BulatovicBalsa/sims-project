@@ -13,13 +13,14 @@ public class HospitalTreatmentReferral
         AdditionalTests = new List<string>();
     }
 
-    public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests, DateTime? admission=null, DateTime? release=null)
+    public HospitalTreatmentReferral(List<Prescription> prescriptions, int duration, List<string> additionalTests, DateTime? admission=null, DateTime? release=null, string? roomId=null)
     {
         Prescriptions = prescriptions;
         Duration = duration;
         AdditionalTests = additionalTests;
         Admission = admission;
         Release = release;
+        RoomId = roomId;
     }
 
     public List<Prescription> Prescriptions { get; set; }
@@ -27,6 +28,7 @@ public class HospitalTreatmentReferral
     public List<string> AdditionalTests { get; set; }
     public DateTime? Admission { get; set; }
     public DateTime? Release { get; set; }
+    public string? RoomId { get; set; }
 
     public override string ToString()
     {
@@ -51,6 +53,7 @@ public class HospitalTreatmentReferral
         }
 
         sb.Append($";{Admission:yyyy-MM-dd HH:mm:ss};{Release:yyyy-MM-dd HH:mm:ss}");
+        sb.Append($";{RoomId}");
 
         return sb.ToString();
     }
