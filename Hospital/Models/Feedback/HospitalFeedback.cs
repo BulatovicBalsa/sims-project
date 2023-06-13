@@ -8,6 +8,7 @@ namespace Hospital.Models.Feedback
 {
     public class HospitalFeedback : Feedback
     {
+        public const int MAX_RATING = 5;
         public int ServiceQualityRating { get; set; }
         public int CleanlinessRating { get; set; }
         public int SatisfactionRating { get; set; }
