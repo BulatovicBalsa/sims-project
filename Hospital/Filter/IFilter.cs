@@ -4,5 +4,5 @@ namespace Hospital.Filter;
 
 public interface IFilter<T>
 {
-    List<T> Filter(T persons, ISpecification<T> specification);
+    List<T> Filter(List<T> itemsToFilter, ISpecification<T> specification);
 }
