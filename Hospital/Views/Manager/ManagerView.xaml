@@ -22,7 +22,7 @@
                     </ToolBar>
                 </DockPanel>
             </TabItem>
-            <TabItem DataContext="{Binding Children[0]}" Header="Orders" Margin="-2,0,-2,0">
+            <TabItem DataContext="{Binding OrderTabViewModel}" Header="Orders" Margin="-2,0,-2,0">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -63,7 +63,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Transfers" DataContext="{Binding Children[1]}">
+            <TabItem Header="Transfers" DataContext="{Binding TransferTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -110,7 +110,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Renovations" DataContext="{Binding Children[2]}">
+            <TabItem Header="Renovations" DataContext="{Binding RenovationTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -137,8 +137,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Rooms" DataContext="{Binding Children[3]}">
-
+            <TabItem Header="Rooms" DataContext="{Binding RoomTabViewModel}">
                 <DockPanel>
                     <ToolBar DockPanel.Dock="Top">
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
@@ -206,6 +205,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ScottPlot:WpfPlot x:Name="WpfPlot"/>
+                    <DockPanel Grid.Row="0" Grid.Column="1">
+                        <ComboBox DockPanel.Dock="Top"/>
+                        <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot"/>
+                    </DockPanel>
                 </Grid>
 
             </TabItem>

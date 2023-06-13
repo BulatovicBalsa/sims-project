@@ -6,15 +6,18 @@ public class ManagerViewModel : ViewModelBase
 {
     public ManagerViewModel()
     {
-        Children = new ObservableCollection<object>
-        {
-            new OrderTabViewModel(),
-            new TransferTabViewModel(),
-            new RenovationTabViewModel(),
-            new RoomTabViewModel()
-        };
+        OrderTabViewModel = new OrderTabViewModel();
+        TransferTabViewModel = new TransferTabViewModel();
+        RenovationTabViewModel = new RenovationTabViewModel();
+        RoomTabViewModel = new RoomTabViewModel();
     }
 
 
     public ObservableCollection<object> Children { get; }
+
+    public OrderTabViewModel OrderTabViewModel { get; }
+    public TransferTabViewModel TransferTabViewModel { get; }
+    public RenovationTabViewModel RenovationTabViewModel { get; }
+    public RoomTabViewModel RoomTabViewModel { get; }
+
 }
