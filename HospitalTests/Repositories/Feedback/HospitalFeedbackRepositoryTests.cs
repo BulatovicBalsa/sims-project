@@ -33,16 +33,16 @@ public class HospitalFeedbackRepositoryTests
     }
 
     [TestMethod]
-    public void GetAverageGradesTest()
+    public void GetAverageRatingsTest()
     {
         AddData();
-        var averageGradeByArea = HospitalFeedbackRepository.Instance.GetAverageGrades();
+        var averageRatings = HospitalFeedbackRepository.Instance.GetAverageRatings();
 
-        Assert.AreEqual(2.5, averageGradeByArea.OverallRating);
-        Assert.AreEqual(1, averageGradeByArea.RecommendationRating);
-        Assert.AreEqual(4.5, averageGradeByArea.ServiceQuality);
-        Assert.AreEqual(4, averageGradeByArea.CleanlinessRating);
-        Assert.AreEqual(5, averageGradeByArea.PatientSatisfactionRating);
+        Assert.AreEqual(2.5, averageRatings.OverallRating);
+        Assert.AreEqual(1, averageRatings.RecommendationRating);
+        Assert.AreEqual(4.5, averageRatings.ServiceQuality);
+        Assert.AreEqual(4, averageRatings.CleanlinessRating);
+        Assert.AreEqual(5, averageRatings.PatientSatisfactionRating);
     }
 
     [TestMethod()]

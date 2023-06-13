@@ -81,19 +81,19 @@ public class HospitalSurveyTabViewModel : ViewModelBase
 
     public void PlotAverageRatingsByArea()
     {
-        var averageRatingByArea = ConvertToDictionary(HospitalFeedbackRepository.Instance.GetAverageGrades());
+        var averageRatingByArea = ConvertToDictionary(HospitalFeedbackRepository.Instance.GetAverageRatings());
         _averageRatingByAreaPlot.Plot(averageRatingByArea);
     }
 
-    public Dictionary<string, double> ConvertToDictionary(AverageHospitalFeedbackGradeByAreaDTO averageGradeByArea)
+    public Dictionary<string, double> ConvertToDictionary(AverageHospitalFeedbackRatingByAreaDTO averageRatingByArea)
     {
         var dictionary = new Dictionary<string, double>
         {
-            ["Overall rating"] = averageGradeByArea.OverallRating,
-            ["Service quality"] = averageGradeByArea.ServiceQuality,
-            ["Cleanliness"] = averageGradeByArea.CleanlinessRating,
-            ["Patient satisfaction"] = averageGradeByArea.PatientSatisfactionRating,
-            ["Recommendation rating"] = averageGradeByArea.RecommendationRating
+            ["Overall rating"] = averageRatingByArea.OverallRating,
+            ["Service quality"] = averageRatingByArea.ServiceQuality,
+            ["Cleanliness"] = averageRatingByArea.CleanlinessRating,
+            ["Patient satisfaction"] = averageRatingByArea.PatientSatisfactionRating,
+            ["Recommendation rating"] = averageRatingByArea.RecommendationRating
         };
         return dictionary;
     }
