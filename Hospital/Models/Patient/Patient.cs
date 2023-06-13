@@ -77,4 +77,9 @@ public class Patient : Person
     {
         return HospitalTreatmentReferrals.Any(referral => referral.Admission == null && referral.Release == null);
     }
+
+    public HospitalTreatmentReferral GetFirstUnusedHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.First(referral => referral.Admission == null && referral.Release == null);
+    }
 }
