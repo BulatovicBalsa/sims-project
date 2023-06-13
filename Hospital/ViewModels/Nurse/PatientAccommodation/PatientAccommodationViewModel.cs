@@ -74,12 +74,12 @@ public class PatientAccommodationViewModel : ViewModelBase
 
     public ICommand AccommodatePatientCommand { get; }
 
-    public void ExecuteAccommodatePatientCommand(object obj)
+    private void ExecuteAccommodatePatientCommand(object obj)
     {
         throw new NotImplementedException();
     }
 
-    public bool CanExecuteAccommodatePatientCommand(object obj)
+    private bool CanExecuteAccommodatePatientCommand(object obj)
     {
         return SelectedPatient != null && SelectedRoom != null;
     }
