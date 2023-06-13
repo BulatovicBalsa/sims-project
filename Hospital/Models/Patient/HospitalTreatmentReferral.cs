@@ -62,6 +62,12 @@ public class HospitalTreatmentReferral
         return sb.ToString();
     }
 
+    public void Accommodate(string roomId)
+    {
+        Admission = DateTime.Now;
+        RoomId = roomId;
+    }
+
     internal bool IsActive()
     {
         if (Admission is null) return false;
