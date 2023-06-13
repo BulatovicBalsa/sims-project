@@ -11,7 +11,7 @@ using CsvHelper.Configuration;
 
 namespace Hospital.Serialization;
 
-public class Serializer<T>
+public class Serializer<T> : ISerializer<T>
 {
     private const string DirectoryPath = "../../../Data/";
 
@@ -79,5 +79,14 @@ public class Serializer<T>
         csvWriter.Flush();
     }
 
+    public List<T> Load(string filePath, ClassMap<T>? mapper = null)
+    {
+        return FromCSV(filePath, mapper);
+    }
+
+    public void Save(List<T> records, string filePath, ClassMap<T>? mapper = null)
+    {
+        ToCSV(records, filePath, mapper);
+    }
 }
 
