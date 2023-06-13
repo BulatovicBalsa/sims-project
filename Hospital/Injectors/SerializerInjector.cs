@@ -3,6 +3,7 @@ using Hospital.Repositories.Doctor;
 using Hospital.Serialization;
 using System.Collections.Generic;
 using System;
+using Hospital.Models.Requests;
 
 namespace Hospital.Injectors;
 
@@ -11,6 +12,7 @@ public class SerializerInjector
     private static readonly Dictionary<Type, object> Implementations = new()
     {
         { typeof(ISerializer<Doctor>), new Serializer<Doctor>() },
+        { typeof(ISerializer<DoctorTimeOffRequest>), new Serializer<DoctorTimeOffRequest>() },
         // Add more implementations here
     };
 
