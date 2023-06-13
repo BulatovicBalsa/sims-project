@@ -1,6 +1,6 @@
 ﻿namespace Hospital.Filter;
 
-public interface ISpecification<T>
+public interface ISpecification<in T>
 {
     bool IsSatisfied(T item);
 }
