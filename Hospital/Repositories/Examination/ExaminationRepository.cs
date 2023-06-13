@@ -5,10 +5,12 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Hospital.Exceptions;
+using Hospital.Filter;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers;
 
 namespace Hospital.Repositories.Examination;
 using Hospital.Models.Examination;
@@ -220,8 +222,13 @@ public class ExaminationRepository
 
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
     {
-        return GetAll(doctor).Where(examination =>
-            (examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)) || examination.IsPerformable()).OrderBy(examination => examination.Start).ToList();
+        var filter = new DoctorExaminationsFilter();
+
+        var start = DateTime.Now;
+        var end = start.AddDays(2);
+        var examinations = GetAll(doctor);
+
+        return filter.Filter(examinations, new ExaminationPerformingSpecification(start, end));
     }
 
     public bool IsFree(Doctor? doctor, DateTime start, string? examinationId = null)
