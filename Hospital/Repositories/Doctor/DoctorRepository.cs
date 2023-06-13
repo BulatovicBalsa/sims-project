@@ -14,20 +14,15 @@ public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
     private static DoctorRepository? _instance;
-    private static ISerializer<Doctor> _serializer = SerializerInjector.CreateInstance<ISerializer<Doctor>>();
+    private static readonly ISerializer<Doctor> Serializer = SerializerInjector.CreateInstance<ISerializer<Doctor>>();
 
     public static DoctorRepository Instance => _instance ??=new DoctorRepository();
 
     private DoctorRepository() { }
 
-    internal DoctorRepository(ISerializer<Doctor> serializer)
-    {
-        _serializer = serializer;
-    }
-
     public List<Doctor> GetAll()
     {
-        return _serializer.Load(FilePath);
+        return Serializer.Load(FilePath);
     }
 
     public Doctor? GetById(string id)
@@ -46,7 +41,7 @@ public class DoctorRepository
 
         allDoctor.Add(doctor);
 
-        _serializer.Save(allDoctor, FilePath);
+        Serializer.Save(allDoctor, FilePath);
     }
 
     public void Update(Doctor doctor)
@@ -58,7 +53,7 @@ public class DoctorRepository
 
         allDoctor[indexToUpdate] = doctor;
 
-        _serializer.Save(allDoctor, FilePath);
+        Serializer.Save(allDoctor, FilePath);
     }
 
     public void Delete(Doctor doctor)
@@ -70,13 +65,13 @@ public class DoctorRepository
 
         allDoctor.RemoveAt(indexToDelete);
 
-        _serializer.Save(allDoctor, FilePath);
+        Serializer.Save(allDoctor, FilePath);
     }
 
     public static void DeleteAll()
     {
         var emptyDoctorList = new List<Doctor>();
-        _serializer.Save(emptyDoctorList, FilePath);
+        Serializer.Save(emptyDoctorList, FilePath);
     }
 
     public List<string> GetAllSpecializations()
