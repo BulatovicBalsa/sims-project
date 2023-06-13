@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
 
-namespace Hospital.Filter
+namespace Hospital.Filter;
+
+public class DoctorExaminationsFilter : IFilter<Examination>
 {
-    internal class DoctorExaminationsFilter
+    public List<Examination> Filter(List<Examination> examinations, ISpecification<Examination> specification)
     {
+        return examinations.Where(specification.IsSatisfied).ToList();
     }
 }
