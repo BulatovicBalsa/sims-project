@@ -1,17 +1,18 @@
-﻿using System.Collections.ObjectModel;
-using Hospital.Charting;
+﻿using Hospital.Charting;
 
 namespace Hospital.ViewModels.Manager;
 
 public class ManagerViewModel : ViewModelBase
 {
-    public ManagerViewModel(IRatingFrequencyPlotter hospitalRatingFrequencyPlotter)
+    public ManagerViewModel(IRatingFrequencyPlotter hospitalRatingFrequencyPlotter,
+        ICategoryPlot averageHospitalFeedbackRatingByAreaPlot)
     {
         OrderTabViewModel = new OrderTabViewModel();
         TransferTabViewModel = new TransferTabViewModel();
         RenovationTabViewModel = new RenovationTabViewModel();
         RoomTabViewModel = new RoomTabViewModel();
-        HospitalSurveyTabViewModel = new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlotter);
+        HospitalSurveyTabViewModel =
+            new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlotter, averageHospitalFeedbackRatingByAreaPlot);
     }
 
 
@@ -19,6 +20,5 @@ public class ManagerViewModel : ViewModelBase
     public TransferTabViewModel TransferTabViewModel { get; }
     public RenovationTabViewModel RenovationTabViewModel { get; }
     public RoomTabViewModel RoomTabViewModel { get; }
-    public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; } 
-
+    public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; }
 }

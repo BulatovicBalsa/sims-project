@@ -200,7 +200,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ScottPlot:WpfPlot x:Name="WpfPlot"/>
+                    <ScottPlot:WpfPlot x:Name="AverageHospitalFeedbackRatingByAreaWpfPlot"/>
                     <DockPanel Grid.Row="0" Grid.Column="1">
                         <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding RatingFrequenciesByArea}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedRatingFrequencies}"/>
                         <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot"/>
