@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hospital.Charting;
-using Hospital.DTOs;
+using Hospital.Converters;
 using Hospital.Models.Feedback;
 using Hospital.Repositories.Feedback;
 
@@ -81,20 +81,8 @@ public class HospitalSurveyTabViewModel : ViewModelBase
 
     public void PlotAverageRatingsByArea()
     {
-        var averageRatingByArea = ConvertToDictionary(HospitalFeedbackRepository.Instance.GetAverageRatings());
+        var dtoConverter = new AverageHospitalFeedbackRatingsToDictionaryConverter();
+        var averageRatingByArea = dtoConverter.Convert(HospitalFeedbackRepository.Instance.GetAverageRatings());
         _averageRatingByAreaPlot.Plot(averageRatingByArea);
-    }
-
-    public Dictionary<string, double> ConvertToDictionary(AverageHospitalFeedbackRatingByAreaDTO averageRatingByArea)
-    {
-        var dictionary = new Dictionary<string, double>
-        {
-            ["Overall rating"] = averageRatingByArea.OverallRating,
-            ["Service quality"] = averageRatingByArea.ServiceQuality,
-            ["Cleanliness"] = averageRatingByArea.CleanlinessRating,
-            ["Patient satisfaction"] = averageRatingByArea.PatientSatisfactionRating,
-            ["Recommendation rating"] = averageRatingByArea.RecommendationRating
-        };
-        return dictionary;
     }
 }
