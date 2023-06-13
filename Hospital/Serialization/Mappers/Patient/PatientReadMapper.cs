@@ -78,9 +78,9 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 let additionalTests = referralArgs[3].Trim().Split("#")
                     .Where(additionalTest => !string.IsNullOrEmpty(additionalTest)).ToList()
 
-                let admission = (string.IsNullOrEmpty(referralArgs[4])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[3], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
-                let release = (string.IsNullOrEmpty(referralArgs[5])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
-                let roomId = (string.IsNullOrEmpty(referralArgs[6])) ? null : referralArgs[5]
+                let admission = (string.IsNullOrEmpty(referralArgs[4])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let release = (string.IsNullOrEmpty(referralArgs[5])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[5], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let roomId = (string.IsNullOrEmpty(referralArgs[6])) ? null : referralArgs[6]
 
                 select new HospitalTreatmentReferral(prescriptions, duration, additionalTests, admission, release, roomId){Id = id});
 
