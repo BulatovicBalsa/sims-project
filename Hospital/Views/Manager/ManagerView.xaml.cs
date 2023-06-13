@@ -2,7 +2,9 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using Hospital.Charting;
 using Hospital.Repositories.Feedback;
+using Hospital.ViewModels.Manager;
 using ScottPlot;
 
 namespace Hospital.Views.Manager;
@@ -12,22 +14,8 @@ public partial class ManagerView : Window
     public ManagerView()
     {
         InitializeComponent();
+        DataContext = new ManagerViewModel(new RatingFrequencyPiePlotter(HospitalFeedbackFrequencyPlot));
         PlotAverageHospitalFeedback();
-        PlotHospitalFeedbackRatingFrequencies();
-    }
-
-    private void PlotHospitalFeedbackRatingFrequencies()
-    {
-        var frequencies = HospitalFeedbackRepository.Instance.GetOverallRatingFrequencies();
-        var labels = frequencies.Keys.Select(e => "Rating " + e.ToString()).ToArray();
-        var values = frequencies.Values.Select(e => (double)e).ToArray();
-
-        var pie = HospitalFeedbackFrequencyPlot.Plot.AddPie(values);
-        pie.SliceLabels = labels;
-        pie.ShowLabels = true;
-        pie.ShowValues = true;
-        HospitalFeedbackFrequencyPlot.Refresh();
-        HospitalFeedbackFrequencyPlot.Plot.AxisAuto();
     }
 
     private void PlotAverageHospitalFeedback()

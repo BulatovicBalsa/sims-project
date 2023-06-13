@@ -8,10 +8,6 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         Title="ManagerView" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <viewModel:ManagerViewModel />
-    </Window.DataContext>
-
     <Grid>
         <TabControl>
             <TabItem Header="Inventory">
@@ -206,7 +202,7 @@
                     </Grid.ColumnDefinitions>
                     <ScottPlot:WpfPlot x:Name="WpfPlot"/>
                     <DockPanel Grid.Row="0" Grid.Column="1">
-                        <ComboBox DockPanel.Dock="Top"/>
+                        <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding RatingFrequenciesByArea}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedRatingFrequencies}"/>
                         <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot"/>
                     </DockPanel>
                     <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding AllHospitalFeedback}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
