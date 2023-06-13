@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
@@ -76,11 +77,25 @@ public class PatientAccommodationViewModel : ViewModelBase
 
     private void ExecuteAccommodatePatientCommand(object obj)
     {
-        throw new NotImplementedException();
+        var unusedPatientReferral = SelectedPatient!.GetFirstUnusedHospitalTreatmentReferral();
+        unusedPatientReferral.Accommodate(SelectedRoom!.Id);
+
+        _patientService.UpdateHospitalTreatmentReferral(SelectedPatient, unusedPatientReferral);
+
+        MessageBox.Show("Patient successfully accommodated.");
+        ResetInput();
     }
 
     private bool CanExecuteAccommodatePatientCommand(object obj)
     {
         return SelectedPatient != null && SelectedRoom != null;
+    }
+
+    private void ResetInput()
+    {
+        AccommodablePatients = new ObservableCollection<Patient>(_patientService.GetAllAccommodablePatients());
+        SelectedPatient = null;
+        AvailableRooms = null;
+        SelectedRoom = null;
     }
 }
