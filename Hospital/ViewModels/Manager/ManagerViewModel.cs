@@ -1,20 +1,24 @@
-﻿using System.Collections.ObjectModel;
+﻿using Hospital.Charting;
 
 namespace Hospital.ViewModels.Manager;
 
 public class ManagerViewModel : ViewModelBase
 {
-    public ManagerViewModel()
+    public ManagerViewModel(IRatingFrequencyPlotter hospitalRatingFrequencyPlotter,
+        ICategoryPlot averageHospitalFeedbackRatingByAreaPlot)
     {
-        Children = new ObservableCollection<object>
-        {
-            new OrderTabViewModel(),
-            new TransferTabViewModel(),
-            new RenovationTabViewModel(),
-            new RoomTabViewModel()
-        };
+        OrderTabViewModel = new OrderTabViewModel();
+        TransferTabViewModel = new TransferTabViewModel();
+        RenovationTabViewModel = new RenovationTabViewModel();
+        RoomTabViewModel = new RoomTabViewModel();
+        HospitalSurveyTabViewModel =
+            new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlotter, averageHospitalFeedbackRatingByAreaPlot);
     }
 
 
-    public ObservableCollection<object> Children { get; }
+    public OrderTabViewModel OrderTabViewModel { get; }
+    public TransferTabViewModel TransferTabViewModel { get; }
+    public RenovationTabViewModel RenovationTabViewModel { get; }
+    public RoomTabViewModel RoomTabViewModel { get; }
+    public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; }
 }
