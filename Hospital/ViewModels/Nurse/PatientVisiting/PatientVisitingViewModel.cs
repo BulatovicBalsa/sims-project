@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Services;
+using Hospital.Views.Nurse.PatientVisiting;
 
 namespace Hospital.ViewModels.Nurse.PatientVisiting;
 
@@ -44,7 +45,13 @@ public class PatientVisitingViewModel : ViewModelBase
 
     private void ExecuteVisitPatientCommand(object obj)
     {
-        throw new NotImplementedException();
+        var visitingDialogViewModel = new VisitingDialogViewModel(SelectedPatient!.Id);
+        var visitingDialog = new VisitingDialogView()
+        {
+            DataContext = visitingDialogViewModel
+        };
+
+        visitingDialog.ShowDialog();
     }
 
     private bool CanExecuteVisitPatientCommand(object obj)
