@@ -41,7 +41,11 @@
                     Command="{Binding VisitPatientCommand}"/>
             <TextBlock Style="{StaticResource MainTextBlock}"
                        Margin="15,4,10,0">Search by name: </TextBlock>
-            <TextBox Width="100" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Width="150" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Style="{StaticResource MainTextBlock}"
+                       Margin="15,4,10,0">Room: </TextBlock>
+            <ComboBox Width="150" ItemsSource="{Binding AllRooms}" 
+                      SelectedItem="{Binding FilterRoom}"/>
         </StackPanel>
     </Grid>
 </UserControl>
