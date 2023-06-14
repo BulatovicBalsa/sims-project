@@ -9,7 +9,7 @@ namespace Hospital.ViewModels.Manager;
 
 public class DoctorTimeOffRequestViewModel : ViewModelBase
 {
-    private readonly RelayCommand _acceptCommand;
+    private readonly RelayCommand _approveCommand;
     private readonly RelayCommand _rejectCommand;
     private readonly DoctorTimeOffRequestService _timeOffRequestService;
     private DoctorTimeOffRequest? _selectedRequest;
@@ -20,7 +20,7 @@ public class DoctorTimeOffRequestViewModel : ViewModelBase
         TimeOffRequests =
             new ObservableCollection<DoctorTimeOffRequest>(DoctorTimeOffRequestRepository.Instance.GetAll());
         _timeOffRequestService = new DoctorTimeOffRequestService();
-        _acceptCommand = new RelayCommand(AcceptSelected, CanAcceptSelected);
+        _approveCommand = new RelayCommand(AcceptSelected, CanAcceptSelected);
         _rejectCommand = new RelayCommand(RejectSelected, CanRejectSelected);
     }
 
@@ -47,13 +47,13 @@ public class DoctorTimeOffRequestViewModel : ViewModelBase
         }
     }
 
-    public ICommand AcceptCommand => _acceptCommand;
+    public ICommand ApproveCommand => _approveCommand;
 
     public ICommand RejectCommand => _rejectCommand;
 
     private void RaiseCanExecuteChangedForAllCommands()
     {
-        _acceptCommand.RaiseCanExecuteChanged();
+        _approveCommand.RaiseCanExecuteChanged();
         _rejectCommand.RaiseCanExecuteChanged();
     }
 
@@ -67,7 +67,7 @@ public class DoctorTimeOffRequestViewModel : ViewModelBase
     private void AcceptSelected()
     {
         if (SelectedRequest != null)
-            _timeOffRequestService.Accept(SelectedRequest);
+            _timeOffRequestService.Approve(SelectedRequest);
         RaiseCanExecuteChangedForAllCommands();
         RefreshTimeOffRequests();
     }

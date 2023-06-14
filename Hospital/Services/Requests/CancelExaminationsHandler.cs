@@ -10,7 +10,7 @@ using Hospital.Models.Requests;
 
 namespace Hospital.Services.Requests
 {
-    public class CancelExaminationsHandler: AbstractAcceptanceHandler
+    public class CancelExaminationsHandler: AbstractApprovalHandler
     {
         public override void Handle(DoctorTimeOffRequest request)
         {

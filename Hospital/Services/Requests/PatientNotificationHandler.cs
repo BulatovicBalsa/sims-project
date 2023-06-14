@@ -12,7 +12,7 @@ using Hospital.Scheduling;
 
 namespace Hospital.Services.Requests
 {
-    public class PatientNotificationHandler: AbstractAcceptanceHandler
+    public class PatientNotificationHandler: AbstractApprovalHandler
     {
         public override void Handle(DoctorTimeOffRequest request)
         {

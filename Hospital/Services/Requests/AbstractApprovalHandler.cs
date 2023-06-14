@@ -8,11 +8,11 @@ using Hospital.Models.Requests;
 
 namespace Hospital.Services.Requests
 {
-    public abstract class AbstractAcceptanceHandler: IAcceptanceHandler
+    public abstract class AbstractApprovalHandler: IApprovalHandler
     {
-        private IAcceptanceHandler? _nextHandler;
+        private IApprovalHandler? _nextHandler;
 
-        public IAcceptanceHandler SetNext(IAcceptanceHandler handler)
+        public IApprovalHandler SetNext(IApprovalHandler handler)
         {
             _nextHandler = handler;
             return handler;

@@ -312,13 +312,13 @@
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
                                 Command="{Binding AcceptCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Accept" VerticalAlignment="Center" Margin="2 0 0 0" />
+                                <TextBlock Text="Approve" VerticalAlignment="Center" Margin="2 0 0 0" />
                             </StackPanel>
                         </Button>
                         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
                                 Command="{Binding RejectCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Decline" VerticalAlignment="Center" Margin="2 0 0 0" />
+                                <TextBlock Text="Reject" VerticalAlignment="Center" Margin="2 0 0 0" />
                             </StackPanel>
                         </Button>
                     </ToolBar>

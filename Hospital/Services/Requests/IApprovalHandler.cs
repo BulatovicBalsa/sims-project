@@ -7,9 +7,9 @@ using Hospital.Models.Requests;
 
 namespace Hospital.Services.Requests
 {
-    public interface IAcceptanceHandler
+    public interface IApprovalHandler
     {
         public void Handle(DoctorTimeOffRequest request);
-        public IAcceptanceHandler SetNext(IAcceptanceHandler handler);
+        public IApprovalHandler SetNext(IApprovalHandler handler);
     }
 }
