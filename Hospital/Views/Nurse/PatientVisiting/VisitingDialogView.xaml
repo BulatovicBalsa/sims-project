@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hospital.Views.Nurse.PatientVisiting"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Nurse.PatientVisiting"
         mc:Ignorable="d"
-        Title="VisitingDialogView" Height="450" Width="800"
+        Title="VisitingDialogView" Height="300" Width="400"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
