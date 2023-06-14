@@ -218,6 +218,33 @@
                 </Grid>
 
             </TabItem>
+            <TabItem Header="Doctor survey" DataContext="{Binding DoctorFeedbackViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.ColumnSpan="2" Height="Auto" ItemsSource="{Binding Doctors}" SelectedValuePath="Id" SelectedValue="{Binding SelectedDoctorId}"/>
+                    <ScottPlot:WpfPlot Grid.Row="1" Grid.Column="0" x:Name="AverageDoctorRatingByAreaWpfPlot"/>
+                    <DockPanel Grid.Row="1" Grid.Column="1">
+                        <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="DoctorRatingFrequencyWpfPlot"/>
+                    </DockPanel>
+                    <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedDoctorFeedback}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Overall rating" Binding="{Binding OverallRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Would recommend to a friend" Binding="{Binding RecommendationRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Quality rating" Binding="{Binding DoctorQualityRating}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ public class ManagerViewModel : ViewModelBase
         RoomTabViewModel = new RoomTabViewModel();
         HospitalSurveyTabViewModel =
             new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlotter, averageHospitalFeedbackRatingByAreaPlot);
+        DoctorFeedbackViewModel = new DoctorFeedbackViewModel();
     }
 
 
@@ -21,4 +22,5 @@ public class ManagerViewModel : ViewModelBase
     public RenovationTabViewModel RenovationTabViewModel { get; }
     public RoomTabViewModel RoomTabViewModel { get; }
     public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; }
+    public DoctorFeedbackViewModel DoctorFeedbackViewModel { get; }
 }
