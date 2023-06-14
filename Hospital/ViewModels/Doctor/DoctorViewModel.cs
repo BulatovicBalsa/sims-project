@@ -19,11 +19,11 @@ namespace Hospital.ViewModels;
 public class DoctorViewModel : ViewModelBase
 {
     private const string Placeholder = "Search...";
-    private readonly ExaminationService _examinationService = new();
-    private readonly PatientService _patientService = new();
-    private readonly DoctorTimeOffRequestService _requestService = new();
+    protected readonly ExaminationService _examinationService = new();
+    protected readonly PatientService _patientService = new();
+    protected readonly DoctorTimeOffRequestService _requestService = new();
 
-    private Doctor _doctor;
+    protected Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
 
     private ObservableCollection<Patient> _patients;

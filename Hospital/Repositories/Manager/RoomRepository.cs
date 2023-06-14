@@ -119,4 +119,9 @@ public class RoomRepository
         var warehouse = GetAll().Find(room => room.Type == RoomType.Warehouse);
         return warehouse ?? throw new NoWarehouseException();
     }
+
+    public List<Room> GetAll(RoomType type)
+    {
+        return GetAll().Where(room => room.Type == type).ToList();
+    }
 }

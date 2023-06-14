@@ -1,0 +1,17 @@
+TransferId,Id,Name,Type,EquipmentId,Amount
+8d0b44ff-62db-4c12-8e21-0dc351ea0937,1027,Band-Aid,DynamicEquipment,1027,1
+a875679c-16d9-4602-8d29-5cd87e23c62f,1027,Band-Aid,DynamicEquipment,1027,1
+b66ddea1-f924-46f6-9ed8-4428d9f01709,1023,Bandage,DynamicEquipment,1023,1
+f4e46467-84b0-4448-b75f-d682d563c238,1023,Bandage,DynamicEquipment,1023,1
+f1ba2f68-d222-4358-848c-6298089a25e4,1024,Pencil,DynamicEquipment,1024,1
+d05e7c5a-9d6c-4a21-a7fe-b361612f00be,1026,Injection,DynamicEquipment,1026,1
+b61903b1-08c1-458a-8a7e-7992685b335e,1026,Injection,DynamicEquipment,1026,1
+96c0a01a-8df0-4ec1-97d7-78ebcf0d331b,1021,Chair,Furniture,1021,2
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1027,Band-Aid,DynamicEquipment,1027,5
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1026,Injection,DynamicEquipment,1026,5
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1024,Pencil,DynamicEquipment,1024,5
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1023,Bandage,DynamicEquipment,1023,5
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1025,Paper,DynamicEquipment,1025,5
+6758ff4b-55aa-4eba-a24f-56326f1833a8,1,Something,DynamicEquipment,1,5
+2e787a0a-0462-4efe-a47b-df09ae70b614,1026,Injection,DynamicEquipment,1026,2
+8e1fa5b8-887b-4165-9a0c-5ab446238bbd,1021,Chair,Furniture,1021,1

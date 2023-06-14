@@ -8,6 +8,7 @@ using Hospital.Exceptions;
 using Hospital.Filter;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
+using Hospital.Repositories.Nurse;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Serialization.Mappers;
@@ -16,6 +17,7 @@ namespace Hospital.Repositories.Examination;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Models.Doctor;
+using Hospital.Models.Nurse;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {
@@ -32,6 +34,8 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
+        Map(examination => examination.ProcedureDoctors).Index(9).TypeConverter<DoctorListTypeConverter>();
+        Map(examination => examination.ProcedureNurses).Index(10).TypeConverter<NurseListTypeConverter>();
     }
 
     public class DoctorTypeConverter : DefaultTypeConverter
@@ -75,6 +79,44 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             return room;
         }
     }
+
+    public class DoctorListTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            if (string.IsNullOrEmpty(inputText))
+                return null;
+
+            var doctors = new List<Doctor>();
+            inputText?.Split("|").ToList().ForEach(doctorId =>
+            {
+                var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+                             throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                doctors.Add(doctor);
+            });
+            
+            return doctors;
+        }
+    }
+
+    public class NurseListTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            if (string.IsNullOrEmpty(inputText))
+                return null;
+
+            var nurses = new List<Nurse>();
+            inputText?.Split("|").ToList().ForEach(nurseId =>
+            {
+                var doctor = NurseRepository.Instance.GetById(nurseId) ??
+                             throw new KeyNotFoundException($"Doctor with ID {nurseId} not found");
+                nurses.Add(doctor);
+            });
+
+            return nurses;
+        }
+    }
 }
 
 public sealed class ExaminationWriteMapper : ClassMap<Examination>
@@ -90,6 +132,8 @@ public sealed class ExaminationWriteMapper : ClassMap<Examination>
         Map(examination => examination.Room!.Id).Index(6);
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
+        Map(examination => examination.ProcedureDoctors).Index(9).Convert(row => string.Join("|", row.Value.ProcedureDoctors?.Select(doctor => doctor.Id) ?? new List<string>())).Index(9);
+        Map(examination => examination.ProcedureNurses).Index(10).Convert(row => string.Join("|", row.Value.ProcedureNurses?.Select(nurse  => nurse.Id) ?? new List<string>())).Index(10);
     }
 }
 

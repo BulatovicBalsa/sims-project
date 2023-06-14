@@ -1,12 +1,13 @@
 ﻿using Hospital.Models.Manager;
 using System;
-using System.Windows.Navigation;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Hospital.Models.Examination;
 using Doctor;
 using Hospital.Repositories.Manager;
 using Patient;
-
+using Nurse;
 public class UpdateExaminationDto
 {
     public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient patient,
@@ -38,8 +39,10 @@ public class Examination
     public Room? Room { get; set; }
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
+    public List<Doctor>? ProcedureDoctors { get; set; }
+    public List<Nurse>? ProcedureNurses { get; set; }
 
-    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false)
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<Doctor>? procedureDoctors = null, List<Nurse>? procedureNursesIds = null)
     {
          Doctor = doctor;
          Patient = patient;
@@ -50,6 +53,8 @@ public class Examination
          Room = room ?? RoomRepository.Instance.GetAll()[0];
          Admissioned = false;
          Urgent = urgent;
+         ProcedureDoctors = procedureDoctors;
+         ProcedureNurses = procedureNursesIds;
     }
 
     public Examination()
@@ -95,7 +100,28 @@ public class Examination
     {
         return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
     }
-      
+    
+    public string ToStringCli
+    {
+        get
+        {
+            var indent = "\t\t";
+            var builder = new StringBuilder();
+            builder.Append($"Examination data: Patient: {Patient.FirstName} {Patient.LastName} {Patient.Jmbg}, Start: {Start}, Operation?: {IsOperation}");
+            if (ProcedureDoctors?.Count > 0)
+            {
+                builder.Append($"\n{indent}Procedure Doctors: ");
+                ProcedureDoctors.ForEach(doctor => builder.Append($"\n\t{indent}{doctor}"));
+            }
+
+            if (!(ProcedureNurses?.Count > 0)) return builder.ToString();
+            builder.Append($"\n{indent}Procedure Nurses: ");
+            ProcedureNurses.ForEach(nurse => builder.Append($"\n\t{indent}{nurse}"));
+
+            return builder.ToString();
+        }
+    }
+
     public void Update(UpdateExaminationDto examinationDto)
     {
         Start = examinationDto.Start;
