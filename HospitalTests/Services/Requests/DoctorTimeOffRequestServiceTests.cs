@@ -1,4 +1,5 @@
-﻿using Hospital.Models.Doctor;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
@@ -41,10 +42,13 @@ public class DoctorTimeOffRequestServiceTests
         var room = RoomRepository.Instance.GetAll()[0];
         var patient = PatientRepository.Instance.GetAll()[0];
         var pera = DoctorRepository.Instance.GetByUsername("pera");
-        DoctorTimeOffRequestRepository.Instance.Add(new DoctorTimeOffRequest(pera.Id, "reason", DateTime.Now.AddDays(3), DateTime.Now.AddDays(10)));
+        DoctorTimeOffRequestRepository.Instance.Add(new DoctorTimeOffRequest(pera.Id, "reason", DateTime.Now.AddDays(3),
+            DateTime.Now.AddDays(10)));
         ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(4), room), false);
-        ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(11), room), false);
-        ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(-1), room), false);
+        ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(11), room),
+            false);
+        ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(-1), room),
+            false);
     }
 
     [TestMethod]
@@ -58,8 +62,8 @@ public class DoctorTimeOffRequestServiceTests
         Assert.AreEqual(2, ExaminationRepository.Instance.GetAll().Count);
         Assert.IsTrue(ExaminationRepository.Instance.GetAll()[0].Start > request.End);
     }
-    [TestMethod]
 
+    [TestMethod]
     public void TestAcceptRequestAndNotifyPatients()
     {
         AddData();
@@ -69,5 +73,16 @@ public class DoctorTimeOffRequestServiceTests
         service.Accept(request);
         var notificationRepository = new NotificationRepository();
         Assert.AreEqual(1, notificationRepository.GetAll().Count);
+    }
+
+    [TestMethod()]
+    public void TestReject()
+    {
+        AddData();
+        var service = new DoctorTimeOffRequestService();
+        var request = DoctorTimeOffRequestRepository.Instance.GetAll()[0];
+        service.Reject(request);
+        Assert.AreEqual(0, DoctorTimeOffRequestRepository.Instance.GetAll().Count);
+        Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
     }
 }

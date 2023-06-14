@@ -39,7 +39,16 @@ public class DoctorTimeOffRequestService
         NotifyPatients(request);
         CancelExaminationsInPeriod(request);
         _requestRepository.Update(request);
-    } 
+    }
+
+    public void Reject(DoctorTimeOffRequest request)
+    {
+        if (request.IsApproved)
+            return;
+
+        _requestRepository.Delete(request);
+    }
+
     private void NotifyPatients(DoctorTimeOffRequest request)
     {
         var doctor = DoctorRepository.Instance.GetById(request.DoctorId); 
