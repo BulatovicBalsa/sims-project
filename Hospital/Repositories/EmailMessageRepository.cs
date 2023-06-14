@@ -20,7 +20,7 @@ namespace Hospital.Repositories
         private EmailMessageRepository() { }
         public List<EmailMessage> GetAll()
         {
-            return Serializer<EmailMessage>.FromCSV(FilePath, new EmailMessageReadMapper());
+            return CsvSerializer<EmailMessage>.FromCSV(FilePath, new EmailMessageReadMapper());
         }
         public List<EmailMessage> GetEmailMessagesByParticipantId(string id)
         {
@@ -31,7 +31,7 @@ namespace Hospital.Repositories
         {
             var allMessages = GetAll();
             allMessages.Add(message);
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            CsvSerializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
         }
         public void Update(EmailMessage message)
         {
@@ -39,7 +39,7 @@ namespace Hospital.Repositories
             var indexToUpdate = allMessages.FindIndex(messageRecord => messageRecord.Id == message.Id);
             if (indexToUpdate == -1) throw new KeyNotFoundException($"Message with id {message.Id} was not found.");
             allMessages[indexToUpdate] = message;
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            CsvSerializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
         }
         public void Delete(EmailMessage message)
         {
@@ -48,12 +48,12 @@ namespace Hospital.Repositories
             if (!allMessages.Remove(message))
                 throw new KeyNotFoundException($"Message with id {message.Id} was not found.");
 
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            CsvSerializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
         }
         public static void DeleteAll()
         {
             var emptyMessageList = new List<EmailMessage>();
-            Serializer<EmailMessage>.ToCSV(emptyMessageList, FilePath);
+            CsvSerializer<EmailMessage>.ToCSV(emptyMessageList, FilePath);
         }
 
         public List<EmailMessage> GetReceivedEmailMessagesByParticipantId(string id)

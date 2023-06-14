@@ -18,19 +18,19 @@ namespace Hospital.Repositories.Patient
 
         public List<PatientExaminationLog> GetAll()
         {
-            return Serializer<PatientExaminationLog>.FromCSV(FilePath);
+            return CsvSerializer<PatientExaminationLog>.FromCSV(FilePath);
         }
 
         public void Add(PatientExaminationLog log)
         {
             var allLogs = GetAll();
             allLogs.Add(log);
-            Serializer<PatientExaminationLog>.ToCSV(allLogs,FilePath);
+            CsvSerializer<PatientExaminationLog>.ToCSV(allLogs,FilePath);
         }
 
         public static void DeleteAll()
         {
-            Serializer<PatientExaminationLog>.ToCSV(new List<PatientExaminationLog>(), FilePath);
+            CsvSerializer<PatientExaminationLog>.ToCSV(new List<PatientExaminationLog>(), FilePath);
         }
 
     }

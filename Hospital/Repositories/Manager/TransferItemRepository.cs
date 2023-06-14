@@ -30,7 +30,7 @@ public class TransferItemRepository
     {
         if (_transferItems != null)
             return _transferItems;
-        _transferItems = Serializer<TransferItem>.FromCSV(FilePath);
+        _transferItems = CsvSerializer<TransferItem>.FromCSV(FilePath);
         JoinWithEquipment();
         return _transferItems;
     }
@@ -39,7 +39,7 @@ public class TransferItemRepository
     {
         var transferItems = GetAll();
         transferItems.Add(item);
-        Serializer<TransferItem>.ToCSV(transferItems, FilePath);
+        CsvSerializer<TransferItem>.ToCSV(transferItems, FilePath);
     }
 
     public void Update(TransferItem item)
@@ -50,12 +50,12 @@ public class TransferItemRepository
             throw new KeyNotFoundException();
 
         transferItems[indexToUpdate] = item;
-        Serializer<TransferItem>.ToCSV(transferItems, FilePath);
+        CsvSerializer<TransferItem>.ToCSV(transferItems, FilePath);
     }
 
     public void DeleteAll()
     {
-        Serializer<TransferItem>.ToCSV(new List<TransferItem>(), FilePath);
+        CsvSerializer<TransferItem>.ToCSV(new List<TransferItem>(), FilePath);
         _transferItems = null;
     }
 }
