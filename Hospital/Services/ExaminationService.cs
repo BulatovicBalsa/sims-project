@@ -49,7 +49,7 @@ public class ExaminationService
             ? postponableExaminations.Take(5).ToList()
             : postponableExaminations;
 
-        return fivePostponableExaminations;
+        return fivePostponableExaminations.Where(examination => TimeslotService.IsIn2Hours(examination.Start)).ToList();
     }
 
     private List<Examination> GetPostponableExaminations(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)

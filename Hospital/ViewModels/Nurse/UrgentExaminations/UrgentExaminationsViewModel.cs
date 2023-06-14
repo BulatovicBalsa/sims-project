@@ -97,7 +97,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
     private bool ScheduleUrgentExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
     {
         var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
-        if (!_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
+        if (!TimeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
 
         SaveUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
         return true;
