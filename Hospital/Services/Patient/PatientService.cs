@@ -43,5 +43,10 @@ namespace Hospital.Services
         {
             _patientRepository.UpdateHospitalTreatmentReferral(patient, referral);
         }
+
+        public List<Patient> GetAllHospitalizedPatients()
+        {
+            return _patientRepository.GetAllHospitalized();
+        }
     }
 }
