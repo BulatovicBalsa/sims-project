@@ -39,6 +39,9 @@
             <Button Content="Perform visit" Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
                     Command="{Binding VisitPatientCommand}"/>
+            <TextBlock Style="{StaticResource MainTextBlock}"
+                       Margin="15,4,10,0">Search by name: </TextBlock>
+            <TextBox Width="100" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </UserControl>
