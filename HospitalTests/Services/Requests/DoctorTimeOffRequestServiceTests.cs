@@ -3,6 +3,7 @@ using Hospital.Models.Examination;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Models.Requests;
+using Hospital.Repositories;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Manager;
@@ -56,5 +57,17 @@ public class DoctorTimeOffRequestServiceTests
         service.Accept(request);
         Assert.AreEqual(2, ExaminationRepository.Instance.GetAll().Count);
         Assert.IsTrue(ExaminationRepository.Instance.GetAll()[0].Start > request.End);
+    }
+    [TestMethod]
+
+    public void TestAcceptRequestAndNotifyPatients()
+    {
+        AddData();
+        Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
+        var service = new DoctorTimeOffRequestService();
+        var request = DoctorTimeOffRequestRepository.Instance.GetAll()[0];
+        service.Accept(request);
+        var notificationRepository = new NotificationRepository();
+        Assert.AreEqual(1, notificationRepository.GetAll().Count);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Documents;
+using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
+using Hospital.Repositories;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Requests;
@@ -34,10 +36,21 @@ public class DoctorTimeOffRequestService
             return;
 
         request.IsApproved = true;
+        NotifyPatients(request);
         CancelExaminationsInPeriod(request);
         _requestRepository.Update(request);
+    } 
+    private void NotifyPatients(DoctorTimeOffRequest request)
+    {
+        var doctor = DoctorRepository.Instance.GetById(request.DoctorId); 
+        var examinationsToBeCancelled = ExaminationRepository.Instance.GetExaminationsInTimeRange(doctor, new TimeRange(request.Start, request.End));
+        var notificationRepository = new NotificationRepository();
+        foreach (var examination in examinationsToBeCancelled)
+        {
+            notificationRepository.Add(new Notification(examination.Patient.Id,
+                $"Examination by {examination.Doctor.FirstName} {examination.Doctor.LastName} at {examination.Start} has been cancelled."));
+        }
     }
-
     private void CancelExaminationsInPeriod(DoctorTimeOffRequest request)
     {
         var doctor = DoctorRepository.Instance.GetById(request.DoctorId); 
