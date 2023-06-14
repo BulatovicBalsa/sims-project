@@ -10,7 +10,7 @@ namespace Hospital.Converters
 {
     public class AverageHospitalFeedbackRatingsToDictionaryConverter
     {
-        public Dictionary<string, double> Convert(AverageHospitalFeedbackRatingByAreaDTO averageRatingByArea)
+        public Dictionary<string, double> Convert(AverageHospitalFeedbackRatingByAreaDto averageRatingByArea)
         {
             var dictionary = new Dictionary<string, double>
             {

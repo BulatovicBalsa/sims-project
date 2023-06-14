@@ -1,8 +1,8 @@
 ﻿namespace Hospital.DTOs;
 
-public class AverageHospitalFeedbackRatingByAreaDTO
+public class AverageHospitalFeedbackRatingByAreaDto
 {
-    public AverageHospitalFeedbackRatingByAreaDTO(double serviceQuality, double overallRating,
+    public AverageHospitalFeedbackRatingByAreaDto(double serviceQuality, double overallRating,
         double recommendationRating, double cleanlinessRating, double patientSatisfactionRating)
     {
         ServiceQuality = serviceQuality;

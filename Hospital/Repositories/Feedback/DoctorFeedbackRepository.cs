@@ -47,22 +47,22 @@ public class DoctorFeedbackRepository
         return frequencies;
     }
 
-    public List<AverageDoctorRatingDTO> GetDoctorsOrderedByAverageRating()
+    public List<AverageDoctorRatingDto> GetDoctorsOrderedByAverageRating()
     {
         var doctorsByRating = from feedback in GetAll()
             group feedback by feedback.DoctorId
             into g
-            select new AverageDoctorRatingDTO(g.Key, g.SelectMany(e => e.GetAllRatings()).Average());
+            select new AverageDoctorRatingDto(g.Key, g.SelectMany(e => e.GetAllRatings()).Average());
         return doctorsByRating.OrderByDescending(e => e.AverageRating).ToList();
     }
 
-    public List<AverageDoctorRatingDTO> GetTop3Doctors()
+    public List<AverageDoctorRatingDto> GetTop3Doctors()
     {
         var doctorsOrderedByAverageRating = GetDoctorsOrderedByAverageRating();
         return doctorsOrderedByAverageRating.Take(Math.Min(3, doctorsOrderedByAverageRating.Count)).ToList();
     }
 
-    public List<AverageDoctorRatingDTO> GetBottom3Doctors()
+    public List<AverageDoctorRatingDto> GetBottom3Doctors()
     {
         var doctorsOrderedByAverageRating = GetDoctorsOrderedByAverageRating();
         return doctorsOrderedByAverageRating.TakeLast(Math.Min(3, doctorsOrderedByAverageRating.Count)).ToList();

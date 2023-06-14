@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Feedback;
+﻿using Hospital.Models.Feedback;
 using Hospital.Repositories.Feedback;
 
 namespace HospitalTests.Repositories.Feedback;
@@ -84,7 +83,7 @@ public class DoctorFeedbackRepositoryTests
         Assert.AreEqual(1, doctorQualityRatingFrequencies[5]);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void TestGetAverageRatingsByArea()
     {
         AddData();
@@ -92,6 +91,5 @@ public class DoctorFeedbackRepositoryTests
         Assert.AreEqual(3d, averageRatingsByArea.OverallRating);
         Assert.AreEqual(3d, averageRatingsByArea.RecommendationRating);
         Assert.AreEqual(3.5d, averageRatingsByArea.DoctorQualityRating);
-
     }
 }

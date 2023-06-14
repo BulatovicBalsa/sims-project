@@ -1,8 +1,8 @@
 ﻿namespace Hospital.DTOs;
 
-public class AverageDoctorRatingDTO
+public class AverageDoctorRatingDto
 {
-    public AverageDoctorRatingDTO(string doctorId, double averageRating)
+    public AverageDoctorRatingDto(string doctorId, double averageRating)
     {
         DoctorId = doctorId;
         AverageRating = averageRating;
