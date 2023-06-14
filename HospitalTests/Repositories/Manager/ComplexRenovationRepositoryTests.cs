@@ -12,14 +12,29 @@ public class ComplexRenovationRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
+
         new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>()).GetAllFromFile();
     }
 
     [TestCleanup]
     public void CleanUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
     }
 
     private static void DeleteData()

@@ -9,13 +9,27 @@ public class DoctorFeedbackRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
     }
 
     [TestCleanup]
     public void CleanUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception )
+        {
+            Console.WriteLine("Files don't exist.");
+        }
     }
 
     private static void DeleteData()
