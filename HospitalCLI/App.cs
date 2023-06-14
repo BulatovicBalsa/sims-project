@@ -62,8 +62,9 @@ public class App
             }
             case "NURSE":
             {
-                var nurseView = new NurseMainView();
-                nurseView.Show();
+                var nurseView = new NurseCli();
+                nurseView.Menu();
+
                 break;
             }
             case "MANAGER":

@@ -22,7 +22,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService;
     private readonly PatientRepository _patientRepository;
-    private readonly DoctorRepository _doctorRepository;
     private readonly TimeslotService _timeslotService;
     private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
@@ -36,7 +35,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
     {
         _doctorService = new DoctorService();
         _patientRepository = PatientRepository.Instance;
-        _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
         _timeslotService = new TimeslotService();
         _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
@@ -99,7 +97,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
     private bool ScheduleUrgentExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
     {
         var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
-        if (!_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
+        if (!TimeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
 
         SaveUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
         return true;
