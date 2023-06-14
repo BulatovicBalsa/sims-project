@@ -15,6 +15,16 @@ public class DoctorTimeOffRequestService
 {
     private readonly DoctorTimeOffRequestRepository _requestRepository = DoctorTimeOffRequestRepository.Instance;
 
+    private readonly IAcceptanceHandler _acceptanceHandler;
+
+    public DoctorTimeOffRequestService()
+    {
+        var cancelExaminationsHandler = new CancelExaminationsHandler();
+        var notifyPatientsHandler = new PatientNotificationHandler();
+        _acceptanceHandler = cancelExaminationsHandler;
+        _acceptanceHandler.SetNext(notifyPatientsHandler);
+    }
+
     public List<DoctorTimeOffRequest> GetAll()
     {
         return _requestRepository.GetAll();
@@ -36,9 +46,8 @@ public class DoctorTimeOffRequestService
             return;
 
         request.IsApproved = true;
-        NotifyPatients(request);
-        CancelExaminationsInPeriod(request);
         _requestRepository.Update(request);
+        _acceptanceHandler.Handle(request);
     }
 
     public void Reject(DoctorTimeOffRequest request)
