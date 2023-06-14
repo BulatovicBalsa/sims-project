@@ -36,7 +36,7 @@ public class RatingAreaBarPlot : ICategoryPlot
         _wpfPlot.Refresh();
     }
 
-    private void Format(BarPlot bar)
+    private void Format(BarPlotBase bar)
     {
         bar.Orientation = Orientation.Horizontal;
         bar.ShowValuesAboveBars = true;
