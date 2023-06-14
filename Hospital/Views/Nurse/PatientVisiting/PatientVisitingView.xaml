@@ -19,8 +19,8 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0" 
-                  ItemsSource="{Binding Path=Patients}" 
-                  x:Name="PatientsDataGrid" 
+                  ItemsSource="{Binding Path=HospitalizedPatients}" 
+                  x:Name="HospitalizedPatientsDataGrid" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{DynamicResource DataGridCellStyle}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
@@ -38,7 +38,7 @@
                     Orientation="Horizontal">
             <Button Content="Perform visit" Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding AddPatientCommand}"/>
+                    Command="{Binding VisitPatientCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
