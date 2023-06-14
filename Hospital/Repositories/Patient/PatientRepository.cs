@@ -93,4 +93,10 @@ public class PatientRepository
         patient.UpdateHospitalTreatmentReferral(referral);
         Update(patient);
     }
+
+    public List<Patient> GetAllHospitalized()
+    {
+        var allPatients = GetAll();
+        return allPatients.Where(patient => patient.IsHospitalized()).ToList();
+    }
 }

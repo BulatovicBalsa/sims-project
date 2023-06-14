@@ -16,8 +16,10 @@
         xmlns:medicationManagementViews="clr-namespace:Hospital.Views.Nurse.Medication"
         xmlns:patientAccommodation="clr-namespace:Hospital.ViewModels.Nurse.PatientAccommodation"
         xmlns:patientAccommodationViews="clr-namespace:Hospital.Views.Nurse.PatientAccommodation"
+        xmlns:patientVisiting="clr-namespace:Hospital.ViewModels.Nurse.PatientVisiting"
+        xmlns:patientVisitingViews="clr-namespace:Hospital.Views.Nurse.PatientVisiting"
         mc:Ignorable="d"
-        Title="NurseMainView" Height="500" Width="1000"
+        Title="NurseMainView" Height="510" Width="1000"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
@@ -45,6 +47,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type patientAccommodation:PatientAccommodationViewModel}">
             <patientAccommodationViews:PatientAccommodationView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type patientVisiting:PatientVisitingViewModel}">
+            <patientVisitingViews:PatientVisitingView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -122,7 +127,7 @@
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowCommunicationViewCommand}">
+                                 Command="{Binding ShowPatientVisitingViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Visit patients" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
