@@ -1,117 +1,139 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hospital.Models.Doctor;
+﻿using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examination;
+using Hospital.Repositories.Patient;
 using Hospital.Scheduling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Cache;
+using System.Printing;
+using System.Text;
+using System.Threading.Tasks;
+using Hospital.Repositories.Examination;
 
-namespace Hospital.Services;
 
-public class ExaminationRecommenderService
+namespace Hospital.Services
 {
-    private const int NUMBER_OF_SUGGESTED_EXAMINATIONS = 3;
-    private const int MAX_NUMBER_OF_CLOSEST_EXAMINATIONS = 10;
-
-    private readonly DoctorRepository _doctorRepository;
-    private readonly ExaminationRepository _examinationRepository;
-
-    public ExaminationRecommenderService()
+    public class ExaminationRecommenderService
     {
-        _doctorRepository = DoctorRepository.Instance;
-        _examinationRepository = ExaminationRepository.Instance;
-    }
+        private const int NumberOfSuggestedExaminations = 3;
+        private const int MaxNumberOfClosestExaminations = 6;
+        private const int TimeIntervalInMinutes = 10;
 
-    public List<Doctor> GetAllDoctors()
-    {
-        return _doctorRepository.GetAll();
-    }
+        private DoctorRepository _doctorRepository;
+        private ExaminationRepository _examinationRepository;
 
-    public void AddExamination(Examination examination)
-    {
-        _examinationRepository.Add(examination, true);
-    }
-
-    public List<Examination> FindAvailableExaminations(Patient patient, ExaminationSearchOptions options)
-    {
-        var examinations = SearchByBothCriteria(patient, options);
-
-        if (examinations.Count > 0) return examinations;
-        if (options.Priority == Priority.Doctor)
+        public ExaminationRecommenderService()
         {
-            examinations = SearchByDoctorPriority(patient, options);
-            if (examinations.Count > 0) return examinations;
-            examinations = SearchByTimeRangePriority(patient, options);
-            if (examinations.Count > 0) return examinations;
-        }
-        else
-        {
-            examinations = SearchByTimeRangePriority(patient, options);
-            if (examinations.Count > 0) return examinations;
-            examinations = SearchByDoctorPriority(patient, options);
-            if (examinations.Count > 0) return examinations;
+            _doctorRepository = DoctorRepository.Instance;
+            _examinationRepository = ExaminationRepository.Instance;
         }
 
-        return SearchWithoutPriority(patient, options);
-    }
-
-    private List<Examination> SearchExaminations(Patient patient, ExaminationSearchOptions options, Doctor doctor,
-        Func<DateTime, TimeRange> getSearchRangeForDay)
-    {
-        var examinations = new List<Examination>();
-        var startDate = DateTime.Now.Date.AddDays(1);
-
-        for (var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
+        public List<Doctor> GetAllDoctors()
         {
-            var timeRange = getSearchRangeForDay(currentDate);
-            examinations = SearchInTimeRange(doctor, patient, timeRange, examinations);
-            if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
+            return _doctorRepository.GetAll();
         }
 
-        return examinations;
-    }
+        public void AddExamination(Examination examination)
+        {
+            _examinationRepository.Add(examination, true);
+        }
 
-    private List<Examination> SearchByBothCriteria(Patient patient, ExaminationSearchOptions options)
-    {
-        return SearchExaminations(patient, options, options.PreferredDoctor,
-            currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
-    }
+        public List<Examination> FindAvailableExaminations(Patient patient, ExaminationSearchOptions options)
+        {
+            List<Examination> examinations = SearchByBothCriteria(patient, options);
 
-    private List<Examination> SearchByDoctorPriority(Patient patient, ExaminationSearchOptions options)
-    {
-        return SearchExaminations(patient, options, options.PreferredDoctor,
-            currentDate => new TimeRange(currentDate, currentDate.AddDays(1)));
-    }
+            if (examinations.Count > 0) return examinations;
+            if (options.Priority == Priority.Doctor)
+            {
+                examinations = SearchByDoctorPriority(patient, options);
+                if (examinations.Count > 0) return examinations;
+                examinations = SearchByTimeRangePriority(patient, options);
+                if (examinations.Count > 0) return examinations;
+            }
+            else
+            {
+                examinations = SearchByTimeRangePriority(patient, options);
+                if (examinations.Count > 0) return examinations;
+                examinations = SearchByDoctorPriority(patient, options);
+                if (examinations.Count > 0) return examinations;
+            }
+            return SearchWithoutPriority(patient, options);
 
-    private List<Examination> SearchByTimeRangePriority(Patient patient, ExaminationSearchOptions options)
-    {
-        var examinations = new List<Examination>();
-        var doctors = GetAllDoctors();
-        var startDate = DateTime.Now.Date.AddDays(1);
+        }
+        private List<Examination> SearchExaminations(Patient patient, ExaminationSearchOptions options, Doctor doctor, Func<DateTime, TimeRange> getSearchRangeForDay)
+        {
+            List<Examination> examinations = new List<Examination>();
+            var startDate = DateTime.Now.Date.AddDays(1);
 
-        foreach (var doctor in doctors)
             for (var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
             {
-                examinations = SearchExaminations(patient, options, doctor,
-                    currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
-                if (examinations.Count >= NUMBER_OF_SUGGESTED_EXAMINATIONS) return examinations;
+                TimeRange timeRange = getSearchRangeForDay(currentDate);
+                examinations = SearchInTimeRange(doctor, patient, timeRange, examinations);
+                if (examinations.Count >= NumberOfSuggestedExaminations) return examinations;
             }
+            return examinations;
+        }
 
-        return examinations;
-    }
+        private List<Examination> SearchByBothCriteria(Patient patient, ExaminationSearchOptions options)
+        {
+            return SearchExaminations(patient, options, options.PreferredDoctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
+        }
 
-    private List<Examination> SearchWithoutPriority(Patient patient, ExaminationSearchOptions options)
-    {
-        var examinations = GetAllPossibleExaminations(patient, options);
-        var closestExaminations = GetClosestExaminations(examinations, options);
-        return closestExaminations;
-    }
+        private List<Examination> SearchByDoctorPriority(Patient patient, ExaminationSearchOptions options)
+        {
+            List<Examination> examinations = new List<Examination>();
 
-    private List<Examination> GetClosestExaminations(List<Examination> examinations, ExaminationSearchOptions options)
-    {
-        var examinationRankings = examinations
+            DateTime today = DateTime.Today;
+            DateTime futureStartDate = today.AddDays(1).Add(options.EndTime);
+            DateTime futureEndDate = futureStartDate.AddHours(4);
+            TimeRange futureTimeRange = new TimeRange(futureStartDate, futureEndDate);
+
+            DateTime pastEndDate = today.AddDays(1).Add(options.StartTime);
+            DateTime pastStartDate = pastEndDate.AddHours(-4);
+            TimeRange pastTimeRange = new TimeRange(pastStartDate, pastEndDate);
+
+            examinations = SearchExaminations(patient, options, options.PreferredDoctor, _ => futureTimeRange);
+            if (examinations.Count >= NumberOfSuggestedExaminations)
+                return examinations;
+
+            examinations = SearchExaminations(patient, options, options.PreferredDoctor, _ => pastTimeRange);
+            if (examinations.Count >= NumberOfSuggestedExaminations)
+                return examinations;
+
+            return examinations;
+        }
+
+        private List<Examination> SearchByTimeRangePriority(Patient patient, ExaminationSearchOptions options)
+        {
+            List<Examination> examinations = new List<Examination>();
+            List<Doctor> doctors = GetAllDoctors();
+            var startDate = DateTime.Now.Date.AddDays(1);
+
+            foreach (var doctor in doctors)
+            {
+                for (var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
+                {
+                    examinations = SearchExaminations(patient, options, doctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
+                    if (examinations.Count >= NumberOfSuggestedExaminations) return examinations;
+                }
+            }
+            return examinations;
+
+        }
+
+        private List<Examination> SearchWithoutPriority(Patient patient, ExaminationSearchOptions options)
+        {
+            List<Examination> examinations = GetAllPossibleExaminations(patient, options);
+            List<Examination> closestExaminations = GetClosestExaminations(examinations, options);
+            return closestExaminations;
+        }
+
+        private List<Examination> GetClosestExaminations(List<Examination> examinations, ExaminationSearchOptions options)
+        {
+            var examinationRankings = examinations
             .Select(examination => new
             {
                 Examination = examination,
@@ -119,80 +141,72 @@ public class ExaminationRecommenderService
                 IsPreferredDoctor = examination.Doctor == options.PreferredDoctor
             });
 
-        var closestExaminations = examinationRankings
-            .OrderByDescending(item => item.IsPreferredDoctor)
-            .ThenBy(item => item.Difference)
-            .Take(NUMBER_OF_SUGGESTED_EXAMINATIONS)
-            .Select(item => item.Examination)
-            .ToList();
+            List<Examination> closestExaminations = examinationRankings
+                .OrderBy(item => item.Difference)
+                .ThenByDescending(item => item.IsPreferredDoctor)
+                .Select(item => item.Examination)
+                .Take(NumberOfSuggestedExaminations)
+                .ToList();
 
-        return closestExaminations;
-    }
+            return closestExaminations;
+        }
 
-    private List<Examination> GetAllPossibleExaminations(Patient patient, ExaminationSearchOptions options)
-    {
-        var examinations = new List<Examination>();
-        var doctors = GetAllDoctors();
-        SortDoctorsByPreference(doctors, options.PreferredDoctor);
-
-        var currentDate = DateTime.Now.Date.AddDays(1);
-        var searchRange = TimeSpan.FromHours(1);
-
-        while (currentDate <= options.LatestDate)
+        private List<Examination> GetAllPossibleExaminations(Patient patient, ExaminationSearchOptions options)
         {
-            var beforeRange = new TimeRange(currentDate.Add(options.StartTime).Subtract(searchRange),
-                currentDate.Add(options.StartTime));
-            var afterRange = new TimeRange(currentDate.Add(options.EndTime),
-                currentDate.Add(options.EndTime).Add(searchRange));
+            List<Examination> examinations = new List<Examination>();
+            List<Doctor> doctors = GetAllDoctors();
+            SortDoctorsByPreference(doctors, options.PreferredDoctor);
 
-            foreach (var doctor in doctors)
+            DateTime currentDate = DateTime.Now.Date.AddDays(1);
+            TimeSpan searchRange = TimeSpan.FromHours(1);
+
+            while (currentDate <= options.LatestDate)
             {
-                examinations = SearchInTimeRange(doctor, patient, beforeRange, examinations);
-                if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
-                examinations = SearchInTimeRange(doctor, patient, afterRange, examinations);
-                if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
+                TimeRange beforeRange = new TimeRange(currentDate.Add(options.StartTime).Subtract(searchRange), currentDate.Add(options.StartTime));
+                TimeRange afterRange = new TimeRange(currentDate.Add(options.EndTime), currentDate.Add(options.EndTime).Add(searchRange));
+
+                foreach (Doctor doctor in doctors)
+                {
+                    examinations = SearchInTimeRange(doctor, patient, beforeRange, examinations);
+                    if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
+                    examinations = SearchInTimeRange(doctor, patient, afterRange, examinations);
+                    if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
+                }
+                currentDate = currentDate.AddDays(1);
             }
-
-            currentDate = currentDate.AddDays(1);
+            return examinations;
         }
 
-        return examinations;
-    }
-
-    private bool IsExaminationTimeFree(Doctor doctor, Patient patient, DateTime examinationTime)
-    {
-        return _examinationRepository.IsFree(doctor, examinationTime) &&
-               _examinationRepository.IsFree(patient, examinationTime);
-    }
-
-    private void AddExaminationIfTimeFree(Doctor doctor, Patient patient, DateTime currentTime,
-        List<Examination> examinations)
-    {
-        if (IsExaminationTimeFree(doctor, patient, currentTime))
+        private bool IsExaminationTimeFree(Doctor doctor, Patient patient, DateTime examinationTime)
         {
-            var examination = new Examination(doctor, patient, false, currentTime, null);
-            examinations.Add(examination);
+            return _examinationRepository.IsFree(doctor, examinationTime) && _examinationRepository.IsFree(patient, examinationTime);
         }
-    }
 
-    private List<Examination> SearchInTimeRange(Doctor doctor, Patient patient, TimeRange timeRange,
-        List<Examination> examinations)
-    {
-        var currentTime = timeRange.StartTime;
-
-        while (currentTime <= timeRange.EndTime)
+        private void AddExaminationIfTimeFree(Doctor doctor, Patient patient, DateTime currentTime, List<Examination> examinations)
         {
-            AddExaminationIfTimeFree(doctor, patient, currentTime, examinations);
-            if (examinations.Count >= MAX_NUMBER_OF_CLOSEST_EXAMINATIONS) return examinations;
-            currentTime = currentTime.AddMinutes(1);
+            if (IsExaminationTimeFree(doctor, patient, currentTime))
+            {
+                Examination examination = new Examination(doctor, patient, false, currentTime, null);
+                examinations.Add(examination);
+            }
+        }
+        private List<Examination> SearchInTimeRange(Doctor doctor, Patient patient, TimeRange timeRange, List<Examination> examinations)
+        {
+            DateTime currentTime = timeRange.StartTime;
+
+            while (currentTime <= timeRange.EndTime)
+            {
+                AddExaminationIfTimeFree(doctor, patient, currentTime, examinations);
+                if (examinations.Count >= MaxNumberOfClosestExaminations) return examinations;
+                currentTime = currentTime.AddMinutes(TimeIntervalInMinutes);
+            }
+            return examinations;
         }
 
-        return examinations;
-    }
-
-    private void SortDoctorsByPreference(List<Doctor> doctors, Doctor preferredDoctor)
-    {
-        doctors.Remove(preferredDoctor);
-        doctors.Insert(0, preferredDoctor);
+        private void SortDoctorsByPreference(List<Doctor> doctors, Doctor preferredDoctor)
+        {
+            doctors.Remove(preferredDoctor);
+            doctors.Insert(0, preferredDoctor);
+        }
     }
 }
