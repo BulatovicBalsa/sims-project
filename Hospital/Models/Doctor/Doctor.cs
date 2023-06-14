@@ -8,17 +8,14 @@ public class Doctor : Person
         string specialization) : base(firstName, lastName, jmbg, username, password)
     {
         Specialization = specialization;
-        AverageRating = GenerateRandomRating();
     }
 
     public Doctor()
     {
         Specialization = "Unknown";
-        AverageRating = GenerateRandomRating();
     }
 
     public string Specialization { get; set; }
-    public double AverageRating { get; set; }
 
     public override bool Equals(object? obj)
     {
@@ -39,15 +36,8 @@ public class Doctor : Person
         var copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, Specialization)
         {
             Id = Id,
-            AverageRating = AverageRating
         };
 
         return copy;
-    }
-
-    private double GenerateRandomRating()
-    {
-        Random random = new Random();
-        return random.NextDouble() * 10; // Generates a random rating between 0 and 10
     }
 }
