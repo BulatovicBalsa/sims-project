@@ -1,0 +1,11 @@
+Id,Sender,Recipient,Text,Timestamp,Subject
+dcda0ec4-2a5f-4c4b-9645-d7360800a867,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,4c6439c5-beb7-46db-9622-02e2e46e8557;Vladimir;Popov;Doctor,proba123,06/05/2023 10:22:21,proba
+1888036d-0e66-4b88-aec8-232ed69a0e66,a4e4da86-994d-4aa0-b85d-c242fb1ce5bf;Vladimir;Popov;Nurse,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,proba2 sestra doktor,06/05/2023 15:39:32,proba2
+dbd08f32-b585-403b-9b9a-112eb7f86e42,a4e4da86-994d-4aa0-b85d-c242fb1ce5bf;Vladimir;Popov;Nurse,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,poruka poslata,06/05/2023 15:40:16,proba3
+fd87ecc3-453c-4474-91dc-59a72ad4919e,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,13362ec1-7610-4a1d-ba35-0d18248e7727;Momir;Milutinovic;Nurse,test test test test,06/05/2023 16:39:38,test
+04a73b60-f055-4954-a683-d3214ee66e65,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,13362ec1-7610-4a1d-ba35-0d18248e7727;Momir;Milutinovic;Nurse,proba test,06/05/2023 16:39:56,test proba
+def91407-441d-4992-95a4-4bed1b5c3e08,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,13362ec1-7610-4a1d-ba35-0d18248e7727;Momir;Milutinovic;Nurse,proba treba zakazati vizitu,06/05/2023 16:40:55,proba2
+4310a0cc-772f-448d-9808-52d99821bae7,96479d8b-a993-4cfe-a987-2e08dfb66269;Balsa;Bulatovic;Doctor,13362ec1-7610-4a1d-ba35-0d18248e7727;Momir;Milutinovic;Nurse,zakazati za sutra,06/05/2023 16:42:25,Vizita
+52b64112-a4db-4f6e-92b0-a813bdfb72df,a4e4da86-994d-4aa0-b85d-c242fb1ce5bf;Vladimir;Popov;Nurse,761259be-a0de-4fdf-95b2-6bad9293e62b;Balsa;Bulatovic;Nurse,usi proba,06/12/2023 18:37:13,usi
+3871751c-4384-4a79-a3cd-b83727416bc6,761259be-a0de-4fdf-95b2-6bad9293e62b;Balsa;Bulatovic;Nurse,13362ec1-7610-4a1d-ba35-0d18248e7727;Momir;Milutinovic;Nurse,usi proba proba,06/12/2023 18:45:04,usi
+5bfe0900-159a-4d93-adfc-282735d3b5ed,a4e4da86-994d-4aa0-b85d-c242fb1ce5bf;Vladimir;Popov;Nurse,761259be-a0de-4fdf-95b2-6bad9293e62b;Balsa;Bulatovic;Nurse,saljem poruku,06/14/2023 19:06:15,Poruka

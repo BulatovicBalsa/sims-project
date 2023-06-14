@@ -1,23 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hospital.Injectors;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
+using DTOs;
+using Filter;
 using Models.Doctor;
 
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
-    private static DoctorRepository? _instance;
+    private readonly ISerializer<Doctor> _serializer;
 
-    public static DoctorRepository Instance => _instance ??=new DoctorRepository();
-
-    private DoctorRepository() { }
+    public DoctorRepository(ISerializer<Doctor> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<Doctor> GetAll()
     {
-        return Serializer<Doctor>.FromCSV(FilePath);
+        return _serializer.Load(FilePath);
     }
 
     public Doctor? GetById(string id)
@@ -36,7 +40,7 @@ public class DoctorRepository
 
         allDoctor.Add(doctor);
 
-        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
     public void Update(Doctor doctor)
@@ -48,7 +52,7 @@ public class DoctorRepository
 
         allDoctor[indexToUpdate] = doctor;
 
-        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
     public void Delete(Doctor doctor)
@@ -60,13 +64,13 @@ public class DoctorRepository
 
         allDoctor.RemoveAt(indexToDelete);
 
-        Serializer<Doctor>.ToCSV(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
-    public static void DeleteAll()
+    public void DeleteAll()
     {
         var emptyDoctorList = new List<Doctor>();
-        Serializer<Doctor>.ToCSV(emptyDoctorList, FilePath);
+        _serializer.Save(emptyDoctorList, FilePath);
     }
 
     public List<string> GetAllSpecializations()
@@ -79,5 +83,31 @@ public class DoctorRepository
     {
         var allDoctors = GetAll();
         return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
+    }
+
+    public List<Doctor> GetDoctorsByFilter(string firstName, string lastName, string specialization)
+    {
+        return GetAll()
+            .Where(doctor =>
+                doctor.FirstName.ToLower().Contains(firstName.ToLower()) &&
+                doctor.LastName.ToLower().Contains(lastName.ToLower()) &&
+                doctor.Specialization.ToLower().Contains(specialization.ToLower()))
+            .ToList();
+    }
+
+    public List<PersonDTO> GetDoctorsAsPersonDTOsByFilter(string id, string searchText)
+    {
+        var allDoctors = GetAll();
+        var filteredDoctors = allDoctors.Where(doctor => SearchFilter.IsPersonMatchingFilter(doctor, id, searchText)).ToList();
+
+        var doctorDTOs = filteredDoctors.Select(doctor => new PersonDTO
+        {
+            Id = doctor.Id,
+            FirstName = doctor.FirstName,
+            LastName = doctor.LastName,
+            Role = Role.Doctor
+        }).ToList();
+
+        return doctorDTOs;
     }
 }

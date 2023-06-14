@@ -27,13 +27,13 @@ namespace HospitalTests.Repositories.Nurse
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234"),
             };
 
-            Serializer<Nurse>.ToCSV(testNurses, TestFilePath);
+            CsvSerializer<Nurse>.ToCSV(testNurses, TestFilePath);
         }
 
         [TestMethod]
         public void TestGetAll()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var loadedNurses = nurseRepository.GetAll();
 
             Assert.IsNotNull(loadedNurses);
@@ -51,13 +51,13 @@ namespace HospitalTests.Repositories.Nurse
                 File.Delete(TestFilePath);
             }
 
-            Assert.AreEqual(0, new NurseRepository().GetAll().Count);
+            Assert.AreEqual(0, NurseRepository.Instance.GetAll().Count);
         }
 
         [TestMethod]
         public void TestGetById()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var loadedNurses = nurseRepository.GetAll();
 
             var testNurse = loadedNurses[0];
@@ -70,7 +70,7 @@ namespace HospitalTests.Repositories.Nurse
         [TestMethod]
         public void TestUpdate()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var loadedNurses= nurseRepository.GetAll();
 
             var testNurse = loadedNurses[1];
@@ -90,7 +90,7 @@ namespace HospitalTests.Repositories.Nurse
         [TestMethod]
         public void TestDelete()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var loadedNurses= nurseRepository.GetAll();
 
             var testNurse= loadedNurses[1];
@@ -106,7 +106,7 @@ namespace HospitalTests.Repositories.Nurse
         {
             var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
 
             nurseRepository.Add(newNurse);
             var loadedNurses= nurseRepository.GetAll();
@@ -120,7 +120,7 @@ namespace HospitalTests.Repositories.Nurse
         [TestMethod]
         public void TestUpdateNonExistent()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
@@ -130,7 +130,7 @@ namespace HospitalTests.Repositories.Nurse
         [TestMethod]
         public void TestDeleteNonExistent()
         {
-            var nurseRepository = new NurseRepository();
+            var nurseRepository = NurseRepository.Instance;
             var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 

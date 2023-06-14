@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Injectors;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
@@ -11,6 +12,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 using Hospital.Services;
 using Hospital.Views.Nurse.UrgentExaminations;
 
@@ -20,7 +22,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService;
     private readonly PatientRepository _patientRepository;
-    private readonly DoctorRepository _doctorRepository;
     private readonly TimeslotService _timeslotService;
     private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
@@ -34,7 +35,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
     {
         _doctorService = new DoctorService();
         _patientRepository = PatientRepository.Instance;
-        _doctorRepository = DoctorRepository.Instance;
         _timeslotService = new TimeslotService();
         _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
@@ -97,7 +97,7 @@ public class UrgentExaminationsViewModel : ViewModelBase
     private bool ScheduleUrgentExamination(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
     {
         var earliestFreeTimeslotDoctor = earliestFreeTimeslotDoctors.First();
-        if (!_timeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
+        if (!TimeslotService.IsIn2Hours(earliestFreeTimeslotDoctor.Key)) return false;
 
         SaveUrgentExamination(false, earliestFreeTimeslotDoctor.Key, earliestFreeTimeslotDoctor.Value);
         return true;

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Hospital.Injectors;
 using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Serialization;
 
 namespace Hospital.Services.Manager;
 
@@ -26,7 +28,7 @@ public class ComplexRenovationService
         RenovationRepository.Instance.Add(complexRenovation.GetSimpleRenovations());
 
         _complexRenovations.Add(complexRenovation);
-        ComplexRenovationRepository.Instance.Add(complexRenovation);
+        new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>()).Add(complexRenovation);
         return true;
     }
 
@@ -50,7 +52,7 @@ public class ComplexRenovationService
 
     public static void TryCompleteAll()
     {
-        foreach (var complexRenovation in ComplexRenovationRepository.Instance.GetAll())
+        foreach (var complexRenovation in new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>()).GetAll())
         {
             if (!complexRenovation.TryComplete()) continue;
             complexRenovation.ToBuild.ForEach(room => RoomRepository.Instance.Update(room));

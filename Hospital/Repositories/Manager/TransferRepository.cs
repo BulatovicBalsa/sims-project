@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hospital.Injectors;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -24,7 +25,7 @@ public class TransferRepository
         if (_transfers != null)
             return _transfers;
 
-        _transfers = Serializer<Transfer>.FromCSV(FilePath);
+        _transfers = CsvSerializer<Transfer>.FromCSV(FilePath);
 
         JoinWithItems();
         JoinWithRooms();
@@ -37,17 +38,17 @@ public class TransferRepository
         foreach (var item in transfer.Items)
             try
             {
-                TransferItemRepository.Instance.Update(item);
+                new TransferItemRepository(SerializerInjector.CreateInstance<ISerializer<TransferItem>>()).Update(item);
             }
             catch (KeyNotFoundException)
             {
-                TransferItemRepository.Instance.Add(item);
+                new TransferItemRepository(SerializerInjector.CreateInstance<ISerializer<TransferItem>>()).Add(item);
             }
     }
 
     private void JoinWithItems()
     {
-        var items = TransferItemRepository.Instance.GetAll();
+        var items = new TransferItemRepository(SerializerInjector.CreateInstance<ISerializer<TransferItem>>()).GetAll();
         foreach (var item in items)
         {
             var transfer = _transfers?.Find(e => e.Id == item.TransferId);
@@ -72,7 +73,7 @@ public class TransferRepository
     {
         var transfers = GetAll();
         transfers.Add(transfer);
-        Serializer<Transfer>.ToCSV(transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(transfers, FilePath);
         WriteItems(transfer);
     }
 
@@ -84,7 +85,7 @@ public class TransferRepository
             throw new KeyNotFoundException();
 
         transfers[indexToUpdate] = transfer;
-        Serializer<Transfer>.ToCSV(transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(transfers, FilePath);
         WriteItems(transfer);
     }
 
@@ -101,7 +102,7 @@ public class TransferRepository
 
         _transfers ??= new List<Transfer>();
         _transfers.Clear();
-        Serializer<Transfer>.ToCSV(_transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(_transfers, FilePath);
         _transfers = null;
     }
 

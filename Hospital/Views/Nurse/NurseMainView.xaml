@@ -14,8 +14,12 @@
         xmlns:referralsViews="clr-namespace:Hospital.Views.Nurse.Referrals"
         xmlns:medicationManagement="clr-namespace:Hospital.ViewModels.Nurse.Medication"
         xmlns:medicationManagementViews="clr-namespace:Hospital.Views.Nurse.Medication"
+        xmlns:patientAccommodation="clr-namespace:Hospital.ViewModels.Nurse.PatientAccommodation"
+        xmlns:patientAccommodationViews="clr-namespace:Hospital.Views.Nurse.PatientAccommodation"
+        xmlns:patientVisiting="clr-namespace:Hospital.ViewModels.Nurse.PatientVisiting"
+        xmlns:patientVisitingViews="clr-namespace:Hospital.Views.Nurse.PatientVisiting"
         mc:Ignorable="d"
-        Title="NurseMainView" Height="480" Width="1000"
+        Title="NurseMainView" Height="510" Width="1000"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
@@ -41,6 +45,12 @@
         <DataTemplate DataType="{x:Type medicationManagement:MedicationManagementViewModel}">
             <medicationManagementViews:MedicationManagementView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type patientAccommodation:PatientAccommodationViewModel}">
+            <patientAccommodationViews:PatientAccommodationView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type patientVisiting:PatientVisitingViewModel}">
+            <patientVisitingViews:PatientVisitingView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="15">
@@ -63,7 +73,7 @@
                 </Border.Background>
                 <StackPanel>
                     <TextBlock Height="35"
-                               Margin="15,25,0,40"
+                               Margin="15,25,0,10"
                                Text="Nurse panel"
                                Foreground="White"
                                FontSize="25"
@@ -102,6 +112,24 @@
                                  Command="{Binding ShowMedicationManagementViewCommand}">
                         <StackPanel>
                             <TextBlock Text="Medication management" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowCommunicationViewCommand}">
+                        <StackPanel>
+                            <TextBlock Text="Send message" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientAccommodationViewCommand}">
+                        <StackPanel>
+                            <TextBlock Text="Patient accommodation" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowPatientVisitingViewCommand}">
+                        <StackPanel>
+                            <TextBlock Text="Visit patients" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Injectors;
+using Hospital.Serialization;
 
 namespace Hospital.Services
 {
@@ -15,7 +17,7 @@ namespace Hospital.Services
 
         public DoctorSearchService()
         {
-            _doctorRepository = DoctorRepository.Instance;
+            _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
             _filteredDoctors = new List<Doctor>();
         }
         public List<Doctor> GetAllDoctors()
@@ -24,12 +26,7 @@ namespace Hospital.Services
         }
         public void FilterDoctors(string firstName, string lastName, string specialization)
         {
-            _filteredDoctors = _doctorRepository.GetAll()
-                .Where(doctor => 
-                    doctor.FirstName.ToLower().Contains(firstName.ToLower()) &&
-                    doctor.LastName.ToLower().Contains(lastName.ToLower()) &&
-                    doctor.Specialization.ToLower().Contains(specialization.ToLower()))
-                .ToList();
+            _filteredDoctors = _doctorRepository.GetDoctorsByFilter(firstName, lastName, specialization);
         }
         public List<Doctor> GetFilteredDoctors()
         {

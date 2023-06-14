@@ -54,7 +54,7 @@ public class TimeslotService
         return time > currentTime;
     }
 
-    private DateTime GetClosestTimeslot(DateTime time)
+    private static DateTime GetClosestTimeslot(DateTime time)
     {
         var minuteStartTime = time.AddSeconds(-time.Second);
         var validExaminationTimeslot = minuteStartTime.AddMinutes(15 - minuteStartTime.Minute % 15);
@@ -76,7 +76,7 @@ public class TimeslotService
                time1.Minute == time2.Minute;
     }
 
-    public bool IsIn2Hours(DateTime timeslot)
+    public static bool IsIn2Hours(DateTime timeslot)
     {
         var closestTimeslot = GetClosestTimeslot(DateTime.Now);
         var in2Hours = closestTimeslot.AddHours(2);

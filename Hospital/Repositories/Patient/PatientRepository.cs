@@ -25,7 +25,7 @@ public class PatientRepository
 
     public List<Patient> GetAll()
     {
-        return Serializer<Patient>.FromCSV(FilePath, new PatientReadMapper());
+        return CsvSerializer<Patient>.FromCSV(FilePath, new PatientReadMapper());
     }
 
     public Patient? GetById(string id)
@@ -42,7 +42,7 @@ public class PatientRepository
     {
         var allPatients = GetAll();
         allPatients.Add(patient);
-        Serializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
+        CsvSerializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
 
         PatientAdded?.Invoke(patient);
     }
@@ -56,7 +56,7 @@ public class PatientRepository
             throw new KeyNotFoundException($"Patient with id {patient.Id} was not found.");
         allPatients[indexToUpdate] = patient;
 
-        Serializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
+        CsvSerializer<Patient>.ToCSV(allPatients, FilePath, new PatientWriteMapper());
 
         PatientUpdated?.Invoke(patient);
     }
@@ -72,12 +72,31 @@ public class PatientRepository
         patientExaminations.ForEach(examination => _examinationRepository.Delete(examination, false));
 
 
-        Serializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
+        CsvSerializer<Patient>.ToCSV(patientRecords, FilePath, new PatientWriteMapper());
     }
 
     public static void DeleteAll()
     {
         var emptyPatientList = new List<Patient>();
-        Serializer<Patient>.ToCSV(emptyPatientList, FilePath);
+        CsvSerializer<Patient>.ToCSV(emptyPatientList, FilePath);
+    }
+
+    public List<Patient> GetAllAccommodable()
+    {
+        var allPatients = GetAll();
+
+        return allPatients.Where(patient => patient.HasUnusedHospitalTreatmentReferral() && !patient.IsHospitalized()).ToList();
+    }
+
+    public void UpdateHospitalTreatmentReferral(Patient patient, HospitalTreatmentReferral referral)
+    {
+        patient.UpdateHospitalTreatmentReferral(referral);
+        Update(patient);
+    }
+
+    public List<Patient> GetAllHospitalized()
+    {
+        var allPatients = GetAll();
+        return allPatients.Where(patient => patient.IsHospitalized()).ToList();
     }
 }

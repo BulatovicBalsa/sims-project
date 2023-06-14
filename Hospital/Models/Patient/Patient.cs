@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hospital.Models.Patient;
@@ -53,5 +54,42 @@ public class Patient : Person
     public void RemoveReferral(Referral referral)
     {
         Referrals.Remove(referral);
+    }
+
+    public bool IsHospitalized()
+    {
+        return HospitalTreatmentReferrals.Any(referral => referral.IsActive());
+    }
+
+    public HospitalTreatmentReferral? GetActiveHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.FirstOrDefault(referral => referral!.IsActive(), null);
+    }
+
+    public void ReleaseHospitalTreatmentReferral(HospitalTreatmentReferral selectedVisitReferral)
+    {
+        var referralToRelease =
+            HospitalTreatmentReferrals.FirstOrDefault(referral => referral.Equals(selectedVisitReferral));
+        referralToRelease!.Release = DateTime.Today;
+    }
+
+    public bool HasUnusedHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.Any(referral => referral.Admission == null && referral.Release == null);
+    }
+
+    public HospitalTreatmentReferral GetFirstUnusedHospitalTreatmentReferral()
+    {
+        return HospitalTreatmentReferrals.First(referral => referral.Admission == null && referral.Release == null);
+    }
+
+    public void UpdateHospitalTreatmentReferral(HospitalTreatmentReferral referral)
+    {
+        var indexToUpdate = HospitalTreatmentReferrals.IndexOf(referral);
+
+        if (indexToUpdate == -1)
+            throw new KeyNotFoundException();
+
+        HospitalTreatmentReferrals[indexToUpdate] = referral;
     }
 }

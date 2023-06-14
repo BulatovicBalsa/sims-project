@@ -21,7 +21,7 @@ public class EquipmentRepositoryTests
             new("4", "Wheelchair", EquipmentType.HallwayEquipment)
         };
 
-        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+        CsvSerializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
     }
 
     [TestMethod]
@@ -127,7 +127,7 @@ public class EquipmentRepositoryTests
             new("9", "Buckle", EquipmentType.DynamicEquipment)
         };
 
-        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+        CsvSerializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
     }
 
     [TestMethod]

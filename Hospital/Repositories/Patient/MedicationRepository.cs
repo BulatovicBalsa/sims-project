@@ -16,7 +16,7 @@ public class MedicationRepository
 
     public List<Medication> GetAll()
     {
-        return Serializer<Medication>.FromCSV(FilePath, new MedicationReadMapper());
+        return CsvSerializer<Medication>.FromCSV(FilePath, new MedicationReadMapper());
     }
 
     public Medication? GetById(string id)
@@ -30,7 +30,7 @@ public class MedicationRepository
 
         allMedication.Add(medication);
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
+        CsvSerializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public void Update(Medication medication)
@@ -42,7 +42,7 @@ public class MedicationRepository
 
         allMedication[indexToUpdate] = medication;
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
+        CsvSerializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public void Delete(Medication medication)
@@ -54,13 +54,13 @@ public class MedicationRepository
 
         allMedication.RemoveAt(indexToDelete);
 
-        Serializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
+        CsvSerializer<Medication>.ToCSV(allMedication, FilePath, new MedicationWriteMapper());
     }
 
     public static void DeleteAll()
     {
         var emptyMedicationList = new List<Medication>();
-        Serializer<Medication>.ToCSV(emptyMedicationList, FilePath, new MedicationWriteMapper());
+        CsvSerializer<Medication>.ToCSV(emptyMedicationList, FilePath, new MedicationWriteMapper());
     }
 
     public List<Medication> GetLowStockMedication()

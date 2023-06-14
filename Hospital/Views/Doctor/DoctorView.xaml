@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DoctorViewModel}"
         mc:Ignorable="d"
-        Title="PatientView" Height="Auto" Width="800"
+        Title="PatientView" Height="Auto" Width="800
+        "
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -105,6 +106,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
@@ -133,10 +139,32 @@
                         <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}" IsReadOnly="True" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Operation?" Binding="{Binding IsOperation}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Room"  Binding="{Binding Room}" IsReadOnly="True" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <TextBlock Grid.Row="4" Text="Your Time Off Requests" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+
+                <DataGrid Grid.Row="5" ItemsSource="{Binding TimeOffRequests}" SelectedItem="{Binding SelectedExamination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Approved?" Binding="{Binding IsApproved}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" IsReadOnly="True" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Grid.Row="6" Text="Other operations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+
+                <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                    <Button Content="Add Time Off Requests"
+                            Margin="5" Command="{Binding AddTimeOffRequestCommand}"/>
+                    <Button Content="Visit Patients On Hospital Treatments"
+                            Margin="5" Command="{Binding VisitHospitalizedPatientsCommand}"/>
+                    <Button Content="Send message"
+                            Margin="5" Command="{Binding SendMessageCommand}"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

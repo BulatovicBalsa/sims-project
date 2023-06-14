@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using CsvHelper.Configuration;
+using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.Serialization.Mappers.Patient;
@@ -52,7 +54,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 select item.Split(";")
                 into referralArgs
                 let doctorId = referralArgs.Length > 1 ? referralArgs[1].Trim() : null
-                let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId)
+                let doctor = string.IsNullOrEmpty(doctorId) ? null : new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId)
                 let specialization = referralArgs[0].Trim()
                 select new Referral(specialization, doctor));
 
@@ -70,12 +72,19 @@ public sealed class PatientReadMapper : ClassMap<Patient>
             referrals.AddRange(from item in referralStringList
                 select item.Split(";")
                 into referralArgs
-                let duration = Convert.ToInt32(referralArgs[0].Trim())
-                let prescriptions = referralArgs[1].Split("#").ToList()
+                let id = referralArgs[0]
+                let duration = Convert.ToInt32(referralArgs[1].Trim())
+
+                let prescriptions = referralArgs[2].Split("#").ToList()
                     .Select(PrescriptionFromString).Where(prescription => prescription != null).ToList()
-                let additionalTests = referralArgs[2].Trim().Split("#")
+                let additionalTests = referralArgs[3].Trim().Split("#")
                     .Where(additionalTest => !string.IsNullOrEmpty(additionalTest)).ToList()
-                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests));
+
+                let admission = (string.IsNullOrEmpty(referralArgs[4])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let release = (string.IsNullOrEmpty(referralArgs[5])) ? (DateTime?)null : DateTime.ParseExact(referralArgs[5], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                let roomId = (string.IsNullOrEmpty(referralArgs[6])) ? null : referralArgs[6]
+
+                select new HospitalTreatmentReferral(prescriptions, duration, additionalTests, admission, release, roomId){Id = id});
 
             return referrals;
         }

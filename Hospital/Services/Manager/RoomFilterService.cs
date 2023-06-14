@@ -8,6 +8,7 @@ namespace Hospital.Services.Manager;
 public class RoomFilterService
 {
     private const int lowEquipmentThreshold = 5;
+    private readonly RoomRepository _roomRepository = RoomRepository.Instance;
 
     public static List<Room> GetRoomsLowOnDynamicEquipment()
     {
@@ -22,5 +23,10 @@ public class RoomFilterService
         var allRooms = RoomRepository.Instance.GetAll();
         return allRooms.Where(room =>
             room.Type is RoomType.OperatingRoom or RoomType.ExaminationRoom).ToList();
+    }
+
+    public List<Room> GetRoomsForAccommodation()
+    {
+        return _roomRepository.GetAll(RoomType.Ward);
     }
 }

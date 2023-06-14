@@ -5,15 +5,21 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Hospital.Exceptions;
+using Hospital.Filter;
+using Hospital.Injectors;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
+using Hospital.Repositories.Nurse;
 using Hospital.Repositories.Patient;
+using Hospital.Scheduling;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers;
 
 namespace Hospital.Repositories.Examination;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Models.Doctor;
+using Hospital.Models.Nurse;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {
@@ -30,6 +36,8 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Room).Index(6).TypeConverter<RoomTypeConverter>();
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
+        Map(examination => examination.ProcedureDoctors).Index(9).TypeConverter<DoctorListTypeConverter>();
+        Map(examination => examination.ProcedureNurses).Index(10).TypeConverter<NurseListTypeConverter>();
     }
 
     public class DoctorTypeConverter : DefaultTypeConverter
@@ -40,7 +48,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             if (string.IsNullOrEmpty(doctorId))
                 return null;
             // Retrieve the Doctor object based on the ID
-            var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+            var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
                          throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
             return doctor;
         }
@@ -73,6 +81,44 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             return room;
         }
     }
+
+    public class DoctorListTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            if (string.IsNullOrEmpty(inputText))
+                return null;
+
+            var doctors = new List<Doctor>();
+            inputText?.Split("|").ToList().ForEach(doctorId =>
+            {
+                var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
+                             throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                doctors.Add(doctor);
+            });
+            
+            return doctors;
+        }
+    }
+
+    public class NurseListTypeConverter : DefaultTypeConverter
+    {
+        public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
+        {
+            if (string.IsNullOrEmpty(inputText))
+                return null;
+
+            var nurses = new List<Nurse>();
+            inputText?.Split("|").ToList().ForEach(nurseId =>
+            {
+                var doctor = NurseRepository.Instance.GetById(nurseId) ??
+                             throw new KeyNotFoundException($"Doctor with ID {nurseId} not found");
+                nurses.Add(doctor);
+            });
+
+            return nurses;
+        }
+    }
 }
 
 public sealed class ExaminationWriteMapper : ClassMap<Examination>
@@ -88,6 +134,8 @@ public sealed class ExaminationWriteMapper : ClassMap<Examination>
         Map(examination => examination.Room!.Id).Index(6);
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
+        Map(examination => examination.ProcedureDoctors).Index(9).Convert(row => string.Join("|", row.Value.ProcedureDoctors?.Select(doctor => doctor.Id) ?? new List<string>())).Index(9);
+        Map(examination => examination.ProcedureNurses).Index(10).Convert(row => string.Join("|", row.Value.ProcedureNurses?.Select(nurse  => nurse.Id) ?? new List<string>())).Index(10);
     }
 }
 
@@ -105,7 +153,7 @@ public class ExaminationRepository
 
     public List<Examination> GetAll()
     {
-        return Serializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
+        return CsvSerializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
     }
 
     public Examination? GetById(string id)
@@ -127,7 +175,7 @@ public class ExaminationRepository
 
         allExamination.Add(examination);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Update(Examination examination, bool isMadeByPatient)
@@ -152,7 +200,7 @@ public class ExaminationRepository
 
         allExamination[indexToUpdate] = examination;
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Delete(Examination examination, bool isMadeByPatient)
@@ -181,7 +229,15 @@ public class ExaminationRepository
 
         allExamination.RemoveAt(indexToDelete);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+    }
+
+    public void Delete(Doctor doctor, TimeRange timeRange)
+    {
+        foreach (var examination in GetExaminationsInTimeRange(doctor, timeRange))
+        {
+            Delete(examination, false);
+        }
     }
 
     public List<Examination> GetAll(Doctor doctor)
@@ -213,6 +269,12 @@ public class ExaminationRepository
         return GetAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
     }
 
+
+    public List<Examination> GetExaminationsInTimeRange(Doctor doctor, TimeRange range)
+    {
+        return GetAll(doctor).Where(examination => range.DoesOverlapWith(new TimeRange(examination.Start, examination.End))).ToList();
+    }
+
     public List<Examination> GetExaminationsForDate(Patient patient, DateTime requestedDate)
     {
         return GetAll(patient).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
@@ -220,8 +282,13 @@ public class ExaminationRepository
 
     public List<Examination> GetExaminationsForNextThreeDays(Doctor doctor)
     {
-        return GetAll(doctor).Where(examination =>
-            (examination.Start >= DateTime.Now && examination.End <= DateTime.Now.AddDays(2)) || examination.IsPerformable()).OrderBy(examination => examination.Start).ToList();
+        var filter = new DoctorExaminationsFilter();
+
+        var start = DateTime.Now;
+        var end = start.AddDays(2);
+        var examinations = GetAll(doctor);
+
+        return filter.Filter(examinations, new ExaminationPerformingSpecification(start, end));
     }
 
     public bool IsFree(Doctor? doctor, DateTime start, string? examinationId = null)
@@ -269,6 +336,6 @@ public class ExaminationRepository
     public static void DeleteAll()
     {
         var emptyList = new List<Examination>();
-        Serializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
     }
 }

@@ -1,44 +1,49 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Hospital.Exceptions;
-using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Patient;
-using Hospital.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
+using Hospital.DTOs;
+using Hospital.Exceptions;
+using Hospital.Models.Doctor;
+using Hospital.Models.Examination;
+using Hospital.Models.Patient;
+using Hospital.Models.Requests;
 using Hospital.Services;
+using Hospital.Services.Requests;
+using Hospital.Views;
 
 namespace Hospital.ViewModels;
 
 public class DoctorViewModel : ViewModelBase
 {
-    private readonly DoctorService _doctorService = new();
-    private readonly ExaminationService _examinationService = new();
-    private readonly PatientService _patientService = new();
-
     private const string Placeholder = "Search...";
+    protected readonly ExaminationService _examinationService = new();
+    protected readonly PatientService _patientService = new();
+    protected readonly DoctorTimeOffRequestService _requestService = new();
 
-    private Doctor _doctor;
+    protected Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
 
     private ObservableCollection<Patient> _patients;
 
     private string _searchBoxText;
 
-    private object _selectedPatient;
-
     private DateTime _selectedDate;
+
+    private object _selectedPatient;
+    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor doctor)
     {
         _doctor = doctor;
         _selectedDate = DateTime.Now;
         Patients = new ObservableCollection<Patient>(_examinationService.GetViewedPatients(doctor));
-        Examinations = new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
+        Examinations =
+            new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
         ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
@@ -47,12 +52,9 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
-    }
-
-    private void DefaultExaminationView()
-    {
-        Examinations.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
+        SendMessageCommand = new RelayCommand(SendMessage);
     }
 
     public ObservableCollection<Examination> Examinations
@@ -72,6 +74,16 @@ public class DoctorViewModel : ViewModelBase
         {
             _patients = value;
             OnPropertyChanged(nameof(Patients));
+        }
+    }
+
+    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests
+    {
+        get => _timeOffRequests;
+        set
+        {
+            _timeOffRequests = value;
+            OnPropertyChanged(nameof(TimeOffRequests));
         }
     }
 
@@ -127,6 +139,31 @@ public class DoctorViewModel : ViewModelBase
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
+    public ICommand SendMessageCommand { get; set; }
+    public ICommand AddTimeOffRequestCommand { get; set; }
+    public ICommand VisitHospitalizedPatientsCommand { get; set; }
+
+    private void DefaultExaminationView()
+    {
+        Examinations.Clear();
+        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
+    }
+
+    private void VisitHospitalizedPatients()
+    {
+        var dialog = new VisitHospitalizedPatientsDialog(_doctor);
+        dialog.ShowDialog();
+    }
+
+    private void AddTimeOffRequest()
+    {
+        var dialog = new AddTimeOffRequestDialog(_doctor);
+        dialog.ShowDialog();
+        TimeOffRequests =
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
+    }
 
     private void ViewMedicalRecord(string patientId)
     {
@@ -224,5 +261,12 @@ public class DoctorViewModel : ViewModelBase
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
         dialog.ShowDialog();
+    }
+
+    private void SendMessage()
+    {
+        var loggedUser = new PersonDTO(_doctor.Id, _doctor.FirstName, _doctor.LastName, Role.Doctor);
+        var communicationView = new CommunicationView(loggedUser);
+        communicationView.ShowDialog();
     }
 }
