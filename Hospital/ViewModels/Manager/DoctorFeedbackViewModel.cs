@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Hospital.Charting;
 using Hospital.Converters;
 using Hospital.Models.Doctor;
@@ -24,6 +25,10 @@ public class DoctorFeedbackViewModel : ViewModelBase
         AllFeedback = new ObservableCollection<DoctorFeedback>(_doctorFeedbackRepository.GetAll());
         Doctors = new ObservableCollection<Doctor>(DoctorRepository.Instance.GetAll());
         SelectedDoctorRatingFrequenciesByArea = new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>();
+        Top3Doctors = new ObservableCollection<Doctor>(_doctorFeedbackRepository.GetTop3Doctors()
+            .Select(e => DoctorRepository.Instance.GetById(e.DoctorId)).ToList());
+        Bottom3Doctors = new ObservableCollection<Doctor>(_doctorFeedbackRepository.GetBottom3Doctors()
+            .Select(e => DoctorRepository.Instance.GetById(e.DoctorId)).ToList());
         RatingFrequencyPlot = ratingFrequencyPlot;
         AverageRatingsByAreaPlot = averageRatingByAreaPlot;
         SelectedDoctorId = "";
@@ -103,8 +108,12 @@ public class DoctorFeedbackViewModel : ViewModelBase
         }
     }
 
+    public ObservableCollection<Doctor> Top3Doctors { get; }
+    public ObservableCollection<Doctor> Bottom3Doctors { get; }
+
     public IRatingFrequencyPlotter RatingFrequencyPlot { get; set; }
     public ICategoryPlot AverageRatingsByAreaPlot { get; set; }
+
 
     private void PlotRatingFrequencies()
     {

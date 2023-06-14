@@ -224,6 +224,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition Height="150"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -243,6 +244,26 @@
                             <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DockPanel Grid.Row="3" Grid.Column="0">
+                        <Label Content="Top 3 doctors" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Top3Doctors}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                    <DockPanel Grid.Row="3" Grid.Column="1">
+                        <Label Content="Bottom 3 doctors" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Bottom3Doctors}" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
                 </Grid>
 
             </TabItem>
