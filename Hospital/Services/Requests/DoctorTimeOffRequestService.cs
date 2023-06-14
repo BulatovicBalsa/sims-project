@@ -2,7 +2,10 @@
 using System.Windows.Documents;
 using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
+using Hospital.Repositories.Doctor;
+using Hospital.Repositories.Examination;
 using Hospital.Repositories.Requests;
+using Hospital.Scheduling;
 
 namespace Hospital.Services.Requests;
 
@@ -23,5 +26,21 @@ public class DoctorTimeOffRequestService
     public void Add(DoctorTimeOffRequest request)
     {
         _requestRepository.Add(request);
+    }
+
+    public void Accept(DoctorTimeOffRequest request)
+    {
+        if (request.IsApproved)
+            return;
+
+        request.IsApproved = true;
+        CancelExaminationsInPeriod(request);
+        _requestRepository.Update(request);
+    }
+
+    private void CancelExaminationsInPeriod(DoctorTimeOffRequest request)
+    {
+        var doctor = DoctorRepository.Instance.GetById(request.DoctorId); 
+        ExaminationRepository.Instance.Delete(doctor, new TimeRange(request.Start, request.End));
     }
 }

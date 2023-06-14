@@ -9,6 +9,7 @@ using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Nurse;
 using Hospital.Repositories.Patient;
+using Hospital.Scheduling;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Examination;
@@ -228,6 +229,14 @@ public class ExaminationRepository
         Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
+    public void Delete(Doctor doctor, TimeRange timeRange)
+    {
+        foreach (var examination in GetExaminationsInTimeRange(doctor, timeRange))
+        {
+            Delete(examination, false);
+        }
+    }
+
     public List<Examination> GetAll(Doctor doctor)
     {
         var doctorExaminations = GetAll()
@@ -255,6 +264,12 @@ public class ExaminationRepository
     public List<Examination> GetExaminationsForDate(Doctor doctor, DateTime requestedDate)
     {
         return GetAll(doctor).Where(examination => examination.Start.Date == requestedDate.Date).ToList();
+    }
+
+
+    public List<Examination> GetExaminationsInTimeRange(Doctor doctor, TimeRange range)
+    {
+        return GetAll(doctor).Where(examination => range.DoesOverlapWith(new TimeRange(examination.Start, examination.End))).ToList();
     }
 
     public List<Examination> GetExaminationsForDate(Patient patient, DateTime requestedDate)
