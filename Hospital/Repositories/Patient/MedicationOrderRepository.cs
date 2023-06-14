@@ -8,15 +8,16 @@ namespace Hospital.Repositories.Patient;
 public class MedicationOrderRepository
 {
     private const string FilePath = "../../../Data/medicationOrders.csv";
-    private static MedicationOrderRepository? _instance;
+    private readonly ISerializer<MedicationOrder> _serializer;
 
-    public static MedicationOrderRepository Instance => _instance ??= new MedicationOrderRepository();
-
-    private MedicationOrderRepository() { }
+    public MedicationOrderRepository(ISerializer<MedicationOrder> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<MedicationOrder> GetAll()
     {
-        return CsvSerializer<MedicationOrder>.FromCSV(FilePath);
+        return _serializer.Load(FilePath);
     }
 
     public List<MedicationOrder> GetAllExecutable()
@@ -37,7 +38,7 @@ public class MedicationOrderRepository
 
         allMedicationOrders.Add(medicationOrder);
 
-        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        _serializer.Save(allMedicationOrders, FilePath);
     }
 
     public void Update(MedicationOrder medicationOrder)
@@ -49,7 +50,7 @@ public class MedicationOrderRepository
 
         allMedicationOrders[indexToUpdate] = medicationOrder;
 
-        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        _serializer.Save(allMedicationOrders, FilePath);
     }
 
     public void Delete(MedicationOrder medicationOrder)
@@ -61,6 +62,6 @@ public class MedicationOrderRepository
 
         allMedicationOrders.RemoveAt(indexToDelete);
 
-        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        _serializer.Save(allMedicationOrders, FilePath);
     }
 }

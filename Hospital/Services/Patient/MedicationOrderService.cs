@@ -1,8 +1,9 @@
 ﻿using System;
 using Hospital.DTOs;
+using Hospital.Injectors;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
-using Hospital.ViewModels.Nurse.Medication;
+using Hospital.Serialization;
 
 namespace Hospital.Services;
 public class MedicationOrderService
@@ -12,7 +13,7 @@ public class MedicationOrderService
 
     public MedicationOrderService()
     {
-        _medicationOrderRepository = MedicationOrderRepository.Instance;
+        _medicationOrderRepository = new MedicationOrderRepository(SerializerInjector.CreateInstance<ISerializer<MedicationOrder>>());
         _medicationService = new MedicationService();
     }
 
