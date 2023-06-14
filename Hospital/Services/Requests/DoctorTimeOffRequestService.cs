@@ -21,8 +21,8 @@ public class DoctorTimeOffRequestService
     {
         var cancelExaminationsHandler = new CancelExaminationsHandler();
         var notifyPatientsHandler = new PatientNotificationHandler();
-        _acceptanceHandler = cancelExaminationsHandler;
-        _acceptanceHandler.SetNext(notifyPatientsHandler);
+        _acceptanceHandler = notifyPatientsHandler;
+        _acceptanceHandler.SetNext(cancelExaminationsHandler);
     }
 
     public List<DoctorTimeOffRequest> GetAll()
