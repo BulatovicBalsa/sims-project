@@ -19,14 +19,14 @@ public class EquipmentPlacementRepositoryTests
                 EquipmentType.OperationEquipment)
         };
 
-        Serializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
+        CsvSerializer<Equipment>.ToCSV(equipment, "../../../Data/equipment.csv");
 
         var equipmentPlacements = new List<InventoryItem>
         {
             new("1", "1", 1),
             new("2", "2", 2)
         };
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
     }
 
 
@@ -63,7 +63,7 @@ public class EquipmentPlacementRepositoryTests
             new("2", "1", 1),
             new("2", "2", 2)
         };
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
 
 
         var equipmentItemRepository = InventoryItemRepository.Instance;

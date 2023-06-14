@@ -1,5 +1,7 @@
-﻿using Hospital.Models.Manager;
+﻿using Hospital.Injectors;
+using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Manager;
 
@@ -9,7 +11,7 @@ public class TransferRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
-        var transferItemsFile = "../../../Data/transferItems.csv";
+        var transferItemsFile = "../../../Data/transferItems.json";
         var transfersFile = "../../../Data/transfers.csv";
 
         if (File.Exists(transferItemsFile))
@@ -17,7 +19,7 @@ public class TransferRepositoryTests
         if (File.Exists(transfersFile))
             File.Delete(transfersFile);
 
-        TransferItemRepository.Instance.DeleteAll();
+        new TransferItemRepository(SerializerInjector.CreateInstance<ISerializer<TransferItem>>()).DeleteAll();
         TransferRepository.Instance.DeleteAll();
         EquipmentRepository.Instance.DeleteAll();
         RoomRepository.Instance.DeleteAll();

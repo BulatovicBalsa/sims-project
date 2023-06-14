@@ -11,7 +11,7 @@ using CsvHelper.Configuration;
 
 namespace Hospital.Serialization;
 
-public class Serializer<T> : ISerializer<T>
+public class CsvSerializer<T> : ISerializer<T>
 {
     private const string DirectoryPath = "../../../Data/";
 

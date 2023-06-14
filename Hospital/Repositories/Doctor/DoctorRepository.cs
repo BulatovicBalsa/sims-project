@@ -5,24 +5,23 @@ using Hospital.Serialization;
 
 namespace Hospital.Repositories.Doctor;
 
-using Hospital.DTOs;
-using Hospital.Filter;
+using DTOs;
+using Filter;
 using Models.Doctor;
-using System;
 
 public class DoctorRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
-    private static DoctorRepository? _instance;
-    private static readonly ISerializer<Doctor> Serializer = SerializerInjector.CreateInstance<ISerializer<Doctor>>();
+    private readonly ISerializer<Doctor> _serializer;
 
-    public static DoctorRepository Instance => _instance ??=new DoctorRepository();
-
-    private DoctorRepository() { }
+    public DoctorRepository(ISerializer<Doctor> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<Doctor> GetAll()
     {
-        return Serializer.Load(FilePath);
+        return _serializer.Load(FilePath);
     }
 
     public Doctor? GetById(string id)
@@ -41,7 +40,7 @@ public class DoctorRepository
 
         allDoctor.Add(doctor);
 
-        Serializer.Save(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
     public void Update(Doctor doctor)
@@ -53,7 +52,7 @@ public class DoctorRepository
 
         allDoctor[indexToUpdate] = doctor;
 
-        Serializer.Save(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
     public void Delete(Doctor doctor)
@@ -65,13 +64,13 @@ public class DoctorRepository
 
         allDoctor.RemoveAt(indexToDelete);
 
-        Serializer.Save(allDoctor, FilePath);
+        _serializer.Save(allDoctor, FilePath);
     }
 
-    public static void DeleteAll()
+    public void DeleteAll()
     {
         var emptyDoctorList = new List<Doctor>();
-        Serializer.Save(emptyDoctorList, FilePath);
+        _serializer.Save(emptyDoctorList, FilePath);
     }
 
     public List<string> GetAllSpecializations()

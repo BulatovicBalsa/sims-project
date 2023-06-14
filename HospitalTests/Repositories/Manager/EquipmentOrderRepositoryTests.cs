@@ -18,7 +18,7 @@ public class EquipmentOrderRepositoryTests
             new("2", new DateTime(), false)
         };
 
-        Serializer<EquipmentOrder>.ToCSV(orders, "../../../Data/equipmentOrders.csv");
+        CsvSerializer<EquipmentOrder>.ToCSV(orders, "../../../Data/equipmentOrders.csv");
 
         var orderItems = new List<EquipmentOrderItem>
         {
@@ -27,7 +27,7 @@ public class EquipmentOrderRepositoryTests
             new("2", 1, "3")
         };
 
-        Serializer<EquipmentOrderItem>.ToCSV(orderItems, "../../../Data/equipmentOrderItems.csv");
+        CsvSerializer<EquipmentOrderItem>.ToCSV(orderItems, "../../../Data/equipmentOrderItems.csv");
     }
     private static void DeleteData()
     {

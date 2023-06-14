@@ -6,6 +6,7 @@ using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Hospital.Exceptions;
 using Hospital.Filter;
+using Hospital.Injectors;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Nurse;
@@ -47,7 +48,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             if (string.IsNullOrEmpty(doctorId))
                 return null;
             // Retrieve the Doctor object based on the ID
-            var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+            var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
                          throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
             return doctor;
         }
@@ -91,7 +92,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             var doctors = new List<Doctor>();
             inputText?.Split("|").ToList().ForEach(doctorId =>
             {
-                var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+                var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
                              throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
                 doctors.Add(doctor);
             });
@@ -152,7 +153,7 @@ public class ExaminationRepository
 
     public List<Examination> GetAll()
     {
-        return Serializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
+        return CsvSerializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
     }
 
     public Examination? GetById(string id)
@@ -174,7 +175,7 @@ public class ExaminationRepository
 
         allExamination.Add(examination);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Update(Examination examination, bool isMadeByPatient)
@@ -199,7 +200,7 @@ public class ExaminationRepository
 
         allExamination[indexToUpdate] = examination;
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Delete(Examination examination, bool isMadeByPatient)
@@ -228,7 +229,7 @@ public class ExaminationRepository
 
         allExamination.RemoveAt(indexToDelete);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Delete(Doctor doctor, TimeRange timeRange)
@@ -335,6 +336,6 @@ public class ExaminationRepository
     public static void DeleteAll()
     {
         var emptyList = new List<Examination>();
-        Serializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
     }
 }
