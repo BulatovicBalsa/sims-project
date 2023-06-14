@@ -17,9 +17,32 @@ public class RoomScheduleService
 
     public RoomScheduleService()
     {
-        _examinations = ExaminationRepository.Instance.GetAll();
-        _renovations = RenovationRepository.Instance.GetAll();
-        _transfers = TransferRepository.Instance.GetAll();
+        try
+        {
+            _examinations = ExaminationRepository.Instance.GetAll();
+        }
+        catch
+        {
+            _examinations = new List<Examination>();
+        }
+
+        try
+        {
+            _renovations = RenovationRepository.Instance.GetAll();
+        }
+        catch
+        {
+            _renovations = new List<Renovation>();
+        }
+
+        try
+        {
+            _transfers = TransferRepository.Instance.GetAll();
+        }
+        catch
+        {
+            _transfers = new List<Transfer>();
+        }
     }
 
     public RoomScheduleService(List<Examination> examinations, List<Renovation> renovations, List<Transfer>? transfers = null)
