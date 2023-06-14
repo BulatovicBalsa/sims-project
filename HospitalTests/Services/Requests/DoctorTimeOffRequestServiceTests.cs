@@ -58,7 +58,7 @@ public class DoctorTimeOffRequestServiceTests
         Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
         var service = new DoctorTimeOffRequestService();
         var request = DoctorTimeOffRequestRepository.Instance.GetAll()[0];
-        service.Accept(request);
+        service.Approve(request);
         Assert.AreEqual(2, ExaminationRepository.Instance.GetAll().Count);
         Assert.IsTrue(ExaminationRepository.Instance.GetAll()[0].Start > request.End);
     }
@@ -70,7 +70,7 @@ public class DoctorTimeOffRequestServiceTests
         Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
         var service = new DoctorTimeOffRequestService();
         var request = DoctorTimeOffRequestRepository.Instance.GetAll()[0];
-        service.Accept(request);
+        service.Approve(request);
         var notificationRepository = new NotificationRepository();
         Assert.AreEqual(1, notificationRepository.GetAll().Count);
     }
