@@ -13,14 +13,29 @@ public class ComplexRenovationServiceTests
     [TestInitialize]
     public void SetUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
+
         RenovationRepository.Instance.GetAllFromFile();
     }
 
     [TestCleanup]
     public void CleanUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
     }
 
     private static void DeleteData()

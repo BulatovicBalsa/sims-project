@@ -10,7 +10,15 @@ public class EquipmentOrderRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
-        DeleteData();
+        try
+        {
+            DeleteData();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Files don't exist.");
+        }
+
         EquipmentOrderRepository.Instance.DeleteAll();
         var orders = new List<EquipmentOrder>
         {
