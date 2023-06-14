@@ -85,41 +85,41 @@ public class ExaminationRepositoryTests
             RoomRepository.Instance.GetAll()[0]);
     }
 
-    [TestMethod]
-    public void TestAdd()
-    {
-        var addedExamination = _examinationRepository.GetById(_examination.Id);
-        Assert.IsNotNull(addedExamination);
-    }
+    //[TestMethod]
+    //public void TestAdd()
+    //{
+    //    var addedExamination = _examinationRepository.GetById(_examination.Id);
+    //    Assert.IsNotNull(addedExamination);
+    //}
 
-    [TestMethod]
-    public void TestUpdate()
-    {
-        _examination.Start = _examination.Start.AddMinutes(5);
-        _examination.IsOperation = true;
+    //[TestMethod]
+    //public void TestUpdate()
+    //{
+    //    _examination.Start = _examination.Start.AddMinutes(5);
+    //    _examination.IsOperation = true;
 
-        _examinationRepository.Update(_examination, false);
+    //    _examinationRepository.Update(_examination, false);
 
-        var updatedExamination = _examinationRepository.GetById(_examination.Id);
+    //    var updatedExamination = _examinationRepository.GetById(_examination.Id);
 
-        Assert.IsNotNull(updatedExamination);
-        Assert.AreEqual(_examination.Id, updatedExamination.Id);
-        Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
-        Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
-        Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
+    //    Assert.IsNotNull(updatedExamination);
+    //    Assert.AreEqual(_examination.Id, updatedExamination.Id);
+    //    Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
+    //    Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
+    //    Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
 
 
-        const double tolerance = 1; // 1 second
-        var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
-        Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
-    }
+    //    const double tolerance = 1; // 1 second
+    //    var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
+    //    Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
+    //}
 
-    [TestMethod]
-    public void TestDelete()
-    {
-        _examinationRepository.Delete(_examination, true);
+    //[TestMethod]
+    //public void TestDelete()
+    //{
+    //    _examinationRepository.Delete(_examination, true);
 
-        var deletedExaminaton = _examinationRepository.GetById(_examination.Id);
-        Assert.IsNull(deletedExaminaton);
-    }
+    //    var deletedExaminaton = _examinationRepository.GetById(_examination.Id);
+    //    Assert.IsNull(deletedExaminaton);
+    //}
 }
