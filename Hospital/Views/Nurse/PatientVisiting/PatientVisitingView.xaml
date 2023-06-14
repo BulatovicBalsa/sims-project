@@ -41,11 +41,14 @@
                     Command="{Binding VisitPatientCommand}"/>
             <TextBlock Style="{StaticResource MainTextBlock}"
                        Margin="15,4,10,0">Search by name: </TextBlock>
-            <TextBox Width="150" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Width="150" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <TextBlock Style="{StaticResource MainTextBlock}"
                        Margin="15,4,10,0">Room: </TextBlock>
             <ComboBox Width="150" ItemsSource="{Binding AllRooms}" 
-                      SelectedItem="{Binding FilterRoom}"/>
+                      SelectedItem="{Binding FilterRoom, Mode=TwoWay}"/>
+            <Button Content="Reset filters" Style="{StaticResource ActionButton}" 
+                    Margin="15,0,0,0"
+                    Command="{Binding ResetFilterCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

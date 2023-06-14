@@ -33,6 +33,7 @@ public class PatientVisitingViewModel : ViewModelBase
         VisitPatientCommand = new ViewModelCommand(ExecuteVisitPatientCommand, CanExecuteVisitPatientCommand);
         _filterName = "";
         _filterRoom = null;
+        ResetFilterCommand = new ViewModelCommand(ExecuteResetFilterCommand);
     }
 
     public ObservableCollection<Patient> HospitalizedPatients
@@ -118,6 +119,7 @@ public class PatientVisitingViewModel : ViewModelBase
     }
 
     public ICommand VisitPatientCommand { get; }
+    public ICommand ResetFilterCommand { get; }
 
     private void ExecuteVisitPatientCommand(object obj)
     {
@@ -133,5 +135,14 @@ public class PatientVisitingViewModel : ViewModelBase
     private bool CanExecuteVisitPatientCommand(object obj)
     {
         return SelectedPatient != null;
+    }
+
+    private void ExecuteResetFilterCommand(object obj)
+    {
+        _filterName = "";
+        OnPropertyChanged(nameof(FilterName));
+        _filterRoom = null;
+        OnPropertyChanged(nameof(FilterRoom));
+        HospitalizedPatients = new ObservableCollection<Patient>(_hospitalizedPatientsBase);
     }
 }
