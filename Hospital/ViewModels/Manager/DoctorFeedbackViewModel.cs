@@ -12,13 +12,13 @@ namespace Hospital.ViewModels.Manager;
 
 public class DoctorFeedbackViewModel : ViewModelBase
 {
+    private readonly DoctorFeedbackRepository _doctorFeedbackRepository = DoctorFeedbackRepository.Instance;
     private ObservableCollection<DoctorFeedback> _allFeedback;
     private ObservableCollection<Doctor> _doctors;
+    private KeyValuePair<string, Dictionary<int, int>> _selectedAreaRatingFrequencies;
     private ObservableCollection<DoctorFeedback> _selectedDoctorFeedback;
     private string _selectedDoctorId;
     private ObservableCollection<KeyValuePair<string, Dictionary<int, int>>> _selectedDoctorRatingFrequenciesByArea;
-    private readonly DoctorFeedbackRepository _doctorFeedbackRepository = DoctorFeedbackRepository.Instance;
-    private KeyValuePair<string, Dictionary<int, int>> _selectedAreaRatingFrequencies;
 
     public DoctorFeedbackViewModel(IRatingFrequencyPlot ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
     {
@@ -118,27 +118,30 @@ public class DoctorFeedbackViewModel : ViewModelBase
     private void PlotRatingFrequencies()
     {
         var ratingFrequencies = SelectedAreaRatingFrequencies.Value;
-        if(ratingFrequencies is { Count: > 0 })
+        if (ratingFrequencies is { Count: > 0 })
             RatingFrequencyPlot.Plot(ratingFrequencies);
     }
 
     private void PlotAverageRatingsByArea()
     {
-        var dtoConverter = new AverageDoctorRatingsByAreaToDictionaryConverter(); 
-        if(!string.IsNullOrEmpty(SelectedDoctorId))
-            AverageRatingsByAreaPlot.Plot(dtoConverter.Convert(_doctorFeedbackRepository.GetAverageRatingsByArea(SelectedDoctorId)));
+        var dtoConverter = new AverageDoctorRatingsByAreaToDictionaryConverter();
+        if (!string.IsNullOrEmpty(SelectedDoctorId))
+            AverageRatingsByAreaPlot.Plot(
+                dtoConverter.Convert(_doctorFeedbackRepository.GetAverageRatingsByArea(SelectedDoctorId)));
     }
 
     private void RefreshSelectedDoctorRatingFrequenciesByArea()
     {
         if (string.IsNullOrEmpty(SelectedDoctorId)) return;
         SelectedDoctorRatingFrequenciesByArea =
-            new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>()
+            new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>
             {
                 new("Overall rating frequency",
                     _doctorFeedbackRepository.GetOverallRatingFrequencies(SelectedDoctorId)),
-                new("Quality rating frequency", _doctorFeedbackRepository.GetDoctorQualityRatingFrequencies(SelectedDoctorId)),
-                new("Recommendation rating frequency", _doctorFeedbackRepository.GetRecommendationRatingFrequencies(SelectedDoctorId))
+                new("Quality rating frequency",
+                    _doctorFeedbackRepository.GetDoctorQualityRatingFrequencies(SelectedDoctorId)),
+                new("Recommendation rating frequency",
+                    _doctorFeedbackRepository.GetRecommendationRatingFrequencies(SelectedDoctorId))
             };
         SelectedAreaRatingFrequencies = SelectedDoctorRatingFrequenciesByArea[0];
     }

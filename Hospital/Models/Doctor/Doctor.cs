@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hospital.Models.Doctor;
+﻿namespace Hospital.Models.Doctor;
 
 public class Doctor : Person
 {
@@ -35,7 +33,7 @@ public class Doctor : Person
     {
         var copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, Specialization)
         {
-            Id = Id,
+            Id = Id
         };
 
         return copy;

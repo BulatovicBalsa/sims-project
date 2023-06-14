@@ -76,7 +76,7 @@ public class HospitalSurveyTabViewModel : ViewModelBase
 
     public void PlotRatingFrequencies()
     {
-        if(SelectedRatingFrequencies.Value.Count > 0)
+        if (SelectedRatingFrequencies.Value.Count > 0)
             _ratingFrequencyPlot.Plot(SelectedRatingFrequencies.Value);
     }
 
