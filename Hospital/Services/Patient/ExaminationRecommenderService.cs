@@ -88,11 +88,11 @@ namespace Hospital.Services
 
             DateTime today = DateTime.Today;
             DateTime futureStartDate = today.AddDays(1).Add(options.EndTime);
-            DateTime futureEndDate = futureStartDate.AddHours(2);
+            DateTime futureEndDate = futureStartDate.AddHours(4);
             TimeRange futureTimeRange = new TimeRange(futureStartDate, futureEndDate);
 
             DateTime pastEndDate = today.AddDays(1).Add(options.StartTime);
-            DateTime pastStartDate = pastEndDate.AddHours(-2);
+            DateTime pastStartDate = pastEndDate.AddHours(-4);
             TimeRange pastTimeRange = new TimeRange(pastStartDate, pastEndDate);
 
             examinations = SearchExaminations(patient, options, options.PreferredDoctor, _ => futureTimeRange);
