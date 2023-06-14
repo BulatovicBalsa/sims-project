@@ -20,7 +20,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService;
     private readonly PatientRepository _patientRepository;
-    private readonly DoctorRepository _doctorRepository;
     private readonly TimeslotService _timeslotService;
     private readonly ExaminationRepository _examinationRepository;
     private readonly ExaminationService _examinationService;
@@ -34,7 +33,6 @@ public class UrgentExaminationsViewModel : ViewModelBase
     {
         _doctorService = new DoctorService();
         _patientRepository = PatientRepository.Instance;
-        _doctorRepository = DoctorRepository.Instance;
         _timeslotService = new TimeslotService();
         _examinationRepository = ExaminationRepository.Instance;
         _examinationService = new ExaminationService();
