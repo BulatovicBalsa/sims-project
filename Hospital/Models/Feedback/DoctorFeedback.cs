@@ -28,5 +28,11 @@ namespace Hospital.Models.Feedback
             DoctorQualityRating = 0;
             DoctorId = "";
         }
+
+        public int[] GetAllRatings()
+        {
+            return new int[] { OverallRating, RecommendationRating, DoctorQualityRating};
+
+        }
     }
 }

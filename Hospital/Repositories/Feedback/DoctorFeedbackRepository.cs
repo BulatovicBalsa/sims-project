@@ -1,10 +1,12 @@
 
 
 
+using System;
 using Hospital.Models.Feedback;
 using Hospital.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.DTOs;
 
 namespace Hospital.Repositories.Feedback
 {
@@ -34,6 +36,55 @@ namespace Hospital.Repositories.Feedback
         public List<DoctorFeedback> GetByDoctorId(string doctorId)
         {
             return GetAll().Where(feedback => feedback.DoctorId == doctorId).ToList();
+        }
+        
+        private Dictionary<int, int> GetFrequencies(int[] ratings)
+        {
+            var frequencies = new Dictionary<int, int>();
+
+            foreach (var possibleRating in ratings.Distinct())
+                frequencies[possibleRating] = ratings.Count(e => e == possibleRating);
+
+            return frequencies;
+        }
+
+        public List<AverageDoctorRatingDTO> GetDoctorsOrderedByAverageRating()
+        {
+            var doctorsByRating = from feedback in GetAll()
+                group feedback by feedback.DoctorId
+                into g
+                select new AverageDoctorRatingDTO(g.Key, g.SelectMany(e => e.GetAllRatings()).Average());
+            return doctorsByRating.OrderByDescending(e => e.AverageRating).ToList();
+        }
+
+        public List<AverageDoctorRatingDTO> GetTop3Doctors()
+        {
+            var doctorsOrderedByAverageRating = GetDoctorsOrderedByAverageRating();
+            return doctorsOrderedByAverageRating.Take(Math.Min(3, doctorsOrderedByAverageRating.Count)).ToList();
+        }
+
+        public List<AverageDoctorRatingDTO> GetBottom3Doctors()
+        {
+            var doctorsOrderedByAverageRating = GetDoctorsOrderedByAverageRating();
+            return doctorsOrderedByAverageRating.TakeLast(Math.Min(3, doctorsOrderedByAverageRating.Count)).ToList();
+        }
+
+        public Dictionary<int, int> GetOverallRatingFrequencies(string doctorId)
+        {
+            var overallRatings = GetByDoctorId(doctorId).Select(e => e.OverallRating).ToArray();
+            return GetFrequencies(overallRatings);
+        }
+
+        public Dictionary<int, int> GetRecommendationRatingFrequencies(string doctorId)
+        {
+            var recommendationRatings = GetByDoctorId(doctorId).Select(e => e.RecommendationRating).ToArray();
+            return GetFrequencies(recommendationRatings);
+        }
+
+        public Dictionary<int, int> GetDoctorQualityRatingFrequencies(string doctorId)
+        {
+            var doctorQualityRatings = GetByDoctorId(doctorId).Select(e => e.DoctorQualityRating).ToArray();
+            return GetFrequencies(doctorQualityRatings);
         }
     }
 }
