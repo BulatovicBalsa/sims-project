@@ -1,5 +1,7 @@
-﻿using Hospital.Models.Manager;
+﻿using Hospital.Injectors;
+using Hospital.Models.Manager;
 using Hospital.Repositories.Manager;
+using Hospital.Serialization;
 using Hospital.Services.Manager;
 
 namespace HospitalTests.Services.Manager;
@@ -14,7 +16,7 @@ public class TransferServiceTests
         RoomRepository.Instance.DeleteAll();
         InventoryItemRepository.Instance.DeleteAll();
         TransferRepository.Instance.DeleteAll();
-        TransferItemRepository.Instance.DeleteAll();
+        new TransferItemRepository(SerializerInjector.CreateInstance<ISerializer<TransferItem>>()).DeleteAll();
     }
 
     [TestMethod]
