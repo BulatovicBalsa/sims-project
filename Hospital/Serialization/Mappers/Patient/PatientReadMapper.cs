@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using CsvHelper.Configuration;
+using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Repositories.Patient;
 
 namespace Hospital.Serialization.Mappers.Patient;
@@ -52,7 +54,7 @@ public sealed class PatientReadMapper : ClassMap<Patient>
                 select item.Split(";")
                 into referralArgs
                 let doctorId = referralArgs.Length > 1 ? referralArgs[1].Trim() : null
-                let doctor = string.IsNullOrEmpty(doctorId) ? null : DoctorRepository.Instance.GetById(doctorId)
+                let doctor = string.IsNullOrEmpty(doctorId) ? null : new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId)
                 let specialization = referralArgs[0].Trim()
                 select new Referral(specialization, doctor));
 

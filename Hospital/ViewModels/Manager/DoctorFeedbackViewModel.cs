@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Hospital.Charting;
 using Hospital.Converters;
+using Hospital.Injectors;
 using Hospital.Models.Doctor;
 using Hospital.Models.Feedback;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Feedback;
+using Hospital.Serialization;
 
 namespace Hospital.ViewModels.Manager;
 
@@ -23,12 +25,12 @@ public class DoctorFeedbackViewModel : ViewModelBase
     public DoctorFeedbackViewModel(IRatingFrequencyPlot ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
     {
         AllFeedback = new ObservableCollection<DoctorFeedback>(_doctorFeedbackRepository.GetAll());
-        Doctors = new ObservableCollection<Doctor>(DoctorRepository.Instance.GetAll());
+        Doctors = new ObservableCollection<Doctor>(new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetAll());
         SelectedDoctorRatingFrequenciesByArea = new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>();
         Top3Doctors = new ObservableCollection<Doctor>(_doctorFeedbackRepository.GetTop3Doctors()
-            .Select(e => DoctorRepository.Instance.GetById(e.DoctorId)).ToList());
+            .Select(e => new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(e.DoctorId)).ToList());
         Bottom3Doctors = new ObservableCollection<Doctor>(_doctorFeedbackRepository.GetBottom3Doctors()
-            .Select(e => DoctorRepository.Instance.GetById(e.DoctorId)).ToList());
+            .Select(e => new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(e.DoctorId)).ToList());
         RatingFrequencyPlot = ratingFrequencyPlot;
         AverageRatingsByAreaPlot = averageRatingByAreaPlot;
         SelectedDoctorId = "";
