@@ -14,7 +14,7 @@ public class RatingFrequencyPiePlot : IRatingFrequencyPlot
         _wpfPlot = wpfPlot;
     }
 
-    public void PlotRatingFrequencies(Dictionary<int, int> frequencies)
+    public void Plot(Dictionary<int, int> frequencies)
     {
         var labels = frequencies.Keys.Select(e => "Rating " + e).ToArray();
         var values = frequencies.Values.Select(e => (double)e).ToArray();

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Hospital.Charting
+namespace Hospital.Charting;
+
+public interface IRatingFrequencyPlot
 {
-    public interface IRatingFrequencyPlot
-    {
-        public void PlotRatingFrequencies(Dictionary<int, int> ratingFrequencies);
-    }
+    public void Plot(Dictionary<int, int> ratingFrequencies);
 }

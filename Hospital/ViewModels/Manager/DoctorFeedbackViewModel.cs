@@ -119,7 +119,7 @@ public class DoctorFeedbackViewModel : ViewModelBase
     {
         var ratingFrequencies = SelectedAreaRatingFrequencies.Value;
         if(ratingFrequencies is { Count: > 0 })
-            RatingFrequencyPlot.PlotRatingFrequencies(ratingFrequencies);
+            RatingFrequencyPlot.Plot(ratingFrequencies);
     }
 
     private void PlotAverageRatingsByArea()
