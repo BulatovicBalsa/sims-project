@@ -14,7 +14,7 @@ public class SerializerInjector
     {
         { typeof(ISerializer<Doctor>), new Serializer<Doctor>() },
         { typeof(ISerializer<DoctorTimeOffRequest>), new Serializer<DoctorTimeOffRequest>() },
-        { typeof(ISerializer<TransferItem>), new Serializer<TransferItem>()},
+        { typeof(ISerializer<TransferItem>), new JsonSerializer<TransferItem>()},
         { typeof(ISerializer<ComplexRenovation>), new JsonSerializer<ComplexRenovation>() }
         // Add more implementations here
     };

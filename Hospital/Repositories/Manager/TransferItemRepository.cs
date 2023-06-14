@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hospital.Injectors;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
 
@@ -7,8 +8,11 @@ namespace Hospital.Repositories.Manager;
 
 public class TransferItemRepository
 {
-    private const string FilePath = "../../../Data/transferItems.csv";
+    private const string FilePath = "../../../Data/transferItems.json";
     private static TransferItemRepository? _instance;
+
+    private static ISerializer<TransferItem>
+        Serializer = SerializerInjector.CreateInstance<ISerializer<TransferItem>>();
 
     private List<TransferItem>? _transferItems;
 
@@ -30,7 +34,7 @@ public class TransferItemRepository
     {
         if (_transferItems != null)
             return _transferItems;
-        _transferItems = Serializer<TransferItem>.FromCSV(FilePath);
+        _transferItems = Serializer.Load(FilePath);
         JoinWithEquipment();
         return _transferItems;
     }
@@ -39,7 +43,7 @@ public class TransferItemRepository
     {
         var transferItems = GetAll();
         transferItems.Add(item);
-        Serializer<TransferItem>.ToCSV(transferItems, FilePath);
+        Serializer.Save(transferItems, FilePath);
     }
 
     public void Update(TransferItem item)
@@ -50,12 +54,12 @@ public class TransferItemRepository
             throw new KeyNotFoundException();
 
         transferItems[indexToUpdate] = item;
-        Serializer<TransferItem>.ToCSV(transferItems, FilePath);
+        Serializer.Save(transferItems, FilePath);
     }
 
     public void DeleteAll()
     {
-        Serializer<TransferItem>.ToCSV(new List<TransferItem>(), FilePath);
+        Serializer.Save(new List<TransferItem>(), FilePath);
         _transferItems = null;
     }
 }

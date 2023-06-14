@@ -9,7 +9,7 @@ public class TransferRepositoryTests
     [TestInitialize]
     public void SetUp()
     {
-        var transferItemsFile = "../../../Data/transferItems.csv";
+        var transferItemsFile = "../../../Data/transferItems.json";
         var transfersFile = "../../../Data/transfers.csv";
 
         if (File.Exists(transferItemsFile))
