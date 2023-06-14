@@ -52,6 +52,8 @@ public class DoctorViewModel : ViewModelBase
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
         PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
         SendMessageCommand = new RelayCommand(SendMessage);
     }
 
