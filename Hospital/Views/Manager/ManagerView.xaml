@@ -232,6 +232,7 @@
                     <ComboBox Grid.ColumnSpan="2" Height="Auto" ItemsSource="{Binding Doctors}" SelectedValuePath="Id" SelectedValue="{Binding SelectedDoctorId}"/>
                     <ScottPlot:WpfPlot Grid.Row="1" Grid.Column="0" x:Name="AverageDoctorRatingByAreaWpfPlot"/>
                     <DockPanel Grid.Row="1" Grid.Column="1">
+                        <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedDoctorRatingFrequenciesByArea}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedAreaRatingFrequencies}"/>
                         <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="DoctorRatingFrequencyWpfPlot"/>
                     </DockPanel>
                     <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedDoctorFeedback}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">

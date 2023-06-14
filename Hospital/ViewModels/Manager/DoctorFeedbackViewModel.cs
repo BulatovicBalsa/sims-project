@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Hospital.Charting;
 using Hospital.Converters;
 using Hospital.Models.Doctor;
@@ -14,11 +15,15 @@ public class DoctorFeedbackViewModel : ViewModelBase
     private ObservableCollection<Doctor> _doctors;
     private ObservableCollection<DoctorFeedback> _selectedDoctorFeedback;
     private string _selectedDoctorId;
+    private ObservableCollection<KeyValuePair<string, Dictionary<int, int>>> _selectedDoctorRatingFrequenciesByArea;
+    private readonly DoctorFeedbackRepository _doctorFeedbackRepository = DoctorFeedbackRepository.Instance;
+    private KeyValuePair<string, Dictionary<int, int>> _selectedAreaRatingFrequencies;
 
     public DoctorFeedbackViewModel(IRatingFrequencyPlotter ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
     {
-        AllFeedback = new ObservableCollection<DoctorFeedback>(DoctorFeedbackRepository.Instance.GetAll());
+        AllFeedback = new ObservableCollection<DoctorFeedback>(_doctorFeedbackRepository.GetAll());
         Doctors = new ObservableCollection<Doctor>(DoctorRepository.Instance.GetAll());
+        SelectedDoctorRatingFrequenciesByArea = new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>();
         RatingFrequencyPlot = ratingFrequencyPlot;
         AverageRatingsByAreaPlot = averageRatingByAreaPlot;
         SelectedDoctorId = "";
@@ -56,9 +61,10 @@ public class DoctorFeedbackViewModel : ViewModelBase
             _selectedDoctorId = value;
             SelectedDoctorFeedback =
                 new ObservableCollection<DoctorFeedback>(
-                    DoctorFeedbackRepository.Instance.GetByDoctorId(_selectedDoctorId));
+                    _doctorFeedbackRepository.GetByDoctorId(_selectedDoctorId));
             PlotRatingFrequencies();
             PlotAverageRatingsByArea();
+            RefreshSelectedDoctorRatingFrequenciesByArea();
             OnPropertyChanged(nameof(SelectedDoctorId));
         }
     }
@@ -74,20 +80,57 @@ public class DoctorFeedbackViewModel : ViewModelBase
         }
     }
 
+    public ObservableCollection<KeyValuePair<string, Dictionary<int, int>>> SelectedDoctorRatingFrequenciesByArea
+    {
+        get => _selectedDoctorRatingFrequenciesByArea;
+        set
+        {
+            if (Equals(value, _selectedDoctorRatingFrequenciesByArea)) return;
+            _selectedDoctorRatingFrequenciesByArea = value;
+            OnPropertyChanged(nameof(SelectedDoctorRatingFrequenciesByArea));
+        }
+    }
+
+    public KeyValuePair<string, Dictionary<int, int>> SelectedAreaRatingFrequencies
+    {
+        get => _selectedAreaRatingFrequencies;
+        set
+        {
+            if (value.Equals(_selectedAreaRatingFrequencies)) return;
+            _selectedAreaRatingFrequencies = value;
+            PlotRatingFrequencies();
+            OnPropertyChanged(nameof(SelectedAreaRatingFrequencies));
+        }
+    }
+
     public IRatingFrequencyPlotter RatingFrequencyPlot { get; set; }
     public ICategoryPlot AverageRatingsByAreaPlot { get; set; }
 
-    public void PlotRatingFrequencies()
+    private void PlotRatingFrequencies()
     {
-        var ratingFrequencies = DoctorFeedbackRepository.Instance.GetOverallRatingFrequencies(SelectedDoctorId);
-        if(ratingFrequencies.Count > 0)
+        var ratingFrequencies = SelectedAreaRatingFrequencies.Value;
+        if(ratingFrequencies is { Count: > 0 })
             RatingFrequencyPlot.PlotRatingFrequencies(ratingFrequencies);
     }
 
-    public void PlotAverageRatingsByArea()
+    private void PlotAverageRatingsByArea()
     {
         var dtoConverter = new AverageDoctorRatingsByAreaToDictionaryConverter(); 
         if(!string.IsNullOrEmpty(SelectedDoctorId))
-            AverageRatingsByAreaPlot.Plot(dtoConverter.Convert(DoctorFeedbackRepository.Instance.GetAverageRatingsByArea(SelectedDoctorId)));
+            AverageRatingsByAreaPlot.Plot(dtoConverter.Convert(_doctorFeedbackRepository.GetAverageRatingsByArea(SelectedDoctorId)));
+    }
+
+    private void RefreshSelectedDoctorRatingFrequenciesByArea()
+    {
+        if (string.IsNullOrEmpty(SelectedDoctorId)) return;
+        SelectedDoctorRatingFrequenciesByArea =
+            new ObservableCollection<KeyValuePair<string, Dictionary<int, int>>>()
+            {
+                new("Overall rating frequency",
+                    _doctorFeedbackRepository.GetOverallRatingFrequencies(SelectedDoctorId)),
+                new("Quality rating frequency", _doctorFeedbackRepository.GetDoctorQualityRatingFrequencies(SelectedDoctorId)),
+                new("Recommendation rating frequency", _doctorFeedbackRepository.GetRecommendationRatingFrequencies(SelectedDoctorId))
+            };
+        SelectedAreaRatingFrequencies = SelectedDoctorRatingFrequenciesByArea[0];
     }
 }
