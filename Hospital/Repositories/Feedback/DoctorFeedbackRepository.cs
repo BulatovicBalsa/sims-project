@@ -20,7 +20,7 @@ public class DoctorFeedbackRepository
 
     public List<DoctorFeedback> GetAll()
     {
-        return Serializer<DoctorFeedback>.FromCSV(FilePath);
+        return CsvSerializer<DoctorFeedback>.FromCSV(FilePath);
     }
 
     public void Add(DoctorFeedback feedback)
@@ -29,7 +29,7 @@ public class DoctorFeedbackRepository
 
         allFeedbacks.Add(feedback);
 
-        Serializer<DoctorFeedback>.ToCSV(allFeedbacks, FilePath);
+        CsvSerializer<DoctorFeedback>.ToCSV(allFeedbacks, FilePath);
     }
 
     public List<DoctorFeedback> GetByDoctorId(string doctorId)

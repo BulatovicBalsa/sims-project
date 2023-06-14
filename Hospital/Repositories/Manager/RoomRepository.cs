@@ -23,7 +23,7 @@ public class RoomRepository
     {
         if (_rooms == null)
         {
-            _rooms = Serializer<Room>.FromCSV(FilePath);
+            _rooms = CsvSerializer<Room>.FromCSV(FilePath);
             JoinWithInventories(_rooms);
         }
 
@@ -64,7 +64,7 @@ public class RoomRepository
 
         rooms.Add(room);
 
-        Serializer<Room>.ToCSV(rooms, FilePath);
+        CsvSerializer<Room>.ToCSV(rooms, FilePath);
 
         foreach (var inventoryItem in room.Inventory)
             InventoryItemRepository.Instance.Add(inventoryItem);
@@ -84,7 +84,7 @@ public class RoomRepository
 
         rooms[indexToUpdate] = room;
 
-        Serializer<Room>.ToCSV(rooms, FilePath);
+        CsvSerializer<Room>.ToCSV(rooms, FilePath);
 
         foreach (var inventoryItem in room.Inventory)
             if (InventoryItemRepository.Instance.GetByKey(inventoryItem.RoomId,
@@ -103,14 +103,14 @@ public class RoomRepository
 
         rooms.RemoveAt(indexToDelete);
 
-        Serializer<Room>.ToCSV(rooms, FilePath);
+        CsvSerializer<Room>.ToCSV(rooms, FilePath);
     }
 
     public void DeleteAll()
     {
         var rooms = _rooms ?? GetAll();
         rooms.Clear();
-        Serializer<Room>.ToCSV(rooms, FilePath);
+        CsvSerializer<Room>.ToCSV(rooms, FilePath);
         _rooms = null;
     }
 

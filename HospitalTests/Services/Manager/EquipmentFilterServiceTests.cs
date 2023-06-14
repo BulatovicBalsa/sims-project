@@ -109,7 +109,7 @@ public class EquipmentFilterServiceTests
             new("3004", "Ward Room 104", RoomType.Ward)
         };
 
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         // 3 beds in every ward
         foreach (var ward in rooms.Where(room => room.Type == RoomType.Ward))
@@ -118,7 +118,7 @@ public class EquipmentFilterServiceTests
         //equipmentPlacements.Add(new InventoryItem("1010", "3004", 3));
 
         InventoryItemRepository.Instance.DeleteAll();
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, "../../../Data/equipmentItems.csv");
         InventoryItemRepository.Instance.GetAll();
     }
 

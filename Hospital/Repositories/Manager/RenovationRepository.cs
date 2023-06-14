@@ -31,7 +31,7 @@ public class RenovationRepository
 
     public List<Renovation> GetAllFromFile()
     {
-        _renovations = Serializer<Renovation>.FromCSV(FilePath);
+        _renovations = CsvSerializer<Renovation>.FromCSV(FilePath);
         JoinWithRooms(_renovations);
         return _renovations;
     }
@@ -40,7 +40,7 @@ public class RenovationRepository
     {
         _renovations = GetAll();
         _renovations.Add(renovation);
-        Serializer<Renovation>.ToCSV(_renovations, FilePath);
+        CsvSerializer<Renovation>.ToCSV(_renovations, FilePath);
     }
 
     public void Add(List<Renovation> renovations)
@@ -56,6 +56,6 @@ public class RenovationRepository
             throw new KeyNotFoundException();
 
         renovations[indexToUpdate] = renovation;
-        Serializer<Renovation>.ToCSV(renovations, FilePath);
+        CsvSerializer<Renovation>.ToCSV(renovations, FilePath);
     }
 }

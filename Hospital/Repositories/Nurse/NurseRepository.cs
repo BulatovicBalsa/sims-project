@@ -18,7 +18,7 @@ public class NurseRepository
     private NurseRepository() { }
     public List<Nurse> GetAll()
     {
-        return Serializer<Nurse>.FromCSV(FilePath);
+        return CsvSerializer<Nurse>.FromCSV(FilePath);
     }
 
     public Nurse? GetById(string id)
@@ -35,7 +35,7 @@ public class NurseRepository
     {
         var allNurses = GetAll();
         allNurses.Add(nurse);
-        Serializer<Nurse>.ToCSV(allNurses, FilePath);
+        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
     }
     public void Update(Nurse nurse)
 
@@ -47,7 +47,7 @@ public class NurseRepository
             throw new ObjectNotFoundException($"Nurse with id {nurse.Id} was not found.");
         allNurses[indexToUpdate] = nurse;
 
-        Serializer<Nurse>.ToCSV(allNurses, FilePath);
+        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
     }
 
     public void Delete(Nurse nurse)
@@ -57,7 +57,7 @@ public class NurseRepository
         if (!allNurses.Remove(nurse))
             throw new ObjectNotFoundException($"Nurse with id {nurse.Id} was not found.");
 
-        Serializer<Nurse>.ToCSV(allNurses, FilePath);
+        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
     }
 
     public List<PersonDTO> GetNursesAsPersonDTOsByFilter(string id, string searchText)

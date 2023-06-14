@@ -23,7 +23,7 @@ public class EquipmentOrderRepository
 
     public void AddItemsFromCsv(List<EquipmentOrder> orders)
     {
-        var allEquipmentOrderItems = Serializer<EquipmentOrderItem>.FromCSV(OrderItemFilePath);
+        var allEquipmentOrderItems = CsvSerializer<EquipmentOrderItem>.FromCSV(OrderItemFilePath);
 
         foreach (var orderItem in allEquipmentOrderItems)
         {
@@ -36,7 +36,7 @@ public class EquipmentOrderRepository
     {
         if (_orders == null)
         {
-            _orders = Serializer<EquipmentOrder>.FromCSV(FilePath);
+            _orders = CsvSerializer<EquipmentOrder>.FromCSV(FilePath);
             AddItemsFromCsv(_orders);
         }
 
@@ -48,7 +48,7 @@ public class EquipmentOrderRepository
         var orders = GetAll();
         orders.Add(order);
         WriteOrderItemsFromOrdersToCsv(orders);
-        Serializer<EquipmentOrder>.ToCSV(orders, FilePath);
+        CsvSerializer<EquipmentOrder>.ToCSV(orders, FilePath);
     }
 
     private void WriteOrderItemsFromOrdersToCsv(List<EquipmentOrder> orders)
@@ -58,7 +58,7 @@ public class EquipmentOrderRepository
 
         foreach (var orderInList in orders) orderItems.AddRange(orderInList.Items);
 
-        Serializer<EquipmentOrderItem>.ToCSV(orderItems, OrderItemFilePath);
+        CsvSerializer<EquipmentOrderItem>.ToCSV(orderItems, OrderItemFilePath);
     }
 
     public void Update(EquipmentOrder order)
@@ -69,7 +69,7 @@ public class EquipmentOrderRepository
 
         orderToUpdate.DeliveryDateTime = order.DeliveryDateTime;
         orderToUpdate.Items = order.Items;
-        Serializer<EquipmentOrder>.ToCSV(orders, FilePath);
+        CsvSerializer<EquipmentOrder>.ToCSV(orders, FilePath);
         WriteOrderItemsFromOrdersToCsv(orders);
     }
 
@@ -77,7 +77,7 @@ public class EquipmentOrderRepository
     {
         if (_orders == null) return;
         _orders.Clear();
-        Serializer<EquipmentOrder>.ToCSV(_orders, FilePath);
+        CsvSerializer<EquipmentOrder>.ToCSV(_orders, FilePath);
         WriteOrderItemsFromOrdersToCsv(_orders);
         _orders = null;
     }

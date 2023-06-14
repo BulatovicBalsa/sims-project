@@ -25,7 +25,7 @@ public class TransferRepository
         if (_transfers != null)
             return _transfers;
 
-        _transfers = Serializer<Transfer>.FromCSV(FilePath);
+        _transfers = CsvSerializer<Transfer>.FromCSV(FilePath);
 
         JoinWithItems();
         JoinWithRooms();
@@ -73,7 +73,7 @@ public class TransferRepository
     {
         var transfers = GetAll();
         transfers.Add(transfer);
-        Serializer<Transfer>.ToCSV(transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(transfers, FilePath);
         WriteItems(transfer);
     }
 
@@ -85,7 +85,7 @@ public class TransferRepository
             throw new KeyNotFoundException();
 
         transfers[indexToUpdate] = transfer;
-        Serializer<Transfer>.ToCSV(transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(transfers, FilePath);
         WriteItems(transfer);
     }
 
@@ -102,7 +102,7 @@ public class TransferRepository
 
         _transfers ??= new List<Transfer>();
         _transfers.Clear();
-        Serializer<Transfer>.ToCSV(_transfers, FilePath);
+        CsvSerializer<Transfer>.ToCSV(_transfers, FilePath);
         _transfers = null;
     }
 

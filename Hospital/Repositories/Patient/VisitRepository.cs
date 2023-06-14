@@ -8,10 +8,16 @@ using Models.Patient;
 public class VisitRepository
 {
     private const string FilePath = "../../../Data/visits.csv";
+    private readonly ISerializer<Visit> _serializer;
+
+    public VisitRepository(ISerializer<Visit> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<Visit> GetAll()
     {
-        return Serializer<Visit>.FromCSV(FilePath);
+        return _serializer.Load(FilePath);
     }
 
     public List<Visit> GetByPatientId(string patientId)
@@ -25,6 +31,6 @@ public class VisitRepository
         var allVisits = GetAll();
         allVisits.Add(visit);
 
-        Serializer<Visit>.ToCSV(allVisits, FilePath);
+        _serializer.Save(allVisits, FilePath);
     }
 }
