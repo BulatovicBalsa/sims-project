@@ -15,6 +15,7 @@ public class ManagerViewModel : ViewModelBase
         HospitalSurveyTabViewModel =
             new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlot, averageHospitalFeedbackRatingByAreaPlot);
         DoctorFeedbackViewModel = new DoctorFeedbackViewModel(doctorRatingFrequencyPlot, averageDoctorRatingByAreaPlot);
+        DoctorTimeOffRequestViewModel = new DoctorTimeOffRequestViewModel();
     }
 
 
@@ -24,4 +25,5 @@ public class ManagerViewModel : ViewModelBase
     public RoomTabViewModel RoomTabViewModel { get; }
     public HospitalSurveyTabViewModel HospitalSurveyTabViewModel { get; }
     public DoctorFeedbackViewModel DoctorFeedbackViewModel { get; }
+    public DoctorTimeOffRequestViewModel DoctorTimeOffRequestViewModel { get; }
 }
