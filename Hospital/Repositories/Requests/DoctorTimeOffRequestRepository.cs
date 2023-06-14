@@ -11,14 +11,16 @@ using Hospital.Models.Doctor;
 public class DoctorTimeOffRequestRepository
 {
     private const string FilePath = "../../../Data/doctorTimeOffRequests.csv";
-    private static DoctorTimeOffRequestRepository? _instance;
-    private static readonly ISerializer<DoctorTimeOffRequest> Serializer = SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>();
+    private readonly ISerializer<DoctorTimeOffRequest> _serializer;
 
-    public static DoctorTimeOffRequestRepository Instance => _instance ??= new DoctorTimeOffRequestRepository();
+    public DoctorTimeOffRequestRepository(ISerializer<DoctorTimeOffRequest> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<DoctorTimeOffRequest> GetAll()
     {
-        return Serializer.Load(FilePath);
+        return _serializer.Load(FilePath);
     }
 
     public DoctorTimeOffRequest? GetById(string id)
@@ -32,7 +34,7 @@ public class DoctorTimeOffRequestRepository
 
         allRequests.Add(request);
 
-        Serializer.Save(allRequests, FilePath);
+        _serializer.Save(allRequests, FilePath);
     }
 
     public void Update(DoctorTimeOffRequest request)
@@ -44,7 +46,7 @@ public class DoctorTimeOffRequestRepository
 
         allRequests[indexToUpdate] = request;
 
-        Serializer.Save(allRequests, FilePath);
+        _serializer.Save(allRequests, FilePath);
     }
 
     public void Delete(DoctorTimeOffRequest request)
@@ -56,13 +58,13 @@ public class DoctorTimeOffRequestRepository
 
         allRequests.RemoveAt(indexToDelete);
 
-        Serializer.Save(allRequests, FilePath);
+        _serializer.Save(allRequests, FilePath);
     }
 
-    public static void DeleteAll()
+    public void DeleteAll()
     {
         var emptyDoctorTimeOffRequestList = new List<DoctorTimeOffRequest>();
-        Serializer.Save(emptyDoctorTimeOffRequestList, FilePath);
+        _serializer.Save(emptyDoctorTimeOffRequestList, FilePath);
     }
 
     public List<DoctorTimeOffRequest> GetDoctorTimeOffRequests(Doctor doctor)
