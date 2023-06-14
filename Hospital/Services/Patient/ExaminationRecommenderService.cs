@@ -24,11 +24,11 @@ namespace Hospital.Services
 
         private DoctorRepository _doctorRepository;
         private ExaminationRepository _examinationRepository;
-     
-        public ExaminationRecommenderService() 
+
+        public ExaminationRecommenderService()
         {
             _doctorRepository = DoctorRepository.Instance;
-            _examinationRepository =ExaminationRepository.Instance;
+            _examinationRepository = ExaminationRepository.Instance;
         }
 
         public List<Doctor> GetAllDoctors()
@@ -77,12 +77,12 @@ namespace Hospital.Services
             return examinations;
         }
 
-        private List<Examination> SearchByBothCriteria(Patient patient,ExaminationSearchOptions options)
+        private List<Examination> SearchByBothCriteria(Patient patient, ExaminationSearchOptions options)
         {
             return SearchExaminations(patient, options, options.PreferredDoctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
         }
 
-        private List<Examination> SearchByDoctorPriority(Patient patient,ExaminationSearchOptions options)
+        private List<Examination> SearchByDoctorPriority(Patient patient, ExaminationSearchOptions options)
         {
             List<Examination> examinations = new List<Examination>();
 
@@ -106,7 +106,7 @@ namespace Hospital.Services
             return examinations;
         }
 
-        private List<Examination> SearchByTimeRangePriority(Patient patient,ExaminationSearchOptions options)
+        private List<Examination> SearchByTimeRangePriority(Patient patient, ExaminationSearchOptions options)
         {
             List<Examination> examinations = new List<Examination>();
             List<Doctor> doctors = GetAllDoctors();
@@ -114,7 +114,7 @@ namespace Hospital.Services
 
             foreach (var doctor in doctors)
             {
-                for(var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
+                for (var currentDate = startDate; currentDate <= options.LatestDate; currentDate = currentDate.AddDays(1))
                 {
                     examinations = SearchExaminations(patient, options, doctor, currentDate => new TimeRange(currentDate.Add(options.StartTime), currentDate.Add(options.EndTime)));
                     if (examinations.Count >= NumberOfSuggestedExaminations) return examinations;
@@ -123,10 +123,10 @@ namespace Hospital.Services
             return examinations;
 
         }
-        
-        private List<Examination> SearchWithoutPriority(Patient patient,ExaminationSearchOptions options)
+
+        private List<Examination> SearchWithoutPriority(Patient patient, ExaminationSearchOptions options)
         {
-            List<Examination> examinations = GetAllPossibleExaminations(patient,options);
+            List<Examination> examinations = GetAllPossibleExaminations(patient, options);
             List<Examination> closestExaminations = GetClosestExaminations(examinations, options);
             return closestExaminations;
         }
@@ -190,7 +190,7 @@ namespace Hospital.Services
                 examinations.Add(examination);
             }
         }
-        private List<Examination> SearchInTimeRange(Doctor doctor, Patient patient, TimeRange timeRange , List<Examination> examinations)
+        private List<Examination> SearchInTimeRange(Doctor doctor, Patient patient, TimeRange timeRange, List<Examination> examinations)
         {
             DateTime currentTime = timeRange.StartTime;
 

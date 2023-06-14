@@ -24,12 +24,7 @@ namespace Hospital.Services
         }
         public void FilterDoctors(string firstName, string lastName, string specialization)
         {
-            _filteredDoctors = _doctorRepository.GetAll()
-                .Where(doctor => 
-                    doctor.FirstName.ToLower().Contains(firstName.ToLower()) &&
-                    doctor.LastName.ToLower().Contains(lastName.ToLower()) &&
-                    doctor.Specialization.ToLower().Contains(specialization.ToLower()))
-                .ToList();
+            _filteredDoctors = _doctorRepository.GetDoctorsByFilter(firstName, lastName, specialization);
         }
         public List<Doctor> GetFilteredDoctors()
         {
