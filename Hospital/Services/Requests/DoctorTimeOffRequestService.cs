@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Documents;
+using Hospital.Injectors;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
@@ -8,12 +9,13 @@ using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Requests;
 using Hospital.Scheduling;
+using Hospital.Serialization;
 
 namespace Hospital.Services.Requests;
 
 public class DoctorTimeOffRequestService
 {
-    private readonly DoctorTimeOffRequestRepository _requestRepository = DoctorTimeOffRequestRepository.Instance;
+    private readonly DoctorTimeOffRequestRepository _requestRepository = new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>());
 
     private readonly IApprovalHandler _approvalHandler;
 
