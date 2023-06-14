@@ -28,7 +28,7 @@ public class MedicationRepositoryTests
         };
 
 
-        Serializer<Medication>.ToCSV(testMedications, TestFilePath, new MedicationWriteMapper());
+        CsvSerializer<Medication>.ToCSV(testMedications, TestFilePath, new MedicationWriteMapper());
     }
 
     [TestMethod]

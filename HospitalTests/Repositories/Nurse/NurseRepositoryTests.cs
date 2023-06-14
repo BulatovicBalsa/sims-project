@@ -27,7 +27,7 @@ namespace HospitalTests.Repositories.Nurse
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234"),
             };
 
-            Serializer<Nurse>.ToCSV(testNurses, TestFilePath);
+            CsvSerializer<Nurse>.ToCSV(testNurses, TestFilePath);
         }
 
         [TestMethod]

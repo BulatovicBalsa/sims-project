@@ -16,7 +16,7 @@ public class MedicationOrderRepository
 
     public List<MedicationOrder> GetAll()
     {
-        return Serializer<MedicationOrder>.FromCSV(FilePath);
+        return CsvSerializer<MedicationOrder>.FromCSV(FilePath);
     }
 
     public List<MedicationOrder> GetAllExecutable()
@@ -37,7 +37,7 @@ public class MedicationOrderRepository
 
         allMedicationOrders.Add(medicationOrder);
 
-        Serializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
     }
 
     public void Update(MedicationOrder medicationOrder)
@@ -49,7 +49,7 @@ public class MedicationOrderRepository
 
         allMedicationOrders[indexToUpdate] = medicationOrder;
 
-        Serializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
     }
 
     public void Delete(MedicationOrder medicationOrder)
@@ -61,6 +61,6 @@ public class MedicationOrderRepository
 
         allMedicationOrders.RemoveAt(indexToDelete);
 
-        Serializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
+        CsvSerializer<MedicationOrder>.ToCSV(allMedicationOrders, FilePath);
     }
 }

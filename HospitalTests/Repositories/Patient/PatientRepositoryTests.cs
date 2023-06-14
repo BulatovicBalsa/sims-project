@@ -35,7 +35,7 @@ namespace HospitalTests.Repositories.Patient
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234", new MedicalRecord(178, 73, new List < string > { "penicillin", "sulfa", "aspirin" }, new List < string >() { "mental illness", "cold", })),
             };
 
-            Serializer<Patient>.ToCSV(testPatients, TestFilePath, new PatientWriteMapper());
+            CsvSerializer<Patient>.ToCSV(testPatients, TestFilePath, new PatientWriteMapper());
         }
 
         [TestMethod]

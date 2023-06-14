@@ -11,7 +11,7 @@ public class VisitRepository
 
     public List<Visit> GetAll()
     {
-        return Serializer<Visit>.FromCSV(FilePath);
+        return CsvSerializer<Visit>.FromCSV(FilePath);
     }
 
     public List<Visit> GetByPatientId(string patientId)
@@ -25,6 +25,6 @@ public class VisitRepository
         var allVisits = GetAll();
         allVisits.Add(visit);
 
-        Serializer<Visit>.ToCSV(allVisits, FilePath);
+        CsvSerializer<Visit>.ToCSV(allVisits, FilePath);
     }
 }

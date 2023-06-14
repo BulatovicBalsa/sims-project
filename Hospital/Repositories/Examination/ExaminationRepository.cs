@@ -152,7 +152,7 @@ public class ExaminationRepository
 
     public List<Examination> GetAll()
     {
-        return Serializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
+        return CsvSerializer<Examination>.FromCSV(FilePath, new ExaminationReadMapper());
     }
 
     public Examination? GetById(string id)
@@ -174,7 +174,7 @@ public class ExaminationRepository
 
         allExamination.Add(examination);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Update(Examination examination, bool isMadeByPatient)
@@ -199,7 +199,7 @@ public class ExaminationRepository
 
         allExamination[indexToUpdate] = examination;
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Delete(Examination examination, bool isMadeByPatient)
@@ -228,7 +228,7 @@ public class ExaminationRepository
 
         allExamination.RemoveAt(indexToDelete);
 
-        Serializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(allExamination, FilePath, new ExaminationWriteMapper());
     }
 
     public void Delete(Doctor doctor, TimeRange timeRange)
@@ -335,6 +335,6 @@ public class ExaminationRepository
     public static void DeleteAll()
     {
         var emptyList = new List<Examination>();
-        Serializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
+        CsvSerializer<Examination>.ToCSV(emptyList, FilePath, new ExaminationWriteMapper());
     }
 }

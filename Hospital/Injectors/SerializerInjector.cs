@@ -11,8 +11,8 @@ public class SerializerInjector
 {
     private static readonly Dictionary<Type, object> Implementations = new()
     {
-        { typeof(ISerializer<Doctor>), new Serializer<Doctor>() },
-        { typeof(ISerializer<DoctorTimeOffRequest>), new Serializer<DoctorTimeOffRequest>() },
+        { typeof(ISerializer<Doctor>), new CsvSerializer<Doctor>() },
+        { typeof(ISerializer<DoctorTimeOffRequest>), new CsvSerializer<DoctorTimeOffRequest>() },
         // Add more implementations here
     };
 
