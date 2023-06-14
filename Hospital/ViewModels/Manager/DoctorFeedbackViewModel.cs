@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using Hospital.Charting;
+using Hospital.Converters;
 using Hospital.Models.Doctor;
 using Hospital.Models.Feedback;
 using Hospital.Repositories.Doctor;
@@ -13,10 +15,12 @@ public class DoctorFeedbackViewModel : ViewModelBase
     private ObservableCollection<DoctorFeedback> _selectedDoctorFeedback;
     private string _selectedDoctorId;
 
-    public DoctorFeedbackViewModel()
+    public DoctorFeedbackViewModel(IRatingFrequencyPlotter ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
     {
         AllFeedback = new ObservableCollection<DoctorFeedback>(DoctorFeedbackRepository.Instance.GetAll());
         Doctors = new ObservableCollection<Doctor>(DoctorRepository.Instance.GetAll());
+        RatingFrequencyPlot = ratingFrequencyPlot;
+        AverageRatingsByAreaPlot = averageRatingByAreaPlot;
         SelectedDoctorId = "";
         SelectedDoctorFeedback = new ObservableCollection<DoctorFeedback>();
     }
@@ -53,6 +57,8 @@ public class DoctorFeedbackViewModel : ViewModelBase
             SelectedDoctorFeedback =
                 new ObservableCollection<DoctorFeedback>(
                     DoctorFeedbackRepository.Instance.GetByDoctorId(_selectedDoctorId));
+            PlotRatingFrequencies();
+            PlotAverageRatingsByArea();
             OnPropertyChanged(nameof(SelectedDoctorId));
         }
     }
@@ -66,5 +72,22 @@ public class DoctorFeedbackViewModel : ViewModelBase
             _doctors = value;
             OnPropertyChanged(nameof(Doctors));
         }
+    }
+
+    public IRatingFrequencyPlotter RatingFrequencyPlot { get; set; }
+    public ICategoryPlot AverageRatingsByAreaPlot { get; set; }
+
+    public void PlotRatingFrequencies()
+    {
+        var ratingFrequencies = DoctorFeedbackRepository.Instance.GetOverallRatingFrequencies(SelectedDoctorId);
+        if(ratingFrequencies.Count > 0)
+            RatingFrequencyPlot.PlotRatingFrequencies(ratingFrequencies);
+    }
+
+    public void PlotAverageRatingsByArea()
+    {
+        var dtoConverter = new AverageDoctorRatingsByAreaToDictionaryConverter(); 
+        if(!string.IsNullOrEmpty(SelectedDoctorId))
+            AverageRatingsByAreaPlot.Plot(dtoConverter.Convert(DoctorFeedbackRepository.Instance.GetAverageRatingsByArea(SelectedDoctorId)));
     }
 }

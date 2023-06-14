@@ -5,7 +5,8 @@ namespace Hospital.ViewModels.Manager;
 public class ManagerViewModel : ViewModelBase
 {
     public ManagerViewModel(IRatingFrequencyPlotter hospitalRatingFrequencyPlotter,
-        ICategoryPlot averageHospitalFeedbackRatingByAreaPlot)
+        ICategoryPlot averageHospitalFeedbackRatingByAreaPlot, IRatingFrequencyPlotter doctorRatingFrequencyPlot,
+        ICategoryPlot averageDoctorRatingByAreaPlot)
     {
         OrderTabViewModel = new OrderTabViewModel();
         TransferTabViewModel = new TransferTabViewModel();
@@ -13,7 +14,7 @@ public class ManagerViewModel : ViewModelBase
         RoomTabViewModel = new RoomTabViewModel();
         HospitalSurveyTabViewModel =
             new HospitalSurveyTabViewModel(hospitalRatingFrequencyPlotter, averageHospitalFeedbackRatingByAreaPlot);
-        DoctorFeedbackViewModel = new DoctorFeedbackViewModel();
+        DoctorFeedbackViewModel = new DoctorFeedbackViewModel(doctorRatingFrequencyPlot, averageDoctorRatingByAreaPlot);
     }
 
 
