@@ -13,7 +13,7 @@ namespace HospitalTests.Repositories.Examination;
 [TestClass]
 public class ExaminationRepositoryTests
 {
-    private DoctorRepository _doctorRepository;
+    private DoctorRepository _doctorRepository = new(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
     private Hospital.Models.Examination.Examination _examination;
     private ExaminationRepository _examinationRepository;
     private PatientRepository _patientRepository;
@@ -23,7 +23,7 @@ public class ExaminationRepositoryTests
     {
         ExaminationRepository.DeleteAll();
         ExaminationChangesTrackerRepository.DeleteAll();
-        DoctorRepository.DeleteAll();
+        _doctorRepository.DeleteAll();
         PatientRepository.DeleteAll();
         RoomRepository.Instance.DeleteAll();
         RoomRepository.Instance.Add(new Room("53454351", "Examination room", RoomType.ExaminationRoom));
