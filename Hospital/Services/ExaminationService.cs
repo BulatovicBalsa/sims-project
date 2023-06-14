@@ -17,7 +17,7 @@ public class ExaminationService
 
     public ExaminationService()
     {
-        _examinationRepository =ExaminationRepository.Instance;
+        _examinationRepository = ExaminationRepository.Instance;
     }
 
     public Examination? GetAdmissibleExamination(Patient patient)
@@ -40,7 +40,8 @@ public class ExaminationService
         return admissibleExaminations;
     }
 
-    public List<Examination> GetFivePostponableExaminations(SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
+    public List<Examination> GetFivePostponableExaminations(
+        SortedDictionary<DateTime, Doctor> earliestFreeTimeslotDoctors)
     {
         var postponableExaminations = GetPostponableExaminations(earliestFreeTimeslotDoctors);
 
@@ -102,10 +103,13 @@ public class ExaminationService
         return _examinationRepository.GetExaminationsForNextThreeDays(doctor);
     }
 
-    public void AddExamination(Examination examination,bool isMadeByPatient)
+    public void AddExamination(Examination examination, bool isMadeByPatient)
     {
         var roomScheduleService = new RoomScheduleService();
-        if (!roomScheduleService.IsFree(examination.Room ?? throw new InvalidOperationException("Attempted to schedule examination in null room"), new TimeRange(examination.Start, examination.End)))
+        if (!roomScheduleService.IsFree(
+                examination.Room ??
+                throw new InvalidOperationException("Attempted to schedule examination in null room"),
+                new TimeRange(examination.Start, examination.End)))
             throw new RoomBusyException("Room is busy during the time of the examination.");
 
         _examinationRepository.Add(examination, isMadeByPatient);
@@ -116,7 +120,7 @@ public class ExaminationService
         _examinationRepository.Update(examination, isMadeByPatient);
     }
 
-    public void DeleteExamination(Examination examination,bool isMadeByPatient)
+    public void DeleteExamination(Examination examination, bool isMadeByPatient)
     {
         _examinationRepository.Delete(examination, isMadeByPatient);
     }

@@ -31,11 +31,11 @@ public class HospitalFeedbackRepository
         Serializer<HospitalFeedback>.ToCSV(allFeedbacks, FilePath);
     }
 
-    public AverageHospitalFeedbackRatingByAreaDTO GetAverageRatings()
+    public AverageHospitalFeedbackRatingByAreaDto GetAverageRatings()
     {
         var allFeedbacks = GetAll();
 
-        return new AverageHospitalFeedbackRatingByAreaDTO(allFeedbacks.Average(e => e.ServiceQualityRating),
+        return new AverageHospitalFeedbackRatingByAreaDto(allFeedbacks.Average(e => e.ServiceQualityRating),
             allFeedbacks.Average(e => e.OverallRating), allFeedbacks.Average(e => e.RecommendationRating),
             allFeedbacks.Average(e => e.CleanlinessRating), allFeedbacks.Average(e => e.SatisfactionRating));
     }

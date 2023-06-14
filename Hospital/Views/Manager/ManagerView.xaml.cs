@@ -1,11 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using Hospital.Charting;
-using Hospital.Repositories.Feedback;
 using Hospital.ViewModels.Manager;
-using ScottPlot;
 
 namespace Hospital.Views.Manager;
 
@@ -14,7 +9,10 @@ public partial class ManagerView : Window
     public ManagerView()
     {
         InitializeComponent();
-        DataContext = new ManagerViewModel(new RatingFrequencyPiePlotter(HospitalFeedbackFrequencyPlot), new RatingAreaBarPlot(AverageHospitalFeedbackRatingByAreaWpfPlot));
+        DataContext = new ManagerViewModel(new RatingFrequencyPiePlot(HospitalFeedbackFrequencyPlot),
+            new RatingAreaBarPlot(AverageHospitalFeedbackRatingByAreaWpfPlot),
+            new RatingFrequencyPiePlot(DoctorRatingFrequencyWpfPlot),
+            new RatingAreaBarPlot(AverageDoctorRatingByAreaWpfPlot));
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
