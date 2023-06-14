@@ -3,6 +3,7 @@ using Hospital.Repositories.Doctor;
 using Hospital.Serialization;
 using System.Collections.Generic;
 using System;
+using Hospital.Models.Manager;
 using Hospital.Models.Requests;
 
 namespace Hospital.Injectors;
@@ -13,6 +14,8 @@ public class SerializerInjector
     {
         { typeof(ISerializer<Doctor>), new Serializer<Doctor>() },
         { typeof(ISerializer<DoctorTimeOffRequest>), new Serializer<DoctorTimeOffRequest>() },
+        { typeof(ISerializer<TransferItem>), new Serializer<TransferItem>()},
+        { typeof(ISerializer<ComplexRenovation>), new JsonSerializer<ComplexRenovation>() }
         // Add more implementations here
     };
 
