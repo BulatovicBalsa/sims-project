@@ -21,6 +21,7 @@ public class RatingAreaBarPlot : ICategoryPlot
     {
         var values = averageRatingByArea.Values.ToArray();
         var labels = averageRatingByArea.Keys.ToArray();
+        _wpfPlot.Plot.Clear();
         var bar = _wpfPlot.Plot.AddBar(values);
         _wpfPlot.Plot.YTicks(labels);
         _wpfPlot.Plot.SetAxisLimitsX(0, MaxRating + XMargin);
@@ -28,7 +29,7 @@ public class RatingAreaBarPlot : ICategoryPlot
         bar.ShowValuesAboveBars = true;
         bar.ValueFormatter = d => Math.Round(d, 2).ToString(CultureInfo.InvariantCulture);
         _wpfPlot.Plot.Title("Average rating by area");
-        _wpfPlot.Refresh();
         _wpfPlot.Plot.AxisAutoY();
+        _wpfPlot.Refresh();
     }
 }

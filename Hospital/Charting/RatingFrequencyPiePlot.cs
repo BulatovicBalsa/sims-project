@@ -22,6 +22,7 @@ namespace Hospital.Charting
             var labels = frequencies.Keys.Select(e => "Rating " + e.ToString()).ToArray();
             var values = frequencies.Values.Select(e => (double)e).ToArray();
 
+            wpfPlot.Plot.Clear();
             var pie = wpfPlot.Plot.AddPie(values);
             pie.SliceLabels = labels;
             pie.ShowLabels = true;
