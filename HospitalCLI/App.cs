@@ -2,8 +2,11 @@
 using System.Net;
 using System.Security.Principal;
 using Hospital.Exceptions;
+using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 using Hospital.Views.Manager;
 using Hospital.Views.Nurse;
 using Hospital.Views;
@@ -71,7 +74,7 @@ public class App
             }
             case "DOCTOR":
             {
-                var doctor = DoctorRepository.Instance.GetById(id);
+                var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(id);
                 if (doctor == null)
                 {
                     Console.WriteLine(UnsuccessfulLoginMessage);

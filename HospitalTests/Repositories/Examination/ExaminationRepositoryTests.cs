@@ -1,17 +1,19 @@
-﻿using Hospital.Models.Doctor;
+﻿using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Examination;
 
 [TestClass]
 public class ExaminationRepositoryTests
 {
-    private DoctorRepository _doctorRepository;
+    private DoctorRepository _doctorRepository = new(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
     private Hospital.Models.Examination.Examination _examination;
     private ExaminationRepository _examinationRepository;
     private PatientRepository _patientRepository;
@@ -21,7 +23,7 @@ public class ExaminationRepositoryTests
     {
         ExaminationRepository.DeleteAll();
         ExaminationChangesTrackerRepository.DeleteAll();
-        DoctorRepository.DeleteAll();
+        _doctorRepository.DeleteAll();
         PatientRepository.DeleteAll();
         RoomRepository.Instance.DeleteAll();
         RoomRepository.Instance.Add(new Room("53454351", "Examination room", RoomType.ExaminationRoom));
@@ -34,7 +36,7 @@ public class ExaminationRepositoryTests
     private void CreateTestExaminationRepository()
     {
         _examinationRepository = ExaminationRepository.Instance;
-        _doctorRepository = DoctorRepository.Instance;
+        _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
         _patientRepository = PatientRepository.Instance;
 
         _patientRepository.PatientAdded += _ => { };
