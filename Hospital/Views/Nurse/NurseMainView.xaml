@@ -19,7 +19,7 @@
         xmlns:patientVisiting="clr-namespace:Hospital.ViewModels.Nurse.PatientVisiting"
         xmlns:patientVisitingViews="clr-namespace:Hospital.Views.Nurse.PatientVisiting"
         mc:Ignorable="d"
-        Title="NurseMainView" Height="500" Width="1000"
+        Title="NurseMainView" Height="510" Width="1000"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
