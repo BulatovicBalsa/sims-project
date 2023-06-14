@@ -6,6 +6,7 @@ using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Hospital.Exceptions;
 using Hospital.Filter;
+using Hospital.Injectors;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Nurse;
@@ -47,7 +48,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             if (string.IsNullOrEmpty(doctorId))
                 return null;
             // Retrieve the Doctor object based on the ID
-            var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+            var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
                          throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
             return doctor;
         }
@@ -91,7 +92,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             var doctors = new List<Doctor>();
             inputText?.Split("|").ToList().ForEach(doctorId =>
             {
-                var doctor = DoctorRepository.Instance.GetById(doctorId) ??
+                var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
                              throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
                 doctors.Add(doctor);
             });

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Hospital.Injectors;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
@@ -10,6 +11,7 @@ using Hospital.Repositories.Examination;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
 using Hospital.Repositories.Requests;
+using Hospital.Serialization;
 using Hospital.Services.Requests;
 
 namespace HospitalTests.Services.Requests;
@@ -36,12 +38,12 @@ public class DoctorTimeOffRequestServiceTests
 
     private void AddData()
     {
-        DoctorRepository.Instance.Add(new Doctor("Pera", "Peric", "", "pera", "", "Cardiologist"));
+        new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).Add(new Doctor("Pera", "Peric", "", "pera", "", "Cardiologist"));
         PatientRepository.Instance.Add(new Patient());
         RoomRepository.Instance.Add(new Room("Examination room", RoomType.ExaminationRoom));
         var room = RoomRepository.Instance.GetAll()[0];
         var patient = PatientRepository.Instance.GetAll()[0];
-        var pera = DoctorRepository.Instance.GetByUsername("pera");
+        var pera = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetByUsername("pera");
         DoctorTimeOffRequestRepository.Instance.Add(new DoctorTimeOffRequest(pera.Id, "reason", DateTime.Now.AddDays(3),
             DateTime.Now.AddDays(10)));
         ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(4), room), false);

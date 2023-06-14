@@ -11,7 +11,9 @@ using System.Net.Cache;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Injectors;
 using Hospital.Repositories.Examination;
+using Hospital.Serialization;
 
 
 namespace Hospital.Services
@@ -27,7 +29,7 @@ namespace Hospital.Services
 
         public ExaminationRecommenderService()
         {
-            _doctorRepository = DoctorRepository.Instance;
+            _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
             _examinationRepository = ExaminationRepository.Instance;
         }
 

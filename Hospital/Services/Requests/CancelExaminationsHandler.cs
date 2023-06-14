@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Models.Requests;
+using Hospital.Serialization;
 
 namespace Hospital.Services.Requests
 {
@@ -14,7 +17,7 @@ namespace Hospital.Services.Requests
     {
         public override void Handle(DoctorTimeOffRequest request)
         {
-            var doctor = DoctorRepository.Instance.GetById(request.DoctorId);
+            var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(request.DoctorId);
             ExaminationRepository.Instance.Delete(doctor, new TimeRange(request.Start, request.End));
             base.Handle(request);
         }

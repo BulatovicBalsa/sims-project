@@ -1,10 +1,12 @@
-﻿using Hospital.Models.Doctor;
+﻿using Hospital.Injectors;
+using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Manager;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Examination;
 
@@ -34,7 +36,7 @@ public class ExaminationRepositoryTests
     private void CreateTestExaminationRepository()
     {
         _examinationRepository = ExaminationRepository.Instance;
-        _doctorRepository = DoctorRepository.Instance;
+        _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
         _patientRepository = PatientRepository.Instance;
 
         _patientRepository.PatientAdded += _ => { };
