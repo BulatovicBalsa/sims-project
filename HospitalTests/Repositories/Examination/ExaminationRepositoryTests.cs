@@ -17,12 +17,13 @@ public class ExaminationRepositoryTests
     private Hospital.Models.Examination.Examination _examination;
     private ExaminationRepository _examinationRepository;
     private PatientRepository _patientRepository;
+    private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());
 
     [TestInitialize]
     public void TestInitialize()
     {
         ExaminationRepository.DeleteAll();
-        ExaminationChangesTrackerRepository.DeleteAll();
+        _examinationChangesTrackerRepository.DeleteAll();
         _doctorRepository.DeleteAll();
         PatientRepository.DeleteAll();
         RoomRepository.Instance.DeleteAll();

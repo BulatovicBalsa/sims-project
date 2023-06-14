@@ -4,6 +4,7 @@ using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Models.Requests;
+using Hospital.Models;
 using Hospital.Serialization;
 
 namespace Hospital.Injectors;
@@ -14,6 +15,8 @@ public class SerializerInjector
     {
         { typeof(ISerializer<Doctor>), new CsvSerializer<Doctor>() },
         { typeof(ISerializer<DoctorTimeOffRequest>), new CsvSerializer<DoctorTimeOffRequest>() },
+        { typeof(ISerializer<EmailMessage>), new CsvSerializer<EmailMessage>()},
+        { typeof(ISerializer < PatientExaminationLog >), new CsvSerializer < PatientExaminationLog >() },
         { typeof(ISerializer<Visit>), new CsvSerializer<Visit>() },
         { typeof(ISerializer<MedicationOrder>), new CsvSerializer<MedicationOrder>() },
         { typeof(ISerializer<TransferItem>), new JsonSerializer<TransferItem>() },
