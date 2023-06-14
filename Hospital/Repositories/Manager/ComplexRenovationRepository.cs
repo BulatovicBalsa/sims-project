@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hospital.Injectors;
 using Hospital.Models.Manager;
 using Hospital.Serialization;
-using Newtonsoft.Json;
 
 namespace Hospital.Repositories.Manager;
 
 public class ComplexRenovationRepository
 {
     private const string FilePath = "../../../Data/complexRenovations.json";
-    private static ComplexRenovationRepository? _instance;
+
+    private readonly ISerializer<ComplexRenovation> _serializer;
     private List<ComplexRenovation>? _complexRenovations;
 
-    private static readonly ISerializer<ComplexRenovation> Serializer =
-        SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>(); 
-
-    public static ComplexRenovationRepository Instance =>
-        _instance ??= new ComplexRenovationRepository();
+    public ComplexRenovationRepository(ISerializer<ComplexRenovation> serializer)
+    {
+        _serializer = serializer;
+    }
 
     public List<ComplexRenovation> GetAll()
     {
@@ -67,7 +65,7 @@ public class ComplexRenovationRepository
     {
         try
         {
-            _complexRenovations = Serializer.Load(FilePath);
+            _complexRenovations = _serializer.Load(FilePath);
             JoinTransfersWithRooms(_complexRenovations);
             JoinWithRoomsToDemolish(_complexRenovations);
             JoinWithRoomsToBuild(_complexRenovations);
@@ -91,7 +89,7 @@ public class ComplexRenovationRepository
 
     private void SaveFile()
     {
-        if (_complexRenovations != null) Serializer.Save(_complexRenovations, FilePath);
+        if (_complexRenovations != null) _serializer.Save(_complexRenovations, FilePath);
     }
 
     public void Add(List<ComplexRenovation> complexRenovations)

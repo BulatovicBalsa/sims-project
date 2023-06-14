@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Manager;
@@ -9,15 +11,21 @@ namespace Hospital.ViewModels.Manager;
 
 public class RenovationTabViewModel : ViewModelBase
 {
-    private BindingList<Renovation> _renovations;
+    private ObservableCollection<Renovation> _renovations;
+    private readonly Timer _refreshTimer;
 
     public RenovationTabViewModel()
     {
-        _renovations = new BindingList<Renovation>(RenovationRepository.Instance.GetAll());
+        _renovations = new ObservableCollection<Renovation>(RenovationRepository.Instance.GetAll());
         OpenAddSimpleRenovationFormCommand = new RelayCommand(OpenAddSimpleRenovationForm);
+        _refreshTimer = new Timer();
+        _refreshTimer.Interval = 1000;
+        _refreshTimer.AutoReset = true;
+        _refreshTimer.Enabled = true;
+        _refreshTimer.Elapsed += (sender, args) => Refresh();
     }
 
-    public BindingList<Renovation> Renovations
+    public ObservableCollection<Renovation> Renovations
     {
         get => _renovations;
         set
@@ -32,7 +40,7 @@ public class RenovationTabViewModel : ViewModelBase
 
     private void Refresh()
     {
-        Renovations = new BindingList<Renovation>(RenovationRepository.Instance.GetAll());
+        Renovations = new ObservableCollection<Renovation>(RenovationRepository.Instance.GetAll());
     }
 
     public void OpenAddSimpleRenovationForm()
