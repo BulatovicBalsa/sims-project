@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Hospital.Filter.Nurse;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Services;
@@ -21,6 +22,8 @@ public class PatientVisitingViewModel : ViewModelBase
     private Patient? _selectedPatient;
     private string _filterName;
     private Room? _filterRoom;
+    private readonly IPatientFilter _patientNameFilter;
+    private readonly IPatientFilter _patientAccommodationRoomFilter;
 
     public PatientVisitingViewModel()
     {
@@ -34,6 +37,8 @@ public class PatientVisitingViewModel : ViewModelBase
         _filterName = "";
         _filterRoom = null;
         ResetFilterCommand = new ViewModelCommand(ExecuteResetFilterCommand);
+        _patientNameFilter = new PatientNameFilter();
+        _patientAccommodationRoomFilter = new PatientAccommodationRoomFilter();
     }
 
     public ObservableCollection<Patient> HospitalizedPatients
@@ -100,7 +105,7 @@ public class PatientVisitingViewModel : ViewModelBase
             basePatients = HospitalizedPatients.ToList();
         }
 
-        var matchingPatients = basePatients.Where(patient => (patient.FirstName + patient.LastName).ToLower().Contains(FilterName.ToLower())).ToList();
+        var matchingPatients = _patientNameFilter.Filter(basePatients, FilterName);
         HospitalizedPatients = new ObservableCollection<Patient>(matchingPatients);
     }
 
@@ -114,7 +119,7 @@ public class PatientVisitingViewModel : ViewModelBase
             basePatients = HospitalizedPatients.ToList();
         }
 
-        var matchingPatients = basePatients.Where(patient => patient.GetActiveHospitalTreatmentReferral()!.RoomId == FilterRoom!.Id).ToList();
+        var matchingPatients = _patientAccommodationRoomFilter.Filter(basePatients, FilterRoom!.Id);
         HospitalizedPatients = new ObservableCollection<Patient>(matchingPatients);
     }
 
