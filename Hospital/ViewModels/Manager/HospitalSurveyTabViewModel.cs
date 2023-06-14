@@ -10,12 +10,12 @@ namespace Hospital.ViewModels.Manager;
 public class HospitalSurveyTabViewModel : ViewModelBase
 {
     private readonly ICategoryPlot _averageRatingByAreaPlot;
-    private readonly IRatingFrequencyPlotter _ratingFrequencyPlotter;
+    private readonly IRatingFrequencyPlot _ratingFrequencyPlot;
     private ObservableCollection<HospitalFeedback> _allHospitalFeedback;
     private ObservableCollection<KeyValuePair<string, Dictionary<int, int>>> _ratingFrequenciesByArea;
     private KeyValuePair<string, Dictionary<int, int>> _selectedRatingFrequencies;
 
-    public HospitalSurveyTabViewModel(IRatingFrequencyPlotter ratingFrequencyPlotter,
+    public HospitalSurveyTabViewModel(IRatingFrequencyPlot ratingFrequencyPlot,
         ICategoryPlot averageRatingByAreaPlot)
     {
         AllHospitalFeedback = new ObservableCollection<HospitalFeedback>(HospitalFeedbackRepository.Instance.GetAll());
@@ -34,7 +34,7 @@ public class HospitalSurveyTabViewModel : ViewModelBase
                 hospitalFeedbackRepository.GetRecommendationRatingFrequencies())
         };
 
-        _ratingFrequencyPlotter = ratingFrequencyPlotter;
+        _ratingFrequencyPlot = ratingFrequencyPlot;
         _averageRatingByAreaPlot = averageRatingByAreaPlot;
         SelectedRatingFrequencies = RatingFrequenciesByArea[0];
         PlotAverageRatingsByArea();
@@ -77,7 +77,7 @@ public class HospitalSurveyTabViewModel : ViewModelBase
     public void PlotRatingFrequencies()
     {
         if(SelectedRatingFrequencies.Value.Count > 0)
-            _ratingFrequencyPlotter.PlotRatingFrequencies(SelectedRatingFrequencies.Value);
+            _ratingFrequencyPlot.PlotRatingFrequencies(SelectedRatingFrequencies.Value);
     }
 
     public void PlotAverageRatingsByArea()

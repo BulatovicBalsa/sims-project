@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Charting
 {
-    public interface IRatingFrequencyPlotter
+    public interface IRatingFrequencyPlot
     {
         public void PlotRatingFrequencies(Dictionary<int, int> ratingFrequencies);
     }

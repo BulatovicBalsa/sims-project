@@ -9,9 +9,9 @@ public partial class ManagerView : Window
     public ManagerView()
     {
         InitializeComponent();
-        DataContext = new ManagerViewModel(new RatingFrequencyPiePlotter(HospitalFeedbackFrequencyPlot),
+        DataContext = new ManagerViewModel(new RatingFrequencyPiePlot(HospitalFeedbackFrequencyPlot),
             new RatingAreaBarPlot(AverageHospitalFeedbackRatingByAreaWpfPlot),
-            new RatingFrequencyPiePlotter(DoctorRatingFrequencyWpfPlot),
+            new RatingFrequencyPiePlot(DoctorRatingFrequencyWpfPlot),
             new RatingAreaBarPlot(AverageDoctorRatingByAreaWpfPlot));
     }
 

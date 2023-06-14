@@ -5,11 +5,11 @@ using ScottPlot.Plottable;
 
 namespace Hospital.Charting;
 
-public class RatingFrequencyPiePlotter : IRatingFrequencyPlotter
+public class RatingFrequencyPiePlot : IRatingFrequencyPlot
 {
     private readonly WpfPlot _wpfPlot;
 
-    public RatingFrequencyPiePlotter(WpfPlot wpfPlot)
+    public RatingFrequencyPiePlot(WpfPlot wpfPlot)
     {
         _wpfPlot = wpfPlot;
     }

@@ -20,7 +20,7 @@ public class DoctorFeedbackViewModel : ViewModelBase
     private readonly DoctorFeedbackRepository _doctorFeedbackRepository = DoctorFeedbackRepository.Instance;
     private KeyValuePair<string, Dictionary<int, int>> _selectedAreaRatingFrequencies;
 
-    public DoctorFeedbackViewModel(IRatingFrequencyPlotter ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
+    public DoctorFeedbackViewModel(IRatingFrequencyPlot ratingFrequencyPlot, ICategoryPlot averageRatingByAreaPlot)
     {
         AllFeedback = new ObservableCollection<DoctorFeedback>(_doctorFeedbackRepository.GetAll());
         Doctors = new ObservableCollection<Doctor>(DoctorRepository.Instance.GetAll());
@@ -111,7 +111,7 @@ public class DoctorFeedbackViewModel : ViewModelBase
     public ObservableCollection<Doctor> Top3Doctors { get; }
     public ObservableCollection<Doctor> Bottom3Doctors { get; }
 
-    public IRatingFrequencyPlotter RatingFrequencyPlot { get; set; }
+    public IRatingFrequencyPlot RatingFrequencyPlot { get; set; }
     public ICategoryPlot AverageRatingsByAreaPlot { get; set; }
 
 
