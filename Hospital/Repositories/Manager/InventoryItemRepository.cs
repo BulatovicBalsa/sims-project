@@ -30,7 +30,7 @@ public class InventoryItemRepository
     public List<InventoryItem> GetAll()
     {
         if (_equipmentPlacements != null) return _equipmentPlacements;
-        _equipmentPlacements = Serializer<InventoryItem>.FromCSV(FilePath);
+        _equipmentPlacements = CsvSerializer<InventoryItem>.FromCSV(FilePath);
         JoinWithEquipment(_equipmentPlacements);
 
         return _equipmentPlacements;
@@ -47,7 +47,7 @@ public class InventoryItemRepository
 
         equipmentPlacements.Add(inventoryItem);
 
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
     }
 
     public void Update(InventoryItem inventoryItem)
@@ -59,7 +59,7 @@ public class InventoryItemRepository
 
         equipmentPlacements[indexToUpdate] = inventoryItem;
 
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
     }
 
     public void Delete(InventoryItem inventoryItem)
@@ -71,14 +71,14 @@ public class InventoryItemRepository
 
         equipmentPlacements.RemoveAt(indexToDelete);
 
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
     }
 
     public void DeleteAll()
     {
         var equipmentPlacements = _equipmentPlacements ?? GetAll();
         equipmentPlacements.Clear();
-        Serializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
+        CsvSerializer<InventoryItem>.ToCSV(equipmentPlacements, FilePath);
         _equipmentPlacements = null;
     }
 }

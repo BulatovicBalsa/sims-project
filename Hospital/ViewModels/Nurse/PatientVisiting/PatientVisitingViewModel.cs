@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Hospital.Filter.Nurse;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Services;
@@ -21,6 +22,8 @@ public class PatientVisitingViewModel : ViewModelBase
     private Patient? _selectedPatient;
     private string _filterName;
     private Room? _filterRoom;
+    private readonly IPatientFilter _patientNameFilter;
+    private readonly IPatientFilter _patientAccommodationRoomFilter;
 
     public PatientVisitingViewModel()
     {
@@ -34,6 +37,8 @@ public class PatientVisitingViewModel : ViewModelBase
         _filterName = "";
         _filterRoom = null;
         ResetFilterCommand = new ViewModelCommand(ExecuteResetFilterCommand);
+        _patientNameFilter = new PatientNameFilter();
+        _patientAccommodationRoomFilter = new PatientAccommodationRoomFilter();
     }
 
     public ObservableCollection<Patient> HospitalizedPatients
@@ -63,7 +68,7 @@ public class PatientVisitingViewModel : ViewModelBase
         {
             _filterName = value;
             OnPropertyChanged(nameof(FilterName));
-            FilterHospitalizedPatientsByName();
+            DualFilter(_patientNameFilter, FilterName, _patientAccommodationRoomFilter, FilterRoom?.Id ?? null);
         }
     }
 
@@ -86,35 +91,21 @@ public class PatientVisitingViewModel : ViewModelBase
             OnPropertyChanged(nameof(FilterRoom));
 
             if (value != null)
-                FilterHospitalizedPatientsByRoom();
+                DualFilter(_patientAccommodationRoomFilter, FilterRoom!.Id, _patientNameFilter, FilterName);
         }
     }
 
-    private void FilterHospitalizedPatientsByName(bool fromScratch = false)
+    private void DualFilter(IPatientFilter filter, object? filterProperty, IPatientFilter? otherFilter = null, object? otherProperty = null, bool fromScratch = false)
     {
         var basePatients = _hospitalizedPatientsBase;
 
-        if (!fromScratch && FilterRoom != null)
+        if (!fromScratch && otherProperty != null)
         {
-            FilterHospitalizedPatientsByRoom(true);
+            DualFilter(otherFilter!, otherProperty, fromScratch:true);
             basePatients = HospitalizedPatients.ToList();
         }
 
-        var matchingPatients = basePatients.Where(patient => (patient.FirstName + patient.LastName).ToLower().Contains(FilterName.ToLower())).ToList();
-        HospitalizedPatients = new ObservableCollection<Patient>(matchingPatients);
-    }
-
-    private void FilterHospitalizedPatientsByRoom(bool fromScratch = false)
-    {
-        var basePatients = _hospitalizedPatientsBase;
-
-        if (!fromScratch && !string.IsNullOrEmpty(FilterName))
-        {
-            FilterHospitalizedPatientsByName(true);
-            basePatients = HospitalizedPatients.ToList();
-        }
-
-        var matchingPatients = basePatients.Where(patient => patient.GetActiveHospitalTreatmentReferral()!.RoomId == FilterRoom!.Id).ToList();
+        var matchingPatients = filter.Filter(basePatients, filterProperty!);
         HospitalizedPatients = new ObservableCollection<Patient>(matchingPatients);
     }
 

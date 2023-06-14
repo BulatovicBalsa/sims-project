@@ -11,26 +11,27 @@ namespace Hospital.Repositories.Patient
     public class ExaminationChangesTrackerRepository
     {
         private const string FilePath = "../../../Data/examinationChangesTrackerLogs.csv";
-
-        private static ExaminationChangesTrackerRepository? _instance;
-        public static ExaminationChangesTrackerRepository Instance => _instance ??= new ExaminationChangesTrackerRepository();
-        private ExaminationChangesTrackerRepository() { }
+        private ISerializer<PatientExaminationLog> _serializer;
+        public ExaminationChangesTrackerRepository(ISerializer<PatientExaminationLog> serializer) 
+        { 
+            _serializer = serializer;
+        }
 
         public List<PatientExaminationLog> GetAll()
         {
-            return Serializer<PatientExaminationLog>.FromCSV(FilePath);
+            return _serializer.Load(FilePath);
         }
 
         public void Add(PatientExaminationLog log)
         {
             var allLogs = GetAll();
             allLogs.Add(log);
-            Serializer<PatientExaminationLog>.ToCSV(allLogs,FilePath);
+            _serializer.Save(allLogs,FilePath);
         }
 
-        public static void DeleteAll()
+        public void DeleteAll()
         {
-            Serializer<PatientExaminationLog>.ToCSV(new List<PatientExaminationLog>(), FilePath);
+            _serializer.Save(new List<PatientExaminationLog>(), FilePath);
         }
 
     }

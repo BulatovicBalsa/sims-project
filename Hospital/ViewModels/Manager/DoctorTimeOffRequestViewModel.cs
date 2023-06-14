@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Injectors;
 using Hospital.Models.Requests;
 using Hospital.Repositories.Requests;
+using Hospital.Serialization;
 using Hospital.Services.Requests;
 
 namespace Hospital.ViewModels.Manager;
@@ -18,7 +20,7 @@ public class DoctorTimeOffRequestViewModel : ViewModelBase
     public DoctorTimeOffRequestViewModel()
     {
         TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(DoctorTimeOffRequestRepository.Instance.GetAll());
+            new ObservableCollection<DoctorTimeOffRequest>(new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll());
         _timeOffRequestService = new DoctorTimeOffRequestService();
         _approveCommand = new RelayCommand(AcceptSelected, CanAcceptSelected);
         _rejectCommand = new RelayCommand(RejectSelected, CanRejectSelected);
@@ -60,7 +62,7 @@ public class DoctorTimeOffRequestViewModel : ViewModelBase
     private void RefreshTimeOffRequests()
     {
         TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(DoctorTimeOffRequestRepository.Instance.GetAll());
+            new ObservableCollection<DoctorTimeOffRequest>(new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll());
         SelectedRequest = null;
     }
 

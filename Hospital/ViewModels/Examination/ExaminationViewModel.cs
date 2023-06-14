@@ -6,11 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Injectors;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 
 namespace Hospital.ViewModels
 {
@@ -102,7 +104,7 @@ namespace Hospital.ViewModels
         public ExaminationViewModel(Patient patient, PatientViewModel patientViewModel, Examination examination = null,Doctor doctor=null)
         {
             _patientViewModel = patientViewModel;
-            RecommendedDoctors = DoctorRepository.Instance.GetAll();
+            RecommendedDoctors = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetAll();
             Patient = patient;
             
             if (examination == null)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Injectors;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
@@ -11,6 +12,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 using Hospital.Services;
 using Hospital.Views.Nurse.UrgentExaminations;
 

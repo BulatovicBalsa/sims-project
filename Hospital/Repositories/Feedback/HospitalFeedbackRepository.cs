@@ -19,7 +19,7 @@ public class HospitalFeedbackRepository
 
     public List<HospitalFeedback> GetAll()
     {
-        return Serializer<HospitalFeedback>.FromCSV(FilePath);
+        return CsvSerializer<HospitalFeedback>.FromCSV(FilePath);
     }
 
     public void Add(HospitalFeedback feedback)
@@ -28,7 +28,7 @@ public class HospitalFeedbackRepository
 
         allFeedbacks.Add(feedback);
 
-        Serializer<HospitalFeedback>.ToCSV(allFeedbacks, FilePath);
+        CsvSerializer<HospitalFeedback>.ToCSV(allFeedbacks, FilePath);
     }
 
     public AverageHospitalFeedbackRatingByAreaDto GetAverageRatings()

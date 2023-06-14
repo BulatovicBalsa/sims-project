@@ -35,7 +35,7 @@ public class RoomRepositoryTests
             new("5", "Ward", RoomType.Ward),
             new("6", "Intensive care unit", RoomType.Ward)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var loadedRooms = RoomRepository.Instance.GetAll();
         Assert.AreEqual(rooms.Count, loadedRooms.Count);
@@ -53,7 +53,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", RoomType.ExaminationRoom),
             new("5", "Ward", RoomType.Ward)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var foundRoom = RoomRepository.Instance.GetById("2");
         Assert.IsNotNull(foundRoom);
@@ -81,7 +81,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", RoomType.ExaminationRoom),
             new("5", "Ward", RoomType.Ward)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var foundRoom = RoomRepository.Instance.GetById("");
         Assert.IsNull(foundRoom);
@@ -98,7 +98,7 @@ public class RoomRepositoryTests
             new("4", "Examination room", RoomType.ExaminationRoom),
             new("5", "Ward", RoomType.Ward)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = RoomRepository.Instance;
         roomRepository.Add(new Room("7", "New room", RoomType.WaitingRoom));
@@ -115,7 +115,7 @@ public class RoomRepositoryTests
             new("0", "Warehouse", RoomType.Warehouse),
             new("1", "Waiting room", RoomType.WaitingRoom)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         var roomRepository = RoomRepository.Instance;
         var idToUpdate = "1";
@@ -138,7 +138,7 @@ public class RoomRepositoryTests
             new("0", "Warehouse", RoomType.Warehouse),
             new("1", "Waiting room", RoomType.WaitingRoom)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
         var roomRepository = RoomRepository.Instance;
 
         roomRepository.Delete(rooms[1]);
@@ -155,7 +155,7 @@ public class RoomRepositoryTests
             new("0", "Warehouse", RoomType.Warehouse),
             new("1", "Waiting room", RoomType.WaitingRoom)
         };
-        Serializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
+        CsvSerializer<Room>.ToCSV(rooms, "../../../Data/rooms.csv");
 
         InventoryItemRepository.Instance.DeleteAll();
         var equipmentInRooms = new List<InventoryItem>
@@ -164,7 +164,7 @@ public class RoomRepositoryTests
             new("2", "0", 2),
             new("1", "1", 3)
         };
-        Serializer<InventoryItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
+        CsvSerializer<InventoryItem>.ToCSV(equipmentInRooms, "../../../Data/equipmentItems.csv");
 
         var loadedRooms = RoomRepository.Instance.GetAll();
 

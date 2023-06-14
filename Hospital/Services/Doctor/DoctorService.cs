@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Hospital.Repositories.Doctor;
 using Hospital.DTOs;
+using Hospital.Injectors;
+using Hospital.Serialization;
 
 namespace Hospital.Services;
 
@@ -12,7 +14,7 @@ public class DoctorService
 
     public DoctorService()
     {
-        _doctorRepository = DoctorRepository.Instance;
+        _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
     }
 
     public List<Doctor> GetAll()

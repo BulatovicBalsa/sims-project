@@ -8,12 +8,15 @@ using Hospital.Repositories.Patient;
 
 namespace HospitalTests.Repositories.Patient
 {
+    using Hospital.Injectors;
     using Hospital.Models.Patient;
+    using Hospital.Serialization;
+
     [TestClass]
     public class ExaminationChangesTrackerTests
     {
         private ExaminationChangesTracker _examinationChangesTracker;
-        private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
+        private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());
         private Patient _patient;
         private PatientExaminationLog _log;
         private PatientExaminationLog _oldLog;
@@ -22,11 +25,9 @@ namespace HospitalTests.Repositories.Patient
         [TestInitialize]
         public void TestInitialize()
         {
-
-            _examinationChangesTrackerRepository = ExaminationChangesTrackerRepository.Instance;
             _examinationChangesTracker = new ExaminationChangesTracker(_examinationChangesTrackerRepository);
 
-            ExaminationChangesTrackerRepository.DeleteAll();
+            _examinationChangesTrackerRepository.DeleteAll();
             _patient = new Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1", new MedicalRecord(80, 180));
 
             _log = new PatientExaminationLog(_patient, false);

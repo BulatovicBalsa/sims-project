@@ -19,7 +19,7 @@ public class EquipmentRepository
 
     public List<Equipment> GetAll()
     {
-        _equipment ??= Serializer<Equipment>.FromCSV(FilePath);
+        _equipment ??= CsvSerializer<Equipment>.FromCSV(FilePath);
         return _equipment;
     }
 
@@ -44,7 +44,7 @@ public class EquipmentRepository
 
         allEquipment.Add(equipment);
 
-        Serializer<Equipment>.ToCSV(allEquipment, FilePath);
+        CsvSerializer<Equipment>.ToCSV(allEquipment, FilePath);
     }
 
     public void Update(Equipment equipment)
@@ -56,7 +56,7 @@ public class EquipmentRepository
 
         allEquipment[indexToUpdate] = equipment;
 
-        Serializer<Equipment>.ToCSV(allEquipment, FilePath);
+        CsvSerializer<Equipment>.ToCSV(allEquipment, FilePath);
     }
 
     public void Delete(Equipment equipment)
@@ -68,14 +68,14 @@ public class EquipmentRepository
 
         allEquipment.RemoveAt(indexToDelete);
 
-        Serializer<Equipment>.ToCSV(allEquipment, FilePath);
+        CsvSerializer<Equipment>.ToCSV(allEquipment, FilePath);
     }
 
     public void DeleteAll()
     {
         var equipment = _equipment ?? GetAll();
         equipment.Clear();
-        Serializer<Equipment>.ToCSV(equipment, FilePath);
+        CsvSerializer<Equipment>.ToCSV(equipment, FilePath);
         _equipment = null;
     }
 }
