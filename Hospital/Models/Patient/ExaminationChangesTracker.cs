@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Injectors;
 using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 
 namespace Hospital.Models.Patient
 {
     public class ExaminationChangesTracker
     {
 
-        private readonly ExaminationChangesTrackerRepository _examinationChangesTrackerRepository;
+        private readonly ExaminationChangesTrackerRepository _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());
 
         public ExaminationChangesTracker(ExaminationChangesTrackerRepository examinationChangesTrackerRepository)
         {
             _examinationChangesTrackerRepository = examinationChangesTrackerRepository;
         }
 
-        public ExaminationChangesTracker() 
-        {
-            _examinationChangesTrackerRepository = ExaminationChangesTrackerRepository.Instance;
-        }
+        public ExaminationChangesTracker() {}
 
         public void Add(PatientExaminationLog log)
         {

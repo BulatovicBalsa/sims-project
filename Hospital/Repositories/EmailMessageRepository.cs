@@ -13,14 +13,15 @@ namespace Hospital.Repositories
     public class EmailMessageRepository
     {
         private const string FilePath = "../../../Data/messages.csv";
-        private static EmailMessageRepository? _instance;
+        private readonly ISerializer<EmailMessage> _serializer;
 
-        public static EmailMessageRepository Instance => _instance ??= new EmailMessageRepository();
-
-        private EmailMessageRepository() { }
+        public EmailMessageRepository(ISerializer<EmailMessage> serializer) 
+        {
+            _serializer = serializer;
+        }
         public List<EmailMessage> GetAll()
         {
-            return Serializer<EmailMessage>.FromCSV(FilePath, new EmailMessageReadMapper());
+            return _serializer.Load(FilePath, new EmailMessageReadMapper());
         }
         public List<EmailMessage> GetEmailMessagesByParticipantId(string id)
         {
@@ -31,7 +32,7 @@ namespace Hospital.Repositories
         {
             var allMessages = GetAll();
             allMessages.Add(message);
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            _serializer.Save(allMessages, FilePath, new EmailMessageWriteMapper());
         }
         public void Update(EmailMessage message)
         {
@@ -39,7 +40,7 @@ namespace Hospital.Repositories
             var indexToUpdate = allMessages.FindIndex(messageRecord => messageRecord.Id == message.Id);
             if (indexToUpdate == -1) throw new KeyNotFoundException($"Message with id {message.Id} was not found.");
             allMessages[indexToUpdate] = message;
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            _serializer.Save(allMessages, FilePath, new EmailMessageWriteMapper());
         }
         public void Delete(EmailMessage message)
         {
@@ -48,12 +49,12 @@ namespace Hospital.Repositories
             if (!allMessages.Remove(message))
                 throw new KeyNotFoundException($"Message with id {message.Id} was not found.");
 
-            Serializer<EmailMessage>.ToCSV(allMessages, FilePath, new EmailMessageWriteMapper());
+            _serializer.Save(allMessages, FilePath, new EmailMessageWriteMapper());
         }
-        public static void DeleteAll()
+        public void DeleteAll()
         {
             var emptyMessageList = new List<EmailMessage>();
-            Serializer<EmailMessage>.ToCSV(emptyMessageList, FilePath);
+            _serializer.Save(emptyMessageList, FilePath);
         }
 
         public List<EmailMessage> GetReceivedEmailMessagesByParticipantId(string id)

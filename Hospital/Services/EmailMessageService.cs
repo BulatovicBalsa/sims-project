@@ -1,6 +1,10 @@
 ﻿using Hospital.DTOs;
+using Hospital.Injectors;
 using Hospital.Models;
+using Hospital.Models.Patient;
 using Hospital.Repositories;
+using Hospital.Repositories.Patient;
+using Hospital.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +17,11 @@ namespace Hospital.Services
     {
         private DoctorService _doctorService;
         private NurseService _nurseService;
-        private EmailMessageRepository _emailMessageRepository;
+        private EmailMessageRepository _emailMessageRepository = new EmailMessageRepository(SerializerInjector.CreateInstance<ISerializer<EmailMessage>>());
         public EmailMessageService()
         {
             _doctorService = new DoctorService();
             _nurseService = new NurseService();
-            _emailMessageRepository = EmailMessageRepository.Instance;
         }
         public List<EmailMessage> GetAllEmailMessagesByParticipant(string id)
         {
