@@ -3,12 +3,12 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Patient;
+using Hospital.Services;
 
 namespace Hospital.ViewModels.Nurse.PatientVisiting;
 public class VisitingDialogViewModel : ViewModelBase
 {
-    private readonly VisitRepository _visitRepository;
+    private readonly VisitService _visitService;
     private string _patientId;
     private string _bloodPressure;
     private string _bodyTemperature;
@@ -16,7 +16,7 @@ public class VisitingDialogViewModel : ViewModelBase
 
     public VisitingDialogViewModel()
     {
-        _visitRepository = new VisitRepository();
+        _visitService = new VisitService();
         _patientId = "";
         _bloodPressure = "";
         _bodyTemperature = "";
@@ -26,7 +26,7 @@ public class VisitingDialogViewModel : ViewModelBase
 
     public VisitingDialogViewModel(string patientId)
     {
-        _visitRepository = new VisitRepository();
+        _visitService = new VisitService();
         _patientId = patientId;
         _bloodPressure = "";
         _bodyTemperature = "";
@@ -82,7 +82,7 @@ public class VisitingDialogViewModel : ViewModelBase
         }
 
         var newVisit = new Visit(_patientId, BloodPressure, bodyTemperatureNumber, Observations, DateTime.Now);
-        _visitRepository.Add(newVisit);
+        _visitService.Add(newVisit);
 
         MessageBox.Show("Visit completed successfully", "Success");
         CloseDialog();
