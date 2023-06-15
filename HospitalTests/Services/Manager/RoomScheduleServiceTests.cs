@@ -1,8 +1,7 @@
-﻿using Hospital.Models.Examination;
-using Hospital.Models.Manager;
-using Hospital.Models.Patient;
+﻿using Hospital.PatientHealthcare.Models;
+using Hospital.PhysicalAssets.Models;
 using Hospital.Scheduling;
-using Hospital.Services.Manager;
+using Hospital.Scheduling.Services;
 
 namespace HospitalTests.Services.Manager;
 

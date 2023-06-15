@@ -1,4 +1,4 @@
-﻿using Hospital.Models.Manager;
+﻿using Hospital.PhysicalAssets.Models;
 
 namespace HospitalTests.Models.Manager;
 

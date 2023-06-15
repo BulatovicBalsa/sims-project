@@ -1,0 +1,90 @@
+﻿<Window x:Class="Hospital.GUI.Views.PatientManagement.MedicalRecordView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.Patients"
+        mc:Ignorable="d"
+        Title="MedicalRecordView" Height="410" Width="350"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None">
+    <Window.DataContext>
+        <viewModel:MedicalRecordOverviewViewModel />
+    </Window.DataContext>
+
+    <Border CornerRadius="15">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0" />
+                <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <StackPanel x:Name="ControlBar"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
+                            Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
+
+                    <Button x:Name="BtnClose"
+                            Style="{StaticResource ControlButton}"
+                            Content="X"
+                            Margin="3,0,3,0"
+                            Click="BtnClose_OnClick" />
+
+                    <Button x:Name="BtnMinimize"
+                            Style="{StaticResource ControlButton}"
+                            Content="-"
+                            Margin="3,0,3,0"
+                            Click="BtnMinimize_OnClick" />
+
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="Montserrat"
+                       FontSize="25"
+                       FontWeight="Bold">
+                Medical record overview
+            </TextBlock>
+
+            <StackPanel Grid.Row="2"
+                        Margin="20, 0, 20, 0">
+                <TextBlock Style="{StaticResource MainTextBlock}">Height</TextBlock>
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding Height}" />
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Weight</TextBlock>
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding Weight}" />
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Medical history</TextBlock>
+                <ListView Height="50" ItemsSource="{Binding MedicalHistory}" />
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Allergies</TextBlock>
+                <ListView Height="50" ItemsSource="{Binding Allergies}" />
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,20">
+                    <Button Content="Close" Style="{StaticResource ActionButton}" Margin="0,0,15,0"
+                            Command="{Binding CloseDialogCommand}" />
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>

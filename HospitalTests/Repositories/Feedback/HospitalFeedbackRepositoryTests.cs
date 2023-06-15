@@ -1,6 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Feedback;
-using Hospital.Repositories.Feedback;
+﻿using Hospital.PatientFeedback.Models;
+using Hospital.PatientFeedback.Repositories;
 
 namespace HospitalTests.Repositories.Feedback;
 
@@ -45,7 +44,7 @@ public class HospitalFeedbackRepositoryTests
         Assert.AreEqual(5, averageRatings.PatientSatisfactionRating);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetServiceQualityRatingFrequenciesTest()
     {
         AddData();
@@ -56,25 +55,25 @@ public class HospitalFeedbackRepositoryTests
         Assert.AreEqual(1, serviceQualityRatingFrequencies[6]);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetOverallRatingFrequenciesTest()
     {
         AddData();
         var overallRatingFrequencies = HospitalFeedbackRepository.Instance.GetOverallRatingFrequencies();
         Assert.AreEqual(2, overallRatingFrequencies[2]);
         Assert.AreEqual(2, overallRatingFrequencies[3]);
-
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetPatientSatisfactionRatingsTest()
     {
         AddData();
-        var satisfactionRatingFrequencies = HospitalFeedbackRepository.Instance.GetPatientSatisfactionRatingFrequencies();
+        var satisfactionRatingFrequencies =
+            HospitalFeedbackRepository.Instance.GetPatientSatisfactionRatingFrequencies();
         Assert.AreEqual(4, satisfactionRatingFrequencies[5]);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetRecommendationFrequenciesRatingsTest()
     {
         AddData();

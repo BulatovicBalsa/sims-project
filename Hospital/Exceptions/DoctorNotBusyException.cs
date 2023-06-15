@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Exceptions
+namespace Hospital.Exceptions;
+
+public class DoctorNotBusyException : Exception
 {
-    public class DoctorNotBusyException : Exception
+    public DoctorNotBusyException(string message) : base(message)
     {
-        public DoctorNotBusyException(string message) : base(message) { }
     }
 }

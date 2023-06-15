@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hospital.Models.Doctor;
-using Hospital.Models.Manager;
-using Hospital.Models.Patient;
-using Hospital.Models.Requests;
-using Hospital.Models;
+using Hospital.Messaging.Models;
+using Hospital.PatientHealthcare.Models;
+using Hospital.Pharmacy.Models;
+using Hospital.PhysicalAssets.Models;
 using Hospital.Serialization;
+using Hospital.TimeOffRequests.Models;
+using Hospital.Workers.Models;
 
 namespace Hospital.Injectors;
 
@@ -15,8 +16,8 @@ public class SerializerInjector
     {
         { typeof(ISerializer<Doctor>), new CsvSerializer<Doctor>() },
         { typeof(ISerializer<DoctorTimeOffRequest>), new CsvSerializer<DoctorTimeOffRequest>() },
-        { typeof(ISerializer<EmailMessage>), new CsvSerializer<EmailMessage>()},
-        { typeof(ISerializer < PatientExaminationLog >), new CsvSerializer < PatientExaminationLog >() },
+        { typeof(ISerializer<EmailMessage>), new CsvSerializer<EmailMessage>() },
+        { typeof(ISerializer<PatientExaminationLog>), new CsvSerializer<PatientExaminationLog>() },
         { typeof(ISerializer<Visit>), new CsvSerializer<Visit>() },
         { typeof(ISerializer<MedicationOrder>), new CsvSerializer<MedicationOrder>() },
         { typeof(ISerializer<TransferItem>), new JsonSerializer<TransferItem>() },

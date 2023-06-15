@@ -1,5 +1,5 @@
 ﻿using System;
-using Hospital.Models.Examination;
+using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.Filter;
 

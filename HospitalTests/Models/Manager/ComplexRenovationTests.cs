@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Manager;
+﻿using Hospital.PhysicalAssets.Models;
 using Hospital.Scheduling;
 
 namespace HospitalTests.Models.Manager;
@@ -129,7 +128,7 @@ public class ComplexRenovationTests
         }
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void TestIsEquipmentProperlyRedistributed()
     {
         var toDemolish = new List<Room>
@@ -159,7 +158,8 @@ public class ComplexRenovationTests
 
         Assert.IsTrue(complexRenovation.IsEquipmentProperlyRedistributed());
     }
-    [TestMethod()]
+
+    [TestMethod]
     public void TestIsEquipmentProperlyRedistributedAttemptToRedistributeMoreThanAvailable()
     {
         var toDemolish = new List<Room>
@@ -189,5 +189,4 @@ public class ComplexRenovationTests
 
         Assert.IsFalse(complexRenovation.IsEquipmentProperlyRedistributed());
     }
-
 }

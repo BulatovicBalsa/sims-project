@@ -1,0 +1,96 @@
+﻿<Window x:Class="Hospital.GUI.Views.PatientHealthcare.AdmissionDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.PatientAdmission"
+        mc:Ignorable="d"
+        Title="AdmissionDialogView"
+        d:DesignHeight="335" d:DesignWidth="350"
+        Height="335"
+        Width="350"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModel:AdmissionDialogViewModel />
+    </Window.DataContext>
+
+    <Border CornerRadius="15">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0" />
+                <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <StackPanel x:Name="ControlBar"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
+                            Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
+
+                    <Button x:Name="BtnClose"
+                            Style="{StaticResource ControlButton}"
+                            Content="X"
+                            Margin="3,0,3,0"
+                            Click="BtnClose_OnClick" />
+
+                    <Button x:Name="BtnMinimize"
+                            Style="{StaticResource ControlButton}"
+                            Content="-"
+                            Margin="3,0,3,0"
+                            Click="BtnMinimize_OnClick" />
+
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="Montserrat"
+                       FontSize="25"
+                       FontWeight="Bold">
+                Patient admission
+            </TextBlock>
+
+            <StackPanel Grid.Row="2"
+                        Margin="20, 0, 20, 0">
+                <TextBlock Style="{StaticResource MainTextBlock}">Symptoms</TextBlock>
+                <TextBox Height="40" TextWrapping="Wrap" Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Medical history (format: str1, str2,...)</TextBlock>
+                <TextBox Height="40" TextWrapping="Wrap"
+                         Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Allergies (format: str1, str2,...)</TextBlock>
+                <TextBox Height="40" TextWrapping="Wrap"
+                         Text="{Binding Allergies, UpdateSourceTrigger=PropertyChanged}" />
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,0">
+                    <Button Content="End admission" Style="{StaticResource ActionButton}" Margin="0,0,15,0"
+                            Command="{Binding EndAdmissionCommand}" />
+                    <Button Content="Cancel" Style="{StaticResource ActionButton}" Margin="15,0,0,0"
+                            Command="{Binding CancelCommand}" />
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+
+</Window>

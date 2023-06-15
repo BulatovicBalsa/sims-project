@@ -1,11 +1,9 @@
 ﻿using System.Net;
 using System.Security.Principal;
+using Hospital.Accounts.Services;
 using Hospital.Exceptions;
-using Hospital.Models.Doctor;
-using Hospital.Models.Manager;
-using Hospital.Models.Nurse;
-using Hospital.Models.Patient;
-using Hospital.Services;
+using Hospital.PatientHealthcare.Models;
+using Hospital.Workers.Models;
 
 namespace HospitalCLI.Login;
 

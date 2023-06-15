@@ -1,0 +1,70 @@
+﻿<Window x:Class="Hospital.GUI.Views.PatientHealthcare.VisitHospitalizedPatientsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.GUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:VisitHospitalizedPatientsViewModel}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Hospital Treatment Patients" Height="450" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ProgressBar Grid.Row="1" Width="200" x:Name="FlowProgressBar" Value="100" Minimum="0" Maximum="100"
+                     Height="20" IsIndeterminate="True" Visibility="{Binding ProgressVisibility}" />
+        <TextBlock Grid.Row="1" Text="Loading..." FontWeight="Bold" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Visibility="{Binding ProgressVisibility}" />
+
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="22" Margin="0 10">Patients</TextBlock>
+        <DataGrid Grid.Row="1" Margin="0 10" ItemsSource="{Binding MedicalVisits}" AutoGenerateColumns="False"
+                  Visibility="{Binding DataGridVisibility}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" Width="175" />
+                <DataGridTextColumn Header="Duration" Binding="{Binding Referral.Duration}" Width="Auto" />
+                <DataGridTextColumn Header="Admission" Binding="{Binding Referral.Admission}" Width="150" />
+
+                <DataGridTemplateColumn Header="Additional Tests" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Referral.AdditionalTests}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Prescriptions" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Referral.Prescriptions}" DisplayMemberPath="ListBoxString" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Modify Therapy" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Modify" Height="25.96"
+                                    Command="{Binding DataContext.ModifyTherapyCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                    CommandParameter="{Binding Patient.Id}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Release Patient" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Release" Height="25.96"
+                                    Command="{Binding DataContext.ReleasePatientCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                    CommandParameter="{Binding Patient.Id}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

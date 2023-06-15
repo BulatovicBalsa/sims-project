@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Windows;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -15,16 +13,23 @@ public class CsvSerializer<T> : ISerializer<T>
 {
     private const string DirectoryPath = "../../../Data/";
 
+    public List<T> Load(string filePath, ClassMap<T>? mapper = null)
+    {
+        return FromCSV(filePath, mapper);
+    }
+
+    public void Save(List<T> records, string filePath, ClassMap<T>? mapper = null)
+    {
+        ToCSV(records, filePath, mapper);
+    }
+
     public static List<T> FromCSV(string filePath, ClassMap<T>? mapper = null)
     {
         try
         {
             using var reader = new StreamReader(filePath);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-            if (mapper != null)
-            {
-                csvReader.Context.RegisterClassMap(mapper);
-            }
+            if (mapper != null) csvReader.Context.RegisterClassMap(mapper);
             return csvReader.GetRecords<T>().ToList();
         }
         catch (FileNotFoundException e)
@@ -46,8 +51,7 @@ public class CsvSerializer<T> : ISerializer<T>
         const int delay = 500;
         StreamWriter writer = null;
 
-        for (int i = 1; i <= numberOfRetries; i++)
-        {
+        for (var i = 1; i <= numberOfRetries; i++)
             try
             {
                 writer = new StreamWriter(filePath);
@@ -65,28 +69,12 @@ public class CsvSerializer<T> : ISerializer<T>
                 Thread.Sleep(delay);
             }
 
-        }
-
         if (writer == null) throw new IOException();
 
         using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
-        if (mapper != null)
-        {
-            csvWriter.Context.RegisterClassMap(mapper);
-        }
+        if (mapper != null) csvWriter.Context.RegisterClassMap(mapper);
         csvWriter.WriteRecords(records.ToList());
 
         csvWriter.Flush();
     }
-
-    public List<T> Load(string filePath, ClassMap<T>? mapper = null)
-    {
-        return FromCSV(filePath, mapper);
-    }
-
-    public void Save(List<T> records, string filePath, ClassMap<T>? mapper = null)
-    {
-        ToCSV(records, filePath, mapper);
-    }
 }
-

@@ -1,18 +1,15 @@
 ﻿using Hospital.Injectors;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Manager;
-using Hospital.Models.Patient;
-using Hospital.Models.Requests;
-using Hospital.Repositories;
-using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examination;
-using Hospital.Repositories.Manager;
-using Hospital.Repositories.Patient;
-using Hospital.Repositories.Requests;
+using Hospital.Notifications.Repositories;
+using Hospital.PatientHealthcare.Models;
+using Hospital.PatientHealthcare.Repositories;
+using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 using Hospital.Serialization;
-using Hospital.Services.Requests;
+using Hospital.TimeOffRequests.Models;
+using Hospital.TimeOffRequests.Repositories;
+using Hospital.TimeOffRequests.Services;
+using Hospital.Workers.Models;
+using Hospital.Workers.Repositories;
 
 namespace HospitalTests.Services.Requests;
 
@@ -52,14 +49,16 @@ public class DoctorTimeOffRequestServiceTests
 
     private void AddData()
     {
-        new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).Add(new Doctor("Pera", "Peric", "", "pera", "", "Cardiologist"));
+        new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).Add(new Doctor("Pera", "Peric",
+            "", "pera", "", "Cardiologist"));
         PatientRepository.Instance.Add(new Patient());
         RoomRepository.Instance.Add(new Room("Examination room", RoomType.ExaminationRoom));
         var room = RoomRepository.Instance.GetAll()[0];
         var patient = PatientRepository.Instance.GetAll()[0];
         var pera = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetByUsername("pera");
-        new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).Add(new DoctorTimeOffRequest(pera.Id, "reason", DateTime.Now.AddDays(3),
-            DateTime.Now.AddDays(10)));
+        new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).Add(
+            new DoctorTimeOffRequest(pera.Id, "reason", DateTime.Now.AddDays(3),
+                DateTime.Now.AddDays(10)));
         ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(4), room), false);
         ExaminationRepository.Instance.Add(new Examination(pera, patient, false, DateTime.Now.AddDays(11), room),
             false);
@@ -73,7 +72,9 @@ public class DoctorTimeOffRequestServiceTests
         AddData();
         Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
         var service = new DoctorTimeOffRequestService();
-        var request = new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll()[0];
+        var request =
+            new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>())
+                .GetAll()[0];
         service.Approve(request);
         Assert.AreEqual(2, ExaminationRepository.Instance.GetAll().Count);
         Assert.IsTrue(ExaminationRepository.Instance.GetAll()[0].Start > request.End);
@@ -85,20 +86,26 @@ public class DoctorTimeOffRequestServiceTests
         AddData();
         Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
         var service = new DoctorTimeOffRequestService();
-        var request = new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll()[0];
+        var request =
+            new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>())
+                .GetAll()[0];
         service.Approve(request);
         var notificationRepository = new NotificationRepository();
         Assert.AreEqual(1, notificationRepository.GetAll().Count);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void TestReject()
     {
         AddData();
         var service = new DoctorTimeOffRequestService();
-        var request = new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll()[0];
+        var request =
+            new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>())
+                .GetAll()[0];
         service.Reject(request);
-        Assert.AreEqual(0, new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>()).GetAll().Count);
+        Assert.AreEqual(0,
+            new DoctorTimeOffRequestRepository(SerializerInjector.CreateInstance<ISerializer<DoctorTimeOffRequest>>())
+                .GetAll().Count);
         Assert.AreEqual(3, ExaminationRepository.Instance.GetAll().Count);
     }
 }

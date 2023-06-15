@@ -1,9 +1,8 @@
-﻿using Hospital.Models.Patient;
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 
-namespace Hospital.Serialization.Mappers;
+namespace Hospital.Serialization.Mappers.Medication;
 
-public sealed class MedicationWriteMapper : ClassMap<Medication>
+public sealed class MedicationWriteMapper : ClassMap<Pharmacy.Models.Medication>
 {
     public MedicationWriteMapper()
     {

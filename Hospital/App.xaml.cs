@@ -3,17 +3,17 @@ using System.Globalization;
 using System.Threading;
 using System.Timers;
 using System.Windows;
+using Hospital.GUI.Views;
+using Hospital.GUI.Views.Accounts;
 using Hospital.Injectors;
-using Hospital.Models.Doctor;
-using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Nurse;
-using Hospital.Repositories.Patient;
+using Hospital.Notifications.Services;
+using Hospital.PatientHealthcare.Repositories;
+using Hospital.Pharmacy.Services;
+using Hospital.PhysicalAssets.Services;
 using Hospital.Serialization;
-using Hospital.Services;
-using Hospital.Services.Manager;
-using Hospital.Views;
-using Hospital.Views.Manager;
-using Hospital.Views.Nurse;
+using Hospital.Workers.Models;
+using Hospital.Workers.Repositories;
+using Timer = System.Timers.Timer;
 
 namespace Hospital;
 
@@ -21,7 +21,7 @@ public partial class App : Application
 {
     private const string _unsuccessfulLoginMessage = "Login was not successful.";
     private readonly MedicationOrderService _medicationOrderService = new();
-    private readonly System.Timers.Timer _medicationOrderTimer = new(60000);
+    private readonly Timer _medicationOrderTimer = new(60000);
 
     private void ProcessEventsThatOccurredBeforeAppStart()
     {

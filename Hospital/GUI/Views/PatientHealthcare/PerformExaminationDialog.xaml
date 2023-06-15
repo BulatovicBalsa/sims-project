@@ -1,0 +1,120 @@
+﻿<Window x:Class="Hospital.GUI.Views.PatientHealthcare.PerformExaminationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.GUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:PerformExaminationViewModel}"
+        mc:Ignorable="d"
+        x:Name="PerformExaminationDialogWindow"
+        Title="" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="First Name: " Grid.Row="0" Grid.Column="0" Margin="5" />
+                <TextBox Text="{Binding PatientOnExamination.FirstName, Mode=OneTime}" Margin="5" Grid.Row="0"
+                         Grid.Column="1" IsReadOnly="True" />
+
+                <Label Content="Last Name: " Grid.Row="1" Grid.Column="0" Margin="5" />
+                <TextBox Text="{Binding PatientOnExamination.LastName, Mode=OneTime}" Margin="5" Grid.Row="1"
+                         Grid.Column="1" IsReadOnly="True" />
+
+                <Label Content="Jmbg: " Grid.Row="2" Grid.Column="0" Margin="5" />
+                <TextBox Text="{Binding PatientOnExamination.Jmbg, Mode=OneTime}" Margin="5" Grid.Row="2"
+                         Grid.Column="1" IsReadOnly="True" />
+
+            </Grid>
+
+            <Frame x:Name="MedicalRecordFrame" Grid.Row="1" />
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Anamnesis: " Grid.Row="0" Grid.Column="0" Margin="5" />
+                <TextBox Grid.Row="0" x:Name="AnamnesisTextBox" Text="{Binding Anamnesis, Mode=TwoWay}"
+                         AcceptsReturn="True" TextWrapping="Wrap" Margin="5" Grid.Column="1" Width="150" />
+                <Button Grid.Row="0" x:Name="ConfirmAnamnesisButton" Content="Save" Grid.Column="2" Margin="5"
+                        Command="{Binding UpdateAnamnesisCommand}" Height="25.96" />
+
+
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Margin="5" Content="Create Referral" Command="{Binding CreateReferralCommand}" />
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Referrals}" AutoGenerateColumns="False"
+                          CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" Width="Auto" />
+                        <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Grid.Row="3" ItemsSource="{Binding HospitalTreatmentReferrals}" AutoGenerateColumns="False"
+                          CanUserAddRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="Auto" />
+                        <DataGridTemplateColumn Header="Additional Tests" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListBox ItemsSource="{Binding AdditionalTests}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Prescriptions" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListBox ItemsSource="{Binding Prescriptions}" DisplayMemberPath="ListBoxString" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Column="0" Grid.Row="2" Margin="5" Content="Create Hospital Treatment Referral"
+                        Command="{Binding CreateHospitalTreatmentReferralCommand}" />
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Button Content="Finish" Margin="5" Command="{Binding FinishExaminationCommand}"
+                        CommandParameter="{Binding ElementName=PerformExaminationDialogWindow}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,50 @@
+﻿<Window x:Class="Hospital.GUI.Views.PatientHealthcare.ModifyExaminationDialog"
+        x:Name="ModifyExaminationDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Hospital.GUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:ModifyExaminationViewModel}"
+        mc:Ignorable="d"
+        Title="New Examination" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Choose Patient:" />
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="PatientComboBox" ItemsSource="{Binding Patients}"
+                  SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Examination Date:" />
+        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker"
+                    SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Examination Time:" />
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossibleTimes}"
+                  SelectedItem="{Binding SelectedTime, Mode=TwoWay}" />
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Is Operation:" />
+        <CheckBox Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" x:Name="IsOperation"
+                  IsChecked="{Binding IsOperation, Mode=TwoWay}" />
+
+        <Label Grid.Row="4" Grid.Column="0" Content="Choose Room:" />
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RoomComboBox" ItemsSource="{Binding Rooms}"
+                  SelectedItem="{Binding SelectedRoom, Mode=TwoWay}" />
+
+        <Button x:Name="ConfirmButton" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0"
+                Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}"
+                CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
+
+    </Grid>
+</Window>

@@ -1,5 +1,5 @@
-﻿using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
+﻿using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 
 namespace HospitalTests.Repositories.Manager;
 
