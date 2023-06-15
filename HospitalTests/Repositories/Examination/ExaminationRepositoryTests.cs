@@ -61,13 +61,13 @@ public class ExaminationRepositoryTests
         _patientRepository.Add(patient1);
         _patientRepository.Add(patient2);
 
-        var examination1 = new Hospital.PatientHealthcare.Models.Examination(doctor1, patient1, false,
+        var examination1 = new Examination(doctor1, patient1, false,
             DateTime.Now.AddHours(30),
             RoomRepository.Instance.GetAll()[0]);
-        var examination2 = new Hospital.PatientHealthcare.Models.Examination(doctor1, patient2, false,
+        var examination2 = new Examination(doctor1, patient2, false,
             DateTime.Now.AddHours(40),
             RoomRepository.Instance.GetAll()[0]);
-        var examination3 = new Hospital.PatientHealthcare.Models.Examination(doctor2, patient1, true,
+        var examination3 = new Examination(doctor2, patient1, true,
             DateTime.Now.AddHours(50),
             RoomRepository.Instance.GetAll()[0]);
 
@@ -87,45 +87,45 @@ public class ExaminationRepositoryTests
         _doctorRepository.Add(doctor);
         _patientRepository.Add(patient);
 
-        _examination = new Hospital.PatientHealthcare.Models.Examination(doctor, patient, false, DateTime.Now.AddHours(60),
+        _examination = new Examination(doctor, patient, false, DateTime.Now.AddHours(60),
             RoomRepository.Instance.GetAll()[0]);
     }
 
-    //[TestMethod]
-    //public void TestAdd()
-    //{
-    //    var addedExamination = _examinationRepository.GetById(_examination.Id);
-    //    Assert.IsNotNull(addedExamination);
-    //}
+    [TestMethod]
+    public void TestAdd()
+    {
+        var addedExamination = _examinationRepository.GetById(_examination.Id);
+        Assert.IsNotNull(addedExamination);
+    }
 
-    //[TestMethod]
-    //public void TestUpdate()
-    //{
-    //    _examination.Start = _examination.Start.AddMinutes(5);
-    //    _examination.IsOperation = true;
+    [TestMethod]
+    public void TestUpdate()
+    {
+        _examination.Start = _examination.Start.AddMinutes(5);
+        _examination.IsOperation = true;
 
-    //    _examinationRepository.Update(_examination, false);
+        _examinationRepository.Update(_examination, false);
 
-    //    var updatedExamination = _examinationRepository.GetById(_examination.Id);
+        var updatedExamination = _examinationRepository.GetById(_examination.Id);
 
-    //    Assert.IsNotNull(updatedExamination);
-    //    Assert.AreEqual(_examination.Id, updatedExamination.Id);
-    //    Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
-    //    Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
-    //    Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
+        Assert.IsNotNull(updatedExamination);
+        Assert.AreEqual(_examination.Id, updatedExamination.Id);
+        Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
+        Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
+        Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
 
 
-    //    const double tolerance = 1; // 1 second
-    //    var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
-    //    Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
-    //}
+        const double tolerance = 1; // 1 second
+        var secondsDifference = Math.Abs((_examination.Start - updatedExamination.Start).TotalSeconds);
+        Assert.IsTrue(secondsDifference <= tolerance, "The Start times are not equal within the tolerance value.");
+    }
 
-    //[TestMethod]
-    //public void TestDelete()
-    //{
-    //    _examinationRepository.Delete(_examination, true);
+    [TestMethod]
+    public void TestDelete()
+    {
+        _examinationRepository.Delete(_examination, true);
 
-    //    var deletedExaminaton = _examinationRepository.GetById(_examination.Id);
-    //    Assert.IsNull(deletedExaminaton);
-    //}
+        var deletedExaminaton = _examinationRepository.GetById(_examination.Id);
+        Assert.IsNull(deletedExaminaton);
+    }
 }

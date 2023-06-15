@@ -94,7 +94,7 @@ public class NurseRepositoryTests
     [TestMethod]
     public void TestAdd()
     {
-        var newNurse = new Hospital.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+        var newNurse = new Hospital.Core.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
             "testPassword");
         var nurseRepository = NurseRepository.Instance;
 
@@ -111,7 +111,7 @@ public class NurseRepositoryTests
     public void TestUpdateNonExistent()
     {
         var nurseRepository = NurseRepository.Instance;
-        var newNurse = new Hospital.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+        var newNurse = new Hospital.Core.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
             "testPassword");
 
         Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Update(newNurse));
@@ -121,7 +121,7 @@ public class NurseRepositoryTests
     public void TestDeleteNonExistent()
     {
         var nurseRepository = NurseRepository.Instance;
-        var newNurse = new Hospital.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+        var newNurse = new Hospital.Core.Workers.Models.Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
             "testPassword");
 
         Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Delete(newNurse));
