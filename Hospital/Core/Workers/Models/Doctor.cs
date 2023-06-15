@@ -1,5 +1,4 @@
-﻿using Hospital.Accounts.Models;
-using Hospital.Core.Accounts.Models;
+﻿using Hospital.Core.Accounts.Models;
 
 namespace Hospital.Core.Workers.Models;
 

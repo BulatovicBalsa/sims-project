@@ -5,11 +5,11 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.Notifications.Models;
 using Hospital.Core.Notifications.Services;
 using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.Pharmacy.Models;
 using Hospital.Core.Pharmacy.Services;
-using Hospital.Notifications.Models;
 
 namespace Hospital.GUI.ViewModels.Pharmacy;
 

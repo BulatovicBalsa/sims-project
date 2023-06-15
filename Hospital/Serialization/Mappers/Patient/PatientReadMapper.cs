@@ -9,8 +9,8 @@ using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.Pharmacy.Models;
 using Hospital.Core.Pharmacy.Repositories;
 using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Repositories;
 using Hospital.Injectors;
-using Hospital.Workers.Repositories;
 
 namespace Hospital.Serialization.Mappers.Patient;
 

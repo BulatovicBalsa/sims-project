@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using Hospital.Core.PhysicalAssets.Models;
 using Hospital.Core.PhysicalAssets.Repositories;
-using Hospital.PhysicalAssets.Services;
+using Hospital.Core.PhysicalAssets.Services;
 
 namespace Hospital.GUI.Views.PhysicalAssets;
 

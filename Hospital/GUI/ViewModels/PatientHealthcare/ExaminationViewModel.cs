@@ -9,9 +9,9 @@ using GalaSoft.MvvmLight.Command;
 using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PatientHealthcare.Repositories;
 using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Repositories;
 using Hospital.Injectors;
 using Hospital.Serialization;
-using Hospital.Workers.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

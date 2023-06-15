@@ -3,8 +3,8 @@ using System.Linq;
 using System.Timers;
 using Hospital.Core.PhysicalAssets.Models;
 using Hospital.Core.PhysicalAssets.Repositories;
+using Hospital.Core.Scheduling;
 using Hospital.Core.Scheduling.Services;
-using Hospital.Scheduling;
 
 namespace Hospital.Core.PhysicalAssets.Services;
 

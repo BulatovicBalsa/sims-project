@@ -1,7 +1,7 @@
 ﻿using System;
+using Hospital.Core.Notifications.Models;
 using Hospital.Core.Notifications.Services;
 using Hospital.Core.PatientHealthcare.Models;
-using Hospital.Notifications.Models;
 
 namespace Hospital.GUI.ViewModels.Notifications;
 

@@ -1,10 +1,9 @@
 ﻿using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PhysicalAssets.Models;
 using Hospital.Core.PhysicalAssets.Repositories;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PhysicalAssets.Services;
-using Hospital.Scheduling;
-using Hospital.Scheduling.Services;
+using Hospital.Core.PhysicalAssets.Services;
+using Hospital.Core.Scheduling;
+using Hospital.Core.Scheduling.Services;
 
 namespace HospitalTests.Services.Manager;
 

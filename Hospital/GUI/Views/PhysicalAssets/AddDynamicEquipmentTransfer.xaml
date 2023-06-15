@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Hospital.GUI.ViewModels.PhysicalAssets"
         xmlns:valRule="clr-namespace:Hospital.ValidationRules"
-        xmlns:converters="clr-namespace:Hospital.Converters"
+        xmlns:converters="clr-namespace:Hospital.GUI.Converters"
 
         mc:Ignorable="d"
         Title="AddDynamicEquipmentTransfer" Height="450" Width="1200">

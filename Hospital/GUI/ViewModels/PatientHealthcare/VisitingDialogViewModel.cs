@@ -2,8 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PatientHealthcare.Services;
-using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

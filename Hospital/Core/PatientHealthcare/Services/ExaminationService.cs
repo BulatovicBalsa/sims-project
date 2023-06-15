@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.Scheduling;
 using Hospital.Core.Scheduling.Services;
 using Hospital.Core.Workers.Models;
 using Hospital.Exceptions;
-using Hospital.Scheduling;
 
 namespace Hospital.Core.PatientHealthcare.Services;
 

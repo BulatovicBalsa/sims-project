@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hospital.Accounts.Models;
 using Hospital.Core.Accounts.Models;
 using Hospital.Core.Pharmacy.Models;
 

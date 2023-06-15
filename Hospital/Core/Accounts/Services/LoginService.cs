@@ -5,7 +5,6 @@ using Hospital.Core.Workers.Models;
 using Hospital.Core.Workers.Repositories;
 using Hospital.Injectors;
 using Hospital.Serialization;
-using Hospital.Workers.Models;
 
 namespace Hospital.Core.Accounts.Services;
 

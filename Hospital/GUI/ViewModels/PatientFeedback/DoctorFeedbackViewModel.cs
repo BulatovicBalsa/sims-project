@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.PatientFeedback.Models;
 using Hospital.Core.PatientFeedback.Services;
 using Hospital.Core.Workers.Models;
-using Hospital.PatientFeedback.Models;
 
 namespace Hospital.GUI.ViewModels.PatientFeedback;
 

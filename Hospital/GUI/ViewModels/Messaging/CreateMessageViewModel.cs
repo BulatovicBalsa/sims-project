@@ -4,9 +4,9 @@ using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Core.Accounts.DTOs;
+using Hospital.Core.Messaging.Models;
 using Hospital.Core.Messaging.Services;
 using Hospital.GUI.Views.Messaging;
-using Hospital.Messaging.Models;
 
 namespace Hospital.GUI.ViewModels.Messaging;
 

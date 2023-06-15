@@ -1,8 +1,7 @@
 ﻿using Hospital.Core.PhysicalAssets.Models;
 using Hospital.Core.PhysicalAssets.Repositories;
+using Hospital.Core.Scheduling;
 using Hospital.Injectors;
-using Hospital.PhysicalAssets.Models;
-using Hospital.Scheduling;
 using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Manager;

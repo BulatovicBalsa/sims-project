@@ -6,7 +6,6 @@ using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PatientHealthcare.Services;
 using Hospital.GUI.Views.PatientHealthcare;
 using Hospital.GUI.Views.PhysicalAssets;
-using Hospital.PatientHealthcare.Services;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

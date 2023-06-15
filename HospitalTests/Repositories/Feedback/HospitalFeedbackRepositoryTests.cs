@@ -1,5 +1,5 @@
-﻿using Hospital.Core.PatientFeedback.Repositories;
-using Hospital.PatientFeedback.Models;
+﻿using Hospital.Core.PatientFeedback.Models;
+using Hospital.Core.PatientFeedback.Repositories;
 
 namespace HospitalTests.Repositories.Feedback;
 

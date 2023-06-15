@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Core.Notifications.Models;
 using Hospital.Core.Notifications.Services;
 using Hospital.Core.PatientHealthcare.Models;
 using Hospital.Core.PatientHealthcare.Repositories;
@@ -11,10 +12,6 @@ using Hospital.Core.Scheduling.Services;
 using Hospital.Core.Workers.Models;
 using Hospital.Core.Workers.Services;
 using Hospital.GUI.Views.Scheduling;
-using Hospital.Injectors;
-using Hospital.Notifications.Models;
-using Hospital.Serialization;
-using Hospital.Workers.Repositories;
 
 namespace Hospital.GUI.ViewModels.Scheduling;
 

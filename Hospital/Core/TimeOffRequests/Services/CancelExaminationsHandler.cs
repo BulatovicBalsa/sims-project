@@ -1,10 +1,10 @@
 ﻿using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.Scheduling;
 using Hospital.Core.TimeOffRequests.Models;
 using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Repositories;
 using Hospital.Injectors;
-using Hospital.Scheduling;
 using Hospital.Serialization;
-using Hospital.Workers.Repositories;
 
 namespace Hospital.Core.TimeOffRequests.Services;
 

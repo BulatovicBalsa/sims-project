@@ -1,5 +1,5 @@
 ﻿using Hospital.Core.Workers.Models;
-using Hospital.Workers.Services;
+using Hospital.Core.Workers.Services;
 
 namespace Hospital.Core.PatientHealthcare.Models;
 
