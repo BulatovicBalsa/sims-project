@@ -1,21 +1,20 @@
 ﻿using System.Globalization;
-using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Manager;
-using Hospital.Models.Nurse;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Nurse;
-using Hospital.Services;
-using Hospital.Services.Manager;
+using Hospital.PatientHealthcare.Models;
+using Hospital.PatientHealthcare.Services;
+using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Services;
+using Hospital.Workers.Models;
+using Hospital.Workers.Repositories;
+using Hospital.Workers.Services;
 
 namespace HospitalCLI.CliViews;
 
 public class DoctorCli
 {
-    private readonly List<Patient> _allPatients;
-    private readonly List<Room> _allRooms;
     private readonly List<Doctor> _allDoctors;
     private readonly List<Nurse> _allNurses;
+    private readonly List<Patient> _allPatients;
+    private readonly List<Room> _allRooms;
 
     private readonly Doctor _doctor;
     private readonly DoctorService _doctorService = new();
@@ -177,19 +176,18 @@ public class DoctorCli
 
         if (isOperation)
         {
-            procedureNurses = new();
-            procedureDoctors = new();
+            procedureNurses = new List<Nurse>();
+            procedureDoctors = new List<Doctor>();
         }
 
         i = j = 0;
 
         while (isOperation)
         {
-
             Console.WriteLine("\nAvailable doctors: ");
             _allDoctors.ForEach(doctor => Console.WriteLine($"\t{i++} {doctor}"));
 
-            Console.Write("Enter doctor index (X to stop): " );
+            Console.Write("Enter doctor index (X to stop): ");
             var answer = Console.ReadLine();
             if (answer == "X") break;
 
@@ -209,7 +207,8 @@ public class DoctorCli
         }
 
         var examination =
-            new Examination(_doctor, selectedPatient, isOperation, selectedDate, selectedRoom, false, procedureDoctors, procedureNurses);
+            new Examination(_doctor, selectedPatient, isOperation, selectedDate, selectedRoom, false, procedureDoctors,
+                procedureNurses);
 
         try
         {

@@ -1,19 +1,14 @@
-﻿using Hospital.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Hospital.Accounts.Models;
 
-namespace Hospital.Filter
+namespace Hospital.Filter;
+
+public class SearchFilter
 {
-    public class SearchFilter
+    public static bool IsPersonMatchingFilter(Person person, string id, string searchText)
     {
-        public static bool IsPersonMatchingFilter(Person person, string id, string searchText)
-        {
-            return person.Id != id &&
-                   (person.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    person.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-        }
+        return person.Id != id &&
+               (person.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                person.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
     }
 }

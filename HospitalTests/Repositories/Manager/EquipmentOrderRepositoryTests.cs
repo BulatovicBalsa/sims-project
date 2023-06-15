@@ -1,8 +1,8 @@
-﻿using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
+﻿using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 using Hospital.Serialization;
 
-namespace HospitalTests.Services.Manager;
+namespace HospitalTests.Repositories.Manager;
 
 [TestClass]
 public class EquipmentOrderRepositoryTests
@@ -29,6 +29,7 @@ public class EquipmentOrderRepositoryTests
 
         CsvSerializer<EquipmentOrderItem>.ToCSV(orderItems, "../../../Data/equipmentOrderItems.csv");
     }
+
     private static void DeleteData()
     {
         Directory.GetFiles("../../../Data/").ToList().ForEach(File.Delete);

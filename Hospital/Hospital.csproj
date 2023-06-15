@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\HospitalLogo.png" />
-    <None Remove="Images\PasswordIcon.png" />
-    <None Remove="Images\UsernameIcon.png" />
+    <None Remove="GUI\Images\HospitalLogo.png" />
+    <None Remove="GUI\Images\PasswordIcon.png" />
+    <None Remove="GUI\Images\UsernameIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,15 +23,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\HospitalLogo.png">
+    <Resource Include="GUI\Images\HospitalLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\PasswordIcon.png">
+    <Resource Include="GUI\Images\PasswordIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\UsernameIcon.png">
+    <Resource Include="GUI\Images\UsernameIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Accounts\Repositories\" />
+    <Folder Include="Examinations\Models\" />
+    <Folder Include="Examinations\Repositories\" />
+    <Folder Include="Examinations\Services\" />
+    <Folder Include="Repositories\Doctor\" />
+    <Folder Include="PatientFeedback\View\" />
+    <Folder Include="PatientFeedback\ViewModels\" />
+    <Folder Include="Patients\Models\" />
+    <Folder Include="Patients\Repositories\" />
+    <Folder Include="Patients\Services\" />
+    <Folder Include="PhysicalAssets\ViewModels\" />
+    <Folder Include="Repositories\Nurse\" />
+    <Folder Include="Scheduling\Repositories\" />
+    <Folder Include="TimeOffRequests\ViewModels\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using Hospital.Injectors;
-using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
+using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 using Hospital.Scheduling;
 using Hospital.Serialization;
 
@@ -13,7 +13,8 @@ public class ComplexRenovationRepositoryTests
     public void SetUp()
     {
         DeleteData();
-        new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>()).GetAllFromFile();
+        new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>())
+            .GetAllFromFile();
     }
 
     [TestCleanup]
@@ -53,7 +54,8 @@ public class ComplexRenovationRepositoryTests
         var complexRenovation = new ComplexRenovation(toDemolish, toBuild,
             new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
             toBuild[0], new List<Transfer> { fromOldToNew });
-        var complexRenovationRepository = new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
+        var complexRenovationRepository =
+            new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
 
         var complexRenovations = new List<ComplexRenovation>
         {
@@ -90,7 +92,8 @@ public class ComplexRenovationRepositoryTests
         var complexRenovation = new ComplexRenovation(toDemolish, toBuild,
             new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now),
             toBuild[0], new List<Transfer> { fromOldToNew });
-        var complexRenovationRepository = new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
+        var complexRenovationRepository =
+            new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
 
         var complexRenovations = new List<ComplexRenovation>
         {
@@ -139,7 +142,8 @@ public class ComplexRenovationRepositoryTests
         var complexRenovation = new ComplexRenovation(toDemolish, toBuild,
             new TimeRange(DateTime.Now.AddDays(-1), DateTime.Now.AddMinutes(-1)),
             toBuild[0], new List<Transfer> { fromOldToNew });
-        var complexRenovationRepository = new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
+        var complexRenovationRepository =
+            new ComplexRenovationRepository(SerializerInjector.CreateInstance<ISerializer<ComplexRenovation>>());
 
         var complexRenovations = new List<ComplexRenovation>
         {

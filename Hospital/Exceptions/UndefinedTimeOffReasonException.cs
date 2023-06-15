@@ -1,10 +1,14 @@
 ﻿using System;
 
-namespace Hospital.Exceptions
+namespace Hospital.Exceptions;
+
+public class UndefinedTimeOffReasonException : Exception
 {
-    public class UndefinedTimeOffReasonException: Exception
+    public UndefinedTimeOffReasonException()
     {
-        public UndefinedTimeOffReasonException() { }
-        public UndefinedTimeOffReasonException(string message) : base(message) { }
+    }
+
+    public UndefinedTimeOffReasonException(string message) : base(message)
+    {
     }
 }

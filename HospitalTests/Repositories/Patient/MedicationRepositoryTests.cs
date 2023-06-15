@@ -1,11 +1,9 @@
-﻿using Hospital.Serialization;
-using Hospital.Models.Patient;
-using Hospital.Serialization.Mappers;
-using Hospital.Serialization.Mappers.Patient;
+﻿using Hospital.Pharmacy.Models;
+using Hospital.Pharmacy.Repositories;
+using Hospital.Serialization;
+using Hospital.Serialization.Mappers.Medication;
 
 namespace HospitalTests.Repositories.Patient;
-
-using Hospital.Repositories.Patient;
 
 [TestClass]
 public class MedicationRepositoryTests

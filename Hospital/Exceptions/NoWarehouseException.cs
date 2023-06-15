@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hospital.Exceptions
+namespace Hospital.Exceptions;
+
+public class NoWarehouseException : Exception
 {
-    public class NoWarehouseException : Exception
-    {
-    }
 }

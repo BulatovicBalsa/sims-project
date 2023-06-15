@@ -1,0 +1,349 @@
+<Window x:Class="Hospital.GUI.Views.ManagerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
+        xmlns:converters="clr-namespace:Hospital.Converters"
+        mc:Ignorable="d"
+        Title="ManagerView" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:DoctorIdToStringConverter x:Key="DoctorIdToStringConverter" />
+    </Window.Resources>
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Inventory">
+                <DockPanel LastChildFill="False">
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button x:Name="EquipmentButton" Content="Inventory" Width="NaN" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" Click="Button_Click" />
+                    </ToolBar>
+                </DockPanel>
+            </TabItem>
+            <TabItem DataContext="{Binding OrderTabViewModel}" Header="Orders" Margin="-2,0,-2,0">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddOrderFormCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Orders, Mode=TwoWay}" SelectedItem="{Binding SelectedOrder}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Delivery Time"
+                                                    Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" IsReadOnly="False" />
+                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridCheckBoxColumn Header="Picked up" Binding="{Binding PickedUp, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedOrderItems}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Transfers" DataContext="{Binding TransferTabViewModel}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddStaticEquipmentTransferCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Add static equipment transfer" VerticalAlignment="Center"
+                                           Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddDynamicEquipmentTransferCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Add dynamic equipment transfer" VerticalAlignment="Center"
+                                           Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid ItemsSource="{Binding Transfers, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedTransfer}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Origin" Binding="{Binding Origin}" IsReadOnly="True"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Destination" Binding="{Binding Destination}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="DeliveryDate"
+                                                    Binding="{Binding DeliveryDateTime, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" IsReadOnly="False" />
+                                <DataGridCheckBoxColumn Header="Delivered" Binding="{Binding Delivered, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                                <DataGridCheckBoxColumn Header="Failed" Binding="{Binding Failed, Mode=OneWay}"
+                                                        Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedTransferItems}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Inventory name" Binding="{Binding Equipment}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Renovations" DataContext="{Binding RenovationTabViewModel}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding OpenAddSimpleRenovationFormCommand }">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Add renovation" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <DataGrid ItemsSource="{Binding Renovations, Mode=TwoWay}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Room" Binding="{Binding Room.Name}" IsReadOnly="True"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Begins"
+                                                    Binding="{Binding BeginTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Ends"
+                                                    Binding="{Binding EndTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" />
+                                <DataGridCheckBoxColumn Header="Completed" Binding="{Binding Completed}"
+                                                        IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Rooms" DataContext="{Binding RoomTabViewModel}">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                CommandParameter="{Binding Path=SelectedItems, ElementName=RoomDataGrid}"
+                                Command="{Binding MergeRoomsCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Merge rooms" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding SplitRoomCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image VerticalAlignment="Center" Source="/GUI/Images/PlusIcon.png" />
+                                <TextBlock Text="Split room" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="RoomDataGrid" ItemsSource="{Binding Rooms, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedRoom}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <Behaviors:Interaction.Triggers>
+                                <Behaviors:EventTrigger EventName="SelectedCellsChanged"
+                                                        SourceObject="{Binding ElementName=RoomDataGrid}">
+                                    <Behaviors:InvokeCommandAction Command="{Binding CheckIfMergingIsEnabled}" />
+                                </Behaviors:EventTrigger>
+                            </Behaviors:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type"
+                                                    Binding="{Binding Type, Mode=TwoWay}"
+                                                    Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="CreationDate"
+                                                    Binding="{Binding CreationDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Header="DemolitionDate"
+                                                    Binding="{Binding DemolitionDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                                    Width="*" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedRoomInventory}" CanUserAddRows="False"
+                                  AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Equipment.Name}"
+                                                    IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Type" Binding="{Binding Equipment.Type}" IsReadOnly="True"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Hospital survey" DataContext="{Binding HospitalSurveyTabViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ScottPlot:WpfPlot x:Name="AverageHospitalFeedbackRatingByAreaWpfPlot" />
+                    <DockPanel Grid.Row="0" Grid.Column="1">
+                        <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding RatingFrequenciesByArea}"
+                                  DisplayMemberPath="Key" SelectedItem="{Binding SelectedRatingFrequencies}" />
+                        <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="HospitalFeedbackFrequencyPlot" />
+                    </DockPanel>
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                              ItemsSource="{Binding AllHospitalFeedback}" AutoGenerateColumns="False"
+                              CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Overall rating" Binding="{Binding OverallRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Service quality" Binding="{Binding ServiceQualityRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Cleanliness" Binding="{Binding CleanlinessRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Patient satisfaction" Binding="{Binding SatisfactionRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Would recommend to a friend"
+                                                Binding="{Binding RecommendationRating}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True"
+                                                Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Doctor survey" DataContext="{Binding DoctorSurveyTabViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.ColumnSpan="2" Height="Auto" ItemsSource="{Binding Doctors}" SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedDoctorId}" />
+                    <ScottPlot:WpfPlot Grid.Row="1" Grid.Column="0" x:Name="AverageDoctorRatingByAreaWpfPlot" />
+                    <DockPanel Grid.Row="1" Grid.Column="1">
+                        <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedDoctorRatingFrequenciesByArea}"
+                                  DisplayMemberPath="Key" SelectedItem="{Binding SelectedAreaRatingFrequencies}" />
+                        <ScottPlot:WpfPlot DockPanel.Dock="Bottom" x:Name="DoctorRatingFrequencyWpfPlot" />
+                    </DockPanel>
+                    <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                              ItemsSource="{Binding SelectedDoctorFeedback}" AutoGenerateColumns="False"
+                              CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Overall rating" Binding="{Binding OverallRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Would recommend to a friend"
+                                                Binding="{Binding RecommendationRating}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Quality rating" Binding="{Binding DoctorQualityRating}"
+                                                IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True"
+                                                Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DockPanel Grid.Row="3" Grid.Column="0">
+                        <Label Content="Top 3 doctors" HorizontalAlignment="Center" DockPanel.Dock="Top" />
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Top3Doctors}" CanUserAddRows="False"
+                                  CanUserDeleteRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}"
+                                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                    <DockPanel Grid.Row="3" Grid.Column="1">
+                        <Label Content="Bottom 3 doctors" HorizontalAlignment="Center" DockPanel.Dock="Top" />
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Bottom3Doctors}"
+                                  CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}"
+                                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Grid>
+
+            </TabItem>
+            <TabItem DataContext="{Binding DoctorTimeOffRequestViewModel}" Header="Time off requests"
+                     Margin="-2,0,-2,0">
+                <DockPanel>
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding ApproveCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Approve" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Height="20"
+                                Command="{Binding RejectCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Reject" VerticalAlignment="Center" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Grid.ColumnSpan="2" ItemsSource="{Binding TimeOffRequests, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedRequest}"
+                                  CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Header="Accepted" Binding="{Binding IsApproved}"
+                                                        IsReadOnly="True" />
+                                <DataGridTextColumn Header="Doctor"
+                                                    Binding="{Binding DoctorId, Converter={StaticResource DoctorIdToStringConverter}}" />
+                                <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

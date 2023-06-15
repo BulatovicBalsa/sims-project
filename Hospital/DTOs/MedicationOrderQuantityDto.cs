@@ -1,11 +1,7 @@
 ﻿namespace Hospital.DTOs;
+
 public class MedicationOrderQuantityDto
 {
-    public string MedicationId { get; set; }
-    public string Name { get; set; }
-    public int Stock { get; set; }
-    public int OrderQuantity { get; set; }
-
     public MedicationOrderQuantityDto()
     {
     }
@@ -17,4 +13,9 @@ public class MedicationOrderQuantityDto
         Stock = stock;
         OrderQuantity = orderQuantity;
     }
+
+    public string MedicationId { get; set; }
+    public string Name { get; set; }
+    public int Stock { get; set; }
+    public int OrderQuantity { get; set; }
 }

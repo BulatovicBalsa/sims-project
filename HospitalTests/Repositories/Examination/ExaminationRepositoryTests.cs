@@ -1,23 +1,25 @@
 ﻿using Hospital.Injectors;
-using Hospital.Models.Doctor;
-using Hospital.Models.Manager;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Examination;
-using Hospital.Repositories.Manager;
-using Hospital.Repositories.Patient;
+using Hospital.PatientHealthcare.Repositories;
+using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 using Hospital.Serialization;
+using Hospital.Workers.Models;
+using Hospital.Workers.Repositories;
 
 namespace HospitalTests.Repositories.Examination;
+using Hospital.PatientHealthcare.Models;
 
 [TestClass]
 public class ExaminationRepositoryTests
 {
     private DoctorRepository _doctorRepository = new(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
-    private Hospital.Models.Examination.Examination _examination;
+    private Hospital.PatientHealthcare.Models.Examination _examination;
+
+    private readonly ExaminationChangesTrackerRepository _examinationChangesTrackerRepository =
+        new(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());
+
     private ExaminationRepository _examinationRepository;
     private PatientRepository _patientRepository;
-    private ExaminationChangesTrackerRepository _examinationChangesTrackerRepository = new ExaminationChangesTrackerRepository(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());
 
     [TestInitialize]
     public void TestInitialize()
@@ -49,20 +51,22 @@ public class ExaminationRepositoryTests
         _doctorRepository.Add(doctor1);
         _doctorRepository.Add(doctor2);
 
-        var patient1 = new Hospital.Models.Patient.Patient("Alice", "Smith", "1234567890124", "alicesmith", "password1",
+        var patient1 = new Patient("Alice", "Smith", "1234567890124", "alicesmith",
+            "password1",
             new MedicalRecord(80, 180));
-        var patient2 = new Hospital.Models.Patient.Patient("Bob", "Johnson", "1234567890125", "bobjohnson", "password2",
+        var patient2 = new Patient("Bob", "Johnson", "1234567890125", "bobjohnson",
+            "password2",
             new MedicalRecord(80, 180));
         _patientRepository.Add(patient1);
         _patientRepository.Add(patient2);
 
-        var examination1 = new Hospital.Models.Examination.Examination(doctor1, patient1, false,
+        var examination1 = new Hospital.PatientHealthcare.Models.Examination(doctor1, patient1, false,
             DateTime.Now.AddHours(30),
             RoomRepository.Instance.GetAll()[0]);
-        var examination2 = new Hospital.Models.Examination.Examination(doctor1, patient2, false,
+        var examination2 = new Hospital.PatientHealthcare.Models.Examination(doctor1, patient2, false,
             DateTime.Now.AddHours(40),
             RoomRepository.Instance.GetAll()[0]);
-        var examination3 = new Hospital.Models.Examination.Examination(doctor2, patient1, true,
+        var examination3 = new Hospital.PatientHealthcare.Models.Examination(doctor2, patient1, true,
             DateTime.Now.AddHours(50),
             RoomRepository.Instance.GetAll()[0]);
 
@@ -75,13 +79,14 @@ public class ExaminationRepositoryTests
     {
         var doctor = new Doctor("Dr. Linda", "Miller", "1234567890123", "drlindamiller", "docpassword3",
             "Cardiologist");
-        var patient = new Hospital.Models.Patient.Patient("Charlie", "Williams", "1234567890126", "charliewilliams", "password3",
+        var patient = new Patient("Charlie", "Williams", "1234567890126", "charliewilliams",
+            "password3",
             new MedicalRecord(80, 180));
 
         _doctorRepository.Add(doctor);
         _patientRepository.Add(patient);
 
-        _examination = new Hospital.Models.Examination.Examination(doctor, patient, false, DateTime.Now.AddHours(60),
+        _examination = new Hospital.PatientHealthcare.Models.Examination(doctor, patient, false, DateTime.Now.AddHours(60),
             RoomRepository.Instance.GetAll()[0]);
     }
 

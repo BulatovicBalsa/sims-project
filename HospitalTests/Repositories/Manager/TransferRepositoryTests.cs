@@ -1,6 +1,6 @@
 ﻿using Hospital.Injectors;
-using Hospital.Models.Manager;
-using Hospital.Repositories.Manager;
+using Hospital.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Repositories;
 using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Manager;

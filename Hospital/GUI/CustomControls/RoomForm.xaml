@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Hospital.GUI.CustomControls.RoomForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:valRule="clr-namespace:Hospital.ValidationRules"
+             x:Name="RoomFormElement"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Name" />
+        <TextBox Grid.Row="0" Grid.Column="1" TextChanged="RoomNameChanged">
+            <TextBox.Style>
+                <Style>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="placeholder" />
+                                    <TextBlock Background="Red" Foreground="White" x:Name="ErrorTextBlock"
+                                               Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}"
+                                               HorizontalAlignment="Left" />
+
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TextBox.Style>
+            <TextBox.Text>
+                <Binding Path="Room.Name" UpdateSourceTrigger="PropertyChanged" ElementName="RoomFormElement"
+                         ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <valRule:StringNotNullOrWhitespaceRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label Grid.Row="1" Grid.Column="0" Content="Type" />
+        <ComboBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"
+                  ItemsSource="{Binding Path=Types, ElementName=RoomFormElement}"
+                  SelectedItem="{Binding Path=Room.Type, ElementName=RoomFormElement}" />
+    </Grid>
+</UserControl>

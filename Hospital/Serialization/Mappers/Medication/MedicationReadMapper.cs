@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CsvHelper.Configuration;
-using Hospital.Models.Patient;
 
-namespace Hospital.Serialization.Mappers;
+namespace Hospital.Serialization.Mappers.Medication;
 
-public sealed class MedicationReadMapper : ClassMap<Medication>
+public sealed class MedicationReadMapper : ClassMap<Pharmacy.Models.Medication>
 {
     public MedicationReadMapper()
     {
