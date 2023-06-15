@@ -1,10 +1,11 @@
-﻿using Hospital.Models;
-using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Examination;
-using Hospital.Repositories.Patient;
-using Hospital.Services;
+﻿using Hospital.Notifications.Models;
+using Hospital.Notifications.Services;
+using Hospital.PatientHealthcare.Models;
+using Hospital.PatientHealthcare.Repositories;
+using Hospital.PatientHealthcare.Services;
+using Hospital.Scheduling.Services;
+using Hospital.Workers.Models;
+using Hospital.Workers.Services;
 
 namespace HospitalCLI.CliViews;
 

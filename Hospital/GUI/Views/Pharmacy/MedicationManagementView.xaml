@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.Medication"
+             xmlns:pharmacy="clr-namespace:Hospital.GUI.ViewModels.Pharmacy"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
-        <viewModel:MedicationManagementViewModel />
+        <pharmacy:MedicationManagementViewModel/>
     </UserControl.DataContext>
 
     <StackPanel Margin="200,0,200,0">

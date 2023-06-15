@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.UrgentExaminations"
+             xmlns:scheduling="clr-namespace:Hospital.GUI.ViewModels.Scheduling"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.DataContext>
-        <viewModel:UrgentExaminationsViewModel />
+        <scheduling:UrgentExaminationsViewModel/>
     </UserControl.DataContext>
 
     <StackPanel Margin="200,0,200,0">

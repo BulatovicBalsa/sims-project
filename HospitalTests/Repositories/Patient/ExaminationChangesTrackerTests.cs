@@ -1,9 +1,9 @@
 ﻿using Hospital.Injectors;
-using Hospital.PatientHealthcare.Models;
 using Hospital.PatientHealthcare.Repositories;
 using Hospital.Serialization;
 
 namespace HospitalTests.Repositories.Patient;
+using Hospital.PatientHealthcare.Models;
 
 [TestClass]
 public class ExaminationChangesTrackerTests

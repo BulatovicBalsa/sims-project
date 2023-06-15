@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.Patients"
+        xmlns:patientManagement="clr-namespace:Hospital.GUI.ViewModels.PatientManagement"
         mc:Ignorable="d"
         d:DesignHeight="675" d:DesignWidth="350"
         Height="675"
@@ -14,7 +14,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <viewModel:AddUpdatePatientViewModel />
+        <patientManagement:AddUpdatePatientViewModel/>
     </Window.DataContext>
 
     <Border CornerRadius="15">

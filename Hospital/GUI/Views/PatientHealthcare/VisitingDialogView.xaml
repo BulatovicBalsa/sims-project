@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModel="clr-namespace:Hospital.GUI.ViewModels.Nurse.PatientVisiting"
+        xmlns:patientHealthcare="clr-namespace:Hospital.GUI.ViewModels.PatientHealthcare"
         mc:Ignorable="d"
         Title="VisitingDialogView" Height="300" Width="400"
         Background="Transparent"
@@ -13,7 +13,7 @@
         WindowStyle="None">
 
     <Window.DataContext>
-        <viewModel:VisitingDialogViewModel />
+        <patientHealthcare:VisitingDialogViewModel />
     </Window.DataContext>
 
     <Border CornerRadius="15">
