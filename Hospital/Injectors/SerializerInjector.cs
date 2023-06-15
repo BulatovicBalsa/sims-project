@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hospital.Messaging.Models;
-using Hospital.PatientHealthcare.Models;
-using Hospital.Pharmacy.Models;
-using Hospital.PhysicalAssets.Models;
+using Hospital.Core.Messaging.Models;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.Pharmacy.Models;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.TimeOffRequests.Models;
+using Hospital.Core.Workers.Models;
 using Hospital.Serialization;
-using Hospital.TimeOffRequests.Models;
-using Hospital.Workers.Models;
 
 namespace Hospital.Injectors;
 

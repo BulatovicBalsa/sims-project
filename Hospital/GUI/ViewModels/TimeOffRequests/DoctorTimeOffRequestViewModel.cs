@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.TimeOffRequests.Models;
+using Hospital.Core.TimeOffRequests.Services;
 using Hospital.Injectors;
 using Hospital.Serialization;
-using Hospital.TimeOffRequests.Models;
 using Hospital.TimeOffRequests.Repositories;
-using Hospital.TimeOffRequests.Services;
 
 namespace Hospital.GUI.ViewModels.TimeOffRequests;
 

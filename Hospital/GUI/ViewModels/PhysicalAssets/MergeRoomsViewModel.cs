@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.Scheduling;
 using Hospital.PhysicalAssets.Services;
-using Hospital.Scheduling;
 using Hospital.Scheduling.Services;
 
 namespace Hospital.GUI.ViewModels.PhysicalAssets;

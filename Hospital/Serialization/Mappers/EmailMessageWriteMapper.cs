@@ -2,8 +2,8 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using Hospital.DTOs;
-using Hospital.Messaging.Models;
+using Hospital.Core.Accounts.DTOs;
+using Hospital.Core.Messaging.Models;
 
 namespace Hospital.Serialization.Mappers;
 

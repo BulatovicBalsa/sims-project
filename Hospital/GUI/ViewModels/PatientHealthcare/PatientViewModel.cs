@@ -8,10 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.Notifications.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
 using Hospital.GUI.Views.PatientFeedback;
-using Hospital.Notifications.Services;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

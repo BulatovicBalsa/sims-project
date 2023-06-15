@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Repositories;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Repositories;
 using Hospital.PhysicalAssets.Services;
 
 namespace Hospital.GUI.Views.PhysicalAssets;

@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Hospital.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Models;
 
 namespace Hospital.GUI.Views.PatientHealthcare;
 

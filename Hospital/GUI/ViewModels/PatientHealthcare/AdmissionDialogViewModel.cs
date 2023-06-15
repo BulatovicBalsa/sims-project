@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

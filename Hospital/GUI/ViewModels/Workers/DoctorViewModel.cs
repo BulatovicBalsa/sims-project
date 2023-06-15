@@ -4,16 +4,16 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.DTOs;
+using Hospital.Core.Accounts.DTOs;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.TimeOffRequests.Models;
+using Hospital.Core.TimeOffRequests.Services;
+using Hospital.Core.Workers.Models;
 using Hospital.Exceptions;
 using Hospital.GUI.Views.Messaging;
 using Hospital.GUI.Views.PatientHealthcare;
 using Hospital.GUI.Views.TimeOffRequests;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.TimeOffRequests.Models;
-using Hospital.TimeOffRequests.Services;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.Workers;
 

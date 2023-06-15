@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.Workers.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.Workers.Services;
 using Microsoft.VisualBasic;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;

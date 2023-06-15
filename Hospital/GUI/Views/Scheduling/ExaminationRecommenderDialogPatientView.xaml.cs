@@ -1,7 +1,7 @@
 ﻿using System.Windows;
+using Hospital.Core.PatientHealthcare.Models;
 using Hospital.GUI.ViewModels.PatientHealthcare;
 using Hospital.GUI.ViewModels.Scheduling;
-using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.GUI.Views.Scheduling;
 

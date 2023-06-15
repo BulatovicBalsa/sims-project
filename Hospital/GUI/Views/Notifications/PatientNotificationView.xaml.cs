@@ -1,6 +1,6 @@
 ﻿using System.Windows;
+using Hospital.Core.PatientHealthcare.Models;
 using Hospital.GUI.ViewModels.Notifications;
-using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.GUI.Views.Notifications;
 

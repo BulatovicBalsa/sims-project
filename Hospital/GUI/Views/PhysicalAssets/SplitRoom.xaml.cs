@@ -1,7 +1,7 @@
 ﻿using System.Windows;
+using Hospital.Core.PhysicalAssets.Models;
 using Hospital.GUI.ViewModels;
 using Hospital.GUI.ViewModels.PhysicalAssets;
-using Hospital.PhysicalAssets.Models;
 
 namespace Hospital.GUI.Views.PhysicalAssets;
 

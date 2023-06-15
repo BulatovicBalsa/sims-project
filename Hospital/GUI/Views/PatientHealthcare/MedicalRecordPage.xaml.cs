@@ -3,8 +3,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hospital.Core.PatientHealthcare.Models;
 using Hospital.GUI.ViewModels.PatientHealthcare;
-using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.GUI.Views.PatientHealthcare;
 

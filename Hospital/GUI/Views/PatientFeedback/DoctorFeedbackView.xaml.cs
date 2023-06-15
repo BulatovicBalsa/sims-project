@@ -1,6 +1,6 @@
 ﻿using System.Windows;
+using Hospital.Core.Workers.Models;
 using Hospital.GUI.ViewModels.PatientFeedback;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.Views.PatientFeedback;
 

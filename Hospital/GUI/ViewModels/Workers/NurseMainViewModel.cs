@@ -1,10 +1,10 @@
 ﻿using System.Windows.Input;
+using Hospital.Core.Workers.Services;
 using Hospital.GUI.ViewModels.PatientHealthcare;
 using Hospital.GUI.ViewModels.PatientManagement;
 using Hospital.GUI.ViewModels.Pharmacy;
 using Hospital.GUI.ViewModels.Scheduling;
 using Hospital.GUI.Views.Messaging;
-using Hospital.Workers.Services;
 
 namespace Hospital.GUI.ViewModels.Workers;
 

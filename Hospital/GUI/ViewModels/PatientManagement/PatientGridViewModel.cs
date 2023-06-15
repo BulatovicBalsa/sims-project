@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
 using Hospital.GUI.Views.PatientManagement;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientManagement;
 

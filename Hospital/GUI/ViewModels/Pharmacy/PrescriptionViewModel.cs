@@ -4,10 +4,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.Pharmacy.Models;
 using Hospital.GUI.Views.PatientHealthcare;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.Pharmacy.Models;
 
 namespace Hospital.GUI.ViewModels.Pharmacy;
 

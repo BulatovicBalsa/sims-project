@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hospital.Converters;
+using Hospital.Core.PatientFeedback.Models;
+using Hospital.Core.PatientFeedback.Repositories;
 using Hospital.GUI.Charting;
-using Hospital.PatientFeedback.Models;
-using Hospital.PatientFeedback.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientFeedback;
 

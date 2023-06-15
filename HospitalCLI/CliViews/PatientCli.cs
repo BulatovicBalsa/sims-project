@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
-using Hospital.PatientHealthcare.Models;
-using Hospital.Scheduling.Models;
-using Hospital.Scheduling.Services;
-using Hospital.Workers.Models;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.Scheduling.Models;
+using Hospital.Core.Scheduling.Services;
+using Hospital.Core.Workers.Models;
 
 namespace HospitalCLI.CliViews;
 

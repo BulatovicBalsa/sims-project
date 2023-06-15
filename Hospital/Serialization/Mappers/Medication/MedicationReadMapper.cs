@@ -4,7 +4,7 @@ using CsvHelper.Configuration;
 
 namespace Hospital.Serialization.Mappers.Medication;
 
-public sealed class MedicationReadMapper : ClassMap<Pharmacy.Models.Medication>
+public sealed class MedicationReadMapper : ClassMap<Core.Pharmacy.Models.Medication>
 {
     public MedicationReadMapper()
     {

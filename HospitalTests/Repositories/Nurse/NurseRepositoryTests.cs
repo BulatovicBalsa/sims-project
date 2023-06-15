@@ -1,6 +1,6 @@
-﻿using Hospital.Exceptions;
+﻿using Hospital.Core.Workers.Repositories;
+using Hospital.Exceptions;
 using Hospital.Serialization;
-using Hospital.Workers.Repositories;
 
 namespace HospitalTests.Repositories.Nurse;
 
@@ -12,7 +12,7 @@ public class NurseRepositoryTests
     [TestInitialize]
     public void TestInitialize()
     {
-        var testNurses = new List<Hospital.Workers.Models.Nurse>
+        var testNurses = new List<Hospital.Core.Workers.Models.Nurse>
         {
             new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234"),
             new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234"),
@@ -20,7 +20,7 @@ public class NurseRepositoryTests
             new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234")
         };
 
-        CsvSerializer<Hospital.Workers.Models.Nurse>.ToCSV(testNurses, TestFilePath);
+        CsvSerializer<Hospital.Core.Workers.Models.Nurse>.ToCSV(testNurses, TestFilePath);
     }
 
     [TestMethod]

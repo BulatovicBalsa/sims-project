@@ -5,16 +5,16 @@ using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.Pharmacy.Models;
+using Hospital.Core.Pharmacy.Repositories;
+using Hospital.Core.Workers.Models;
 using Hospital.Injectors;
-using Hospital.PatientHealthcare.Models;
-using Hospital.Pharmacy.Models;
-using Hospital.Pharmacy.Repositories;
-using Hospital.Workers.Models;
 using Hospital.Workers.Repositories;
 
 namespace Hospital.Serialization.Mappers.Patient;
 
-public sealed class PatientReadMapper : ClassMap<PatientHealthcare.Models.Patient>
+public sealed class PatientReadMapper : ClassMap<Core.PatientHealthcare.Models.Patient>
 {
     public PatientReadMapper()
     {

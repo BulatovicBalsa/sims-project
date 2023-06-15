@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.DTOs;
+using Hospital.Core.PatientHealthcare.DTOs;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.Workers.Models;
 using Hospital.GUI.Views.PatientHealthcare;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

@@ -6,11 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.Workers.Models;
 using Hospital.Injectors;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
 using Hospital.Serialization;
-using Hospital.Workers.Models;
 using Hospital.Workers.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;

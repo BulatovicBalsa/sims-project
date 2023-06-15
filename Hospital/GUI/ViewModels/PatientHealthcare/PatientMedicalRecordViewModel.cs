@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

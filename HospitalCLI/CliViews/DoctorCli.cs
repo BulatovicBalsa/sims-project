@@ -1,11 +1,11 @@
 ﻿using System.Globalization;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Services;
-using Hospital.Workers.Models;
-using Hospital.Workers.Repositories;
-using Hospital.Workers.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Services;
+using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Repositories;
+using Hospital.Core.Workers.Services;
 
 namespace HospitalCLI.CliViews;
 

@@ -1,5 +1,5 @@
 ﻿using CsvHelper.Configuration;
-using Hospital.Notifications.Models;
+using Hospital.Core.Notifications.Models;
 
 namespace Hospital.Serialization.Mappers;
 

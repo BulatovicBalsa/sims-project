@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.DTOs;
+using Hospital.Core.Accounts.DTOs;
+using Hospital.Core.Messaging.Models;
+using Hospital.Core.Messaging.Services;
 using Hospital.GUI.Views.Messaging;
-using Hospital.Messaging.Models;
-using Hospital.Messaging.Services;
 
 namespace Hospital.GUI.ViewModels.Messaging;
 

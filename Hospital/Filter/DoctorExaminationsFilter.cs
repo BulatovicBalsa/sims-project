@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hospital.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Models;
 
 namespace Hospital.Filter;
 

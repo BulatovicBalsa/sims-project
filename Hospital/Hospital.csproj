@@ -8,15 +8,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Accounts\Repositories\**" />
+    <Compile Remove="Core\PatientFeedback\ViewModels\**" />
+    <Compile Remove="Core\PatientFeedback\View\**" />
+    <Compile Remove="Core\PhysicalAssets\ViewModels\**" />
+    <Compile Remove="Core\Scheduling\Repositories\**" />
+    <Compile Remove="Core\TimeOffRequests\ViewModels\**" />
     <Compile Remove="Examinations\**" />
     <Compile Remove="Patients\**" />
     <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="Core\Accounts\Repositories\**" />
+    <EmbeddedResource Remove="Core\PatientFeedback\ViewModels\**" />
+    <EmbeddedResource Remove="Core\PatientFeedback\View\**" />
+    <EmbeddedResource Remove="Core\PhysicalAssets\ViewModels\**" />
+    <EmbeddedResource Remove="Core\Scheduling\Repositories\**" />
+    <EmbeddedResource Remove="Core\TimeOffRequests\ViewModels\**" />
     <EmbeddedResource Remove="Examinations\**" />
     <EmbeddedResource Remove="Patients\**" />
     <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Core\Accounts\Repositories\**" />
+    <None Remove="Core\PatientFeedback\ViewModels\**" />
+    <None Remove="Core\PatientFeedback\View\**" />
+    <None Remove="Core\PhysicalAssets\ViewModels\**" />
+    <None Remove="Core\Scheduling\Repositories\**" />
+    <None Remove="Core\TimeOffRequests\ViewModels\**" />
     <None Remove="Examinations\**" />
     <None Remove="Patients\**" />
     <None Remove="Repositories\**" />
+    <Page Remove="Core\Accounts\Repositories\**" />
+    <Page Remove="Core\PatientFeedback\ViewModels\**" />
+    <Page Remove="Core\PatientFeedback\View\**" />
+    <Page Remove="Core\PhysicalAssets\ViewModels\**" />
+    <Page Remove="Core\Scheduling\Repositories\**" />
+    <Page Remove="Core\TimeOffRequests\ViewModels\**" />
     <Page Remove="Examinations\**" />
     <Page Remove="Patients\**" />
     <Page Remove="Repositories\**" />
@@ -47,15 +71,6 @@
     <Resource Include="GUI\Images\UsernameIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Accounts\Repositories\" />
-    <Folder Include="PatientFeedback\View\" />
-    <Folder Include="PatientFeedback\ViewModels\" />
-    <Folder Include="PhysicalAssets\ViewModels\" />
-    <Folder Include="Scheduling\Repositories\" />
-    <Folder Include="TimeOffRequests\ViewModels\" />
   </ItemGroup>
 
 </Project>

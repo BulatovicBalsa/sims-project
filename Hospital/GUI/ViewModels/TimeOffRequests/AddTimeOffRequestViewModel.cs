@@ -2,10 +2,10 @@
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.TimeOffRequests.Models;
+using Hospital.Core.TimeOffRequests.Services;
+using Hospital.Core.Workers.Models;
 using Hospital.Exceptions;
-using Hospital.TimeOffRequests.Models;
-using Hospital.TimeOffRequests.Services;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.TimeOffRequests;
 

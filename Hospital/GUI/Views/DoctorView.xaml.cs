@@ -2,8 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Hospital.Core.Workers.Models;
 using Hospital.GUI.ViewModels.Workers;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.Views;
 

@@ -1,6 +1,7 @@
-﻿using Hospital.Injectors;
+﻿using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Repositories;
+using Hospital.Injectors;
 using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Repositories;
 using Hospital.Scheduling;
 using Hospital.Serialization;
 

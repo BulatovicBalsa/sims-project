@@ -1,11 +1,11 @@
-﻿using Hospital.Notifications.Models;
-using Hospital.Notifications.Services;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
-using Hospital.PatientHealthcare.Services;
-using Hospital.Scheduling.Services;
-using Hospital.Workers.Models;
-using Hospital.Workers.Services;
+﻿using Hospital.Core.Notifications.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.Scheduling.Services;
+using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Services;
+using Hospital.Notifications.Models;
 
 namespace HospitalCLI.CliViews;
 

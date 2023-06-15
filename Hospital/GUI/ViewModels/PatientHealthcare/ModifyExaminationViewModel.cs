@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Services;
+using Hospital.Core.Workers.Models;
 using Hospital.Exceptions;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Services;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

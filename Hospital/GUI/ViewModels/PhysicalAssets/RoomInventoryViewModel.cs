@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Repositories;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Repositories;
 
 namespace Hospital.GUI.ViewModels.PhysicalAssets;
 

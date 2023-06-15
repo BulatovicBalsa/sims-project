@@ -3,10 +3,10 @@ using System.Security;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Input;
-using Hospital.Accounts.Services;
+using Hospital.Core.Accounts.Services;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.Workers.Models;
 using Hospital.Exceptions;
-using Hospital.PatientHealthcare.Models;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.Accounts;
 

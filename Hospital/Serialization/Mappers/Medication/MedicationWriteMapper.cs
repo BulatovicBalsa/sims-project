@@ -2,7 +2,7 @@
 
 namespace Hospital.Serialization.Mappers.Medication;
 
-public sealed class MedicationWriteMapper : ClassMap<Pharmacy.Models.Medication>
+public sealed class MedicationWriteMapper : ClassMap<Core.Pharmacy.Models.Medication>
 {
     public MedicationWriteMapper()
     {

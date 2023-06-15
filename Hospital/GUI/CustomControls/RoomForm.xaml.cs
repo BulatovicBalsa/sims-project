@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using Hospital.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Models;
 
 namespace Hospital.GUI.CustomControls;
 

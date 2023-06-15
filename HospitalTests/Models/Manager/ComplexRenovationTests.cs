@@ -1,4 +1,5 @@
-﻿using Hospital.PhysicalAssets.Models;
+﻿using Hospital.Core.PhysicalAssets.Models;
+using Hospital.PhysicalAssets.Models;
 using Hospital.Scheduling;
 
 namespace HospitalTests.Models.Manager;

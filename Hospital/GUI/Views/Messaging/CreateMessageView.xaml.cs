@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Hospital.DTOs;
+using Hospital.Core.Accounts.DTOs;
 using Hospital.GUI.ViewModels.Messaging;
 
 namespace Hospital.GUI.Views.Messaging;

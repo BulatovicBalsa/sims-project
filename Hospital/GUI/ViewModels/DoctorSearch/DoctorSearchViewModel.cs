@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using Hospital.DoctorSearch.Services;
-using Hospital.Workers.Models;
+using Hospital.Core.DoctorSearch.Services;
+using Hospital.Core.Workers.Models;
 
 namespace Hospital.GUI.ViewModels.DoctorSearch;
 

@@ -2,12 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Hospital.Converters;
+using Hospital.Core.PatientFeedback.Models;
+using Hospital.Core.PatientFeedback.Repositories;
+using Hospital.Core.Workers.Models;
 using Hospital.GUI.Charting;
 using Hospital.Injectors;
-using Hospital.PatientFeedback.Models;
-using Hospital.PatientFeedback.Repositories;
 using Hospital.Serialization;
-using Hospital.Workers.Models;
 using Hospital.Workers.Repositories;
 
 namespace Hospital.GUI.ViewModels.PatientFeedback;

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Hospital.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Models;
 
 namespace Hospital.Filter.Nurse;
 

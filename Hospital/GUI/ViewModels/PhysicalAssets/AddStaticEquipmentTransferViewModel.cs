@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using Hospital.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Models;
 
 namespace Hospital.GUI.ViewModels.PhysicalAssets;
 

@@ -3,9 +3,9 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using Hospital.Notifications.Models;
-using Hospital.Pharmacy.Models;
-using Hospital.Pharmacy.Repositories;
+using Hospital.Core.Notifications.Models;
+using Hospital.Core.Pharmacy.Models;
+using Hospital.Core.Pharmacy.Repositories;
 
 namespace Hospital.Serialization.Mappers;
 

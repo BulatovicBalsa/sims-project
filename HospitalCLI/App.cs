@@ -1,8 +1,8 @@
-﻿using Hospital.GUI.Views;
+﻿using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.Workers.Models;
+using Hospital.GUI.Views;
 using Hospital.Injectors;
-using Hospital.PatientHealthcare.Repositories;
 using Hospital.Serialization;
-using Hospital.Workers.Models;
 using Hospital.Workers.Repositories;
 using HospitalCLI.CliViews;
 using HospitalCLI.Login;

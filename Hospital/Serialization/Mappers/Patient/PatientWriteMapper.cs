@@ -1,7 +1,8 @@
 ﻿using CsvHelper.Configuration;
 
 namespace Hospital.Serialization.Mappers.Patient;
-using Hospital.PatientHealthcare.Models;
+
+using Hospital.Core.PatientHealthcare.Models;
 public sealed class PatientWriteMapper : ClassMap<Patient>
 {
     public PatientWriteMapper()

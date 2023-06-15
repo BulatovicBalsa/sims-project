@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using Hospital.Messaging.Models;
+using Hospital.Core.Messaging.Models;
 
 namespace Hospital.Serialization.Mappers;
 

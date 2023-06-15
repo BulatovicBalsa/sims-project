@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Models;
 
 namespace Hospital.GUI.ViewModels.PatientManagement;
 

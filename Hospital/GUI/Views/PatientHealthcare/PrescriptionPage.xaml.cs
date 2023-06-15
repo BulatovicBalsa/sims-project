@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
+using Hospital.Core.PatientHealthcare.Models;
 using Hospital.GUI.ViewModels.Pharmacy;
-using Hospital.PatientHealthcare.Models;
 
 namespace Hospital.GUI.Views.PatientHealthcare;
 

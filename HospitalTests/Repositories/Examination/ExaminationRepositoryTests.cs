@@ -1,19 +1,20 @@
 ﻿using Hospital.Injectors;
-using Hospital.PatientHealthcare.Repositories;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Repositories;
 using Hospital.Serialization;
-using Hospital.Workers.Models;
-using Hospital.Workers.Repositories;
 
 namespace HospitalTests.Repositories.Examination;
-using Hospital.PatientHealthcare.Models;
+
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Repositories;
+using Hospital.Core.Workers.Models;
+using Hospital.Core.Workers.Repositories;
 
 [TestClass]
 public class ExaminationRepositoryTests
 {
     private DoctorRepository _doctorRepository = new(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
-    private Hospital.PatientHealthcare.Models.Examination _examination;
+    private Examination _examination;
 
     private readonly ExaminationChangesTrackerRepository _examinationChangesTrackerRepository =
         new(SerializerInjector.CreateInstance<ISerializer<PatientExaminationLog>>());

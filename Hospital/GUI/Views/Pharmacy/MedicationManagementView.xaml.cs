@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Hospital.DTOs;
+using Hospital.Core.Pharmacy.DTOs;
 
 namespace Hospital.GUI.Views.Pharmacy;
 

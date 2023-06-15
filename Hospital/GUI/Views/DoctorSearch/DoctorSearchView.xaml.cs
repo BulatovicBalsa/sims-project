@@ -1,9 +1,9 @@
 ﻿using System.Windows;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.Workers.Models;
 using Hospital.GUI.ViewModels.DoctorSearch;
 using Hospital.GUI.ViewModels.PatientHealthcare;
 using Hospital.GUI.Views.Scheduling;
-using Hospital.PatientHealthcare.Models;
-using Hospital.Workers.Models;
 
 namespace Hospital.GUI.Views.DoctorSearch;
 

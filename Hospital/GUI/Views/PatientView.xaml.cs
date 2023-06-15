@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
 using Hospital.GUI.ViewModels.PatientHealthcare;
 using Hospital.GUI.Views.DoctorSearch;
 using Hospital.GUI.Views.Notifications;
 using Hospital.GUI.Views.PatientHealthcare;
 using Hospital.GUI.Views.Scheduling;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
 
 namespace Hospital.GUI.Views;
 

@@ -3,13 +3,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.DTOs;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Repositories;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.Pharmacy.DTOs;
+using Hospital.Core.Pharmacy.Models;
+using Hospital.Core.Pharmacy.Services;
 using Hospital.GUI.Views.Pharmacy;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Repositories;
-using Hospital.PatientHealthcare.Services;
-using Hospital.Pharmacy.Models;
-using Hospital.Pharmacy.Services;
 
 namespace Hospital.GUI.ViewModels.Pharmacy;
 

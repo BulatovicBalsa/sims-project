@@ -1,4 +1,6 @@
-﻿using Hospital.PatientHealthcare.Models;
+﻿using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.PatientHealthcare.Models;
 using Hospital.PhysicalAssets.Models;
 using Hospital.Scheduling;
 using Hospital.Scheduling.Services;

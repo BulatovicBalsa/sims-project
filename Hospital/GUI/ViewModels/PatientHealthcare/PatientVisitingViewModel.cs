@@ -2,12 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Hospital.Core.PatientHealthcare.Models;
+using Hospital.Core.PatientHealthcare.Services;
+using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Services;
 using Hospital.Filter.Nurse;
 using Hospital.GUI.Views.PatientHealthcare;
-using Hospital.PatientHealthcare.Models;
-using Hospital.PatientHealthcare.Services;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Services;
 
 namespace Hospital.GUI.ViewModels.PatientHealthcare;
 

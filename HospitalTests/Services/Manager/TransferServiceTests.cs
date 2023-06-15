@@ -1,7 +1,7 @@
-﻿using Hospital.Injectors;
-using Hospital.PhysicalAssets.Models;
-using Hospital.PhysicalAssets.Repositories;
-using Hospital.PhysicalAssets.Services;
+﻿using Hospital.Core.PhysicalAssets.Models;
+using Hospital.Core.PhysicalAssets.Repositories;
+using Hospital.Core.PhysicalAssets.Services;
+using Hospital.Injectors;
 using Hospital.Serialization;
 
 namespace HospitalTests.Services.Manager;

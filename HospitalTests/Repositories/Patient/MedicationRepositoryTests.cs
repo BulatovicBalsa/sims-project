@@ -1,5 +1,5 @@
-﻿using Hospital.Pharmacy.Models;
-using Hospital.Pharmacy.Repositories;
+﻿using Hospital.Core.Pharmacy.Models;
+using Hospital.Core.Pharmacy.Repositories;
 using Hospital.Serialization;
 using Hospital.Serialization.Mappers.Medication;
 
