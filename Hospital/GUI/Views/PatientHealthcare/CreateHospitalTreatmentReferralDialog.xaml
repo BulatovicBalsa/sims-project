@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:Hospital.GUI.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:CreateHospitalTreatmentReferralViewModel}"
+        d:DataContext="{d:DesignInstance Type=patientHealthcare:CreateHospitalTreatmentReferralViewModel}"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:patientHealthcare="clr-namespace:Hospital.GUI.ViewModels.PatientHealthcare"
         mc:Ignorable="d"
         Title="Create Hospital Treatment Referral" Width="800" x:Name="HospitalTreatmentWindow"
         WindowStartupLocation="CenterScreen" SizeToContent="Height">

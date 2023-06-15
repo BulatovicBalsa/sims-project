@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Examinations\**" />
+    <Compile Remove="Patients\**" />
+    <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="Examinations\**" />
+    <EmbeddedResource Remove="Patients\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Examinations\**" />
+    <None Remove="Patients\**" />
+    <None Remove="Repositories\**" />
+    <Page Remove="Examinations\**" />
+    <Page Remove="Patients\**" />
+    <Page Remove="Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="GUI\Images\HospitalLogo.png" />
     <None Remove="GUI\Images\PasswordIcon.png" />
     <None Remove="GUI\Images\UsernameIcon.png" />
@@ -36,17 +51,9 @@
 
   <ItemGroup>
     <Folder Include="Accounts\Repositories\" />
-    <Folder Include="Examinations\Models\" />
-    <Folder Include="Examinations\Repositories\" />
-    <Folder Include="Examinations\Services\" />
-    <Folder Include="Repositories\Doctor\" />
     <Folder Include="PatientFeedback\View\" />
     <Folder Include="PatientFeedback\ViewModels\" />
-    <Folder Include="Patients\Models\" />
-    <Folder Include="Patients\Repositories\" />
-    <Folder Include="Patients\Services\" />
     <Folder Include="PhysicalAssets\ViewModels\" />
-    <Folder Include="Repositories\Nurse\" />
     <Folder Include="Scheduling\Repositories\" />
     <Folder Include="TimeOffRequests\ViewModels\" />
   </ItemGroup>
