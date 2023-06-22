@@ -90,7 +90,7 @@
                         <DataGridTemplateColumn Header="Description">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="View" Margin="3" Command="{Binding DataContext.ViewMedicalRecordCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
+                                    <Button Content="View" Margin="3" Command="{Binding DataContext.ViewAdvancedBookDetailsCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

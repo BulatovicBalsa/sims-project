@@ -9,7 +9,6 @@ using Hospital.Exceptions;
 using Hospital.Models.Books;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
-using Hospital.Models.Patient;
 using Hospital.Models.Requests;
 using Hospital.Services;
 using Hospital.Services.Books;
@@ -21,15 +20,15 @@ namespace Hospital.ViewModels;
 public class DoctorViewModel : ViewModelBase
 {
     private const string Placeholder = "Search...";
+    private readonly BookService _bookService = new();
     private readonly ExaminationService _examinationService = new();
     private readonly PatientService _patientService = new();
     private readonly DoctorTimeOffRequestService _requestService = new();
-    private readonly BookService _bookService = new();
+
+    private ObservableCollection<Book> _books;
 
     private Doctor _doctor;
     private ObservableCollection<Examination> _examinations;
-
-    private ObservableCollection<Book> _books;
 
     private string _searchBoxText;
 
@@ -49,7 +48,7 @@ public class DoctorViewModel : ViewModelBase
             new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
         SearchBoxText = Placeholder;
 
-        ViewMedicalRecordCommand = new RelayCommand<string>(ViewMedicalRecord);
+        ViewAdvancedBookDetailsCommand = new RelayCommand<string>(ViewAdvancedBookDetails);
         AddExaminationCommand = new RelayCommand(AddExamination);
         UpdateExaminationCommand = new RelayCommand(UpdateExamination);
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
@@ -136,7 +135,7 @@ public class DoctorViewModel : ViewModelBase
 
     public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
 
-    public ICommand ViewMedicalRecordCommand { get; set; }
+    public ICommand ViewAdvancedBookDetailsCommand { get; set; }
     public ICommand AddExaminationCommand { get; set; }
     public ICommand PerformExaminationCommand { get; set; }
     public ICommand UpdateExaminationCommand { get; set; }
@@ -145,6 +144,20 @@ public class DoctorViewModel : ViewModelBase
     public ICommand SendMessageCommand { get; set; }
     public ICommand AddTimeOffRequestCommand { get; set; }
     public ICommand VisitHospitalizedPatientsCommand { get; set; }
+
+    private void ViewAdvancedBookDetails(string bookId)
+    {
+        var book = _bookService.GetBookById(bookId);
+        if (book == null)
+        {
+            MessageBox.Show("Select a book in order to see more details", "Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
+
+        var dialog = new MedicalRecordDialog(book, false);
+        dialog.ShowDialog();
+    }
 
     private void DefaultExaminationView()
     {
