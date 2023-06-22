@@ -21,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Books;
 
 namespace Hospital.Views
 {
@@ -61,11 +62,9 @@ namespace Hospital.Views
             SearchBox.Foreground = Brushes.Black;
             string searchText = SearchBox.Text.ToLower();
 
-            List<Patient> filteredPatients = _viewModel.Books.Where(patient =>
-                patient.FirstName.ToLower().Contains(searchText) ||
-                patient.LastName.ToLower().Contains(searchText) ||
-                patient.Jmbg.ToLower().ToLower().Contains(searchText) ||
-                patient.Id.ToLower().Contains(searchText)).ToList();
+            List<Book> filteredPatients = _viewModel.Books.Where(patient =>
+                patient.Title.ToLower().Contains(searchText) ||
+                patient.Isbn.ToLower().Contains(searchText)).ToList();
 
             PatientsDataGrid.ItemsSource = filteredPatients;
         }
