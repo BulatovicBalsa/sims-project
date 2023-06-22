@@ -81,7 +81,12 @@
                     </TextBox>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" MaxHeight="400">
+                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}"
+                          Style="{DynamicResource DataGridStyle}" 
+                          CellStyle="{DynamicResource DataGridCellStyle}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                          RowStyle="{DynamicResource DataGridRowStyle}"
+                          SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" MaxHeight="400">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
                         <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
@@ -90,7 +95,7 @@
                         <DataGridTemplateColumn Header="Description">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="View" Margin="3" Command="{Binding DataContext.ViewAdvancedBookDetailsCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
+                                    <Button Style="{DynamicResource ActionButton}" Content="View" Margin="3" Command="{Binding DataContext.ViewAdvancedBookDetailsCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

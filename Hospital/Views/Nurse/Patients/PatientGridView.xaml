@@ -19,9 +19,8 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" 
+        <DataGrid Grid.Row="0" x:Name="PatientsDataGrid" 
                   ItemsSource="{Binding Path=Patients}" 
-                  x:Name="PatientsDataGrid" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{DynamicResource DataGridCellStyle}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 

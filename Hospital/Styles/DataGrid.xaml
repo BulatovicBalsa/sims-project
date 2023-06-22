@@ -135,6 +135,9 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
