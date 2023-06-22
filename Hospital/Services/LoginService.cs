@@ -3,7 +3,7 @@ using Hospital.Injectors;
 using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Librarian;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 
@@ -12,13 +12,13 @@ namespace Hospital.Services;
 public class LoginService
 {
     private readonly DoctorRepository _doctorRepository;
-    private readonly NurseRepository _nurseRepository;
+    private readonly LibrarianRepository _librarianRepository;
     private readonly PatientRepository _patientRepository;
 
     public LoginService()
     {
         _doctorRepository = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>());
-        _nurseRepository = NurseRepository.Instance;
+        _librarianRepository = LibrarianRepository.Instance;
         _patientRepository = PatientRepository.Instance;
     }
 
@@ -27,7 +27,7 @@ public class LoginService
     public bool AuthenticateUser(NetworkCredential credentials)
     {
         if (AuthenticateDoctor(credentials)) return true;
-        if (AuthenticateNurse(credentials)) return true;
+        if (AuthenticateLibrarian(credentials)) return true;
         if (AuthenticatePatient(credentials)) return true;
         if (AuthenticateManager(credentials)) return true;
 
@@ -40,9 +40,9 @@ public class LoginService
         return LoggedUser != null && LoggedUser.Profile.Password == credentials.Password;
     }
 
-    private bool AuthenticateNurse(NetworkCredential credentials)
+    private bool AuthenticateLibrarian(NetworkCredential credentials)
     {
-        LoggedUser = _nurseRepository.GetByUsername(credentials.UserName);
+        LoggedUser = _librarianRepository.GetByUsername(credentials.UserName);
         return LoggedUser != null && LoggedUser.Profile.Password == credentials.Password;
     }
 

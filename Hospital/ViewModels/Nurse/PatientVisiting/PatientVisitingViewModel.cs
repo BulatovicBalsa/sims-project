@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using Hospital.Filter.Nurse;
+using Hospital.Filter.Librarian;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Services;
 using Hospital.Services.Manager;
-using Hospital.Views.Nurse.PatientVisiting;
+using Hospital.Views.Librarian.PatientVisiting;
 
-namespace Hospital.ViewModels.Nurse.PatientVisiting;
+namespace Hospital.ViewModels.Librarian.PatientVisiting;
 
 public class PatientVisitingViewModel : ViewModelBase
 {

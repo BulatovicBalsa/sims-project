@@ -3,76 +3,76 @@ using System.Linq;
 using Hospital.Exceptions;
 using Hospital.Serialization;
 
-namespace Hospital.Repositories.Nurse;
+namespace Hospital.Repositories.Librarian;
 
 using Hospital.DTOs;
 using Hospital.Filter;
-using Hospital.Models.Nurse;
+using Hospital.Models.Librarian;
 using System;
 
-public class NurseRepository
+public class LibrarianRepository
 {
-    private const string FilePath = "../../../Data/nurses.csv";
-    private static NurseRepository? _instance;
-    public static NurseRepository Instance => _instance ??= new NurseRepository();
-    private NurseRepository() { }
-    public List<Nurse> GetAll()
+    private const string FilePath = "../../../Data/librarians.csv";
+    private static LibrarianRepository? _instance;
+    public static LibrarianRepository Instance => _instance ??= new LibrarianRepository();
+    private LibrarianRepository() { }
+    public List<Librarian> GetAll()
     {
-        return CsvSerializer<Nurse>.FromCSV(FilePath);
+        return CsvSerializer<Librarian>.FromCSV(FilePath);
     }
 
-    public Nurse? GetById(string id)
+    public Librarian? GetById(string id)
     {
-        return GetAll().FirstOrDefault(nurse => nurse.Id == id);
+        return GetAll().FirstOrDefault(librarian => librarian.Id == id);
     }
 
-    public Nurse? GetByUsername(string username)
+    public Librarian? GetByUsername(string username)
     {
-        return GetAll().FirstOrDefault(nurse => nurse.Profile.Username == username);
+        return GetAll().FirstOrDefault(librarian => librarian.Profile.Username == username);
     }
 
-    public void Add(Nurse nurse)
+    public void Add(Librarian librarian)
     {
-        var allNurses = GetAll();
-        allNurses.Add(nurse);
-        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
+        var allLibrarians = GetAll();
+        allLibrarians.Add(librarian);
+        CsvSerializer<Librarian>.ToCSV(allLibrarians, FilePath);
     }
-    public void Update(Nurse nurse)
+    public void Update(Librarian librarian)
 
     {
-        var allNurses = GetAll();
+        var allLibrarians = GetAll();
 
-        var indexToUpdate = allNurses.FindIndex(nurseRecord => nurseRecord.Id == nurse.Id);
+        var indexToUpdate = allLibrarians.FindIndex(librarianRecord => librarianRecord.Id == librarian.Id);
         if (indexToUpdate == -1)
-            throw new ObjectNotFoundException($"Nurse with id {nurse.Id} was not found.");
-        allNurses[indexToUpdate] = nurse;
+            throw new ObjectNotFoundException($"Librarian with id {librarian.Id} was not found.");
+        allLibrarians[indexToUpdate] = librarian;
 
-        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
+        CsvSerializer<Librarian>.ToCSV(allLibrarians, FilePath);
     }
 
-    public void Delete(Nurse nurse)
+    public void Delete(Librarian librarian)
     {
-        var allNurses = GetAll();
+        var allLibrarians = GetAll();
 
-        if (!allNurses.Remove(nurse))
-            throw new ObjectNotFoundException($"Nurse with id {nurse.Id} was not found.");
+        if (!allLibrarians.Remove(librarian))
+            throw new ObjectNotFoundException($"Librarian with id {librarian.Id} was not found.");
 
-        CsvSerializer<Nurse>.ToCSV(allNurses, FilePath);
+        CsvSerializer<Librarian>.ToCSV(allLibrarians, FilePath);
     }
 
-    public List<PersonDTO> GetNursesAsPersonDTOsByFilter(string id, string searchText)
+    public List<PersonDTO> GetLibrariansAsPersonDTOsByFilter(string id, string searchText)
     {
-        var allNurses = GetAll();
-        var filteredNurses = allNurses.Where(nurse => SearchFilter.IsPersonMatchingFilter(nurse, id, searchText)).ToList();
+        var allLibrarians = GetAll();
+        var filteredLibrarians = allLibrarians.Where(librarian => SearchFilter.IsPersonMatchingFilter(librarian, id, searchText)).ToList();
 
-        var nurseDTOs = filteredNurses.Select(nurse => new PersonDTO
+        var librarianDTOs = filteredLibrarians.Select(librarian => new PersonDTO
         {
-            Id = nurse.Id,
-            FirstName = nurse.FirstName,
-            LastName = nurse.LastName,
-            Role = Role.Nurse
+            Id = librarian.Id,
+            FirstName = librarian.FirstName,
+            LastName = librarian.LastName,
+            Role = Role.Librarian
         }).ToList();
 
-        return nurseDTOs;
+        return librarianDTOs;
     }
 }

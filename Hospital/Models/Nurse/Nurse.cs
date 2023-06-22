@@ -1,12 +1,12 @@
-﻿namespace Hospital.Models.Nurse;
+﻿namespace Hospital.Models.Librarian;
 
-public class Nurse : Person
+public class Librarian : Person
 {
-    public Nurse()
+    public Librarian()
     {
     }
 
-    public Nurse(string firstName, string lastName, string jmbg, string username, string password) : base(firstName,
+    public Librarian(string firstName, string lastName, string jmbg, string username, string password) : base(firstName,
         lastName, jmbg, username, password)
     {
     }

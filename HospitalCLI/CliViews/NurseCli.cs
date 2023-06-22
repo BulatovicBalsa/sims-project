@@ -8,7 +8,7 @@ using Hospital.Services;
 
 namespace HospitalCLI.CliViews;
 
-public class NurseCli
+public class LibrarianCli
 {
     private readonly DoctorService _doctorService;
     private readonly PatientRepository _patientRepository;
@@ -24,7 +24,7 @@ public class NurseCli
     private List<Patient> _allPatients;
     private List<String> _allSpecializations;
 
-    public NurseCli()
+    public LibrarianCli()
     {
         _doctorService = new DoctorService();
         _patientRepository = PatientRepository.Instance;

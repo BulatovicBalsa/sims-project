@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Exceptions;
-using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Librarian;
 using Hospital.Serialization;
 
-namespace HospitalTests.Repositories.Nurse
+namespace HospitalTests.Repositories.Librarian
 {
-    using Hospital.Models.Nurse;
+    using Hospital.Models.Librarian;
 
     [TestClass]
-    public class NurseRepositoryTests
+    public class LibrarianRepositoryTests
     {
-        private const string TestFilePath = "../../../Data/nurses.csv";
+        private const string TestFilePath = "../../../Data/librarians.csv";
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var testNurses = new List<Nurse>
+            var testLibrarians = new List<Librarian>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234"),
                 new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234"),
@@ -27,20 +27,20 @@ namespace HospitalTests.Repositories.Nurse
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234"),
             };
 
-            CsvSerializer<Nurse>.ToCSV(testNurses, TestFilePath);
+            CsvSerializer<Librarian>.ToCSV(testLibrarians, TestFilePath);
         }
 
         [TestMethod]
         public void TestGetAll()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var loadedNurses = nurseRepository.GetAll();
+            var librarianRepository = LibrarianRepository.Instance;
+            var loadedLibrarians = librarianRepository.GetAll();
 
-            Assert.IsNotNull(loadedNurses);
-            Assert.AreEqual(4, loadedNurses.Count);
-            Assert.AreEqual("Teodor", loadedNurses[3].FirstName);
-            Assert.AreNotEqual("11", loadedNurses[0].Jmbg);
-            Assert.AreEqual("Milutinovic", loadedNurses[1].LastName);
+            Assert.IsNotNull(loadedLibrarians);
+            Assert.AreEqual(4, loadedLibrarians.Count);
+            Assert.AreEqual("Teodor", loadedLibrarians[3].FirstName);
+            Assert.AreNotEqual("11", loadedLibrarians[0].Jmbg);
+            Assert.AreEqual("Milutinovic", loadedLibrarians[1].LastName);
         }
 
         [TestMethod]
@@ -51,90 +51,90 @@ namespace HospitalTests.Repositories.Nurse
                 File.Delete(TestFilePath);
             }
 
-            Assert.AreEqual(0, NurseRepository.Instance.GetAll().Count);
+            Assert.AreEqual(0, LibrarianRepository.Instance.GetAll().Count);
         }
 
         [TestMethod]
         public void TestGetById()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var loadedNurses = nurseRepository.GetAll();
+            var librarianRepository = LibrarianRepository.Instance;
+            var loadedLibrarians = librarianRepository.GetAll();
 
-            var testNurse = loadedNurses[0];
+            var testLibrarian = loadedLibrarians[0];
             
-            Assert.AreEqual(testNurse.FirstName, nurseRepository.GetById(testNurse.Id).FirstName);
-            Assert.IsNull(nurseRepository.GetById("0"));
-            Assert.AreEqual(testNurse.LastName, nurseRepository.GetById(testNurse.Id).LastName);
+            Assert.AreEqual(testLibrarian.FirstName, librarianRepository.GetById(testLibrarian.Id).FirstName);
+            Assert.IsNull(librarianRepository.GetById("0"));
+            Assert.AreEqual(testLibrarian.LastName, librarianRepository.GetById(testLibrarian.Id).LastName);
         }
 
         [TestMethod]
         public void TestUpdate()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var loadedNurses= nurseRepository.GetAll();
+            var librarianRepository = LibrarianRepository.Instance;
+            var loadedLibrarians= librarianRepository.GetAll();
 
-            var testNurse = loadedNurses[1];
-            testNurse.FirstName = "TestFirstName";
-            testNurse.LastName = "TestLastName";
-            testNurse.Profile.Username = "TestUsername";
-            testNurse.Profile.Password = "TestPassword";
+            var testLibrarian = loadedLibrarians[1];
+            testLibrarian.FirstName = "TestFirstName";
+            testLibrarian.LastName = "TestLastName";
+            testLibrarian.Profile.Username = "TestUsername";
+            testLibrarian.Profile.Password = "TestPassword";
 
-            nurseRepository.Update(testNurse);
+            librarianRepository.Update(testLibrarian);
 
-            Assert.AreEqual("TestFirstName", nurseRepository.GetById(testNurse.Id)?.FirstName);
-            Assert.AreEqual("TestLastName", nurseRepository.GetById(testNurse.Id)?.LastName);
-            Assert.AreEqual("TestUsername", nurseRepository.GetById(testNurse.Id)?.Profile.Username);
-            Assert.AreEqual("TestPassword", nurseRepository.GetById(testNurse.Id)?.Profile.Password);
+            Assert.AreEqual("TestFirstName", librarianRepository.GetById(testLibrarian.Id)?.FirstName);
+            Assert.AreEqual("TestLastName", librarianRepository.GetById(testLibrarian.Id)?.LastName);
+            Assert.AreEqual("TestUsername", librarianRepository.GetById(testLibrarian.Id)?.Profile.Username);
+            Assert.AreEqual("TestPassword", librarianRepository.GetById(testLibrarian.Id)?.Profile.Password);
         }
 
         [TestMethod]
         public void TestDelete()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var loadedNurses= nurseRepository.GetAll();
+            var librarianRepository = LibrarianRepository.Instance;
+            var loadedLibrarians= librarianRepository.GetAll();
 
-            var testNurse= loadedNurses[1];
+            var testLibrarian= loadedLibrarians[1];
 
-            nurseRepository.Delete(testNurse);
+            librarianRepository.Delete(testLibrarian);
 
-            Assert.AreEqual(3, nurseRepository.GetAll().Count);
-            Assert.IsNull(nurseRepository.GetById(testNurse.Id));
+            Assert.AreEqual(3, librarianRepository.GetAll().Count);
+            Assert.IsNull(librarianRepository.GetById(testLibrarian.Id));
         }
 
         [TestMethod]
         public void TestAdd()
         {
-            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
-            var nurseRepository = NurseRepository.Instance;
+            var librarianRepository = LibrarianRepository.Instance;
 
-            nurseRepository.Add(newNurse);
-            var loadedNurses= nurseRepository.GetAll();
+            librarianRepository.Add(newLibrarian);
+            var loadedLibrarians= librarianRepository.GetAll();
 
-            var testNurse= loadedNurses[4];
+            var testLibrarian= loadedLibrarians[4];
 
-            Assert.AreEqual(5, nurseRepository.GetAll().Count);
-            Assert.AreEqual(testNurse, nurseRepository.GetById(testNurse.Id));
+            Assert.AreEqual(5, librarianRepository.GetAll().Count);
+            Assert.AreEqual(testLibrarian, librarianRepository.GetById(testLibrarian.Id));
         }
 
         [TestMethod]
         public void TestUpdateNonExistent()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var librarianRepository = LibrarianRepository.Instance;
+            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
-            Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Update(newNurse));
+            Assert.ThrowsException<ObjectNotFoundException>(() => librarianRepository.Update(newLibrarian));
         }
 
         [TestMethod]
         public void TestDeleteNonExistent()
         {
-            var nurseRepository = NurseRepository.Instance;
-            var newNurse = new Nurse("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var librarianRepository = LibrarianRepository.Instance;
+            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
-            Assert.ThrowsException<ObjectNotFoundException>(() => nurseRepository.Delete(newNurse));
+            Assert.ThrowsException<ObjectNotFoundException>(() => librarianRepository.Delete(newLibrarian));
         }
     }
 }

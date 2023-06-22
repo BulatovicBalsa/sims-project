@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models.Patient;
 
-namespace Hospital.Filter.Nurse;
+namespace Hospital.Filter.Librarian;
 public class PatientAccommodationRoomFilter : IPatientFilter
 {
     public List<Patient> Filter(List<Patient> patientsToFilter, object valueToCompare)

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse.Patients
+namespace Hospital.Views.Librarian.Patients
 {
     /// <summary>
     /// Interaction logic for MedicalRecordView.xaml

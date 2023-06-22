@@ -2,9 +2,9 @@
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
-using Hospital.Models.Nurse;
+using Hospital.Models.Librarian;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Librarian;
 using Hospital.Services;
 using Hospital.Services.Manager;
 
@@ -15,7 +15,7 @@ public class DoctorCli
     private readonly List<Patient> _allPatients;
     private readonly List<Room> _allRooms;
     private readonly List<Doctor> _allDoctors;
-    private readonly List<Nurse> _allNurses;
+    private readonly List<Librarian> _allLibrarians;
 
     private readonly Doctor _doctor;
     private readonly DoctorService _doctorService = new();
@@ -32,7 +32,7 @@ public class DoctorCli
         _allPatients = _patientService.GetAllPatients();
         _allRooms = _roomFilterService.GetRoomsForExamination();
         _allDoctors = _doctorService.GetAll();
-        _allNurses = NurseRepository.Instance.GetAll(); //change later
+        _allLibrarians = LibrarianRepository.Instance.GetAll(); //change later
         _examinations = _examinationService.GetExaminationsForNextThreeDays(_doctor);
 
         _allDoctors.Remove(_allDoctors.FirstOrDefault(_doctor.Equals)!);
@@ -173,11 +173,11 @@ public class DoctorCli
         if (Console.ReadLine() == "yes") isOperation = true;
 
         List<Doctor> procedureDoctors = null;
-        List<Nurse> procedureNurses = null;
+        List<Librarian> procedureLibrarians = null;
 
         if (isOperation)
         {
-            procedureNurses = new();
+            procedureLibrarians = new();
             procedureDoctors = new();
         }
 
@@ -198,18 +198,18 @@ public class DoctorCli
 
         while (isOperation)
         {
-            Console.WriteLine("\nAvailable nurses: ");
-            _allNurses.ForEach(nurse => Console.WriteLine($"\t{j++} {nurse}"));
+            Console.WriteLine("\nAvailable librarians: ");
+            _allLibrarians.ForEach(librarian => Console.WriteLine($"\t{j++} {librarian}"));
 
-            Console.Write("Enter nurse index for help (X to stop): ");
+            Console.Write("Enter librarian index for help (X to stop): ");
             var answer = Console.ReadLine();
             if (answer == "X") break;
 
-            procedureNurses!.Add(_allNurses[Convert.ToInt32(answer)]);
+            procedureLibrarians!.Add(_allLibrarians[Convert.ToInt32(answer)]);
         }
 
         var examination =
-            new Examination(_doctor, selectedPatient, isOperation, selectedDate, selectedRoom, false, procedureDoctors, procedureNurses);
+            new Examination(_doctor, selectedPatient, isOperation, selectedDate, selectedRoom, false, procedureDoctors, procedureLibrarians);
 
         try
         {

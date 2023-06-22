@@ -1,6 +1,6 @@
 ﻿using Hospital.DTOs;
-using Hospital.Models.Nurse;
-using Hospital.Repositories.Nurse;
+using Hospital.Models.Librarian;
+using Hospital.Repositories.Librarian;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,30 +9,30 @@ namespace Hospital.Services
 
 {
 
-    public class NurseService
+    public class LibrarianService
     {
-        private readonly NurseRepository _nurseRepository;
-        public NurseService() 
+        private readonly LibrarianRepository _librarianRepository;
+        public LibrarianService() 
         {
-            _nurseRepository = NurseRepository.Instance;
+            _librarianRepository = LibrarianRepository.Instance;
         }
-        public List<Nurse> GetAll()
+        public List<Librarian> GetAll()
         {
-            return _nurseRepository.GetAll();
+            return _librarianRepository.GetAll();
         }
-        public List<PersonDTO> GetNursesAsPersonDTOsByFilter(string id, string searchText)
+        public List<PersonDTO> GetLibrariansAsPersonDTOsByFilter(string id, string searchText)
         {
-            return _nurseRepository.GetNursesAsPersonDTOsByFilter(id, searchText);
+            return _librarianRepository.GetLibrariansAsPersonDTOsByFilter(id, searchText);
         }
 
-        public PersonDTO GetLoggedInNurse()
+        public PersonDTO GetLoggedInLibrarian()
         {
             var identityName = Thread.CurrentPrincipal.Identity.Name;
             var id = identityName.Split("|")[0];
-            var loggedInNurse = _nurseRepository.GetById(id);
+            var loggedInLibrarian = _librarianRepository.GetById(id);
 
-            // Convert the Nurse object to PersonDTO
-            return new PersonDTO(loggedInNurse.Id, loggedInNurse.FirstName, loggedInNurse.LastName, Role.Nurse);
+            // Convert the Librarian object to PersonDTO
+            return new PersonDTO(loggedInLibrarian.Id, loggedInLibrarian.FirstName, loggedInLibrarian.LastName, Role.Librarian);
         }
     }
 }

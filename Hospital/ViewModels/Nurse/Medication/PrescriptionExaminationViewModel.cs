@@ -7,7 +7,7 @@ using Hospital.Models.Patient;
 using Hospital.Services;
 using Hospital.Models.Examination;
 
-namespace Hospital.ViewModels.Nurse.Medication;
+namespace Hospital.ViewModels.Librarian.Medication;
 public class PrescriptionExaminationViewModel : ViewModelBase
 {
     private readonly DoctorService _doctorService;

@@ -8,7 +8,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 
-namespace Hospital.ViewModels.Nurse.PatientAdmission;
+namespace Hospital.ViewModels.Librarian.PatientAdmission;
 
 public class AdmissionDialogViewModel : ViewModelBase
 {

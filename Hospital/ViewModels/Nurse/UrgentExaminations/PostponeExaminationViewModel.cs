@@ -10,7 +10,7 @@ using Hospital.Models.Patient;
 using Hospital.Repositories.Examination;
 using Hospital.Services;
 
-namespace Hospital.ViewModels.Nurse.UrgentExaminations;
+namespace Hospital.ViewModels.Librarian.UrgentExaminations;
 
 public class PostponeExaminationViewModel : ViewModelBase
 {

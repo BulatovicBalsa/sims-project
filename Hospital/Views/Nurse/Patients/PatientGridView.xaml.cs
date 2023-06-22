@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse
+namespace Hospital.Views.Librarian
 {
     /// <summary>
     /// Interaction logic for PatientGridView.xaml

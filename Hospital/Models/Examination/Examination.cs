@@ -7,7 +7,7 @@ namespace Hospital.Models.Examination;
 using Doctor;
 using Hospital.Repositories.Manager;
 using Patient;
-using Nurse;
+using Librarian;
 public class UpdateExaminationDto
 {
     public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient patient,
@@ -40,9 +40,9 @@ public class Examination
     public bool Admissioned { get; set; }
     public bool Urgent { get; set; }
     public List<Doctor>? ProcedureDoctors { get; set; }
-    public List<Nurse>? ProcedureNurses { get; set; }
+    public List<Librarian>? ProcedureLibrarians { get; set; }
 
-    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<Doctor>? procedureDoctors = null, List<Nurse>? procedureNursesIds = null)
+    public Examination(Doctor? doctor, Patient patient, bool isOperation, DateTime start, Room? room, bool urgent = false, List<Doctor>? procedureDoctors = null, List<Librarian>? procedureLibrariansIds = null)
     {
          Doctor = doctor;
          Patient = patient;
@@ -54,7 +54,7 @@ public class Examination
          Admissioned = false;
          Urgent = urgent;
          ProcedureDoctors = procedureDoctors;
-         ProcedureNurses = procedureNursesIds;
+         ProcedureLibrarians = procedureLibrariansIds;
     }
 
     public Examination()
@@ -114,9 +114,9 @@ public class Examination
                 ProcedureDoctors.ForEach(doctor => builder.Append($"\n\t{indent}{doctor}"));
             }
 
-            if (!(ProcedureNurses?.Count > 0)) return builder.ToString();
-            builder.Append($"\n{indent}Procedure Nurses: ");
-            ProcedureNurses.ForEach(nurse => builder.Append($"\n\t{indent}{nurse}"));
+            if (!(ProcedureLibrarians?.Count > 0)) return builder.ToString();
+            builder.Append($"\n{indent}Procedure Librarians: ");
+            ProcedureLibrarians.ForEach(librarian => builder.Append($"\n\t{indent}{librarian}"));
 
             return builder.ToString();
         }

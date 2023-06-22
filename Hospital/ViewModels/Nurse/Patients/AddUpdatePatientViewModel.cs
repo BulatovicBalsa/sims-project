@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 
-namespace Hospital.ViewModels.Nurse.Patients;
+namespace Hospital.ViewModels.Librarian.Patients;
 
 public class AddUpdatePatientViewModel : ViewModelBase
 {

@@ -9,7 +9,7 @@ using Hospital.Filter;
 using Hospital.Injectors;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
-using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Librarian;
 using Hospital.Repositories.Patient;
 using Hospital.Scheduling;
 using Hospital.Serialization;
@@ -19,7 +19,7 @@ namespace Hospital.Repositories.Examination;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Models.Doctor;
-using Hospital.Models.Nurse;
+using Hospital.Models.Librarian;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {
@@ -37,7 +37,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
         Map(examination => examination.ProcedureDoctors).Index(9).TypeConverter<DoctorListTypeConverter>();
-        Map(examination => examination.ProcedureNurses).Index(10).TypeConverter<NurseListTypeConverter>();
+        Map(examination => examination.ProcedureLibrarians).Index(10).TypeConverter<LibrarianListTypeConverter>();
     }
 
     public class DoctorTypeConverter : DefaultTypeConverter
@@ -101,22 +101,22 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
         }
     }
 
-    public class NurseListTypeConverter : DefaultTypeConverter
+    public class LibrarianListTypeConverter : DefaultTypeConverter
     {
         public override object? ConvertFromString(string? inputText, IReaderRow rowData, MemberMapData mappingData)
         {
             if (string.IsNullOrEmpty(inputText))
                 return null;
 
-            var nurses = new List<Nurse>();
-            inputText?.Split("|").ToList().ForEach(nurseId =>
+            var librarians = new List<Librarian>();
+            inputText?.Split("|").ToList().ForEach(librarianId =>
             {
-                var doctor = NurseRepository.Instance.GetById(nurseId) ??
-                             throw new KeyNotFoundException($"Doctor with ID {nurseId} not found");
-                nurses.Add(doctor);
+                var doctor = LibrarianRepository.Instance.GetById(librarianId) ??
+                             throw new KeyNotFoundException($"Doctor with ID {librarianId} not found");
+                librarians.Add(doctor);
             });
 
-            return nurses;
+            return librarians;
         }
     }
 }
@@ -135,7 +135,7 @@ public sealed class ExaminationWriteMapper : ClassMap<Examination>
         Map(examination => examination.Admissioned).Index(7);
         Map(examination => examination.Urgent).Index(8);
         Map(examination => examination.ProcedureDoctors).Index(9).Convert(row => string.Join("|", row.Value.ProcedureDoctors?.Select(doctor => doctor.Id) ?? new List<string>())).Index(9);
-        Map(examination => examination.ProcedureNurses).Index(10).Convert(row => string.Join("|", row.Value.ProcedureNurses?.Select(nurse  => nurse.Id) ?? new List<string>())).Index(10);
+        Map(examination => examination.ProcedureLibrarians).Index(10).Convert(row => string.Join("|", row.Value.ProcedureLibrarians?.Select(librarian  => librarian.Id) ?? new List<string>())).Index(10);
     }
 }
 

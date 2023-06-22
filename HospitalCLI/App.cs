@@ -8,7 +8,7 @@ using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Views.Manager;
-using Hospital.Views.Nurse;
+using Hospital.Views.Librarian;
 using Hospital.Views;
 using HospitalCLI.CliViews;
 using HospitalCLI.Login;
@@ -60,10 +60,10 @@ public class App
                 //ShowNotifications(id);
                 break;
             }
-            case "NURSE":
+            case "LIBRARIAN":
             {
-                var nurseView = new NurseCli();
-                nurseView.Menu();
+                var librarianView = new LibrarianCli();
+                librarianView.Menu();
 
                 break;
             }

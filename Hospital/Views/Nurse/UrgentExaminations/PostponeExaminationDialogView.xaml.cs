@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse.UrgentExaminations
+namespace Hospital.Views.Librarian.UrgentExaminations
 {
     /// <summary>
     /// Interaction logic for PostponeExaminationDialogView.xaml

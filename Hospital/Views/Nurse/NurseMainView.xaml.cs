@@ -4,14 +4,14 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace Hospital.Views.Nurse;
+namespace Hospital.Views.Librarian;
 
 /// <summary>
-///     Interaction logic for NurseMainView.xaml
+///     Interaction logic for LibrarianMainView.xaml
 /// </summary>
-public partial class NurseMainView : Window
+public partial class LibrarianMainView : Window
 {
-    public NurseMainView()
+    public LibrarianMainView()
     {
         InitializeComponent();
     }

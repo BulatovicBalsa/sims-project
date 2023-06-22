@@ -14,9 +14,9 @@ using Hospital.Repositories.Examination;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Services;
-using Hospital.Views.Nurse.UrgentExaminations;
+using Hospital.Views.Librarian.UrgentExaminations;
 
-namespace Hospital.ViewModels.Nurse.UrgentExaminations;
+namespace Hospital.ViewModels.Librarian.UrgentExaminations;
 
 public class UrgentExaminationsViewModel : ViewModelBase
 {

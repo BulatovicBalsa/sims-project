@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse.UrgentExaminations
+namespace Hospital.Views.Librarian.UrgentExaminations
 {
     /// <summary>
     /// Interaction logic for UrgentExaminationsView.xaml

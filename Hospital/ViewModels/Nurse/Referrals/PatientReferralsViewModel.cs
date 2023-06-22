@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Hospital.Models.Examination;
 using Hospital.Services;
 
-namespace Hospital.ViewModels.Nurse.Referrals;
+namespace Hospital.ViewModels.Librarian.Referrals;
 
 public class PatientReferralsViewModel : ViewModelBase
 {

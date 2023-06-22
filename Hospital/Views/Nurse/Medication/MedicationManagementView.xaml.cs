@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hospital.DTOs;
 
-namespace Hospital.Views.Nurse.Medication
+namespace Hospital.Views.Librarian.Medication
 {
     /// <summary>
     /// Interaction logic for MedicationManagementView.xaml

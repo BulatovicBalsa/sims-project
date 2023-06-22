@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Services;
 
-namespace Hospital.ViewModels.Nurse.PatientVisiting;
+namespace Hospital.ViewModels.Librarian.PatientVisiting;
 public class VisitingDialogViewModel : ViewModelBase
 {
     private readonly VisitService _visitService;

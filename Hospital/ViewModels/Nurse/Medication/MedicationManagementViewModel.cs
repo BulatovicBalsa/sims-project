@@ -8,9 +8,9 @@ using System.Windows.Input;
 using Hospital.DTOs;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
-using Hospital.Views.Nurse.Medication;
+using Hospital.Views.Librarian.Medication;
 
-namespace Hospital.ViewModels.Nurse.Medication;
+namespace Hospital.ViewModels.Librarian.Medication;
 
 using Hospital.Models.Patient;
 public class MedicationManagementViewModel : ViewModelBase

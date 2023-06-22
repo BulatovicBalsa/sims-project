@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse.Referrals
+namespace Hospital.Views.Librarian.Referrals
 {
     /// <summary>
     /// Interaction logic for PatientReferralView.xaml

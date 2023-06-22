@@ -16,12 +16,12 @@ namespace Hospital.Services
     public class EmailMessageService
     {
         private DoctorService _doctorService;
-        private NurseService _nurseService;
+        private LibrarianService _librarianService;
         private EmailMessageRepository _emailMessageRepository = new EmailMessageRepository(SerializerInjector.CreateInstance<ISerializer<EmailMessage>>());
         public EmailMessageService()
         {
             _doctorService = new DoctorService();
-            _nurseService = new NurseService();
+            _librarianService = new LibrarianService();
         }
         public List<EmailMessage> GetAllEmailMessagesByParticipant(string id)
         {
@@ -40,8 +40,8 @@ namespace Hospital.Services
         public List<PersonDTO> GetMedicalStaffByFilter(string id, string searchText)
         {
             var filteredDoctors = _doctorService.GetDoctorsAsPersonDTOsByFilter(id, searchText);
-            var filteredNurses = _nurseService.GetNursesAsPersonDTOsByFilter(id, searchText);
-            return ConcatenateDoctorsAndNurses(filteredDoctors, filteredNurses);
+            var filteredLibrarians = _librarianService.GetLibrariansAsPersonDTOsByFilter(id, searchText);
+            return ConcatenateDoctorsAndLibrarians(filteredDoctors, filteredLibrarians);
         }
 
         public void SendMessage(EmailMessage message)
@@ -49,9 +49,9 @@ namespace Hospital.Services
             _emailMessageRepository.Add(message);
         }
 
-        private List<PersonDTO> ConcatenateDoctorsAndNurses(List<PersonDTO> filteredDoctors, List<PersonDTO> filteredNurses)
+        private List<PersonDTO> ConcatenateDoctorsAndLibrarians(List<PersonDTO> filteredDoctors, List<PersonDTO> filteredLibrarians)
         {
-            var medicalStaff = filteredDoctors.Concat(filteredNurses).ToList();
+            var medicalStaff = filteredDoctors.Concat(filteredLibrarians).ToList();
             return medicalStaff;
         }
     }

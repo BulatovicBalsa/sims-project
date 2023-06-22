@@ -130,8 +130,8 @@ namespace Hospital.ViewModels
         }
         private void LoadMedicalStaff()
         {
-            var allDoctorsAndNurses = _emailMessageService.GetMedicalStaffByFilter(_loggedUser.Id,SearchText);
-            MedicalStaff = new ObservableCollection<PersonDTO>(allDoctorsAndNurses);
+            var allDoctorsAndLibrarians = _emailMessageService.GetMedicalStaffByFilter(_loggedUser.Id,SearchText);
+            MedicalStaff = new ObservableCollection<PersonDTO>(allDoctorsAndLibrarians);
         }
         private void SendMessage()
         {

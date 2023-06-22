@@ -6,11 +6,11 @@ using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
 using Hospital.Services;
-using Hospital.ViewModels.Nurse.Patients;
-using Hospital.Views.Nurse.PatientAdmission;
-using Hospital.Views.Nurse.Patients;
+using Hospital.ViewModels.Librarian.Patients;
+using Hospital.Views.Librarian.PatientAdmission;
+using Hospital.Views.Librarian.Patients;
 
-namespace Hospital.ViewModels.Nurse.PatientAdmission;
+namespace Hospital.ViewModels.Librarian.PatientAdmission;
 
 public class PatientAdmissionViewModel : ViewModelBase
 {

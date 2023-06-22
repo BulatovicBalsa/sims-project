@@ -3,7 +3,7 @@ using System.Security.Principal;
 using Hospital.Exceptions;
 using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
-using Hospital.Models.Nurse;
+using Hospital.Models.Librarian;
 using Hospital.Models.Patient;
 using Hospital.Services;
 
@@ -80,7 +80,7 @@ public class LoginCli
     {
         if (_loginService.LoggedUser?.GetType() == typeof(Patient)) return "PATIENT";
         if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
-        if (_loginService.LoggedUser?.GetType() == typeof(Nurse)) return "NURSE";
+        if (_loginService.LoggedUser?.GetType() == typeof(Librarian)) return "LIBRARIAN";
         if (_loginService.LoggedUser?.GetType() == typeof(Manager)) return "MANAGER";
 
         throw new UnrecognizedUserTypeException();

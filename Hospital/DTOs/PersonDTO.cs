@@ -8,7 +8,7 @@ namespace Hospital.DTOs
 {
     public enum Role
     {
-        Nurse,
+        Librarian,
         Doctor
     }
     public class PersonDTO

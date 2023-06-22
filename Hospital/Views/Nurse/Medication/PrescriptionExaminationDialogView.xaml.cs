@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Nurse.Medication
+namespace Hospital.Views.Librarian.Medication
 {
     /// <summary>
     /// Interaction logic for PrescriptionExaminationDialogView.xaml

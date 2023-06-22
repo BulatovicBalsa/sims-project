@@ -2,22 +2,22 @@
 using System.Windows.Input;
 using Hospital.DTOs;
 using Hospital.Services;
-using Hospital.ViewModels.Nurse.Medication;
-using Hospital.ViewModels.Nurse.PatientAccommodation;
-using Hospital.ViewModels.Nurse.PatientAdmission;
-using Hospital.ViewModels.Nurse.Patients;
-using Hospital.ViewModels.Nurse.PatientVisiting;
-using Hospital.ViewModels.Nurse.Referrals;
-using Hospital.ViewModels.Nurse.UrgentExaminations;
+using Hospital.ViewModels.Librarian.Medication;
+using Hospital.ViewModels.Librarian.PatientAccommodation;
+using Hospital.ViewModels.Librarian.PatientAdmission;
+using Hospital.ViewModels.Librarian.Patients;
+using Hospital.ViewModels.Librarian.PatientVisiting;
+using Hospital.ViewModels.Librarian.Referrals;
+using Hospital.ViewModels.Librarian.UrgentExaminations;
 using Hospital.Views;
 
-namespace Hospital.ViewModels.Nurse;
+namespace Hospital.ViewModels.Librarian;
 
-public class NurseMainViewModel : ViewModelBase
+public class LibrarianMainViewModel : ViewModelBase
 {
     private ViewModelBase _currentChildView;
-    private NurseService _nurseService = new();
-    public NurseMainViewModel()
+    private LibrarianService _librarianService = new();
+    public LibrarianMainViewModel()
     {
         ShowPatientsViewCommand = new ViewModelCommand(ExecuteShowPatientsViewCommand);
         ShowPatientAdmissionViewCommand = new ViewModelCommand(ExecuteShowPatientAdmissionViewCommand);
@@ -75,7 +75,7 @@ public class NurseMainViewModel : ViewModelBase
     }
     private void ExecuteShowCommunicationViewCommand(object obj)
     {
-        PersonDTO loggedUser = _nurseService.GetLoggedInNurse();
+        PersonDTO loggedUser = _librarianService.GetLoggedInLibrarian();
         CommunicationView communicationView = new CommunicationView(loggedUser);
         communicationView.Show();
     }

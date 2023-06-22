@@ -6,7 +6,7 @@ using Hospital.Models.Manager;
 using Hospital.Models.Patient;
 using Hospital.Services;
 
-namespace Hospital.ViewModels.Nurse.PatientAccommodation;
+namespace Hospital.ViewModels.Librarian.PatientAccommodation;
 public class PatientAccommodationViewModel : ViewModelBase
 {
     private readonly PatientService _patientService;

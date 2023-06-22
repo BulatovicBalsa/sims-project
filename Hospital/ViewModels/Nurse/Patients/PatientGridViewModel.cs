@@ -2,9 +2,9 @@
 using System.Windows.Input;
 using Hospital.Models.Patient;
 using Hospital.Repositories.Patient;
-using Hospital.Views.Nurse.Patients;
+using Hospital.Views.Librarian.Patients;
 
-namespace Hospital.ViewModels.Nurse.Patients;
+namespace Hospital.ViewModels.Librarian.Patients;
 
 public class PatientGridViewModel : ViewModelBase
 {

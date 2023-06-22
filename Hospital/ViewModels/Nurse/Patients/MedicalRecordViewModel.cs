@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Patient;
 
-namespace Hospital.ViewModels.Nurse.Patients;
+namespace Hospital.ViewModels.Librarian.Patients;
 
 internal class MedicalRecordViewModel : ViewModelBase
 {

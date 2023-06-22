@@ -6,14 +6,14 @@ using System.Windows;
 using Hospital.Injectors;
 using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Nurse;
+using Hospital.Repositories.Librarian;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Services;
 using Hospital.Services.Manager;
 using Hospital.Views;
 using Hospital.Views.Manager;
-using Hospital.Views.Nurse;
+using Hospital.Views.Librarian;
 
 namespace Hospital;
 
@@ -67,10 +67,10 @@ public partial class App : Application
                 patientView.Show();
             }
 
-            else if (role == "NURSE")
+            else if (role == "LIBRARIAN")
             {
-                var nurseView = new NurseMainView();
-                nurseView.Show();
+                var librarianView = new LibrarianMainView();
+                librarianView.Show();
             }
 
             else if (role == "MANAGER")
