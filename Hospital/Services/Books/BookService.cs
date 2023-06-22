@@ -2,6 +2,7 @@
 using System.Linq;
 using Hospital.Injectors;
 using Hospital.Models.Books;
+using Hospital.Models.Patient;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 
@@ -20,4 +21,6 @@ public class BookService
     {
         return _bookRepository.GetAll().DistinctBy(book => book.Title).ToList();
     }
+
+    public Book? GetBookById(string bookId) => _bookRepository.GetById(bookId);
 }
