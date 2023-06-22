@@ -82,12 +82,12 @@
                     </TextBox>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" Width="*"/>
-                        <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" Width="*"/>
-                        <DataGridTextColumn Header="Jmbg" Binding="{Binding Jmbg}" Width="*"/>
-                        <DataGridTemplateColumn Header="Medical Record">
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                        <DataGridTextColumn Header="UDC" Binding="{Binding Udc}" Width="*"/>
+                        <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="*"/>
+                        <DataGridTemplateColumn Header="Description">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="View" Margin="3" Command="{Binding DataContext.ViewMedicalRecordCommand , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Id}" />
@@ -159,7 +159,7 @@
                 <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Button Content="Add Time Off Requests"
                             Margin="5" Command="{Binding AddTimeOffRequestCommand}"/>
-                    <Button Content="Visit Patients On Hospital Treatments"
+                    <Button Content="Visit Books On Hospital Treatments"
                             Margin="5" Command="{Binding VisitHospitalizedPatientsCommand}"/>
                     <Button Content="Send message"
                             Margin="5" Command="{Binding SendMessageCommand}"/>
