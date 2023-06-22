@@ -64,7 +64,9 @@ namespace Hospital.Views
 
             List<Book> filteredPatients = _viewModel.Books.Where(patient =>
                 patient.Title.ToLower().Contains(searchText) ||
-                patient.Isbn.ToLower().Contains(searchText)).ToList();
+                patient.Isbn.ToLower().Contains(searchText) ||
+                patient.Author.ToLower().Contains(searchText) ||
+                patient.UdcAsString.ToLower().Contains(searchText)).ToList();
 
             PatientsDataGrid.ItemsSource = filteredPatients;
         }
