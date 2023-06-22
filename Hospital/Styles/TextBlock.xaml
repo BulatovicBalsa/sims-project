@@ -19,5 +19,16 @@
         <Setter Property="Margin" Value="0,2,0,0"/>
         <Setter Property="Foreground" Value="{StaticResource ErrorFont}"/>
     </Style>
-    
+
+    <Style x:Key="DescriptorTextBlock" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="0, 10, 0, 5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Background" Value="AliceBlue"/>
+    </Style>
+
 </ResourceDictionary>

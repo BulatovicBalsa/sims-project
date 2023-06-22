@@ -13,6 +13,7 @@ using Hospital.Models.Requests;
 using Hospital.Services;
 using Hospital.Services.Books;
 using Hospital.Services.Requests;
+using Hospital.ViewModels.Books;
 using Hospital.Views;
 
 namespace Hospital.ViewModels;
@@ -155,7 +156,10 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        var dialog = new MedicalRecordDialog(book, false);
+        var dialog = new AdvancedBookDetailsDialog()
+        {
+            DataContext = new AdvancedBookDetailsViewModel(book)
+        };
         dialog.ShowDialog();
     }
 

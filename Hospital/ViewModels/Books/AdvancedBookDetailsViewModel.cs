@@ -1,5 +1,6 @@
-﻿
-using Hospital.Models.Books;
+﻿using Hospital.Models.Books;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Hospital.ViewModels.Books
 {
@@ -7,11 +8,18 @@ namespace Hospital.ViewModels.Books
     {
         public Book Book { get; set; }
 
+        public AdvancedBookDetailsViewModel() { }
         public AdvancedBookDetailsViewModel(Book book)
         {
             Book = book;
+            CloseDialogCommand = new ViewModelCommand(ExecuteCloseDialogCommand);
         }
 
+        public ICommand CloseDialogCommand { get; }
 
+        private void ExecuteCloseDialogCommand(object obj)
+        {
+            Application.Current.Windows[1]?.Close();
+        }
     }
 }
