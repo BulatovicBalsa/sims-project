@@ -87,7 +87,7 @@
                                  Command="{Binding ShowPatientsViewCommand}"
                                  IsChecked="True">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Patients" Style="{StaticResource MenuButtonText}"/>
+                            <TextBlock Text="Books" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource MenuButton}"

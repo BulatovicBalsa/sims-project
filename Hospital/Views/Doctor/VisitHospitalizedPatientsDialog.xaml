@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:VisitHospitalizedPatientsViewModel}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Hospital Treatment Patients" Height="450" Width="1000">
+        Title="Hospital Treatment Books" Height="450" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -19,7 +19,7 @@
         <TextBlock Grid.Row="1" Text="Loading..." FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ProgressVisibility}"/>
 
 
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="22" Margin="0 10">Patients</TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="22" Margin="0 10">Books</TextBlock>
         <DataGrid Grid.Row="1" Margin="0 10" ItemsSource="{Binding MedicalVisits}" AutoGenerateColumns="False" Visibility="{Binding DataGridVisibility}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" Width="175"></DataGridTextColumn>

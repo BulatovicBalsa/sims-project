@@ -61,7 +61,7 @@ namespace Hospital.Views
             SearchBox.Foreground = Brushes.Black;
             string searchText = SearchBox.Text.ToLower();
 
-            List<Patient> filteredPatients = _viewModel.Patients.Where(patient =>
+            List<Patient> filteredPatients = _viewModel.Books.Where(patient =>
                 patient.FirstName.ToLower().Contains(searchText) ||
                 patient.LastName.ToLower().Contains(searchText) ||
                 patient.Jmbg.ToLower().ToLower().Contains(searchText) ||
