@@ -112,7 +112,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Your examinations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Text="Rented books" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Label Content="View for:"></Label>
