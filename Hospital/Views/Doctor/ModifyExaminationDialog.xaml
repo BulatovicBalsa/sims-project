@@ -4,59 +4,83 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:Hospital.ViewModels"
         xmlns:local="clr-namespace:Hospital.Views"
-        xmlns:viewModel="clr-namespace:Hospital.ViewModels.Doctor"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="MedicalRecordView" Width="400"
-        SizeToContent="Height"
+        Title="PrescriptionExaminationDialogView"
+        Height="300" Width="350"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None">
     <Window.DataContext>
-        <viewModel:/>
+        <viewModel:ModifyExaminationViewModel/>
     </Window.DataContext>
 
-    <Border CornerRadius="15" BorderThickness="2" BorderBrush="Black">
+    <Border CornerRadius="15" BorderThickness="2" Bor>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="{StaticResource PrimaryBackground1}" Offset="0"></GradientStop>
                 <GradientStop Color="{StaticResource PrimaryBackground2}" Offset="1"></GradientStop>
             </LinearGradientBrush>
         </Border.Background>
-        
+
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Choose Patient:" />
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="PatientComboBox" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook, Mode=TwoWay}" />
-        
-        <Label Grid.Row="1" Grid.Column="0" Content="Examination Date:" />
-        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="ExaminationDatePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
-        
-        <Label Grid.Row="2" Grid.Column="0" Content="Examination Time:"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossibleTimes}" SelectedItem="{Binding SelectedTime, Mode=TwoWay}" ></ComboBox>
-        
-        <Label Grid.Row="3" Grid.Column="0" Content="Is Operation:" />
-        <CheckBox Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" x:Name="IsOperation" IsChecked="{Binding IsOperation, Mode=TwoWay}"/>
-        
-        <Label Grid.Row="4" Grid.Column="0" Content="Choose Room:" />
-        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RoomComboBox" ItemsSource="{Binding Rooms}" SelectedItem="{Binding SelectedMember, Mode=TwoWay}" />
-        
-        <Button x:Name="ConfirmButton" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Content="{Binding ButtonContent}" Command="{Binding ModifyExaminationCommand}" CommandParameter="{Binding ElementName=ModifyExaminationDialogWindow}" />
+            <Grid Grid.Row="0">
+                <StackPanel x:Name="ControlBar"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
+                            Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
 
-    </Grid>
-        </Border>
+                    <Button x:Name="BtnClose" 
+                            Style="{StaticResource ControlButton}"
+                            Content="X"
+                            Margin="3,0,3,0"
+                            Click="BtnClose_OnClick"/>
+
+                    <Button x:Name="BtnMinimize" 
+                            Style="{StaticResource ControlButton}"
+                            Content="-"
+                            Margin="3,0,3,0"
+                            Click="BtnMinimize_OnClick"/>
+
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="Montserrat"
+                       FontSize="25"
+                       FontWeight="Bold"
+                       Text="{Binding ButtonContent}"/>
+
+            <StackPanel Grid.Row="2"
+                        Margin="20, 20, 20, 0">
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding DoctorName, StringFormat='Doctor: {0}'}"/>
+                <TextBlock Style="{StaticResource MainTextBlock}">Date</TextBlock>
+                <DatePicker Height="30" DisplayDateStart="{x:Static sys:DateTime.Today}" 
+                            SelectedDate="{Binding SelectedDate}"/>
+                <TextBlock Style="{StaticResource MainTextBlock}">Time</TextBlock>
+                <ComboBox Height="30" ItemsSource="{Binding PossibleTimeslots, Mode=TwoWay}"
+                          SelectedItem="{Binding SelectedTime}"/>
+                <Button Style="{StaticResource ActionButton}" 
+                        Content="Schedule examination"
+                        Margin="0,20,0,0"
+                        Command="{Binding ScheduleExaminationCommand}"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
 </Window>

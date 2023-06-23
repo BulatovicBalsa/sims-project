@@ -18,18 +18,18 @@ namespace Hospital.ViewModels;
 
 public class ModifyExaminationViewModel : ViewModelBase
 {
-    private readonly Doctor _doctor;
+    private readonly Doctor _member;
     private readonly ObservableCollection<Loan> _loanCollection;
     private readonly LoanService _loanService = new();
     private readonly Loan? _loanToChange;
     private readonly bool _isUpdate;
     private readonly BookService _bookService = new();
-    private readonly RoomFilterService _roomFilterService = new();
+    private readonly DoctorService _doctorService = new();
 
     private string _buttonContent;
 
     private ObservableCollection<Book> _books;
-
+    private ObservableCollection<Doctor> _members;
     private Book? _selectedBook;
     private Doctor? _selectedMember;
 
@@ -37,18 +37,19 @@ public class ModifyExaminationViewModel : ViewModelBase
     {
         
     }
-    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
+    public ModifyExaminationViewModel(Doctor member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
         _isUpdate = loanToChange is not null;
-        _doctor = doctor;
+        _member = member;
         _loanCollection = loanCollection;
         _loanToChange = loanToChange;
 
         _books = new ObservableCollection<Book>(_loanService.GetNotLoanedBooks());
+        _members = new ObservableCollection<Doctor>(_doctorService.GetAll());
 
         _selectedBook = _loanToChange?.Book;
         _selectedMember = _loanToChange?.Member;
-        _buttonContent = _loanToChange is null ? "Create" : "Update";
+        _buttonContent = _loanToChange is null ? "Create Loan" : "Update Loan";
 
         ModifyExaminationCommand = new RelayCommand(ModifyExamination);
     }
@@ -70,6 +71,16 @@ public class ModifyExaminationViewModel : ViewModelBase
         {
             _books = value;
             OnPropertyChanged(nameof(Books));
+        }
+    }
+
+    public ObservableCollection<Doctor> Members
+    {
+        get => _members;
+        set
+        {
+            _members = value;
+            OnPropertyChanged(nameof(Members));
         }
     }
 
@@ -121,8 +132,8 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
         }
 
+        MessageBox.Show("Task successfully ended", "Good job", MessageBoxButton.OK, MessageBoxImage.Information);
         Application.Current.Windows[1]?.Close();
-
     }
 
     private Loan? CreateLoanFromForm()
@@ -147,7 +158,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         else throw new InvalidOperationException("loan to change can't be null");
         _loanService.Update(loan);
         _loanCollection.Clear();
-        _loanService.GetCurrentLoans(_doctor)
+        _loanService.GetCurrentLoans(_member)
             .ForEach(loanInRange => _loanCollection.Add(loanInRange));
     }
 }
