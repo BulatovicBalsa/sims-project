@@ -51,7 +51,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         _selectedMember = _loanToChange?.Member;
         _buttonContent = _loanToChange is null ? "Create Loan" : "Update Loan";
 
-        ModifyLoanCommand = new RelayCommand(ModifyExamination);
+        ModifyLoanCommand = new RelayCommand(ModifyLoan);
     }
 
     public Book? SelectedBook
@@ -106,7 +106,7 @@ public class ModifyExaminationViewModel : ViewModelBase
 
     public ICommand ModifyLoanCommand { get; set; }
 
-    private void ModifyExamination()
+    private void ModifyLoan()
     {
         var createdLoan = CreateLoanFromForm();
         if (createdLoan is null) return;
@@ -115,7 +115,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         {
             if (_isUpdate)
             {
-                UpdateExamination(createdLoan);
+                UpdateLoan(createdLoan);
             }
             else
             {
@@ -152,7 +152,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         return createdExamination;
     }
 
-    private void UpdateExamination(Loan loan)
+    private void UpdateLoan(Loan loan)
     {
         if (_loanToChange != null) loan.Id = _loanToChange.Id;
         else throw new InvalidOperationException("loan to change can't be null");
