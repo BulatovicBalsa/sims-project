@@ -89,14 +89,14 @@ public class VisitHospitalizedPatientsViewModel : ViewModelBase
 
     private void CreateExaminationInTenDays(MessageBoxResult dialogResult, Patient patient)
     {
-        if (dialogResult == MessageBoxResult.No) return;
+        //if (dialogResult == MessageBoxResult.No) return;
 
-        var createExaminationDialog =
-            new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, DateTime.Today.AddDays(10), patient);
-        var result = createExaminationDialog.ShowDialog();
+        //var createExaminationDialog =
+        //    new ModifyExaminationDialog(_doctor, new ObservableCollection<Examination>(), null, DateTime.Today.AddDays(10), patient);
+        //var result = createExaminationDialog.ShowDialog();
 
-        if (!result.GetValueOrDefault()) return;
-        MessageBox.Show("Successfully added examination", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        //if (!result.GetValueOrDefault()) return;
+        //MessageBox.Show("Successfully added examination", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void ModifyTherapy(string patientId)
