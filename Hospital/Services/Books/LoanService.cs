@@ -16,5 +16,5 @@ public class LoanService
     public List<Loan> GetAll(Doctor member) => _loanRepository.GetAll(member);
     public void Add(Loan loan) => _loanRepository.Add(loan);
     public List<Book> GetNotLoanedBooks() => _bookRepository.GetAll().Where(_loanRepository.IsFree).ToList();
-    
+    public void DeleteLoan(Loan loan) => _loanRepository.Delete(loan);
 }
