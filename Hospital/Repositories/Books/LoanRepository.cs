@@ -51,7 +51,18 @@ public sealed class LoanReadMapper : ClassMap<Loan>
             return book;
         }
     }
+}
 
+public sealed class LoanWriteMapper : ClassMap<Loan>
+{
+    public LoanWriteMapper()
+    {
+        Map(loan => loan.Id).Index(0);
+        Map(loan => loan.Member.Id).Index(1);
+        Map(loan => loan.Book.Id).Index(2);
+        Map(loan => loan.Start).Index(3);
+        Map(loan => loan.End).Index(4);
+    }
 }
 
 public class LoanRepository
