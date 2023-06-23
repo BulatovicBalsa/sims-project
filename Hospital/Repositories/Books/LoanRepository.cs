@@ -59,7 +59,7 @@ public class LoanRepository
     private const string FilePath = "../../../Data/loans.csv";
     private readonly ISerializer<Loan> _serializer;
 
-    private LoanRepository(ISerializer<Loan> serializer)
+    public LoanRepository(ISerializer<Loan> serializer)
     {
         _serializer = serializer;
     }
