@@ -51,7 +51,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         _selectedMember = _loanToChange?.Member;
         _buttonContent = _loanToChange is null ? "Create Loan" : "Update Loan";
 
-        ModifyExaminationCommand = new RelayCommand(ModifyExamination);
+        ModifyLoanCommand = new RelayCommand(ModifyExamination);
     }
 
     public Book? SelectedBook
@@ -104,7 +104,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
     }
 
-    public ICommand ModifyExaminationCommand { get; set; }
+    public ICommand ModifyLoanCommand { get; set; }
 
     private void ModifyExamination()
     {
