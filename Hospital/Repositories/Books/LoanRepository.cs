@@ -93,7 +93,7 @@ public class LoanRepository
 
         allLoans.Add(loan);
 
-       _serializer.Save(allLoans, FilePath);
+       _serializer.Save(allLoans, FilePath, new LoanWriteMapper());
     }
 
     public void Update(Loan loan)
@@ -105,7 +105,7 @@ public class LoanRepository
 
         allLoans[indexToUpdate] = loan;
 
-       _serializer.Save(allLoans, FilePath);
+       _serializer.Save(allLoans, FilePath, new LoanWriteMapper());
     }
 
     public void Delete(Loan loan)
@@ -117,7 +117,7 @@ public class LoanRepository
 
         allLoan.RemoveAt(indexToDelete);
 
-       _serializer.Save(allLoan, FilePath);
+       _serializer.Save(allLoan, FilePath, new LoanWriteMapper());
     }
 
     public List<Loan> GetAll(Doctor member)
@@ -154,6 +154,6 @@ public class LoanRepository
     public void DeleteAll()
     {
         var emptyList = new List<Loan>();
-       _serializer.Save(emptyList, FilePath);
+       _serializer.Save(emptyList, FilePath, new LoanWriteMapper());
     }
 }
