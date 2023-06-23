@@ -166,7 +166,7 @@ public class ExaminationRepository
         var allExamination = GetAll();
 
         if (!IsFree(examination.Doctor, examination.Start)) throw new DoctorBusyException("Doctor is busy");
-        if (!IsFree(examination.Patient!, examination.Start)) throw new PatientBusyException("Patient is busy");
+        if (!IsFree(examination.Patient!, examination.Start)) throw new BookAlreadyLoanedException("Patient is busy");
         if (isMadeByPatient)
         {
             PatientExaminationLog log = new(examination.Patient!, true);
@@ -188,7 +188,7 @@ public class ExaminationRepository
         if (!IsFree(examination.Doctor, examination.Start, examination.Id))
             throw new DoctorBusyException("Doctor is busy");
         if (!IsFree(examination.Patient!, examination.Start, examination.Id))
-            throw new PatientBusyException("Patient is busy");
+            throw new BookAlreadyLoanedException("Patient is busy");
         if (isMadeByPatient)
         {
             ValidateExaminationTiming(examination.Start);
