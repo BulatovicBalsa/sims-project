@@ -27,9 +27,10 @@ public class Book
         Id = Guid.NewGuid().ToString();
         Description = Isbn = Title = "";
         Udc = new List<int>();
+        Author = "";
     }
 
-    public Book(string title, string description, string isbn, List<int> udc, BindingType bindingType)
+    public Book(string title, string description, string isbn, List<int> udc, BindingType bindingType, string author, BookLanguage language)
     {
         Id = Guid.NewGuid().ToString();
         Title = title;
@@ -37,6 +38,8 @@ public class Book
         Isbn = isbn;
         Udc = udc;
         BindingType = bindingType;
+        Author = author;
+        Language = language;
     }
 
     public string Id { get; set; }
