@@ -73,7 +73,7 @@
 
                 <DataGrid Grid.Row="1" ItemsSource="{Binding Referrals}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" Width="Auto"/>
+                        <DataGridTextColumn Header="Member" Binding="{Binding Doctor}" Width="Auto"/>
                         <DataGridTextColumn Header="Specialization" Binding="{Binding Specialization}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>

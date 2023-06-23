@@ -47,9 +47,9 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             var doctorId = inputText?.Trim();
             if (string.IsNullOrEmpty(doctorId))
                 return null;
-            // Retrieve the Doctor object based on the ID
+            // Retrieve the Member object based on the ID
             var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
-                         throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                         throw new KeyNotFoundException($"Member with ID {doctorId} not found");
             return doctor;
         }
     }
@@ -93,7 +93,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             inputText?.Split("|").ToList().ForEach(doctorId =>
             {
                 var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(doctorId) ??
-                             throw new KeyNotFoundException($"Doctor with ID {doctorId} not found");
+                             throw new KeyNotFoundException($"Member with ID {doctorId} not found");
                 doctors.Add(doctor);
             });
             
@@ -112,7 +112,7 @@ public sealed class ExaminationReadMapper : ClassMap<Examination>
             inputText?.Split("|").ToList().ForEach(librarianId =>
             {
                 var doctor = LibrarianRepository.Instance.GetById(librarianId) ??
-                             throw new KeyNotFoundException($"Doctor with ID {librarianId} not found");
+                             throw new KeyNotFoundException($"Member with ID {librarianId} not found");
                 librarians.Add(doctor);
             });
 
@@ -165,7 +165,7 @@ public class ExaminationRepository
     {
         var allExamination = GetAll();
 
-        if (!IsFree(examination.Doctor, examination.Start)) throw new DoctorBusyException("Doctor is busy");
+        if (!IsFree(examination.Doctor, examination.Start)) throw new DoctorBusyException("Member is busy");
         if (!IsFree(examination.Patient!, examination.Start)) throw new BookAlreadyLoanedException("Patient is busy");
         if (isMadeByPatient)
         {
@@ -186,7 +186,7 @@ public class ExaminationRepository
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
         if (!IsFree(examination.Doctor, examination.Start, examination.Id))
-            throw new DoctorBusyException("Doctor is busy");
+            throw new DoctorBusyException("Member is busy");
         if (!IsFree(examination.Patient!, examination.Start, examination.Id))
             throw new BookAlreadyLoanedException("Patient is busy");
         if (isMadeByPatient)
@@ -213,7 +213,7 @@ public class ExaminationRepository
         if (examination.Start != DateTime.MinValue)
         {
             if (IsFree(examination.Doctor, examination.Start))
-                throw new DoctorNotBusyException("Doctor is not busy,although he should be");
+                throw new DoctorNotBusyException("Member is not busy,although he should be");
             if (IsFree(examination.Patient, examination.Start))
                 throw new BookNotLoanedException("Patient is not busy,although he should be");
         }

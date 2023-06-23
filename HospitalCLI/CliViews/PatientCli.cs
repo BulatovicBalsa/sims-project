@@ -156,10 +156,10 @@ namespace HospitalCLI.CliViews
         {
             while (true)
             {
-                Console.Write("Priority (Doctor/Time Range): ");
+                Console.Write("Priority (Member/Time Range): ");
                 if (!TryParseEnum<Priority>(Console.ReadLine(), true, out var priority))
                 {
-                    Console.WriteLine("Invalid priority. Please enter either 'Doctor' or 'Time Range'.");
+                    Console.WriteLine("Invalid priority. Please enter either 'Member' or 'Time Range'.");
                     continue;
                 }
 

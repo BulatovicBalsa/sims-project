@@ -16,7 +16,7 @@
         <TextBlock Style="{StaticResource MainTextBlock}">Patient</TextBlock>
         <ComboBox Height="30" ItemsSource="{Binding AllPatients}"
                   SelectedItem="{Binding SelectedPatient}"/>
-        <TextBlock Style="{StaticResource MainTextBlock}">Doctor specialization</TextBlock>
+        <TextBlock Style="{StaticResource MainTextBlock}">Member specialization</TextBlock>
         <ComboBox Height="30" ItemsSource="{Binding AllSpecializations}"
                   SelectedItem="{Binding SelectedSpecialization}"/>
         <TextBlock Style="{StaticResource MainTextBlock}">Operation</TextBlock>

@@ -35,7 +35,7 @@ public sealed class LoanReadMapper : ClassMap<Loan>
             
             var member =
                 new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(memberId) ??
-                throw new KeyNotFoundException($"Doctor with ID {memberId} not found");
+                throw new KeyNotFoundException($"Member with ID {memberId} not found");
             return member;
         }
     }

@@ -27,7 +27,7 @@ public class DoctorViewModel : ViewModelBase
 
     private ObservableCollection<Book> _books;
 
-    private Doctor _doctor;
+    private Doctor _member;
     private ObservableCollection<Loan> _loans;
 
     private string _searchBoxText;
@@ -37,17 +37,17 @@ public class DoctorViewModel : ViewModelBase
     private DateTime _selectedDate;
     private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
-    public DoctorViewModel(Doctor doctor)
+    public DoctorViewModel(Doctor member)
     {
-        _doctor = doctor;
+        _member = member;
         _selectedDate = DateTime.Now;
         Books = new ObservableCollection<Book>(_bookService.GetDistinct());
         _books = Books;
         TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(member));
         _timeOffRequests = TimeOffRequests;
         Loans =
-            new ObservableCollection<Loan>(_loanService.GetAll(doctor));
+            new ObservableCollection<Loan>(_loanService.GetAll(member));
         _loans = Loans;
         SearchBoxText = Placeholder;
 
@@ -94,13 +94,13 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public Doctor Doctor
+    public Doctor Member
     {
-        get => _doctor;
+        get => _member;
         set
         {
-            _doctor = value;
-            OnPropertyChanged(nameof(Doctor));
+            _member = value;
+            OnPropertyChanged(nameof(Member));
         }
     }
 
@@ -132,13 +132,13 @@ public class DoctorViewModel : ViewModelBase
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
             Loans.Clear();
-            //_loanService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Loans.Add);
+            //_loanService.GetExaminationsForDate(_member, SelectedDate).ToList().ForEach(Loans.Add);
         }
     }
 
     public object SelectedLoan { get; set; }
 
-    public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
+    public string DoctorName => $"Member {Member.FirstName} {Member.LastName}";
 
     public ICommand ViewAdvancedBookDetailsCommand { get; set; }
     public ICommand AddExaminationCommand { get; set; }
@@ -170,21 +170,21 @@ public class DoctorViewModel : ViewModelBase
     private void DefaultExaminationView()
     {
         Loans.Clear();
-        _loanService.GetAll(_doctor).ForEach(Loans.Add);
+        _loanService.GetAll(_member).ForEach(Loans.Add);
     }
 
     private void VisitHospitalizedPatients()
     {
-        var dialog = new VisitHospitalizedPatientsDialog(_doctor);
+        var dialog = new VisitHospitalizedPatientsDialog(_member);
         dialog.ShowDialog();
     }
 
     private void AddTimeOffRequest()
     {
-        var dialog = new AddTimeOffRequestDialog(_doctor);
+        var dialog = new AddTimeOffRequestDialog(_member);
         dialog.ShowDialog();
         TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_doctor));
+            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_member));
     }
 
     private void ViewMedicalRecord(string patientId)
@@ -202,32 +202,28 @@ public class DoctorViewModel : ViewModelBase
 
     private void AddExamination()
     {
-        //var dialog = new ModifyExaminationDialog(Doctor, Loans)
-        //{
-        //    WindowStyle = WindowStyle.ToolWindow
-        //};
+        var dialog = new ModifyExaminationDialog()
+        {
+            DataContext = new ModifyExaminationViewModel(Member, Loans)
+        };
 
-        //var result = dialog.ShowDialog();
-        //if (result == true) MessageBox.Show("Succeed");
+        dialog.ShowDialog();
     }
 
     private void UpdateExamination()
     {
-        //var examinationToChange = SelectedLoan as Examination;
-        //if (examinationToChange == null)
-        //{
-        //    MessageBox.Show("Please select examination in order to delete it");
-        //    return;
-        //}
+        if (SelectedLoan is not Loan examinationToChange)
+        {
+            MessageBox.Show("Please select examination in order to delete it");
+            return;
+        }
 
-        //var dialog = new ModifyExaminationDialog(Doctor, Loans, examinationToChange)
-        //{
-        //    WindowStyle = WindowStyle.ToolWindow
-        //};
+        var dialog = new ModifyExaminationDialog()
+        {
+            DataContext = new ModifyExaminationViewModel(Member, Loans, examinationToChange)
+        };
 
-        //var result = dialog.ShowDialog();
-
-        //if (result == true) MessageBox.Show("Succeed");
+        dialog.ShowDialog();
     }
 
     private void DeleteExamination()
@@ -286,7 +282,7 @@ public class DoctorViewModel : ViewModelBase
 
     private void SendMessage()
     {
-        var loggedUser = new PersonDTO(_doctor.Id, _doctor.FirstName, _doctor.LastName, Role.Doctor);
+        var loggedUser = new PersonDTO(_member.Id, _member.FirstName, _member.LastName, Role.Doctor);
         var communicationView = new CommunicationView(loggedUser);
         communicationView.ShowDialog();
     }

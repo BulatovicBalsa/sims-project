@@ -98,7 +98,7 @@ public class Examination
 
     public override string ToString()
     {
-        return $"Doctor: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
+        return $"Member: {Doctor?.FirstName ?? ""} {Doctor?.LastName ?? ""}, Patient: {Patient.FirstName} {Patient.LastName}, Start: {Start}";
     }
     
     public string ToStringCli

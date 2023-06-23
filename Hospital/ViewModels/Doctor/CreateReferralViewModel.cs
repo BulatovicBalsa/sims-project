@@ -95,7 +95,7 @@ public class CreateReferralViewModel : ViewModelBase
     {
         if (SelectedDoctor is null && SelectedSpecialization is null)
         {
-            MessageBox.Show("You must enter Specializations or Doctor");
+            MessageBox.Show("You must enter Specializations or Member");
             return;
         }
 

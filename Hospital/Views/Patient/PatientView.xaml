@@ -113,7 +113,7 @@
                     Margin="5"
                     Click="BtnMedicalRecord_Click"/>
                     <Button x:Name="BtnDoctorSearch"
-                    Content="Doctor Search"
+                    Content="Member Search"
                     Margin="5"
                     Click="BtnDoctorSearch_Click"/>
                     <Button x:Name="BtnCreateNotification"
@@ -125,7 +125,7 @@
                     Margin="5"
                     Command="{Binding HospitalSurveyCommand}"/>
                     <Button x:Name="BtnDoctorSurvey"
-                    Content="Doctor Survey"
+                    Content="Member Survey"
                     Margin="5"
                     Command="{Binding DoctorSurveyCommand}"/>
                 </StackPanel>
@@ -144,7 +144,7 @@
                 <DataGrid Grid.Row="4" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedExamination}" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Examination ID"  Binding="{Binding Id}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"/>
+                        <DataGridTextColumn Header="Member" Binding="{Binding Doctor.FirstName}" Width="*"/>
                         <DataGridTextColumn Header="Patient" Binding="{Binding Patient.FirstName}" Width="*"/>
                         <DataGridTextColumn Header="Start" Binding="{Binding Start}" Width="*"/>
                         <DataGridTextColumn Header="End" Binding="{Binding End}" Width="*"/>

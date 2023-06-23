@@ -104,7 +104,7 @@ public class ExaminationRepositoryTests
 
     //    Assert.IsNotNull(updatedExamination);
     //    Assert.AreEqual(_examination.Id, updatedExamination.Id);
-    //    Assert.AreEqual(_examination.Doctor, updatedExamination.Doctor);
+    //    Assert.AreEqual(_examination.Member, updatedExamination.Member);
     //    Assert.AreEqual(_examination.Patient, updatedExamination.Patient);
     //    Assert.AreEqual(_examination.IsOperation, updatedExamination.IsOperation);
 

@@ -44,7 +44,7 @@ namespace Hospital.ViewModels
 
             Doctors = new ObservableCollection<Doctor>(_examinationService.GetAllDoctors());
             RecommendedExaminations = new ObservableCollection<Examination>();
-            Priorities = new List<string> { "Doctor", "Time Range" };
+            Priorities = new List<string> { "Member", "Time Range" };
 
             StartTimeRange = "00:00";
             EndTimeRange = "23:59";

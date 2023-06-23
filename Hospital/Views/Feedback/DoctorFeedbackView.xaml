@@ -13,9 +13,9 @@
             <ColumnDefinition Width="690*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="9,20,20,20" Grid.ColumnSpan="2" Grid.Column="1">
-            <TextBlock Text="Doctor Feedback" FontWeight="Bold" FontSize="20" Margin="0 0 0 20"/>
+            <TextBlock Text="Member Feedback" FontWeight="Bold" FontSize="20" Margin="0 0 0 20"/>
 
-            <TextBlock Text="Doctor Name: " FontWeight="Bold" Margin="0 0 0 10" />
+            <TextBlock Text="Member Name: " FontWeight="Bold" Margin="0 0 0 10" />
             <TextBlock>
                 <Run Text="{Binding Doctor.FirstName}" FontWeight="Bold" />
                 <Run Text=" " />
@@ -26,10 +26,10 @@
             <TextBlock Text=" Overall Rating" Margin="0 0 0 10"/>
             <Slider Minimum="1" Maximum="5" Value="{Binding OverallRating}"/>
 
-            <TextBlock Text="Quality of Doctor Rating" Margin="0 0 0 10"/>
+            <TextBlock Text="Quality of Member Rating" Margin="0 0 0 10"/>
             <Slider Minimum="1" Maximum="5" Value="{Binding DoctorQualityRating}"/>
 
-            <TextBlock Text="Would You Recommend the Doctor?" Margin="0 0 0 10"/>
+            <TextBlock Text="Would You Recommend the Member?" Margin="0 0 0 10"/>
             <ComboBox SelectedItem="{Binding RecommendationRating}" Validation.ErrorTemplate="{x:Null}">
                 <ComboBoxItem Content="1"/>
                 <ComboBoxItem Content="2"/>

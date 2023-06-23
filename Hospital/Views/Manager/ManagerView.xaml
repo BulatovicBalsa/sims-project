@@ -245,7 +245,7 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Doctor survey" DataContext="{Binding DoctorFeedbackViewModel}">
+            <TabItem Header="Member survey" DataContext="{Binding DoctorFeedbackViewModel}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -331,7 +331,7 @@
                                   CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Header="Accepted" Binding="{Binding IsApproved}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Doctor" Binding="{Binding DoctorId, Converter={StaticResource DoctorIdToStringConverter}}"/>
+                                <DataGridTextColumn Header="Member" Binding="{Binding DoctorId, Converter={StaticResource DoctorIdToStringConverter}}"/>
                                 <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" IsReadOnly="True"/>

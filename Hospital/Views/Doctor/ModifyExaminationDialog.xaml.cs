@@ -21,22 +21,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Hospital.Models.Books;
 
 namespace Hospital.Views
 {
     public partial class ModifyExaminationDialog : Window
     {
-        public ModifyExaminationDialog(Doctor doctor, ObservableCollection<Examination> examinationCollection, Examination examinationToChange=null, DateTime? examinationDate=null, Patient patientInTenDays=null)
+        public ModifyExaminationDialog()
         {
-            DataContext = new ModifyExaminationViewModel(doctor, examinationCollection, examinationToChange, examinationDate, patientInTenDays);
             InitializeComponent();
-            ConfigWindow();
-        }
-
-        private void ConfigWindow()
-        {
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            SizeToContent = SizeToContent.WidthAndHeight;
         }
     }
 }

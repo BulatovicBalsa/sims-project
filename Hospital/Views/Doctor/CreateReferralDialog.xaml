@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Doctor:"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="Member:"/>
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DoctorComboBox" Margin="0 0 0 10" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor}"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Specializations:"/>

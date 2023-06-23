@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
          xmlns:viewmodels="clr-namespace:Hospital.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="Doctor Search" Height="450" Width="800"
+        Title="Member Search" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
