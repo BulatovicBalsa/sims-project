@@ -57,6 +57,8 @@ public class Book
         return $"{Id},{Title},{Author},{Description},{Isbn},{UdcAsString.Replace("-", "|")},{BindingType},{Language}";
     }
 
+    public string ComboBoxString => $"{Title}, {Author}";
+
     public override bool Equals(object? obj)
     {
         if (obj == null || GetType() != obj.GetType()) return false;
