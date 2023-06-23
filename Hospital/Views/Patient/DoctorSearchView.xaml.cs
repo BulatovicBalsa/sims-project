@@ -46,7 +46,7 @@ namespace Hospital.Views
             }
             else
             {
-                MessageBox.Show("Please select a doctor before creating an examination.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a member before creating an examination.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace HospitalCLI.CliViews
                 Console.WriteLine();
                 Console.WriteLine("Patient Menu");
                 Console.WriteLine("===============================================");
-                Console.WriteLine("1 - Get Recommended Examinations");
+                Console.WriteLine("1 - Get Recommended Loans");
                 Console.WriteLine("X - Exit");
                 Console.WriteLine();
                 Console.Write("Choose operation: ");
@@ -206,7 +206,7 @@ namespace HospitalCLI.CliViews
         }
         private void PrintAvailableExaminations(IEnumerable<Examination> examinations)
         {
-            Console.WriteLine("\nAvailable Examinations:");
+            Console.WriteLine("\nAvailable Loans:");
             examinations.Select((examination, index) => $"{index + 1}. {examination}").ToList().ForEach(Console.WriteLine);
         }
     }

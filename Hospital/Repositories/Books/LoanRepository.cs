@@ -97,7 +97,7 @@ public class LoanRepository
        _serializer.Save(allLoans, FilePath);
     }
 
-    public void Delete(Loan loan, bool isMadeByBook)
+    public void Delete(Loan loan)
     {
         var allLoan = GetAll();
 

@@ -46,8 +46,8 @@ public class DoctorCli
             Console.WriteLine();
             Console.WriteLine("Operations");
             Console.WriteLine("===============================================");
-            Console.WriteLine("1 - View Examinations for next 3 days");
-            Console.WriteLine("2 - View Examinations for selected date");
+            Console.WriteLine("1 - View Loans for next 3 days");
+            Console.WriteLine("2 - View Loans for selected date");
             Console.WriteLine("3 - Add Examination");
             Console.WriteLine("4 - Update Examination");
             Console.WriteLine("5 - Delete Examination");

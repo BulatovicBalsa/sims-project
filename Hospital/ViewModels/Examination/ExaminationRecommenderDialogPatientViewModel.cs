@@ -93,7 +93,7 @@ namespace Hospital.ViewModels
             RecommendedExaminations.Clear();
             foreach (var examination in foundExaminations) RecommendedExaminations.Add(examination);
 
-            if (foundExaminations.Any()) MessageBox.Show("Examinations found successfully.", "Success");
+            if (foundExaminations.Any()) MessageBox.Show("Loans found successfully.", "Success");
             else MessageBox.Show("No examinations found.", ":(");
 
         }

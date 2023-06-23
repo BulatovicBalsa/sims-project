@@ -22,20 +22,20 @@ public class DoctorViewModel : ViewModelBase
 {
     private const string Placeholder = "Search...";
     private readonly BookService _bookService = new();
-    private readonly ExaminationService _examinationService = new();
+    private readonly LoanService _loanService = new();
     private readonly PatientService _patientService = new();
     private readonly DoctorTimeOffRequestService _requestService = new();
 
     private ObservableCollection<Book> _books;
 
     private Doctor _doctor;
-    private ObservableCollection<Examination> _examinations;
+    private ObservableCollection<Loan> _loans;
 
-    private string _searchBoxText;
+    private string? _searchBoxText;
 
     private DateTime _selectedDate;
 
-    private object _selectedPatient;
+    private object? _selectedBook;
     private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor doctor)
@@ -43,10 +43,13 @@ public class DoctorViewModel : ViewModelBase
         _doctor = doctor;
         _selectedDate = DateTime.Now;
         Books = new ObservableCollection<Book>(_bookService.GetDistinct());
+        _books = Books;
         TimeOffRequests =
             new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(doctor));
-        Examinations =
-            new ObservableCollection<Examination>(_examinationService.GetExaminationsForNextThreeDays(doctor));
+        _timeOffRequests = TimeOffRequests;
+        Loans =
+            new ObservableCollection<Loan>(_loanService.GetAll(doctor));
+        _loans = Loans;
         SearchBoxText = Placeholder;
 
         ViewAdvancedBookDetailsCommand = new RelayCommand<string>(ViewAdvancedBookDetails);
@@ -58,15 +61,17 @@ public class DoctorViewModel : ViewModelBase
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
         VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
         SendMessageCommand = new RelayCommand(SendMessage);
+        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
+        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
     }
 
-    public ObservableCollection<Examination> Examinations
+    public ObservableCollection<Loan> Loans
     {
-        get => _examinations;
+        get => _loans;
         set
         {
-            _examinations = value;
-            OnPropertyChanged(nameof(Examinations));
+            _loans = value;
+            OnPropertyChanged(nameof(Loans));
         }
     }
 
@@ -100,7 +105,7 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public string SearchBoxText
+    public string? SearchBoxText
     {
         get => _searchBoxText;
         set
@@ -110,13 +115,13 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public object SelectedPatient
+    public object? SelectedBook
     {
-        get => _selectedPatient;
+        get => _selectedBook;
         set
         {
-            _selectedPatient = value;
-            OnPropertyChanged(nameof(SelectedPatient));
+            _selectedBook = value;
+            OnPropertyChanged(nameof(SelectedBook));
         }
     }
 
@@ -127,8 +132,8 @@ public class DoctorViewModel : ViewModelBase
         {
             _selectedDate = value;
             OnPropertyChanged(nameof(SelectedDate));
-            Examinations.Clear();
-            _examinationService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Examinations.Add);
+            Loans.Clear();
+            //_loanService.GetExaminationsForDate(_doctor, SelectedDate).ToList().ForEach(Loans.Add);
         }
     }
 
@@ -165,10 +170,8 @@ public class DoctorViewModel : ViewModelBase
 
     private void DefaultExaminationView()
     {
-        Examinations.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor).ToList().ForEach(Examinations.Add);
-        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
-        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
+        Loans.Clear();
+        _loanService.GetAll(_doctor).ForEach(Loans.Add);
     }
 
     private void VisitHospitalizedPatients()
@@ -200,7 +203,7 @@ public class DoctorViewModel : ViewModelBase
 
     private void AddExamination()
     {
-        var dialog = new ModifyExaminationDialog(Doctor, Examinations)
+        var dialog = new ModifyExaminationDialog(Doctor, Loans)
         {
             WindowStyle = WindowStyle.ToolWindow
         };
@@ -218,7 +221,7 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        var dialog = new ModifyExaminationDialog(Doctor, Examinations, examinationToChange)
+        var dialog = new ModifyExaminationDialog(Doctor, Loans, examinationToChange)
         {
             WindowStyle = WindowStyle.ToolWindow
         };
@@ -239,7 +242,7 @@ public class DoctorViewModel : ViewModelBase
 
         try
         {
-            _examinationService.DeleteExamination(examination, false);
+            _loanService.DeleteExamination(examination, false);
         }
         catch (DoctorNotBusyException ex)
         {
@@ -252,7 +255,7 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        Examinations.Remove(examination);
+        Loans.Remove(examination);
         MessageBox.Show("Succeed");
     }
 

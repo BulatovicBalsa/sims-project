@@ -100,7 +100,7 @@
                         Margin="5" Click="BtnDeleteExamination_Click"/>
                     <!-- Find Examinations button -->
                     <Button x:Name="BtnFindExaminations"
-                        Content="Find Examinations"
+                        Content="Find Loans"
                         Margin="10,5,5,5"
                         Padding="10,0"
                         FontWeight="Bold"
