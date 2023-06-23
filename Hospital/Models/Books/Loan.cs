@@ -13,9 +13,11 @@ public class Loan
     public Loan()
     {
         Id = Guid.NewGuid().ToString();
+        Member = new Doctor();
+        Book = new Book();
     }
 
-    public Loan(string id, Book book, Doctor member, DateTime start, DateTime? end)
+    public Loan(Book book, Doctor member, DateTime start, DateTime? end)
     {
         Id = Guid.NewGuid().ToString();
         Book = book;
