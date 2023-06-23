@@ -86,7 +86,7 @@
                           CellStyle="{DynamicResource DataGridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
                           RowStyle="{DynamicResource DataGridRowStyle}"
-                          SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" MaxHeight="400">
+                          SelectedItem="{Binding SelectedBook}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" MaxHeight="400">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
                         <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
@@ -117,7 +117,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Rented books" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Text="Loaned books" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Label Content="View for:"></Label>
@@ -138,19 +138,17 @@
                             Margin="5" Command="{Binding PerformExaminationCommand}"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Examinations}" SelectedItem="{Binding SelectedExamination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Loans}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Operation?" Binding="{Binding IsOperation}" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="Room"  Binding="{Binding Room}" IsReadOnly="True" Width="*" />
+                        <DataGridTextColumn Header="Title" Binding="{Binding Book.Title}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Author" Binding="{Binding Book.Author}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Loan start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
                 <TextBlock Grid.Row="4" Text="Your Time Off Requests" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
-                <DataGrid Grid.Row="5" ItemsSource="{Binding TimeOffRequests}" SelectedItem="{Binding SelectedExamination}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="5" ItemsSource="{Binding TimeOffRequests}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
