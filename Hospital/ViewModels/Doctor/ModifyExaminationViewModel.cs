@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models.Books;
 using Hospital.Services;
+using Hospital.Services.Books;
 using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels;
@@ -17,86 +19,54 @@ namespace Hospital.ViewModels;
 public class ModifyExaminationViewModel : ViewModelBase
 {
     private readonly Doctor _doctor;
-    private readonly ObservableCollection<Examination> _examinationCollection;
-    private readonly ExaminationService _examinationService = new();
-    private readonly Examination? _examinationToChange;
+    private readonly ObservableCollection<Loan> _loanCollection;
+    private readonly LoanService _loanService = new();
+    private readonly Loan? _loanToChange;
     private readonly bool _isUpdate;
-    private readonly PatientService _patientService = new();
+    private readonly BookService _bookService = new();
     private readonly RoomFilterService _roomFilterService = new();
 
     private string _buttonContent;
 
-    private bool _isOperation;
+    private ObservableCollection<Book> _books;
 
-    private ObservableCollection<Patient> _patients;
+    private Book? _selectedBook;
+    private Doctor? _selectedMember;
 
-    private ObservableCollection<TimeOnly> _possibleTimes;
 
-    private DateTime? _selectedDate;
-
-    private Patient? _selectedPatient;
-
-    private Room? _selectedRoom;
-
-    private TimeOnly? _selectedTime;
-
-    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Examination> examinationCollection,
-        Examination? examinationToChange = null, DateTime? examinationDate = null, Patient patientInTenDays = null)
+    public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
-        _isUpdate = examinationToChange is not null;
+        _isUpdate = loanToChange is not null;
         _doctor = doctor;
-        _examinationCollection = examinationCollection;
-        _examinationToChange = examinationToChange;
+        _loanCollection = loanCollection;
+        _loanToChange = loanToChange;
 
-        Patients = new ObservableCollection<Patient>(_patientService.GetAllPatients());
-        PossibleTimes = new ObservableCollection<TimeOnly>(GetPossibleTimes());
-        Rooms = new ObservableCollection<Room>(_roomFilterService.GetRoomsForExamination());
+        _books = new ObservableCollection<Book>(_loanService.GetNotLoanedBooks());
 
-        ModifyExaminationCommand = new RelayCommand<Window>(ModifyExamination);
-        FillForm();
+        _selectedBook = _loanToChange?.Book;
+        _selectedMember = _loanToChange?.Member;
+        _buttonContent = _loanToChange is null ? "Create" : "Update";
 
-        if (examinationDate is null) return;
-        SelectedDate = DateTime.Today.AddDays(10);
-        SelectedPatient = patientInTenDays;
+        ModifyExaminationCommand = new RelayCommand(ModifyExamination);
     }
 
-    public bool IsOperation
+    public Book? SelectedBook
     {
-        get => _isOperation;
+        get => _selectedBook;
         set
         {
-            _isOperation = value;
-            OnPropertyChanged(nameof(IsOperation));
+            _selectedBook = value;
+            OnPropertyChanged(nameof(SelectedBook));
         }
     }
 
-    public DateTime? SelectedDate
+    public ObservableCollection<Book> Books
     {
-        get => _selectedDate;
+        get => _books;
         set
         {
-            _selectedDate = value;
-            OnPropertyChanged(nameof(SelectedDate));
-        }
-    }
-
-    public Patient? SelectedPatient
-    {
-        get => _selectedPatient;
-        set
-        {
-            _selectedPatient = value;
-            OnPropertyChanged(nameof(SelectedPatient));
-        }
-    }
-
-    public ObservableCollection<Patient> Patients
-    {
-        get => _patients;
-        set
-        {
-            _patients = value;
-            OnPropertyChanged(nameof(Patients));
+            _books = value;
+            OnPropertyChanged(nameof(Books));
         }
     }
 
@@ -110,67 +80,33 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
     }
 
-    public TimeOnly? SelectedTime
+    public Doctor? SelectedMember
     {
-        get => _selectedTime;
+        get => _selectedMember;
         set
         {
-            _selectedTime = value;
-            OnPropertyChanged(nameof(SelectedTime));
-        }
-    }
-
-    public ObservableCollection<TimeOnly> PossibleTimes
-    {
-        get => _possibleTimes;
-        set
-        {
-            _possibleTimes = value;
-            OnPropertyChanged(nameof(PossibleTimes));
-        }
-    }
-
-    public ObservableCollection<Room> Rooms { get; set; }
-
-    public Room? SelectedRoom
-    {
-        get => _selectedRoom;
-        set
-        {
-            _selectedRoom = value;
-            OnPropertyChanged(nameof(SelectedRoom));
+            _selectedMember = value;
+            OnPropertyChanged(nameof(SelectedMember));
         }
     }
 
     public ICommand ModifyExaminationCommand { get; set; }
 
-    private void FillForm()
+    private void ModifyExamination()
     {
-        SelectedDate = _examinationToChange?.Start ?? DateTime.Now;
-        IsOperation = _examinationToChange is not null && _examinationToChange.IsOperation;
-        SelectedTime = _examinationToChange is null
-            ? null
-            : TimeOnly.FromTimeSpan(_examinationToChange.Start.TimeOfDay);
-        SelectedPatient = _examinationToChange?.Patient;
-        SelectedRoom = _examinationToChange?.Room;
-        ButtonContent = _examinationToChange is null ? "Create" : "Update";
-    }
-
-    private void ModifyExamination(Window window)
-    {
-        var createdExamination = CreateExaminationFromForm();
-        if (createdExamination is null) return;
+        var createdLoan = CreateLoanFromForm();
+        if (createdLoan is null) return;
 
         try
         {
             if (_isUpdate)
             {
-                UpdateExamination(createdExamination);
+                UpdateExamination(createdLoan);
             }
             else
             {
-                _examinationService.AddExamination(createdExamination, false);
-                _examinationCollection.Add(createdExamination);
+                _loanService.Add(createdLoan);
+                _loanCollection.Add(createdLoan);
             }
         }
         catch (Exception ex)
@@ -182,53 +118,33 @@ public class ModifyExaminationViewModel : ViewModelBase
             }
         }
 
-        window.DialogResult = true;
+        Application.Current.Windows[1]?.Close();
+
     }
 
-    private Examination? CreateExaminationFromForm()
+    private Loan? CreateLoanFromForm()
     {
-        if (SelectedPatient == null
-            || SelectedDate == null
-            || SelectedTime == null
-            || SelectedRoom == null)
+        if (SelectedBook == null
+            || SelectedMember == null)
         {
-            MessageBox.Show("You must select patient, date, time, and room");
+            MessageBox.Show("You must select book and member");
             return null;
         }
 
-        var startDate = CreateDateFromForm();
+        var startDate = DateTime.Today;
 
-        var createdExamination = _isUpdate ? _examinationToChange : new Examination();
-        createdExamination?.Update(new UpdateExaminationDto(startDate, IsOperation, SelectedRoom, SelectedPatient,
-            _doctor));
+        var createdExamination = _isUpdate ? _loanToChange : new Loan();
+        createdExamination?.Update(SelectedMember, SelectedBook, startDate, null);
         return createdExamination;
     }
 
-    private DateTime CreateDateFromForm()
+    private void UpdateExamination(Loan loan)
     {
-        var startTime = SelectedTime.GetValueOrDefault();
-        var startDate = SelectedDate.GetValueOrDefault();
-        startDate = startDate.Add(startTime.ToTimeSpan());
-        return startDate;
-    }
-
-    private void UpdateExamination(Examination examination)
-    {
-        if (_examinationToChange != null) examination.Id = _examinationToChange.Id;
-        else throw new InvalidOperationException("examination to change can't be null");
-        _examinationService.UpdateExamination(examination, false);
-        _examinationCollection.Clear();
-        _examinationService.GetExaminationsForNextThreeDays(_doctor)
-            .ForEach(examinationInRange => _examinationCollection.Add(examinationInRange));
-    }
-
-    private List<TimeOnly> GetPossibleTimes()
-    {
-        var possibleTimes = new List<TimeOnly>();
-
-        for (var hour = 0; hour <= 23; hour++)
-        for (var minute = 0; minute < 60; minute += 15)
-            possibleTimes.Add(new TimeOnly(hour, minute));
-        return possibleTimes;
+        if (_loanToChange != null) loan.Id = _loanToChange.Id;
+        else throw new InvalidOperationException("loan to change can't be null");
+        _loanService.Update(loan);
+        _loanCollection.Clear();
+        _loanService.GetCurrentLoans(_doctor)
+            .ForEach(loanInRange => _loanCollection.Add(loanInRange));
     }
 }
