@@ -33,7 +33,10 @@ public class ModifyExaminationViewModel : ViewModelBase
     private Book? _selectedBook;
     private Doctor? _selectedMember;
 
-
+    public ModifyExaminationViewModel()
+    {
+        
+    }
     public ModifyExaminationViewModel(Doctor doctor, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
         _isUpdate = loanToChange is not null;
