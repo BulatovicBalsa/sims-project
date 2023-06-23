@@ -148,7 +148,8 @@ public class LoanRepository
 
     public bool IsFree(Book book)
     {
-        return GetAll(book).Any(loan => loan.End is null);
+        var allLoansForBook = GetAll(book);
+        return allLoansForBook.Any(loan => loan.End is null) || allLoansForBook.Count == 0;
     }
 
     public void DeleteAll()

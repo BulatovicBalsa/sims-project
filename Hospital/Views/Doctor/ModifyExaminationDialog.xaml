@@ -72,14 +72,13 @@
                 <ComboBox Height="30" ItemsSource="{Binding Members}"
                           SelectedItem="{Binding SelectedMember}"/>
                 <TextBlock Style="{StaticResource MainTextBlock}">Book</TextBlock>
-                <ComboBox Height="30" ItemsSource="{Binding Books}"
+                <ComboBox Height="30" ItemsSource="{Binding Books}" DisplayMemberPath="ComboBoxString" 
                           SelectedItem="{Binding SelectedBook}"/>
                 <Button Style="{StaticResource ActionButton}" 
                         Content="{Binding ButtonContent}"
                         Margin="0,20,0,0"
                         Command="{Binding ModifyLoanCommand}"/>
             </StackPanel>
-
         </Grid>
     </Border>
 </Window>
