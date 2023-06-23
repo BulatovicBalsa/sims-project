@@ -2,6 +2,7 @@
 using System.Linq;
 using Hospital.Models.Books;
 using Hospital.Serialization;
+using Hospital.Serialization.Mappers.Books;
 
 namespace Hospital.Repositories.Books;
 
@@ -17,7 +18,7 @@ public class BookRepository
 
     public List<Book> GetAll()
     {
-        return _serializer.Load(FilePath);
+        return _serializer.Load(FilePath, new BookReadMapper());
     }
 
     public Book? GetById(string id)
