@@ -47,7 +47,7 @@ public class DoctorViewModel : ViewModelBase
             new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(member));
         _timeOffRequests = TimeOffRequests;
         Loans =
-            new ObservableCollection<Loan>(_loanService.GetAll(member));
+            new ObservableCollection<Loan>(_loanService.GetCurrentLoans(member));
         _loans = Loans;
         SearchBoxText = Placeholder;
 
@@ -170,7 +170,7 @@ public class DoctorViewModel : ViewModelBase
     private void DefaultExaminationView()
     {
         Loans.Clear();
-        _loanService.GetAll(_member).ForEach(Loans.Add);
+        _loanService.GetCurrentLoans(_member).ForEach(Loans.Add);
     }
 
     private void VisitHospitalizedPatients()
