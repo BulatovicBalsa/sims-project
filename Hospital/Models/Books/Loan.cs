@@ -28,6 +28,6 @@ public class Loan
 
     public override string ToString()
     {
-        return $"{Id},{Book.Id},{Member.Id},{Start},{End}";
+        return $"{Id},{Member.Id},{Book.Id},{Start},{End}";
     }
 }

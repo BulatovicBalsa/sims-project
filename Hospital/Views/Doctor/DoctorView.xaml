@@ -138,7 +138,12 @@
                             Margin="5" Command="{Binding PerformExaminationCommand}"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid" ItemsSource="{Binding Loans}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid"
+                          Style="{DynamicResource DataGridStyle}" 
+                          CellStyle="{DynamicResource DataGridCellStyle}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                          RowStyle="{DynamicResource DataGridRowStyle}"
+                          ItemsSource="{Binding Loans}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Title" Binding="{Binding Book.Title}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Author" Binding="{Binding Book.Author}" IsReadOnly="True" Width="*"/>
