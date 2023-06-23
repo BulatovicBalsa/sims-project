@@ -33,10 +33,10 @@ public sealed class LoanReadMapper : ClassMap<Loan>
             if (string.IsNullOrEmpty(memberId))
                 return null;
             
-            var doctor =
+            var member =
                 new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(memberId) ??
                 throw new KeyNotFoundException($"Doctor with ID {memberId} not found");
-            return doctor;
+            return member;
         }
     }
 
@@ -78,7 +78,7 @@ public class LoanRepository
     {
         var allLoans = GetAll();
 
-        if (!IsFree(loan.Book!, loan.Start)) throw new BookAlreadyLoanedException("Book is already loaned");
+        if (!IsFree(loan.Book)) throw new BookAlreadyLoanedException("Book is already loaned");
 
         allLoans.Add(loan);
 
@@ -92,11 +92,6 @@ public class LoanRepository
         var indexToUpdate = allLoans.FindIndex(e => e.Id == loan.Id);
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-        if (!IsFree(loan.Doctor, loan.Start, loan.Id))
-            throw new DoctorBusyException("Doctor is busy");
-        if (!IsFree(loan.Book!, loan.Start, loan.Id))
-            throw new BookAlreadyLoanedException("Book is busy");
-
         allLoans[indexToUpdate] = loan;
 
        _serializer.Save(allLoans, FilePath);
@@ -109,129 +104,43 @@ public class LoanRepository
         var indexToDelete = allLoan.FindIndex(e => e.Id == loan.Id);
         if (indexToDelete == -1) throw new KeyNotFoundException();
 
-        if (loan.Start != DateTime.MinValue)
-        {
-            if (IsFree(loan.Doctor, loan.Start))
-                throw new DoctorNotBusyException("Doctor is not busy,although he should be");
-            if (IsFree(loan.Book, loan.Start))
-                throw new BookNotLoanedException("Book is not busy,although he should be");
-        }
-
-        if (isMadeByBook)
-        {
-            ValidateLoanTiming(loan.Start);
-            ValidateMaxChangesOrDeletesLast30Days(loan.Book!);
-            ValidateMaxAllowedLoansLast30Days(loan.Book!);
-            BookLoanLog log = new(loan.Book!, false);
-            _loanChangesTracker.Add(log);
-        }
-
         allLoan.RemoveAt(indexToDelete);
 
        _serializer.Save(allLoan, FilePath);
     }
 
-    public void Delete(Doctor doctor, TimeRange timeRange)
+    public List<Loan> GetAll(Doctor member)
     {
-        foreach (var loan in GetLoansInTimeRange(doctor, timeRange)) Delete(loan, false);
-    }
-
-    public List<Loan> GetAll(Doctor doctor)
-    {
-        var doctorLoans = GetAll()
-            .Where(loan => loan.Doctor?.Equals(doctor) ?? false)
+        var memberLoans = GetAll()
+            .Where(loan => loan.Member.Equals(member))
             .ToList();
-        return doctorLoans;
+        return memberLoans;
     }
 
     public List<Loan> GetAll(Book book)
     {
         var bookLoans = GetAll()
-            .Where(loan => loan.Book!.Equals(book))
+            .Where(loan => loan.Book.Equals(book))
             .ToList();
         return bookLoans;
     }
 
-    public List<Loan> GetFinishedLoans(Doctor doctor)
+    public List<Loan> GetFinishedLoans(Doctor member)
     {
-        var currentTime = DateTime.Now;
-        var finishedLoans = GetAll()
-            .Where(loan => (loan.Doctor?.Equals(doctor) ?? false) && loan.Start < currentTime)
-            .ToList();
-        return finishedLoans;
+        return GetAll(member).Where(loan => loan.End is not null).ToList();
     }
 
-    public List<Loan> GetLoansForDate(Doctor doctor, DateTime requestedDate)
+    public List<Loan> GetCurrentLoans(Doctor member)
     {
-        return GetAll(doctor).Where(loan => loan.Start.Date == requestedDate.Date).ToList();
+        return GetAll(member).Where(loan => loan.End is null).ToList();
     }
 
-
-    public List<Loan> GetLoansInTimeRange(Doctor doctor, TimeRange range)
+    public bool IsFree(Book book)
     {
-        return GetAll(doctor)
-            .Where(loan => range.DoesOverlapWith(new TimeRange(loan.Start, loan.End))).ToList();
+        return GetAll(book).Any(loan => loan.End is null);
     }
 
-    public List<Loan> GetLoansForDate(Book book, DateTime requestedDate)
-    {
-        return GetAll(book).Where(loan => loan.Start.Date == requestedDate.Date).ToList();
-    }
-
-    public List<Loan> GetLoansForNextThreeDays(Doctor doctor)
-    {
-        var filter = new DoctorLoansFilter();
-
-        var start = DateTime.Now;
-        var end = start.AddDays(2);
-        var loans = GetAll(doctor);
-
-        return filter.Filter(loans, new LoanPerformingSpecification(start, end));
-    }
-
-    public bool IsFree(Doctor? doctor, DateTime start, string? loanId = null)
-    {
-        if (doctor == null)
-            return true;
-
-        var allLoans = GetAll(doctor);
-        var isAvailable = !allLoans.Any(loan =>
-            loan.Id != loanId && loan.DoesInterfereWith(start));
-
-        return isAvailable;
-    }
-
-    public bool IsFree(Book book, DateTime start, string? loanId = null)
-    {
-        var allLoans = GetAll(book);
-        var isLoaned = !allLoans.Any(loan =>
-            loan.Id != loanId && loan.DoesInterfereWith(start));
-
-        return isLoaned;
-    }
-
-    private void ValidateLoanTiming(DateTime start)
-    {
-        if (start < DateTime.Now.AddDays(Book.MinimumDaysToChangeOrDeleteLoan))
-            throw new InvalidOperationException(
-                $"It is not possible to update an loan less than {Book.MinimumDaysToChangeOrDeleteLoan * 24} hours in advance.");
-    }
-
-    private void ValidateMaxChangesOrDeletesLast30Days(Book book)
-    {
-        if (_loanChangesTracker.GetNumberOfChangeLogsForBookInLast30Days(book) + 1 >
-            Book.MaxChangesOrDeletesLast30Days)
-            throw new InvalidOperationException("Book made too many changes in last 30 days");
-    }
-
-    private void ValidateMaxAllowedLoansLast30Days(Book book)
-    {
-        if (_loanChangesTracker.GetNumberOfCreationLogsForBookInLast30Days(book) + 1 >
-            Book.MaxAllowedLoansLast30Days)
-            throw new InvalidOperationException("Book made too many loans in last 30 days");
-    }
-
-    public static void DeleteAll()
+    public void DeleteAll()
     {
         var emptyList = new List<Loan>();
        _serializer.Save(emptyList, FilePath);
