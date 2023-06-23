@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -31,11 +30,11 @@ public class DoctorViewModel : ViewModelBase
     private Doctor _doctor;
     private ObservableCollection<Loan> _loans;
 
-    private string? _searchBoxText;
-
-    private DateTime _selectedDate;
+    private string _searchBoxText;
 
     private object? _selectedBook;
+
+    private DateTime _selectedDate;
     private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor doctor)
@@ -105,7 +104,7 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public string? SearchBoxText
+    public string SearchBoxText
     {
         get => _searchBoxText;
         set
@@ -137,7 +136,7 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public object SelectedExamination { get; set; }
+    public object SelectedLoan { get; set; }
 
     public string DoctorName => $"Doctor {Doctor.FirstName} {Doctor.LastName}";
 
@@ -161,7 +160,7 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        var dialog = new AdvancedBookDetailsDialog()
+        var dialog = new AdvancedBookDetailsDialog
         {
             DataContext = new AdvancedBookDetailsViewModel(book)
         };
@@ -203,46 +202,45 @@ public class DoctorViewModel : ViewModelBase
 
     private void AddExamination()
     {
-        var dialog = new ModifyExaminationDialog(Doctor, Loans)
-        {
-            WindowStyle = WindowStyle.ToolWindow
-        };
+        //var dialog = new ModifyExaminationDialog(Doctor, Loans)
+        //{
+        //    WindowStyle = WindowStyle.ToolWindow
+        //};
 
-        var result = dialog.ShowDialog();
-        if (result == true) MessageBox.Show("Succeed");
+        //var result = dialog.ShowDialog();
+        //if (result == true) MessageBox.Show("Succeed");
     }
 
     private void UpdateExamination()
     {
-        var examinationToChange = SelectedExamination as Examination;
-        if (examinationToChange == null)
-        {
-            MessageBox.Show("Please select examination in order to delete it");
-            return;
-        }
+        //var examinationToChange = SelectedLoan as Examination;
+        //if (examinationToChange == null)
+        //{
+        //    MessageBox.Show("Please select examination in order to delete it");
+        //    return;
+        //}
 
-        var dialog = new ModifyExaminationDialog(Doctor, Loans, examinationToChange)
-        {
-            WindowStyle = WindowStyle.ToolWindow
-        };
+        //var dialog = new ModifyExaminationDialog(Doctor, Loans, examinationToChange)
+        //{
+        //    WindowStyle = WindowStyle.ToolWindow
+        //};
 
-        var result = dialog.ShowDialog();
+        //var result = dialog.ShowDialog();
 
-        if (result == true) MessageBox.Show("Succeed");
+        //if (result == true) MessageBox.Show("Succeed");
     }
 
     private void DeleteExamination()
     {
-        var examination = SelectedExamination as Examination;
-        if (examination == null)
+        if (SelectedLoan is not Loan loan)
         {
-            MessageBox.Show("Please select examination in order to delete it");
+            MessageBox.Show("Please select loan in order to delete it");
             return;
         }
 
         try
         {
-            _loanService.DeleteExamination(examination, false);
+            _loanService.DeleteLoan(loan);
         }
         catch (DoctorNotBusyException ex)
         {
@@ -255,13 +253,13 @@ public class DoctorViewModel : ViewModelBase
             return;
         }
 
-        Loans.Remove(examination);
+        Loans.Remove(loan);
         MessageBox.Show("Succeed");
     }
 
     private void PerformExamination()
     {
-        var examinationToPerform = SelectedExamination as Examination;
+        var examinationToPerform = SelectedLoan as Examination;
         if (examinationToPerform == null)
         {
             MessageBox.Show("Please select examination in order to perform it");
