@@ -19,8 +19,8 @@ public sealed class LoanReadMapper : ClassMap<Loan>
     public LoanReadMapper()
     {
         Map(loan => loan.Id).Index(0);
-        Map(loan => loan.Book).Index(1).TypeConverter<BookTypeConverter>();
-        Map(loan => loan.Member).Index(2).TypeConverter<DoctorTypeConverter>();
+        Map(loan => loan.Member).Index(1).TypeConverter<DoctorTypeConverter>();
+        Map(loan => loan.Book).Index(2).TypeConverter<BookTypeConverter>();
         Map(loan => loan.Start).Index(3);
         Map(loan => loan.End).Index(4);
     }
