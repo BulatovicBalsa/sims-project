@@ -22,7 +22,8 @@ public class SerializerInjector
         { typeof(ISerializer<MedicationOrder>), new CsvSerializer<MedicationOrder>() },
         { typeof(ISerializer<TransferItem>), new JsonSerializer<TransferItem>() },
         { typeof(ISerializer<ComplexRenovation>), new JsonSerializer<ComplexRenovation>() },
-        { typeof(ISerializer<Book>), new CsvSerializer<Book>() }
+        { typeof(ISerializer<Book>), new CsvSerializer<Book>() },
+        { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() }
         // Add more implementations here
     };
 
