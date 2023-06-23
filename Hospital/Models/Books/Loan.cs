@@ -30,4 +30,12 @@ public class Loan
     {
         return $"{Id},{Member.Id},{Book.Id},{Start},{End}";
     }
+
+    public void Update(Doctor selectedMember, Book selectedBook, DateTime start, DateTime? end = null)
+    {
+        Member = selectedMember;
+        Book = selectedBook;
+        Start = start;
+        End = end;
+    }
 }
