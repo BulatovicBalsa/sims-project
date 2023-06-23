@@ -76,38 +76,30 @@ public class LoanRepository
 
     public void Add(Loan loan)
     {
-        var allLoan = GetAll();
+        var allLoans = GetAll();
 
         if (!IsFree(loan.Book!, loan.Start)) throw new BookAlreadyLoanedException("Book is already loaned");
 
-        allLoan.Add(loan);
+        allLoans.Add(loan);
 
-       _serializer.Save(allLoan, FilePath, new LoanWriteMapper());
+       _serializer.Save(allLoans, FilePath);
     }
 
-    public void Update(Loan loan, bool isMadeByBook)
+    public void Update(Loan loan)
     {
-        var allLoan = GetAll();
+        var allLoans = GetAll();
 
-        var indexToUpdate = allLoan.FindIndex(e => e.Id == loan.Id);
+        var indexToUpdate = allLoans.FindIndex(e => e.Id == loan.Id);
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
         if (!IsFree(loan.Doctor, loan.Start, loan.Id))
             throw new DoctorBusyException("Doctor is busy");
         if (!IsFree(loan.Book!, loan.Start, loan.Id))
             throw new BookAlreadyLoanedException("Book is busy");
-        if (isMadeByBook)
-        {
-            ValidateLoanTiming(loan.Start);
-            ValidateMaxChangesOrDeletesLast30Days(loan.Book!);
-            ValidateMaxAllowedLoansLast30Days(loan.Book!);
-            BookLoanLog log = new(loan.Book!, false);
-            _loanChangesTracker.Add(log);
-        }
 
-        allLoan[indexToUpdate] = loan;
+        allLoans[indexToUpdate] = loan;
 
-       _serializer.Save(allLoan, FilePath, new LoanWriteMapper());
+       _serializer.Save(allLoans, FilePath);
     }
 
     public void Delete(Loan loan, bool isMadeByBook)
@@ -122,7 +114,7 @@ public class LoanRepository
             if (IsFree(loan.Doctor, loan.Start))
                 throw new DoctorNotBusyException("Doctor is not busy,although he should be");
             if (IsFree(loan.Book, loan.Start))
-                throw new BookNotBusyException("Book is not busy,although he should be");
+                throw new BookNotLoanedException("Book is not busy,although he should be");
         }
 
         if (isMadeByBook)
@@ -136,7 +128,7 @@ public class LoanRepository
 
         allLoan.RemoveAt(indexToDelete);
 
-       _serializer.Save(allLoan, FilePath, new LoanWriteMapper());
+       _serializer.Save(allLoan, FilePath);
     }
 
     public void Delete(Doctor doctor, TimeRange timeRange)
@@ -242,6 +234,6 @@ public class LoanRepository
     public static void DeleteAll()
     {
         var emptyList = new List<Loan>();
-       _serializer.Save(emptyList, FilePath, new LoanWriteMapper());
+       _serializer.Save(emptyList, FilePath);
     }
 }

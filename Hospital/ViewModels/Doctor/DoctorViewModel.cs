@@ -246,7 +246,7 @@ public class DoctorViewModel : ViewModelBase
             MessageBox.Show(ex.Message);
             return;
         }
-        catch (PatientNotBusyException ex)
+        catch (BookNotLoanedException ex)
         {
             MessageBox.Show(ex.Message);
             return;

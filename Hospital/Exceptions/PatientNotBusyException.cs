@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hospital.Exceptions
 {
-    public class PatientNotBusyException : Exception
+    public class BookNotLoanedException : Exception
     {
-        public PatientNotBusyException(string message) : base(message) { }
+        public BookNotLoanedException(string message) : base(message) { }
     }
 }

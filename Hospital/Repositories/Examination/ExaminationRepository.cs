@@ -215,7 +215,7 @@ public class ExaminationRepository
             if (IsFree(examination.Doctor, examination.Start))
                 throw new DoctorNotBusyException("Doctor is not busy,although he should be");
             if (IsFree(examination.Patient, examination.Start))
-                throw new PatientNotBusyException("Patient is not busy,although he should be");
+                throw new BookNotLoanedException("Patient is not busy,although he should be");
         }
 
         if (isMadeByPatient)
