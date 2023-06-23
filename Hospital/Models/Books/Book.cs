@@ -48,4 +48,9 @@ public class Book
     public BookLanguage Language { get; set; }
     public string Author { get; set; } //change later, this is just temporary
     public string UdcAsString => string.Join("-", Udc.Select(u => u.ToString()));
+
+    public override string ToString()
+    {
+        return $"{Id},{Title},{Author},{Description},{Isbn},{UdcAsString.Replace("-", "|")},{BindingType},{Language}";
+    }
 }
