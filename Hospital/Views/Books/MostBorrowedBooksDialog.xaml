@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:Hospital.Views.Books"
         xmlns:viewModels="clr-namespace:Hospital.ViewModels.Books"
         mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Background="Transparent"
+        AllowsTransparency="True"
         Title="MostBorrowedBooksDialog" Height="450" Width="800">
 
     <Window.DataContext>
@@ -23,12 +27,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalContentAlignment="Center" FontSize="30" FontWeight="Bold">Most read books</Label>
+            <Label Grid.Row="1" HorizontalContentAlignment="Center" FontSize="30" FontWeight="Bold">Most read books</Label>
 
 
-            <DataGrid Grid.Row="1" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}"
+            <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}"
                           Style="{DynamicResource DataGridStyle}" 
                           CellStyle="{DynamicResource DataGridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
@@ -48,6 +53,28 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+                <StackPanel x:Name="ControlBar"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
+                            Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="ControlBar_OnMouseLeftButtonDown">
+
+                    <Button x:Name="BtnClose" 
+                            Style="{StaticResource ControlButton}"
+                            Content="X"
+                            Margin="3,0,3,0"
+                            Click="BtnClose_OnClick"/>
+
+                    <Button x:Name="BtnMinimize" 
+                            Style="{StaticResource ControlButton}"
+                            Content="-"
+                            Margin="3,0,3,0"
+                            Click="BtnMinimize_OnClick"/>
+
+                </StackPanel>
+
         </Grid>
     </Border>
 </Window>
