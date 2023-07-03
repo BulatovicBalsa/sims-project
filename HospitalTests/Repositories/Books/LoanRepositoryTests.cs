@@ -1,116 +1,97 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hospital.Repositories.Books;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hospital.Injectors;
+﻿using Hospital.Injectors;
 using Hospital.Models.Books;
 using Hospital.Repositories.Doctor;
 using Hospital.Serialization;
 
-namespace Hospital.Repositories.Books.Tests
+namespace Hospital.Repositories.Books.Tests;
+
+[TestClass]
+public class LoanRepositoryTests
 {
-    [TestClass()]
-    public class LoanRepositoryTests
+    [TestInitialize]
+    public void SetUp()
     {
-        [TestInitialize]
-        public void SetUp()
+        try
         {
-            try
-            {
-                DeleteData();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Files don't exist.");
-            }
+            DeleteData();
         }
-
-        [TestCleanup]
-        public void CleanUp()
+        catch (Exception)
         {
-            try
-            {
-                DeleteData();
-            }
-            catch (Exception )
-            {
-                Console.WriteLine("Files don't exist.");
-            }
+            Console.WriteLine("Files don't exist.");
         }
+    }
 
-        private static void DeleteData()
+    [TestCleanup]
+    public void CleanUp()
+    {
+        try
         {
-            Directory.GetFiles("../../../Data/").ToList().ForEach(File.Delete);
+            DeleteData();
         }
-
-        [TestMethod()]
-        public void GetBooksOrderedByBorrowCountTest()
+        catch (Exception)
         {
-            var bookRepository = new BookRepository(SerializerInjector.CreateInstance<ISerializer<Book>>());
-            var loanRepository = new LoanRepository(SerializerInjector.CreateInstance<ISerializer<Loan>>());
-
-            var books = new List<Book>()
-            {
-                new Book("The Great Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "", BookLanguage.English),
-                new Book("The Greater Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "",
-                    BookLanguage.English),
-                new Book("The Greatest Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "",
-                    BookLanguage.English)
-            };
-
-
-            foreach (var book in books)
-            {
-                bookRepository.Add(book);
-            }
-
-            var curDate = DateTime.Now;
-            var member = new Models.Doctor.Doctor();
-            new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Models.Doctor.Doctor>>()).Add(member);
-            for (var i = 0; i < 10; i++)
-            {
-                loanRepository.Add(new Loan(books[i % 3], member, curDate.AddDays(i * -1), curDate));
-            }
-
-            var topBooks = loanRepository.GetBooksOrderedByBorrowCount(curDate.AddDays(-3));
-            Assert.AreEqual(books[0].Id, topBooks[0].Book.Id);
+            Console.WriteLine("Files don't exist.");
         }
+    }
 
-        [TestMethod()]
-        public void GetBooksOrderedByBorrowCountTestNoLoans()
+    private static void DeleteData()
+    {
+        Directory.GetFiles("../../../Data/").ToList().ForEach(File.Delete);
+    }
+
+    [TestMethod]
+    public void GetBooksOrderedByBorrowCountTest()
+    {
+        var bookRepository = new BookRepository(SerializerInjector.CreateInstance<ISerializer<Book>>());
+        var loanRepository = new LoanRepository(SerializerInjector.CreateInstance<ISerializer<Loan>>());
+
+        var books = new List<Book>
         {
-            var bookRepository = new BookRepository(SerializerInjector.CreateInstance<ISerializer<Book>>());
-            var loanRepository = new LoanRepository(SerializerInjector.CreateInstance<ISerializer<Loan>>());
-
-            var books = new List<Book>()
-            {
-                new Book("The Great Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "", BookLanguage.English),
-                new Book("The Greater Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "",
-                    BookLanguage.English),
-                new Book("The Greatest Gatsby", "", "", new List<int>{1, 2}, BindingType.Hardcover, "",
-                    BookLanguage.English)
-            };
+            new("The Great Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "", BookLanguage.English),
+            new("The Greater Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "",
+                BookLanguage.English),
+            new("The Greatest Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "",
+                BookLanguage.English)
+        };
 
 
-            foreach (var book in books)
-            {
-                bookRepository.Add(book);
-            }
+        foreach (var book in books) bookRepository.Add(book);
 
-            var curDate = DateTime.Now;
-            var member = new Models.Doctor.Doctor();
-            new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Models.Doctor.Doctor>>()).Add(member);
-            for (var i = 0; i < 10; i++)
-            {
-                loanRepository.Add(new Loan(books[i % 3], member, curDate.AddDays(i * -1), curDate));
-            }
+        var curDate = DateTime.Now;
+        var member = new Models.Doctor.Doctor();
+        new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Models.Doctor.Doctor>>()).Add(member);
+        for (var i = 0; i < 10; i++)
+            loanRepository.Add(new Loan(books[i % 3], member, curDate.AddDays(i * -1), curDate));
 
-            var topBooks = loanRepository.GetBooksOrderedByBorrowCount(curDate.AddDays(1));
-            Assert.AreEqual(0, topBooks.Count);
-        }
+        var topBooks = loanRepository.GetBooksOrderedByBorrowCount(curDate.AddDays(-3));
+        Assert.AreEqual(books[0].Id, topBooks[0].Book.Id);
+    }
 
+    [TestMethod]
+    public void GetBooksOrderedByBorrowCountTestNoLoans()
+    {
+        var bookRepository = new BookRepository(SerializerInjector.CreateInstance<ISerializer<Book>>());
+        var loanRepository = new LoanRepository(SerializerInjector.CreateInstance<ISerializer<Loan>>());
+
+        var books = new List<Book>
+        {
+            new("The Great Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "", BookLanguage.English),
+            new("The Greater Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "",
+                BookLanguage.English),
+            new("The Greatest Gatsby", "", "", new List<int> { 1, 2 }, BindingType.Hardcover, "",
+                BookLanguage.English)
+        };
+
+
+        foreach (var book in books) bookRepository.Add(book);
+
+        var curDate = DateTime.Now;
+        var member = new Models.Doctor.Doctor();
+        new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Models.Doctor.Doctor>>()).Add(member);
+        for (var i = 0; i < 10; i++)
+            loanRepository.Add(new Loan(books[i % 3], member, curDate.AddDays(i * -1), curDate));
+
+        var topBooks = loanRepository.GetBooksOrderedByBorrowCount(curDate.AddDays(1));
+        Assert.AreEqual(0, topBooks.Count);
     }
 }

@@ -22,6 +22,8 @@ public enum BookLanguage
 
 public class Book
 {
+    public const string UdcSeparator = "|";
+
     public Book()
     {
         Id = Guid.NewGuid().ToString();
@@ -30,7 +32,8 @@ public class Book
         Author = "";
     }
 
-    public Book(string title, string description, string isbn, List<int> udc, BindingType bindingType, string author, BookLanguage language)
+    public Book(string title, string description, string isbn, List<int> udc, BindingType bindingType, string author,
+        BookLanguage language)
     {
         Id = Guid.NewGuid().ToString();
         Title = title;
@@ -52,14 +55,12 @@ public class Book
     public string Author { get; set; } //change later, this is just temporary
     public string UdcAsString => string.Join(UdcSeparator, Udc.Select(u => u.ToString()));
 
-    public const string UdcSeparator = "|";
+    public string ComboBoxString => $"{Title}, {Author}";
 
     public override string ToString()
     {
         return $"{Id},{Title},{Author},{Description},{Isbn},{UdcAsString.Replace("-", "|")},{BindingType},{Language}";
     }
-
-    public string ComboBoxString => $"{Title}, {Author}";
 
     public override bool Equals(object? obj)
     {
