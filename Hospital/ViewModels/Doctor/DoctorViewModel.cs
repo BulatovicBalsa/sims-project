@@ -187,19 +187,6 @@ public class DoctorViewModel : ViewModelBase
             new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_member));
     }
 
-    private void ViewMedicalRecord(string patientId)
-    {
-        var patient = _patientService.GetPatientById(patientId);
-        if (patient == null)
-        {
-            MessageBox.Show("Please select examination in order to delete it");
-            return;
-        }
-
-        var dialog = new MedicalRecordDialog(patient, false);
-        dialog.ShowDialog();
-    }
-
     private void AddExamination()
     {
         var dialog = new ModifyExaminationDialog()

@@ -150,28 +150,6 @@
                         <DataGridTextColumn Header="Loan start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-
-                <TextBlock Grid.Row="4" Text="Your Time Off Requests" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
-
-                <DataGrid Grid.Row="5" ItemsSource="{Binding TimeOffRequests}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="End" Binding="{Binding End}" IsReadOnly="True" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Approved?" Binding="{Binding IsApproved}" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" IsReadOnly="True" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <TextBlock Grid.Row="6" Text="Other operations" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
-
-                <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-                    <Button Content="Add Time Off Requests"
-                            Margin="5" Command="{Binding AddTimeOffRequestCommand}"/>
-                    <Button Content="Visit Books On Hospital Treatments"
-                            Margin="5" Command="{Binding VisitHospitalizedPatientsCommand}"/>
-                    <Button Content="Send message"
-                            Margin="5" Command="{Binding SendMessageCommand}"/>
-                </StackPanel>
             </Grid>
         </Grid>
     </Border>
