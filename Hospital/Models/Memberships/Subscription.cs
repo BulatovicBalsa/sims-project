@@ -10,7 +10,7 @@ public class Subscription
         MemberId = MembershipId = "";
     }
 
-    public Subscription(string memberId, string membershipId, DateTime start)
+    public Subscription(string memberId, string membershipId, DateOnly start)
     {
         Id = Guid.NewGuid().ToString();
         MemberId = memberId;
@@ -21,5 +21,5 @@ public class Subscription
     public string Id { get; set; }
     public string MemberId { get; set; }
     public string MembershipId { get; set; }
-    public DateTime Start { get; set; }
+    public DateOnly Start { get; set; }
 }
