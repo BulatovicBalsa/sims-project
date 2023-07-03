@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Hospital.Models.Memberships;
 using Hospital.Serialization;
 
@@ -61,6 +62,16 @@ namespace Hospital.Repositories.Memberships
         {
             var emptySubscriptionList = new List<Subscription>();
             _serializer.Save(emptySubscriptionList, FilePath);
+        }
+
+        public List<Subscription> GetAllForMember(string memberId)
+        {
+            return GetAll().Where(sub => sub.MemberId == memberId).ToList();
+        }
+
+        public List<Subscription> GetAllForMembership(string membershipId)
+        {
+            return GetAll().Where(sub => sub.MemberId == membershipId).ToList();
         }
     }
 }
