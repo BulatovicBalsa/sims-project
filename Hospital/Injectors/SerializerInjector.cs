@@ -6,6 +6,7 @@ using Hospital.Models.Patient;
 using Hospital.Models.Requests;
 using Hospital.Models;
 using Hospital.Models.Books;
+using Hospital.Models.Memberships;
 using Hospital.Serialization;
 
 namespace Hospital.Injectors;
@@ -23,7 +24,8 @@ public class SerializerInjector
         { typeof(ISerializer<TransferItem>), new JsonSerializer<TransferItem>() },
         { typeof(ISerializer<ComplexRenovation>), new JsonSerializer<ComplexRenovation>() },
         { typeof(ISerializer<Book>), new CsvSerializer<Book>() },
-        { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() }
+        { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() },
+        { typeof(ISerializer<Membership>), new CsvSerializer<Membership>() },
         // Add more implementations here
     };
 
