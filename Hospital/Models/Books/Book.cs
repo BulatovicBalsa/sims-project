@@ -50,7 +50,9 @@ public class Book
     public BindingType BindingType { get; set; }
     public BookLanguage Language { get; set; }
     public string Author { get; set; } //change later, this is just temporary
-    public string UdcAsString => string.Join("-", Udc.Select(u => u.ToString()));
+    public string UdcAsString => string.Join(UdcSeparator, Udc.Select(u => u.ToString()));
+
+    public const string UdcSeparator = "|";
 
     public override string ToString()
     {

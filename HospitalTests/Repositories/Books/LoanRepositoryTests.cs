@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hospital.Injectors;
 using Hospital.Models.Books;
+using Hospital.Repositories.Doctor;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Books.Tests
@@ -67,9 +68,11 @@ namespace Hospital.Repositories.Books.Tests
             }
 
             var curDate = DateTime.Now;
+            var member = new Models.Doctor.Doctor();
+            new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Models.Doctor.Doctor>>()).Add(member);
             for (var i = 0; i < 10; i++)
             {
-                loanRepository.Add(new Loan(books[i % 3], new Models.Doctor.Doctor(), curDate.AddDays(i * -1), DateTime.Now));
+                loanRepository.Add(new Loan(books[i % 3], member, curDate.AddDays(i * -1), curDate));
             }
 
             var topBooks = loanRepository.GetBooksOrderedByBorrowCount(curDate.AddDays(-3));
