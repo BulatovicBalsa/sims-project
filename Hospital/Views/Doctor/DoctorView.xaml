@@ -136,6 +136,8 @@
                     <Button x:Name="BtnPerformExamination"
                             Content="Perform Examination"
                             Margin="5" Command="{Binding PerformExaminationCommand}"/>
+                    <Button Content="Most read books"
+                            Margin="5" Command="{Binding ViewMostBorrowedBooksCommand}"/>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid"
