@@ -1,11 +1,4 @@
-﻿using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace Hospital.Models.Books
@@ -34,7 +27,7 @@ namespace Hospital.Models.Books
             Price = price;
         }
 
-        public Loan Borrow(Doctor.Member member)
+        public Loan Borrow(Member member)
         {
             if (Status != CopyStatus.Available && Status != CopyStatus.Reserved)
                 throw new InvalidOperationException();

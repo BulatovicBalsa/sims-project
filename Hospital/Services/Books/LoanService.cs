@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Hospital.Injectors;
+using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Models.Doctor;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 

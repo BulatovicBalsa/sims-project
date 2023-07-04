@@ -1,10 +1,6 @@
-using Hospital.Models.Doctor;
 using System.Collections.Generic;
-using System.Linq;
-using Hospital.Repositories.Doctor;
-using Hospital.DTOs;
-using Hospital.Injectors;
-using Hospital.Serialization;
+using Hospital.Models;
+using Hospital.Repositories;
 
 namespace Hospital.Services;
 
@@ -14,7 +10,7 @@ public class MemberService
 
     public MemberService()
     {
-        _memberRepository = new MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>());
+        _memberRepository = new MemberRepository();
     }
 
     public List<Member> GetAll()

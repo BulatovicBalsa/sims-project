@@ -3,11 +3,9 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.DTOs;
 using Hospital.Exceptions;
+using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Models.Doctor;
-using Hospital.Services;
 using Hospital.Services.Books;
 using Hospital.ViewModels.Books;
 using Hospital.Views;
@@ -220,6 +218,7 @@ public class MemberViewModel : ViewModelBase
         if (loan == null)
         {
             MessageBox.Show("Please select a loan to return it");
+            return;
         }
         _loanService.Return(loan);
         DefaultExaminationView();

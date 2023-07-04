@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Hospital.Models.Doctor;
+using Hospital.Models;
 using Hospital.ViewModels;
 
 namespace Hospital.Views;

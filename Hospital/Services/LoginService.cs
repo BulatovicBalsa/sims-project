@@ -1,12 +1,6 @@
 ﻿using System.Net;
-using Hospital.Injectors;
 using Hospital.Models;
-using Hospital.Models.Doctor;
 using Hospital.Repositories;
-using Hospital.Repositories.Doctor;
-using Hospital.Serialization;
-using Member = Hospital.Models.Doctor.Member;
-using MemberRepository = Hospital.Repositories.Doctor.MemberRepository;
 
 namespace Hospital.Services;
 
@@ -17,7 +11,7 @@ public class LoginService
 
     public LoginService()
     {
-        _memberRepository = new MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>());
+        _memberRepository = new MemberRepository();
         _librarianRepository = LibrarianRepository.Instance;
     }
 

@@ -1,11 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Hospital.Exceptions;
-using Hospital.Models.Doctor;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Services;
 using Hospital.Services.Books;

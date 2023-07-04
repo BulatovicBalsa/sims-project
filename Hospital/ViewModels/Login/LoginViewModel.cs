@@ -4,11 +4,10 @@ using System.Security.Principal;
 using System.Threading;
 using System.Windows.Input;
 using Hospital.Exceptions;
+using Hospital.Models;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login;
-
-using Models.Doctor;
 
 public class LoginViewModel : ViewModelBase
 {

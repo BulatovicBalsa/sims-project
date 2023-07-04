@@ -1,6 +1,5 @@
 ﻿using System;
 namespace Hospital.Models.Books;
-using Doctor;
 
 public class Loan
 {

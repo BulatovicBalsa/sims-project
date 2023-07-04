@@ -7,12 +7,12 @@ using CsvHelper.TypeConversion;
 using Hospital.DTOs;
 using Hospital.Exceptions;
 using Hospital.Injectors;
+using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Repositories.Doctor;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Books;
-using Hospital.Models.Doctor;
+
 public sealed class LoanReadMapper : ClassMap<Loan>
 {
     public LoanReadMapper()
@@ -34,7 +34,7 @@ public sealed class LoanReadMapper : ClassMap<Loan>
                 return null;
             
             var member =
-                new Repositories.Doctor.MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>()).GetById(memberId) ??
+                new MemberRepository().GetById(memberId) ??
                 throw new KeyNotFoundException($"Member with ID {memberId} not found");
             return member;
         }

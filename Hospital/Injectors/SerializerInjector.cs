@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hospital.Models.Doctor;
 using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Models.Memberships;
 using Hospital.Serialization;
-using Member = Hospital.Models.Doctor.Member;
 
 namespace Hospital.Injectors;
 

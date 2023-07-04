@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
-using System.Timers;
 using System.Windows;
-using Hospital.Injectors;
-using Hospital.Models.Doctor;
-using Hospital.Repositories.Doctor;
-using Hospital.Serialization;
-using Hospital.Services;
+using Hospital.Repositories;
 using Hospital.Views;
 using Hospital.Views.Librarian;
 
@@ -39,7 +34,7 @@ public partial class App : Application
 
             else if (role == "DOCTOR")
             {
-                var doctor = new MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>()).GetById(id);
+                var doctor = new MemberRepository().GetById(id);
                 if (doctor == null)
                 {
                     MessageBox.Show(_unsuccessfulLoginMessage);
