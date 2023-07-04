@@ -117,12 +117,45 @@ public class AddUpdateCopyViewModel : ViewModelBase
 
     private void CloseDialog()
     {
-        Application.Current.Windows[1]?.Close();
+        Application.Current.Windows[2]?.Close();
         DialogClosed?.Invoke();
+    }
+
+    private bool CheckInputErrors()
+    {
+        if (string.IsNullOrEmpty(InventoryNumber))
+        {
+            InventoryNumberError = "Enter inventory number";
+            return false;
+        }
+
+        InventoryNumberError = "";
+
+        if (Book == null)
+        {
+            BookError = "Select a book";
+            return false;
+        }
+
+        BookError = "";
+
+        double parsedPrice = -1.1;
+        if (!double.TryParse(Price, out parsedPrice) || parsedPrice < 0)
+        {
+            PriceError = "Enter a non-negative price";
+            return false;
+        }
+
+        return true;
     }
 
     private void ExecuteAddCopyCommand(object obj)
     {
+        if (!CheckInputErrors())
+            return;
+        var copyRepository = new CopyRepository(new JsonSerializer<Copy>());
+        var copy = new Copy(InventoryNumber, Book, double.Parse(Price));
+        copyRepository.Add(copy);
         CloseDialog();
     }
 }
