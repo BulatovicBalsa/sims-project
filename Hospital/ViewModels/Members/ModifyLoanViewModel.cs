@@ -17,7 +17,6 @@ public class ModifyLoanViewModel : ViewModelBase
     private readonly LoanService _loanService = new();
     private readonly Loan? _loanToChange;
     private readonly bool _isUpdate;
-    private readonly BookService _bookService = new();
     private readonly MemberService _memberService = new();
 
     private string _buttonContent;

@@ -117,13 +117,9 @@ public class MemberViewModel : ViewModelBase
 
     public ICommand ViewAdvancedBookDetailsCommand { get; set; }
     public ICommand AddExaminationCommand { get; set; }
-    public ICommand PerformExaminationCommand { get; set; }
     public ICommand UpdateExaminationCommand { get; set; }
     public ICommand DeleteExaminationCommand { get; set; }
     public ICommand DefaultExaminationViewCommand { get; set; }
-    public ICommand SendMessageCommand { get; set; }
-    public ICommand AddTimeOffRequestCommand { get; set; }
-    public ICommand VisitHospitalizedPatientsCommand { get; set; }
     public ICommand ViewMostBorrowedBooksCommand { get; set; }
     public ICommand ReturnLoanCommand { get; set; }
 
