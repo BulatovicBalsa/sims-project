@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hospital.DTOs;
 using Hospital.Exceptions;
-using Hospital.Filter;
 using Hospital.Models;
 using Hospital.Serialization;
 
@@ -16,7 +14,7 @@ public class LibrarianRepository
     private LibrarianRepository() { }
     public List<Librarian> GetAll()
     {
-        return CsvSerializer<Models.Librarian>.FromCSV(FilePath);
+        return CsvSerializer<Librarian>.FromCSV(FilePath);
     }
 
     public Librarian? GetById(string id)
@@ -56,21 +54,5 @@ public class LibrarianRepository
             throw new ObjectNotFoundException($"Librarian with id {librarian.Id} was not found.");
 
         CsvSerializer<Librarian>.ToCSV(allLibrarians, FilePath);
-    }
-
-    public List<PersonDTO> GetLibrariansAsPersonDTOsByFilter(string id, string searchText)
-    {
-        var allLibrarians = GetAll();
-        var filteredLibrarians = allLibrarians.Where(librarian => SearchFilter.IsPersonMatchingFilter(librarian, id, searchText)).ToList();
-
-        var librarianDTOs = filteredLibrarians.Select(librarian => new PersonDTO
-        {
-            Id = librarian.Id,
-            FirstName = librarian.FirstName,
-            LastName = librarian.LastName,
-            Role = Role.Librarian
-        }).ToList();
-
-        return librarianDTOs;
     }
 }
