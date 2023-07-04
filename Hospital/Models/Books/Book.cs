@@ -54,6 +54,7 @@ public class Book
     public BookLanguage Language { get; set; }
     public Author? Author { get; set; }
     public string UdcAsString => string.Join(UdcSeparator, Udc.Select(u => u.ToString()));
+    public string UdcGuiString => string.Join(".", Udc.Select(u => u.ToString()));
     public Genre? Genre { get; set; }
 
     public string ComboBoxString => $"{Title}, {Author}";

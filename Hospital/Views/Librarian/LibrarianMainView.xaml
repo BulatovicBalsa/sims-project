@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hospital.Views.Librarian"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Librarian"
         mc:Ignorable="d"
-        Title="LibrarianMainView" Height="510" Width="1100"
+        Title="LibrarianMainView" Height="510" Width="1300"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"

@@ -174,7 +174,7 @@ public class AddUpdateBookViewModel : ViewModelBase
         Title = selectedBook.Title;
         Description = selectedBook.Description;
         Isbn = selectedBook.Isbn;
-        Udc = selectedBook.UdcAsString;
+        Udc = selectedBook.UdcGuiString;
         SelectedLanguage = selectedBook.Language;
         Author = selectedBook.Author!;
         Genre = selectedBook.Genre!;

@@ -27,12 +27,9 @@ public class MemberViewModel : ViewModelBase
 
     private object? _selectedBook;
 
-    private DateTime _selectedDate;
-
     public MemberViewModel(Models.Member member)
     {
         _member = member;
-        _selectedDate = DateTime.Now;
         Books = new ObservableCollection<Book>(_bookService.GetDistinct());
         _books = Books;
         Loans =
@@ -96,18 +93,6 @@ public class MemberViewModel : ViewModelBase
         {
             _selectedBook = value;
             OnPropertyChanged(nameof(SelectedBook));
-        }
-    }
-
-    public DateTime SelectedDate
-    {
-        get => _selectedDate;
-        set
-        {
-            _selectedDate = value;
-            OnPropertyChanged(nameof(SelectedDate));
-            Loans.Clear();
-            //_loanService.GetExaminationsForDate(_member, SelectedDate).ToList().ForEach(Loans.Add);
         }
     }
 
@@ -183,11 +168,6 @@ public class MemberViewModel : ViewModelBase
         try
         {
             _loanService.DeleteLoan(loan);
-        }
-        catch (DoctorNotBusyException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
         }
         catch (BookNotLoanedException ex)
         {
