@@ -15,6 +15,8 @@ namespace Hospital.ViewModels.Librarian;
 public class AddUpdateBookViewModel : ViewModelBase
 {
     private readonly BookRepository _bookRepository;
+    private readonly AuthorRepository _authorRepository;
+    private readonly GenreRepository _genreRepository;
     private readonly Book? _bookToUpdate;
     private string _title;
     private string _description;
@@ -23,6 +25,8 @@ public class AddUpdateBookViewModel : ViewModelBase
     private Author? _author;
     private Genre? _genre;
     private ObservableCollection<BookLanguage> _allLanguages;
+    private ObservableCollection<Author> _allAuthors;
+    private ObservableCollection<Genre> _allGenres;
     private BookLanguage? _selectedLanguage;
 
     public event Action? DialogClosed;
@@ -35,7 +39,12 @@ public class AddUpdateBookViewModel : ViewModelBase
     public AddUpdateBookViewModel(BookRepository BookRepository)
     {
         _bookRepository = BookRepository;
+        _genreRepository = new GenreRepository(new CsvSerializer<Genre>());
+        _authorRepository = new AuthorRepository();
+        
         _allLanguages = new ObservableCollection<BookLanguage>(Enum.GetValues<BookLanguage>());
+        _allAuthors = new ObservableCollection<Author>(_authorRepository.GetAll());
+        _allGenres = new ObservableCollection<Genre>(_genreRepository.GetAll());
 
         AddBookCommand = new ViewModelCommand(ExecuteAddBookCommand, CanExecuteAddUpdateBookCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
@@ -45,7 +54,12 @@ public class AddUpdateBookViewModel : ViewModelBase
     {
         _bookToUpdate = selectedBook;
         _bookRepository = BookRepository;
+        _genreRepository = new GenreRepository(new CsvSerializer<Genre>());
+        _authorRepository = new AuthorRepository();
+
         _allLanguages = new ObservableCollection<BookLanguage>(Enum.GetValues<BookLanguage>());
+        _allAuthors = new ObservableCollection<Author>(_authorRepository.GetAll());
+        _allGenres = new ObservableCollection<Genre>(_genreRepository.GetAll());
 
         SetViewModelProperties(selectedBook);
 
@@ -120,6 +134,26 @@ public class AddUpdateBookViewModel : ViewModelBase
         {
             _allLanguages = value;
             OnPropertyChanged(nameof(AllLanguages));
+        }
+    }
+
+    public ObservableCollection<Genre> AllGenres
+    {
+        get => _allGenres;
+        set
+        {
+            _allGenres = value;
+            OnPropertyChanged(nameof(AllGenres));
+        }
+    }
+
+    public ObservableCollection<Author> AllAuthors
+    {
+        get => _allAuthors;
+        set
+        {
+            _allAuthors = value;
+            OnPropertyChanged(nameof(AllAuthors));
         }
     }
 

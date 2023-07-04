@@ -56,13 +56,13 @@
                 </StackPanel>
             </Grid>
 
-            <TextBlock Grid.Row="1"
+            <TextBlock
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Top"
                        FontFamily="Montserrat"
                        FontSize="25"
-                       FontWeight="Bold">
-                Update member
+                       FontWeight="Bold" Margin="0,22,0,0" Grid.RowSpan="3">
+                Update book
             </TextBlock>
 
             <StackPanel Grid.Row="2"
@@ -80,14 +80,14 @@
                 <TextBox Text="{Binding Udc, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Author</TextBlock>
-                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox ItemsSource="{Binding AllAuthors}" SelectedItem="{Binding Author, Mode=TwoWay}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Genre</TextBlock>
-                <TextBox Text="{Binding Genre, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox ItemsSource="{Binding AllGenres}" SelectedItem="{Binding Genre, Mode=TwoWay}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Language</TextBlock>
                 <ComboBox ItemsSource="{Binding AllLanguages}" SelectedItem="{Binding SelectedLanguage}"/>
-                
+
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0,20,0,0">
