@@ -41,10 +41,10 @@ public class MemberViewModel : ViewModelBase
         SearchBoxText = Placeholder;
 
         ViewAdvancedBookDetailsCommand = new RelayCommand<string>(ViewAdvancedBookDetails);
-        AddExaminationCommand = new RelayCommand(AddExamination);
-        UpdateExaminationCommand = new RelayCommand(UpdateExamination);
-        DeleteExaminationCommand = new RelayCommand(DeleteExamination);
-        DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        AddLoanCommand = new RelayCommand(AddLoan);
+        UpdateLoanCommand = new RelayCommand(UpdateLoan);
+        DeleteLoanCommand = new RelayCommand(DeleteLoan);
+        DefaultLoanViewCommand = new RelayCommand(DefaultLoanView);
         ViewMostBorrowedBooksCommand = new RelayCommand(ViewMostBorrowedBooks);
         ReturnLoanCommand = new RelayCommand(ReturnLoan);
     }
@@ -116,10 +116,10 @@ public class MemberViewModel : ViewModelBase
     public string DoctorName => $"Member {Member.FirstName} {Member.LastName}";
 
     public ICommand ViewAdvancedBookDetailsCommand { get; set; }
-    public ICommand AddExaminationCommand { get; set; }
-    public ICommand UpdateExaminationCommand { get; set; }
-    public ICommand DeleteExaminationCommand { get; set; }
-    public ICommand DefaultExaminationViewCommand { get; set; }
+    public ICommand AddLoanCommand { get; set; }
+    public ICommand UpdateLoanCommand { get; set; }
+    public ICommand DeleteLoanCommand { get; set; }
+    public ICommand DefaultLoanViewCommand { get; set; }
     public ICommand ViewMostBorrowedBooksCommand { get; set; }
     public ICommand ReturnLoanCommand { get; set; }
 
@@ -140,13 +140,13 @@ public class MemberViewModel : ViewModelBase
         dialog.ShowDialog();
     }
 
-    private void DefaultExaminationView()
+    private void DefaultLoanView()
     {
         Loans.Clear();
         _loanService.GetCurrentLoans(_member).ForEach(Loans.Add);
     }
 
-    private void AddExamination()
+    private void AddLoan()
     {
         var dialog = new ModifyExaminationDialog()
         {
@@ -156,7 +156,7 @@ public class MemberViewModel : ViewModelBase
         dialog.ShowDialog();
     }
 
-    private void UpdateExamination()
+    private void UpdateLoan()
     {
         if (SelectedLoan is not Loan examinationToChange)
         {
@@ -172,7 +172,7 @@ public class MemberViewModel : ViewModelBase
         dialog.ShowDialog();
     }
 
-    private void DeleteExamination()
+    private void DeleteLoan()
     {
         if (SelectedLoan is not Loan loan)
         {
@@ -216,7 +216,7 @@ public class MemberViewModel : ViewModelBase
             return;
         }
         _loanService.Return(loan);
-        DefaultExaminationView();
+        DefaultLoanView();
         MessageBox.Show("Loan successfully returned");
     }
 
