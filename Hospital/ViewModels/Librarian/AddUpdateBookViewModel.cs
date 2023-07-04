@@ -20,8 +20,8 @@ public class AddUpdateBookViewModel : ViewModelBase
     private string _description;
     private string _isbn;
     private string _udc;
-    private string _author;
-    private string _genre;
+    private Author? _author;
+    private Genre? _genre;
     private ObservableCollection<BookLanguage> _allLanguages;
     private BookLanguage? _selectedLanguage;
 
@@ -93,7 +93,7 @@ public class AddUpdateBookViewModel : ViewModelBase
         }
     }
 
-    public string Author
+    public Author? Author
     {
         get => _author;
         set
@@ -103,7 +103,7 @@ public class AddUpdateBookViewModel : ViewModelBase
         }
     }
 
-    public string Genre
+    public Genre? Genre
     {
         get => _genre;
         set
@@ -144,8 +144,8 @@ public class AddUpdateBookViewModel : ViewModelBase
         Isbn = selectedBook.Isbn;
         Udc = selectedBook.UdcAsString;
         SelectedLanguage = selectedBook.Language;
-        Author = selectedBook.Author;
-        Genre = selectedBook.Genre;
+        Author = selectedBook.Author!;
+        Genre = selectedBook.Genre!;
     }
 
     private void ExecuteAddBookCommand(object obj)
@@ -198,8 +198,8 @@ public class AddUpdateBookViewModel : ViewModelBase
                                     !string.IsNullOrEmpty(Description) &&
                                     !string.IsNullOrEmpty(Isbn) &&
                                     !string.IsNullOrEmpty(Udc) &&
-                                    !string.IsNullOrEmpty(Author) &&
-                                    !string.IsNullOrEmpty(Genre) &&
+                                    Author is not null &&
+                                    Genre is not null &&
                                     SelectedLanguage != null;
 
         return isAnyFieldNullOrEmpty;

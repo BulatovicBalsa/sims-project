@@ -6,7 +6,7 @@ namespace Hospital.Repositories.Books
 {
     public class AuthorRepository
     {
-        private const string FilePath = "../../../Data/books.csv";
+        private const string FilePath = "../../../Data/authors.csv";
         private readonly ISerializer<Author> _serializer;
 
         public AuthorRepository()

@@ -21,6 +21,11 @@ namespace Hospital.Models.Books
             BirthDate = birthDate;
         }
 
+        public Author()
+        {
+            
+        }
+
         public override string ToString()
         {
             return $"{FirstName} {LastName}";
