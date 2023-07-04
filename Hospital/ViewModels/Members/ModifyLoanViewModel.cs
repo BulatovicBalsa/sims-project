@@ -29,10 +29,8 @@ public class ModifyLoanViewModel : ViewModelBase
     private ObservableCollection<Copy> _copies;
     private ICommand _modifyLoanCommand;
 
-    public ModifyLoanViewModel()
-    {
-        
-    }
+    public ModifyLoanViewModel() {}
+
     public ModifyLoanViewModel(Models.Member member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
         _isUpdate = loanToChange is not null;
@@ -155,13 +153,10 @@ public class ModifyLoanViewModel : ViewModelBase
                     .ForEach(loanInRange => _loanCollection.Add(loanInRange));
             }
         }
-        catch (Exception ex)
+        catch (BookAlreadyLoanedException ex)
         {
-            if (ex is DoctorBusyException or BookAlreadyLoanedException)
-            {
                 MessageBox.Show(ex.Message);
                 return;
-            }
         }
 
         MessageBox.Show("Task successfully ended", "Good job", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hospital.Views"
-        xmlns:viewmodels="clr-namespace:Hospital.ViewModels"
         xmlns:members="clr-namespace:Hospital.ViewModels.Members"
         d:DataContext="{d:DesignInstance Type=members:MemberViewModel}"
         mc:Ignorable="d"
@@ -30,7 +28,6 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
-            <!-- Window Header -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="99*"/>
@@ -79,8 +76,15 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <TextBlock Text="Search books:"
                             Margin="5"/>
-                    <TextBox x:Name="SearchBox" Text="Search..." Foreground="Gray" Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus">
-                    </TextBox>
+                    <Border BorderBrush="#40FFFFFF" BorderThickness="1" CornerRadius="2">
+                        <Border BorderBrush="#80000000" BorderThickness="1,1,0,0" CornerRadius="2">
+                            <Border BorderBrush="#30000000" BorderThickness="0,0,1,1" CornerRadius="2">
+                                <Border BorderBrush="#F0FFFFFF" BorderThickness="1" CornerRadius="1">
+                                    <TextBox x:Name="SearchBox" Text="Search..." Width="120" Grid.Row="0" Margin="5" TextChanged="SearchBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" Background="#C0FFFFFF" BorderThickness="0"></TextBox>
+                                </Border>
+                            </Border>
+                        </Border>
+                    </Border>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2" x:Name="PatientsDataGrid" ItemsSource="{Binding Books}"
@@ -121,8 +125,6 @@
                 <TextBlock Grid.Row="0" Text="Loaned books" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-                    <Label Content="View for:"></Label>
-                    <DatePicker Background="Black"  x:Name="LoanDatePicker" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
                     <Button Content="Default View"
                             Style="{DynamicResource ActionButton}"
                             Margin="5" Command="{Binding DefaultLoanViewCommand}"/>
