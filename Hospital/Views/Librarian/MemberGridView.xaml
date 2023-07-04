@@ -28,7 +28,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last name" IsReadOnly="True" Width="*" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="*" Binding="{Binding JMBG}"/>
+                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="*" Binding="{Binding Jmbg}"/>
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
                 <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="*" Binding="{Binding PhoneNumber}"/>
                 <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
