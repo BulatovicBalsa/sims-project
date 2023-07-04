@@ -1,7 +1,7 @@
-# Predmetni projekat iz pretmeta SIMS
+# Predmetni projekat iz predmeta SIMS
 
     Implementacija projektnog zadatka radjena je u C# jeziku, oslanjajuci se pretezno 
-    na MVVM sablon
+    na MVVM sablon u WPF-u
 
     Aplikaciji je moguce pristupiti preko dve razlicite uloge:
       - Bibliotekar
