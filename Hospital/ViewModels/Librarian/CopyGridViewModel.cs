@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Hospital.Models.Books;
 using Hospital.Repositories.Books;
@@ -65,14 +66,7 @@ namespace Hospital.ViewModels.Librarian
 
         private void ExecuteUpdateCopyCommand(object obj)
         {
-            /*
-            var updateCopyDialog = new UpdateCopyView();
-            {
-                DataContext = new AddUpdateCopyViewModel(_copyRepository, SelectedCopy);
-            };
-
-            updateCopyDialog.ShowDialog();
-            */
+            MessageBox.Show("Not implemented yet");
         }
 
         private void ExecuteDeleteCopyCommand(object obj)

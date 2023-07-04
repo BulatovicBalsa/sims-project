@@ -40,11 +40,11 @@
             <Button Content="Update" 
                     Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding UpdateMemberCommand}"/>
+                    Command="{Binding UpdateCopyCommand}"/>
             <Button Content="Delete" 
                     Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding DeleteMemberCommand}"/>
+                    Command="{Binding DeleteCopyCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
