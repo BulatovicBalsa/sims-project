@@ -24,7 +24,7 @@ namespace Hospital.Serialization.Mappers
             Map(member => member.Profile.Password).Index(9);
             Map(member => member.MembershipNumber).Index(10);
             Map(member => member.MembershipExpires).Index(11);
-            Map(member => member.Membership.Id).Index(12);
+            Map(member => member.Membership.TypeId).Index(12);
         }
     }
 }

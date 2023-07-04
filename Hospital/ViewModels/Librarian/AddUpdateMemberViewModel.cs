@@ -271,7 +271,7 @@ public class AddUpdateMemberViewModel : ViewModelBase
             return;
 
         _memberRepository.Add(new Member(FirstName, LastName, DateTime.Parse(BirthDate), Email, PhoneNumber,
-            Jmbg, MembershipNumber, DateTime.Now.AddYears(1), new Membership(), Username, Password));
+            Jmbg, MembershipNumber, DateTime.Now.AddYears(1), SelectedMembership, Username, Password));
 
         CloseDialog();
     }

@@ -25,7 +25,7 @@ namespace Hospital.Repositories.Memberships
 
         public Membership? GetById(string id)
         {
-            return GetAll().Find(membership => membership.Id == id);
+            return GetAll().Find(membership => membership.TypeId == id);
         }
 
         public void Add(Membership membership)
@@ -41,7 +41,7 @@ namespace Hospital.Repositories.Memberships
         {
             var allMembership = GetAll();
 
-            var indexToUpdate = allMembership.FindIndex(e => e.Id == membership.Id);
+            var indexToUpdate = allMembership.FindIndex(e => e.TypeId == membership.TypeId);
             if (indexToUpdate == -1) throw new KeyNotFoundException();
 
             allMembership[indexToUpdate] = membership;
@@ -53,7 +53,7 @@ namespace Hospital.Repositories.Memberships
         {
             var allMembership = GetAll();
 
-            var indexToDelete = allMembership.FindIndex(e => e.Id == membership.Id);
+            var indexToDelete = allMembership.FindIndex(e => e.TypeId == membership.TypeId);
             if (indexToDelete == -1) throw new KeyNotFoundException();
 
             allMembership.RemoveAt(indexToDelete);
