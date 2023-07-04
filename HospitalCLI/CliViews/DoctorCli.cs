@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
+using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Examination;
 using Hospital.Models.Manager;
-using Hospital.Models.Librarian;
 using Hospital.Models.Patient;
-using Hospital.Repositories.Librarian;
+using Hospital.Repositories;
 using Hospital.Services;
 using Hospital.Services.Manager;
 

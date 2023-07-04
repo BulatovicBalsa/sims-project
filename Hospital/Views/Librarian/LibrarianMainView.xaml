@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type viewModel:MemberGridViewModel}">
             <local:MemberGridView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:BookGridViewModel}">
+            <local:BookGridView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="15">
@@ -57,6 +60,13 @@
                                  IsChecked="True">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowBooksViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Books" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>
