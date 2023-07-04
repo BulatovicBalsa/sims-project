@@ -16,7 +16,7 @@
         ResizeMode="NoResize"
         WindowStyle="None">
     <Window.DataContext>
-        <viewModel:ModifyExaminationViewModel/>
+        <viewModel:ModifyLoanViewModel/>
     </Window.DataContext>
 
     <Border CornerRadius="15" BorderThickness="2" BorderBrush="Black" Padding="0 0 0 20">

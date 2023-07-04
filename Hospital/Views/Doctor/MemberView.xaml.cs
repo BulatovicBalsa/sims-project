@@ -10,16 +10,16 @@ namespace Hospital.Views;
 public partial class DoctorView : Window
 {
     private readonly string placeholder = "Search...";
-    private readonly DoctorViewModel _viewModel;
+    private readonly MemberViewModel _viewModel;
     private bool isUserInput = true;
 
-    public DoctorView(Doctor doctor)
+    public DoctorView(Member member)
     {
         isUserInput = false;
 
         InitializeComponent();
 
-        _viewModel = new DoctorViewModel(doctor);
+        _viewModel = new MemberViewModel(member);
         ConfigWindow();
     }
 

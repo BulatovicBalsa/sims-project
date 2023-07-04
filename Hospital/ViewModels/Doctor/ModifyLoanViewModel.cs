@@ -12,31 +12,31 @@ using Hospital.Services.Books;
 
 namespace Hospital.ViewModels;
 
-public class ModifyExaminationViewModel : ViewModelBase
+public class ModifyLoanViewModel : ViewModelBase
 {
-    private readonly Doctor _member;
+    private readonly Member _member;
     private readonly ObservableCollection<Loan> _loanCollection;
     private readonly LoanService _loanService = new();
     private readonly Loan? _loanToChange;
     private readonly bool _isUpdate;
     private readonly BookService _bookService = new();
-    private readonly DoctorService _doctorService = new();
+    private readonly MemberService _memberService = new();
 
     private string _buttonContent;
 
     private ObservableCollection<Book> _books;
-    private ObservableCollection<Doctor> _members;
+    private ObservableCollection<Member> _members;
     private Book? _selectedBook;
-    private Doctor? _selectedMember;
+    private Member? _selectedMember;
     private Copy? _selectedCopy;
     private ObservableCollection<Copy> _copies;
     private ICommand _modifyLoanCommand;
 
-    public ModifyExaminationViewModel()
+    public ModifyLoanViewModel()
     {
         
     }
-    public ModifyExaminationViewModel(Doctor member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
+    public ModifyLoanViewModel(Member member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
         _isUpdate = loanToChange is not null;
         _member = member;
@@ -44,7 +44,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         _loanToChange = loanToChange;
 
         _books = new ObservableCollection<Book>(_loanService.GetNotLoanedBooks());
-        _members = new ObservableCollection<Doctor>(_doctorService.GetAll());
+        _members = new ObservableCollection<Member>(_memberService.GetAll());
 
         _selectedBook = _loanToChange?.Book;
         _selectedMember = _loanToChange?.Member;
@@ -76,7 +76,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<Doctor> Members
+    public ObservableCollection<Member> Members
     {
         get => _members;
         set
@@ -96,7 +96,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
     }
 
-    public Doctor? SelectedMember
+    public Member? SelectedMember
     {
         get => _selectedMember;
         set

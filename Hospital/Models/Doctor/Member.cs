@@ -1,14 +1,14 @@
 ﻿namespace Hospital.Models.Doctor;
 
-public class Doctor : Person
+public class Member : Person
 {
-    public Doctor(string firstName, string lastName, string jmbg, string username, string password,
+    public Member(string firstName, string lastName, string jmbg, string username, string password,
         string specialization) : base(firstName, lastName, jmbg, username, password)
     {
         Specialization = specialization;
     }
 
-    public Doctor()
+    public Member()
     {
         Specialization = "Unknown";
     }
@@ -19,7 +19,7 @@ public class Doctor : Person
     {
         if (obj == null || GetType() != obj.GetType()) return false;
 
-        var other = obj as Doctor;
+        var other = obj as Member;
         if (other == null) return false;
         return Id == other.Id;
     }
@@ -29,9 +29,9 @@ public class Doctor : Person
         return Id.GetHashCode();
     }
 
-    public Doctor DeepCopy()
+    public Member DeepCopy()
     {
-        var copy = new Doctor(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, Specialization)
+        var copy = new Member(FirstName, LastName, Jmbg, Profile.Username, Profile.Password, Specialization)
         {
             Id = Id
         };

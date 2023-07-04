@@ -15,7 +15,7 @@ using Hospital.Views.Books;
 
 namespace Hospital.ViewModels;
 
-public class DoctorViewModel : ViewModelBase
+public class MemberViewModel : ViewModelBase
 {
     private const string Placeholder = "Search...";
     private readonly BookService _bookService = new();
@@ -23,7 +23,7 @@ public class DoctorViewModel : ViewModelBase
 
     private ObservableCollection<Book> _books;
 
-    private Doctor _member;
+    private Member _member;
     private ObservableCollection<Loan> _loans;
 
     private string _searchBoxText;
@@ -32,7 +32,7 @@ public class DoctorViewModel : ViewModelBase
 
     private DateTime _selectedDate;
 
-    public DoctorViewModel(Doctor member)
+    public MemberViewModel(Member member)
     {
         _member = member;
         _selectedDate = DateTime.Now;
@@ -72,7 +72,7 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public Doctor Member
+    public Member Member
     {
         get => _member;
         set
@@ -157,7 +157,7 @@ public class DoctorViewModel : ViewModelBase
     {
         var dialog = new ModifyExaminationDialog()
         {
-            DataContext = new ModifyExaminationViewModel(Member, Loans)
+            DataContext = new ModifyLoanViewModel(Member, Loans)
         };
 
         dialog.ShowDialog();
@@ -173,7 +173,7 @@ public class DoctorViewModel : ViewModelBase
 
         var dialog = new ModifyExaminationDialog()
         {
-            DataContext = new ModifyExaminationViewModel(Member, Loans, examinationToChange)
+            DataContext = new ModifyLoanViewModel(Member, Loans, examinationToChange)
         };
 
         dialog.ShowDialog();

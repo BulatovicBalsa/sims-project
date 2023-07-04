@@ -34,7 +34,7 @@ public sealed class LoanReadMapper : ClassMap<Loan>
                 return null;
             
             var member =
-                new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(memberId) ??
+                new Repositories.Doctor.MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>()).GetById(memberId) ??
                 throw new KeyNotFoundException($"Member with ID {memberId} not found");
             return member;
         }
@@ -121,7 +121,7 @@ public class LoanRepository
        _serializer.Save(allLoan, FilePath, new LoanWriteMapper());
     }
 
-    public List<Loan> GetAll(Doctor member)
+    public List<Loan> GetAll(Member member)
     {
         var memberLoans = GetAll()
             .Where(loan => loan.Member.Equals(member))
@@ -137,12 +137,12 @@ public class LoanRepository
         return bookLoans;
     }
 
-    public List<Loan> GetFinishedLoans(Doctor member)
+    public List<Loan> GetFinishedLoans(Member member)
     {
         return GetAll(member).Where(loan => loan.End is not null).ToList();
     }
 
-    public List<Loan> GetCurrentLoans(Doctor member)
+    public List<Loan> GetCurrentLoans(Member member)
     {
         return GetAll(member).Where(loan => loan.End is null).ToList();
     }

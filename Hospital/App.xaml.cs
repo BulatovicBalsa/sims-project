@@ -39,7 +39,7 @@ public partial class App : Application
 
             else if (role == "DOCTOR")
             {
-                var doctor = new DoctorRepository(SerializerInjector.CreateInstance<ISerializer<Doctor>>()).GetById(id);
+                var doctor = new MemberRepository(SerializerInjector.CreateInstance<ISerializer<Member>>()).GetById(id);
                 if (doctor == null)
                 {
                     MessageBox.Show(_unsuccessfulLoginMessage);

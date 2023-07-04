@@ -5,6 +5,7 @@ using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Models.Memberships;
 using Hospital.Serialization;
+using Member = Hospital.Models.Doctor.Member;
 
 namespace Hospital.Injectors;
 
@@ -12,7 +13,7 @@ public class SerializerInjector
 {
     private static readonly Dictionary<Type, object> Implementations = new()
     {
-        { typeof(ISerializer<Doctor>), new CsvSerializer<Doctor>() },
+        { typeof(ISerializer<Member>), new CsvSerializer<Member>() },
         { typeof(ISerializer<Book>), new CsvSerializer<Book>() },
         { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() },
         { typeof(ISerializer<Membership>), new CsvSerializer<Membership>() },

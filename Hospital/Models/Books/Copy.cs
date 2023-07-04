@@ -34,7 +34,7 @@ namespace Hospital.Models.Books
             Price = price;
         }
 
-        public Loan Borrow(Doctor.Doctor member)
+        public Loan Borrow(Doctor.Member member)
         {
             if (Status != CopyStatus.Available && Status != CopyStatus.Reserved)
                 throw new InvalidOperationException();

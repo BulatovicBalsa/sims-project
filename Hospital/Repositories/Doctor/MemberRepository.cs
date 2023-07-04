@@ -9,57 +9,57 @@ using DTOs;
 using Filter;
 using Models.Doctor;
 
-public class DoctorRepository
+public class MemberRepository
 {
     private const string FilePath = "../../../Data/doctors.csv";
-    private readonly ISerializer<Doctor> _serializer;
+    private readonly ISerializer<Member> _serializer;
 
-    public DoctorRepository(ISerializer<Doctor> serializer)
+    public MemberRepository(ISerializer<Member> serializer)
     {
         _serializer = serializer;
     }
 
-    public List<Doctor> GetAll()
+    public List<Member> GetAll()
     {
         return _serializer.Load(FilePath);
     }
 
-    public Doctor? GetById(string id)
+    public Member? GetById(string id)
     {
         return GetAll().Find(doctor => doctor.Id == id);
     }
 
-    public Doctor? GetByUsername(string username)
+    public Member? GetByUsername(string username)
     {
         return GetAll().Find(doctor => doctor.Profile.Username == username);
     }
 
-    public void Add(Doctor doctor)
+    public void Add(Member member)
     {
         var allDoctor = GetAll();
 
-        allDoctor.Add(doctor);
+        allDoctor.Add(member);
 
         _serializer.Save(allDoctor, FilePath);
     }
 
-    public void Update(Doctor doctor)
+    public void Update(Member member)
     {
         var allDoctor = GetAll();
 
-        var indexToUpdate = allDoctor.FindIndex(e => e.Id == doctor.Id);
+        var indexToUpdate = allDoctor.FindIndex(e => e.Id == member.Id);
         if (indexToUpdate == -1) throw new KeyNotFoundException();
 
-        allDoctor[indexToUpdate] = doctor;
+        allDoctor[indexToUpdate] = member;
 
         _serializer.Save(allDoctor, FilePath);
     }
 
-    public void Delete(Doctor doctor)
+    public void Delete(Member member)
     {
         var allDoctor = GetAll();
 
-        var indexToDelete = allDoctor.FindIndex(e => e.Id == doctor.Id);
+        var indexToDelete = allDoctor.FindIndex(e => e.Id == member.Id);
         if (indexToDelete == -1) throw new KeyNotFoundException();
 
         allDoctor.RemoveAt(indexToDelete);
@@ -69,7 +69,7 @@ public class DoctorRepository
 
     public void DeleteAll()
     {
-        var emptyDoctorList = new List<Doctor>();
+        var emptyDoctorList = new List<Member>();
         _serializer.Save(emptyDoctorList, FilePath);
     }
 
@@ -79,13 +79,13 @@ public class DoctorRepository
         return allDoctors.Select(doctor => doctor.Specialization).Distinct().ToList();
     }
 
-    public List<Doctor> GetQualifiedDoctors(string specialization)
+    public List<Member> GetQualifiedDoctors(string specialization)
     {
         var allDoctors = GetAll();
         return allDoctors.Where(doctor => doctor.Specialization == specialization).ToList();
     }
 
-    public List<Doctor> GetDoctorsByFilter(string firstName, string lastName, string specialization)
+    public List<Member> GetDoctorsByFilter(string firstName, string lastName, string specialization)
     {
         return GetAll()
             .Where(doctor =>

@@ -6,7 +6,7 @@ public class Loan
 {
     public string Id { get; set; }
     public Book Book { get; set; }
-    public Doctor Member { get; set; }
+    public Member Member { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
 
@@ -15,12 +15,12 @@ public class Loan
     public Loan()
     {
         Id = Guid.NewGuid().ToString();
-        Member = new Doctor();
+        Member = new Member();
         Book = new Book();
         InventoryNumber = "";
     }
 
-    public Loan(Book book, Doctor member, DateTime start, DateTime? end, string inventoryNumber)
+    public Loan(Book book, Member member, DateTime start, DateTime? end, string inventoryNumber)
     {
         Id = Guid.NewGuid().ToString();
         Book = book;
@@ -35,7 +35,7 @@ public class Loan
         return $"{Id},{Member.Id},{Book.Id},{Start},{End}";
     }
 
-    public void Update(Doctor selectedMember, Book selectedBook, DateTime start, DateTime? end = null, string inventoryNumber = "")
+    public void Update(Member selectedMember, Book selectedBook, DateTime start, DateTime? end = null, string inventoryNumber = "")
     {
         Member = selectedMember;
         Book = selectedBook;
