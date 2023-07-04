@@ -1,4 +1,4 @@
-﻿namespace Hospital.Models.Librarian;
+﻿namespace Hospital.Models;
 
 public class Librarian : Person
 {

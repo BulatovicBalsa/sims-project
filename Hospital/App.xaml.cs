@@ -6,7 +6,6 @@ using System.Windows;
 using Hospital.Injectors;
 using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Librarian;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Services;

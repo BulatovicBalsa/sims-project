@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hospital.DTOs;
 using Hospital.Exceptions;
+using Hospital.Filter;
+using Hospital.Models;
 using Hospital.Serialization;
 
-namespace Hospital.Repositories.Librarian;
-
-using Hospital.DTOs;
-using Hospital.Filter;
-using Hospital.Models.Librarian;
-using System;
+namespace Hospital.Repositories;
 
 public class LibrarianRepository
 {
@@ -18,7 +16,7 @@ public class LibrarianRepository
     private LibrarianRepository() { }
     public List<Librarian> GetAll()
     {
-        return CsvSerializer<Librarian>.FromCSV(FilePath);
+        return CsvSerializer<Models.Librarian>.FromCSV(FilePath);
     }
 
     public Librarian? GetById(string id)

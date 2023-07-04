@@ -30,9 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\HospitalLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\PasswordIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
