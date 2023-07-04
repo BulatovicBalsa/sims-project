@@ -1,15 +1,9 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Security.Principal;
-using Hospital.Exceptions;
-using Hospital.Injectors;
+﻿using Hospital.Injectors;
 using Hospital.Models.Doctor;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Patient;
 using Hospital.Serialization;
 using Hospital.Views.Manager;
-using Hospital.Views.Librarian;
-using Hospital.Views;
 using HospitalCLI.CliViews;
 using HospitalCLI.Login;
 

@@ -24,6 +24,7 @@ public sealed class LoanReadMapper : ClassMap<Loan>
         Map(loan => loan.Book).Index(2).TypeConverter<BookTypeConverter>();
         Map(loan => loan.Start).Index(3);
         Map(loan => loan.End).Index(4);
+        Map(loan => loan.InventoryNumber).Index(5);
     }
 
     public class DoctorTypeConverter : DefaultTypeConverter
@@ -63,6 +64,7 @@ public sealed class LoanWriteMapper : ClassMap<Loan>
         Map(loan => loan.Book.Id).Index(2);
         Map(loan => loan.Start).Index(3);
         Map(loan => loan.End).Index(4);
+        Map(loan => loan.InventoryNumber).Index(5);
     }
 }
 
@@ -90,7 +92,7 @@ public class LoanRepository
     {
         var allLoans = GetAll();
 
-        if (!IsFree(loan.Book)) throw new BookAlreadyLoanedException("Book is already loaned");
+        if (!IsFree(loan.InventoryNumber)) throw new BookAlreadyLoanedException("Book is already loaned");
 
         allLoans.Add(loan);
 
@@ -147,10 +149,11 @@ public class LoanRepository
         return GetAll(member).Where(loan => loan.End is null).ToList();
     }
 
-    public bool IsFree(Book book)
+    public bool IsFree(string inventoryNumber)
     {
-        var allLoansForBook = GetAll(book);
-        return allLoansForBook.All(loan => loan.End is not null) || allLoansForBook.Count == 0;
+        var copyRepository = new CopyRepository(new JsonSerializer<Copy>());
+        var copy = copyRepository.GetByInventoryNumber(inventoryNumber);
+        return copy != null && copy.IsAvailable();
     }
 
     public void DeleteAll()

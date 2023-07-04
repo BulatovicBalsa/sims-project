@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Exceptions;
-using Hospital.Repositories.Librarian;
+using Hospital.Repositories;
 using Hospital.Serialization;
+using static Hospital.Repositories.LibrarianRepository;
 
 namespace HospitalTests.Repositories.Librarian
 {
-    using Hospital.Models.Librarian;
+    using static Hospital.Models.Librarian;
 
     [TestClass]
     public class LibrarianRepositoryTests
@@ -19,7 +20,7 @@ namespace HospitalTests.Repositories.Librarian
         [TestInitialize]
         public void TestInitialize()
         {
-            var testLibrarians = new List<Librarian>
+            var testLibrarians = new List<Hospital.Models.Librarian>
             {
                 new("Vladimir", "Popov", "0123456789012", "vlada1234", "vlada1234"),
                 new("Momir", "Milutinovic", "0123456789012", "momir1234", "momir1234"),
@@ -27,7 +28,7 @@ namespace HospitalTests.Repositories.Librarian
                 new("Teodor", "Vidakovic", "0123456789012", "teodor1234", "teodor1234"),
             };
 
-            CsvSerializer<Librarian>.ToCSV(testLibrarians, TestFilePath);
+            CsvSerializer<Hospital.Models.Librarian>.ToCSV(testLibrarians, TestFilePath);
         }
 
         [TestMethod]
@@ -104,7 +105,7 @@ namespace HospitalTests.Repositories.Librarian
         [TestMethod]
         public void TestAdd()
         {
-            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var newLibrarian = new Hospital.Models.Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
             var librarianRepository = LibrarianRepository.Instance;
 
@@ -121,7 +122,7 @@ namespace HospitalTests.Repositories.Librarian
         public void TestUpdateNonExistent()
         {
             var librarianRepository = LibrarianRepository.Instance;
-            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var newLibrarian = new Hospital.Models.Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
             Assert.ThrowsException<ObjectNotFoundException>(() => librarianRepository.Update(newLibrarian));
@@ -131,7 +132,7 @@ namespace HospitalTests.Repositories.Librarian
         public void TestDeleteNonExistent()
         {
             var librarianRepository = LibrarianRepository.Instance;
-            var newLibrarian = new Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
+            var newLibrarian = new Hospital.Models.Librarian("TestFirstName", "TestLastName", "1234567890123", "testUsername",
                 "testPassword");
 
             Assert.ThrowsException<ObjectNotFoundException>(() => librarianRepository.Delete(newLibrarian));
