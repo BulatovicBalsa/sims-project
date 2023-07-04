@@ -7,11 +7,8 @@ using Hospital.DTOs;
 using Hospital.Exceptions;
 using Hospital.Models.Books;
 using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Requests;
 using Hospital.Services;
 using Hospital.Services.Books;
-using Hospital.Services.Requests;
 using Hospital.ViewModels.Books;
 using Hospital.Views;
 using Hospital.Views.Books;
@@ -23,8 +20,6 @@ public class DoctorViewModel : ViewModelBase
     private const string Placeholder = "Search...";
     private readonly BookService _bookService = new();
     private readonly LoanService _loanService = new();
-    private readonly PatientService _patientService = new();
-    private readonly DoctorTimeOffRequestService _requestService = new();
 
     private ObservableCollection<Book> _books;
 
@@ -36,7 +31,6 @@ public class DoctorViewModel : ViewModelBase
     private object? _selectedBook;
 
     private DateTime _selectedDate;
-    private ObservableCollection<DoctorTimeOffRequest> _timeOffRequests;
 
     public DoctorViewModel(Doctor member)
     {
@@ -44,9 +38,6 @@ public class DoctorViewModel : ViewModelBase
         _selectedDate = DateTime.Now;
         Books = new ObservableCollection<Book>(_bookService.GetDistinct());
         _books = Books;
-        TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(member));
-        _timeOffRequests = TimeOffRequests;
         Loans =
             new ObservableCollection<Loan>(_loanService.GetCurrentLoans(member));
         _loans = Loans;
@@ -56,13 +47,7 @@ public class DoctorViewModel : ViewModelBase
         AddExaminationCommand = new RelayCommand(AddExamination);
         UpdateExaminationCommand = new RelayCommand(UpdateExamination);
         DeleteExaminationCommand = new RelayCommand(DeleteExamination);
-        PerformExaminationCommand = new RelayCommand(PerformExamination);
         DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
-        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
-        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
-        SendMessageCommand = new RelayCommand(SendMessage);
-        AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
-        VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
         ViewMostBorrowedBooksCommand = new RelayCommand(ViewMostBorrowedBooks);
         ReturnLoanCommand = new RelayCommand(ReturnLoan);
     }
@@ -84,16 +69,6 @@ public class DoctorViewModel : ViewModelBase
         {
             _books = value;
             OnPropertyChanged(nameof(Books));
-        }
-    }
-
-    public ObservableCollection<DoctorTimeOffRequest> TimeOffRequests
-    {
-        get => _timeOffRequests;
-        set
-        {
-            _timeOffRequests = value;
-            OnPropertyChanged(nameof(TimeOffRequests));
         }
     }
 
@@ -178,20 +153,6 @@ public class DoctorViewModel : ViewModelBase
         _loanService.GetCurrentLoans(_member).ForEach(Loans.Add);
     }
 
-    private void VisitHospitalizedPatients()
-    {
-        var dialog = new VisitHospitalizedPatientsDialog(_member);
-        dialog.ShowDialog();
-    }
-
-    private void AddTimeOffRequest()
-    {
-        var dialog = new AddTimeOffRequestDialog(_member);
-        dialog.ShowDialog();
-        TimeOffRequests =
-            new ObservableCollection<DoctorTimeOffRequest>(_requestService.GetNonExpiredDoctorTimeOffRequests(_member));
-    }
-
     private void AddExamination()
     {
         var dialog = new ModifyExaminationDialog()
@@ -245,33 +206,6 @@ public class DoctorViewModel : ViewModelBase
         MessageBox.Show("Succeed");
     }
 
-    private void PerformExamination()
-    {
-        var examinationToPerform = SelectedLoan as Examination;
-        if (examinationToPerform == null)
-        {
-            MessageBox.Show("Please select examination in order to perform it");
-            return;
-        }
-
-        var patientOnExamination = _patientService.GetPatient(examinationToPerform);
-
-        if (!examinationToPerform.IsPerformable())
-        {
-            MessageBox.Show("Chosen examination can't be performed right now");
-            return;
-        }
-
-        if (examinationToPerform.Room is null)
-        {
-            MessageBox.Show("Chosen examination doesn't have room. Please add room");
-            return;
-        }
-
-        var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
-        dialog.ShowDialog();
-    }
-
     private void ViewMostBorrowedBooks()
     {
         var dialog = new MostBorrowedBooksDialog();
@@ -292,10 +226,4 @@ public class DoctorViewModel : ViewModelBase
         MessageBox.Show("Loan successfully returned");
     }
 
-    private void SendMessage()
-    {
-        var loggedUser = new PersonDTO(_member.Id, _member.FirstName, _member.LastName, Role.Doctor);
-        var communicationView = new CommunicationView(loggedUser);
-        communicationView.ShowDialog();
-    }
 }

@@ -8,9 +8,7 @@ using Hospital.Services;
 
 namespace Hospital.ViewModels.Login;
 
-using Models.Manager;
 using Models.Doctor;
-using Models.Patient;
 
 public class LoginViewModel : ViewModelBase
 {
@@ -101,10 +99,8 @@ public class LoginViewModel : ViewModelBase
 
     private string GetUserType()
     {
-        if (_loginService.LoggedUser?.GetType() == typeof(Patient)) return "PATIENT";
         if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
         if (_loginService.LoggedUser?.GetType() == typeof(Models.Librarian)) return "LIBRARIAN";
-        if (_loginService.LoggedUser?.GetType() == typeof(Manager)) return "MANAGER";
 
         throw new UnrecognizedUserTypeException();
     }
