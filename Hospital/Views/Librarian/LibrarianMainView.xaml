@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    
+
     <Window.DataContext>
         <viewModel:LibrarianMainViewModel/>
     </Window.DataContext>
@@ -22,6 +22,7 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CopyGridViewModel}">
             <local:CopyGridView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:BookGridViewModel}">
             <local:BookGridView/>
         </DataTemplate>
@@ -64,7 +65,7 @@
                             <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-                  
+
                     <RadioButton Style="{StaticResource MenuButton}"
                                  Command="{Binding ShowCopyViewCommand}"
                                  IsChecked="False">
