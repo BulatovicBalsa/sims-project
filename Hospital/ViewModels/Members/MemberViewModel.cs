@@ -3,19 +3,16 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Hospital.DTOs;
 using Hospital.Exceptions;
 using Hospital.Models.Books;
-using Hospital.Models.Doctor;
-using Hospital.Services;
 using Hospital.Services.Books;
 using Hospital.ViewModels.Books;
-using Hospital.Views;
 using Hospital.Views.Books;
+using Hospital.Views.Members;
 
-namespace Hospital.ViewModels;
+namespace Hospital.ViewModels.Members;
 
-public class DoctorViewModel : ViewModelBase
+public class MemberViewModel : ViewModelBase
 {
     private const string Placeholder = "Search...";
     private readonly BookService _bookService = new();
@@ -23,7 +20,7 @@ public class DoctorViewModel : ViewModelBase
 
     private ObservableCollection<Book> _books;
 
-    private Doctor _member;
+    private Models.Member _member;
     private ObservableCollection<Loan> _loans;
 
     private string _searchBoxText;
@@ -32,7 +29,7 @@ public class DoctorViewModel : ViewModelBase
 
     private DateTime _selectedDate;
 
-    public DoctorViewModel(Doctor member)
+    public MemberViewModel(Models.Member member)
     {
         _member = member;
         _selectedDate = DateTime.Now;
@@ -44,10 +41,10 @@ public class DoctorViewModel : ViewModelBase
         SearchBoxText = Placeholder;
 
         ViewAdvancedBookDetailsCommand = new RelayCommand<string>(ViewAdvancedBookDetails);
-        AddExaminationCommand = new RelayCommand(AddExamination);
-        UpdateExaminationCommand = new RelayCommand(UpdateExamination);
-        DeleteExaminationCommand = new RelayCommand(DeleteExamination);
-        DefaultExaminationViewCommand = new RelayCommand(DefaultExaminationView);
+        AddLoanCommand = new RelayCommand(AddLoan);
+        UpdateLoanCommand = new RelayCommand(UpdateLoan);
+        DeleteLoanCommand = new RelayCommand(DeleteLoan);
+        DefaultLoanViewCommand = new RelayCommand(DefaultLoanView);
         ViewMostBorrowedBooksCommand = new RelayCommand(ViewMostBorrowedBooks);
         ReturnLoanCommand = new RelayCommand(ReturnLoan);
     }
@@ -72,7 +69,7 @@ public class DoctorViewModel : ViewModelBase
         }
     }
 
-    public Doctor Member
+    public Models.Member Member
     {
         get => _member;
         set
@@ -119,14 +116,10 @@ public class DoctorViewModel : ViewModelBase
     public string DoctorName => $"Member {Member.FirstName} {Member.LastName}";
 
     public ICommand ViewAdvancedBookDetailsCommand { get; set; }
-    public ICommand AddExaminationCommand { get; set; }
-    public ICommand PerformExaminationCommand { get; set; }
-    public ICommand UpdateExaminationCommand { get; set; }
-    public ICommand DeleteExaminationCommand { get; set; }
-    public ICommand DefaultExaminationViewCommand { get; set; }
-    public ICommand SendMessageCommand { get; set; }
-    public ICommand AddTimeOffRequestCommand { get; set; }
-    public ICommand VisitHospitalizedPatientsCommand { get; set; }
+    public ICommand AddLoanCommand { get; set; }
+    public ICommand UpdateLoanCommand { get; set; }
+    public ICommand DeleteLoanCommand { get; set; }
+    public ICommand DefaultLoanViewCommand { get; set; }
     public ICommand ViewMostBorrowedBooksCommand { get; set; }
     public ICommand ReturnLoanCommand { get; set; }
 
@@ -147,23 +140,23 @@ public class DoctorViewModel : ViewModelBase
         dialog.ShowDialog();
     }
 
-    private void DefaultExaminationView()
+    private void DefaultLoanView()
     {
         Loans.Clear();
         _loanService.GetCurrentLoans(_member).ForEach(Loans.Add);
     }
 
-    private void AddExamination()
+    private void AddLoan()
     {
         var dialog = new ModifyExaminationDialog()
         {
-            DataContext = new ModifyExaminationViewModel(Member, Loans)
+            DataContext = new ModifyLoanViewModel(Member, Loans)
         };
 
         dialog.ShowDialog();
     }
 
-    private void UpdateExamination()
+    private void UpdateLoan()
     {
         if (SelectedLoan is not Loan examinationToChange)
         {
@@ -173,13 +166,13 @@ public class DoctorViewModel : ViewModelBase
 
         var dialog = new ModifyExaminationDialog()
         {
-            DataContext = new ModifyExaminationViewModel(Member, Loans, examinationToChange)
+            DataContext = new ModifyLoanViewModel(Member, Loans, examinationToChange)
         };
 
         dialog.ShowDialog();
     }
 
-    private void DeleteExamination()
+    private void DeleteLoan()
     {
         if (SelectedLoan is not Loan loan)
         {
@@ -220,9 +213,10 @@ public class DoctorViewModel : ViewModelBase
         if (loan == null)
         {
             MessageBox.Show("Please select a loan to return it");
+            return;
         }
         _loanService.Return(loan);
-        DefaultExaminationView();
+        DefaultLoanView();
         MessageBox.Show("Loan successfully returned");
     }
 

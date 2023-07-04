@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hospital.Models.Doctor;
 using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Models.Memberships;
@@ -12,7 +11,7 @@ public class SerializerInjector
 {
     private static readonly Dictionary<Type, object> Implementations = new()
     {
-        { typeof(ISerializer<Doctor>), new CsvSerializer<Doctor>() },
+        { typeof(ISerializer<Member>), new CsvSerializer<Member>() },
         { typeof(ISerializer<Book>), new CsvSerializer<Book>() },
         { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() },
         { typeof(ISerializer<Membership>), new CsvSerializer<Membership>() },

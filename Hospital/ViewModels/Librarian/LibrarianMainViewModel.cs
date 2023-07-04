@@ -1,8 +1,4 @@
-using System.Threading;
 using System.Windows.Input;
-using Hospital.DTOs;
-using Hospital.Services;
-using Hospital.Views;
 
 namespace Hospital.ViewModels.Librarian;
 

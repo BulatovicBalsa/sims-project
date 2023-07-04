@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -253,7 +252,7 @@ public class AddUpdateMemberViewModel : ViewModelBase
     {
         FirstName = selectedMember.FirstName;
         LastName = selectedMember.LastName;
-        Jmbg = selectedMember.JMBG;
+        Jmbg = selectedMember.Jmbg;
         Username = selectedMember.Profile.Username;
         Password = selectedMember.Profile.Password;
         Email = selectedMember.Email;
@@ -294,7 +293,7 @@ public class AddUpdateMemberViewModel : ViewModelBase
     {
         _memberToUpdate.FirstName = FirstName;
         _memberToUpdate.LastName = LastName;
-        _memberToUpdate.JMBG = Jmbg;
+        _memberToUpdate.Jmbg = Jmbg;
         _memberToUpdate.Profile.Username = Username;
         _memberToUpdate.Profile.Password = Password;
         _memberToUpdate.Email = Email;

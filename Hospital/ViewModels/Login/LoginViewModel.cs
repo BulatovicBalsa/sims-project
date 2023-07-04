@@ -4,11 +4,10 @@ using System.Security.Principal;
 using System.Threading;
 using System.Windows.Input;
 using Hospital.Exceptions;
+using Hospital.Models;
 using Hospital.Services;
 
 namespace Hospital.ViewModels.Login;
-
-using Models.Doctor;
 
 public class LoginViewModel : ViewModelBase
 {
@@ -99,7 +98,7 @@ public class LoginViewModel : ViewModelBase
 
     private string GetUserType()
     {
-        if (_loginService.LoggedUser?.GetType() == typeof(Doctor)) return "DOCTOR";
+        if (_loginService.LoggedUser?.GetType() == typeof(Member)) return "DOCTOR";
         if (_loginService.LoggedUser?.GetType() == typeof(Models.Librarian)) return "LIBRARIAN";
 
         throw new UnrecognizedUserTypeException();

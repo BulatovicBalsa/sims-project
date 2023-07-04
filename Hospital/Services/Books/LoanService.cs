@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Hospital.Injectors;
+using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Models.Doctor;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 
@@ -14,7 +14,7 @@ public class LoanService
     private readonly LoanRepository _loanRepository = new(SerializerInjector.CreateInstance<ISerializer<Loan>>());
     private readonly CopyRepository _copyRepository = new(new JsonSerializer<Copy>());
 
-    public List<Loan> GetAll(Doctor member)
+    public List<Loan> GetAll(Member member)
     {
         return _loanRepository.GetAll(member);
     }
@@ -46,9 +46,9 @@ public class LoanService
         _loanRepository.Update(loan);
     }
 
-    public List<Loan> GetCurrentLoans(Doctor doctor)
+    public List<Loan> GetCurrentLoans(Member member)
     {
-        return _loanRepository.GetCurrentLoans(doctor);
+        return _loanRepository.GetCurrentLoans(member);
     }
 
     public void Return(Loan loan)
