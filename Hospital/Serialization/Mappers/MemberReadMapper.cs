@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Hospital.Models;
@@ -22,7 +17,7 @@ namespace Hospital.Serialization.Mappers
             Map(member => member.BirthDate).Index(3);
             Map(member => member.Email).Index(4);
             Map(member => member.PhoneNumber).Index(5);
-            Map(member => member.JMBG).Index(6);
+            Map(member => member.Jmbg).Index(6);
             Map(member => member.Type).Index(7);
             Map(member => member.Profile.Username).Index(8);
             Map(member => member.Profile.Password).Index(9);

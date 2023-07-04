@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Repositories;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 using Hospital.Views.Librarian;

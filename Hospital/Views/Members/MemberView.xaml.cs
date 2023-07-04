@@ -2,24 +2,23 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Hospital.Models.Doctor;
-using Hospital.ViewModels;
+using Hospital.ViewModels.Members;
 
-namespace Hospital.Views;
+namespace Hospital.Views.Members;
 
 public partial class DoctorView : Window
 {
     private readonly string placeholder = "Search...";
-    private readonly DoctorViewModel _viewModel;
+    private readonly MemberViewModel _viewModel;
     private bool isUserInput = true;
 
-    public DoctorView(Doctor doctor)
+    public DoctorView(Models.Member member)
     {
         isUserInput = false;
 
         InitializeComponent();
 
-        _viewModel = new DoctorViewModel(doctor);
+        _viewModel = new MemberViewModel(member);
         ConfigWindow();
     }
 

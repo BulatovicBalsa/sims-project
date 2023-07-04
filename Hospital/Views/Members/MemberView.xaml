@@ -1,10 +1,12 @@
-﻿<Window x:Class="Hospital.Views.DoctorView"
+﻿<Window x:Class="Hospital.Views.Members.DoctorView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views"
-        xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DoctorViewModel}"
+        xmlns:viewmodels="clr-namespace:Hospital.ViewModels"
+        xmlns:members="clr-namespace:Hospital.ViewModels.Members"
+        d:DataContext="{d:DesignInstance Type=members:MemberViewModel}"
         mc:Ignorable="d"
         Title="PatientView" Height="Auto" Width="1000"
         WindowStyle="None"
@@ -119,32 +121,32 @@
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Label Content="View for:"></Label>
-                    <DatePicker Background="Black"  x:Name="ExaminationDatePicker" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
+                    <DatePicker Background="Black"  x:Name="LoanDatePicker" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
                     <Button Content="Default View"
                             Style="{DynamicResource ActionButton}"
-                            Margin="5" Command="{Binding DefaultExaminationViewCommand}"/>
-                    <Button x:Name="BtnAddExamination"
+                            Margin="5" Command="{Binding DefaultLoanViewCommand}"/>
+                    <Button x:Name="BtnAddLoan"
                             Style="{DynamicResource ActionButton}"
                             Content="Add Loan"
-                            Margin="5" Command="{Binding AddExaminationCommand}"/>
+                            Margin="5" Command="{Binding AddLoanCommand}"/>
                     <Button x:Name="BtnReturnLoan"
                             Style="{DynamicResource ActionButton}"
                             Content="Return Loan"
                             Margin="5" Command="{Binding ReturnLoanCommand}"/>
-                    <Button x:Name="BtnUpdateExamination"
+                    <Button x:Name="BtnUpdateLoan"
                             Style="{DynamicResource ActionButton}"
                             Content="Update Loan"
-                            Margin="5" Command="{Binding UpdateExaminationCommand}"/>
-                    <Button x:Name="BtnDeleteExamination"
+                            Margin="5" Command="{Binding UpdateLoanCommand}"/>
+                    <Button x:Name="BtnDeleteLoan"
                             Style="{DynamicResource ActionButton}"
                             Content="Delete Loan"
-                            Margin="5" Command="{Binding DeleteExaminationCommand}"/>
+                            Margin="5" Command="{Binding DeleteLoanCommand}"/>
                     <Button Content="Most read books"
                             Style="{DynamicResource ActionButton}"
                             Margin="5" Command="{Binding ViewMostBorrowedBooksCommand}"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="2" x:Name="ExaminationsDataGrid"
+                <DataGrid Grid.Row="2" x:Name="LoansDataGrid"
                           Style="{DynamicResource DataGridStyle}" 
                           CellStyle="{DynamicResource DataGridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 

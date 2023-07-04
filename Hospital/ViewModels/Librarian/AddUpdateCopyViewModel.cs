@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 using Hospital.Models.Books;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
