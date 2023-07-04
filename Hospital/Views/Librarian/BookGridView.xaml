@@ -28,7 +28,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" IsReadOnly="True" Width="*" Binding="{Binding Title}"/>
                 <DataGridTextColumn Header="ISBN" IsReadOnly="True" Width="*" Binding="{Binding Isbn}"/>
-                <DataGridTextColumn Header="UDC" IsReadOnly="True" Width="*" Binding="{Binding UdcAsString}"/>
+                <DataGridTextColumn Header="UDC" IsReadOnly="True" Width="*" Binding="{Binding UdcGuiString}"/>
                 <DataGridTextColumn Header="Language" IsReadOnly="True" Width="*" Binding="{Binding Language}"/>
                 <DataGridTextColumn Header="Author" IsReadOnly="True" Width="*" Binding="{Binding Author}"/>
                 <DataGridTextColumn Header="Genre" IsReadOnly="True" Width="*" Binding="{Binding Genre}"/>

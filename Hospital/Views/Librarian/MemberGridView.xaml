@@ -34,7 +34,7 @@
                 <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
                 <DataGridTextColumn Header="Type" IsReadOnly="True" Width="*" Binding="{Binding Membership.Name}"/>
                 <DataGridTextColumn Header="Number" IsReadOnly="True" Width="*" Binding="{Binding MembershipNumber}"/>
-                <DataGridTextColumn Header="Expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires}"/>
+                <DataGridTextColumn Header="Expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires, StringFormat={}{0:dd/MM/yyyy}}"/>
             </DataGrid.Columns>
         </DataGrid>
 
