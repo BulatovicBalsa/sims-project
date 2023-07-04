@@ -26,7 +26,15 @@ public partial class App : Application
     private void ProcessEventsThatOccurredBeforeAppStart()
     {
         EquipmentOrderService.AttemptPickUpOfAllOrders();
-        TransferService.AttemptDeliveryOfAllTransfers();
+        try
+        {
+            TransferService.AttemptDeliveryOfAllTransfers();
+        }
+        catch
+        {
+            return;
+        }
+
         _medicationOrderService.ExecuteMedicationOrders();
     }
 

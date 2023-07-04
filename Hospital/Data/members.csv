@@ -1,0 +1,3 @@
+MembershipNumber,MembershipExpires,Id,Name,BookLimit,LoanDaysLimit,Price,Id,FirstName,LastName,BirthDate,Email,PhoneNumber,JMBG,Type,Username,Password
+1,07/04/2024 04:44:13,M001,Student,3,14,1500,M001,Vladaa,Popov,12/25/2002 00:00:00,vladapopov@ftn.com,021021021,1234567890123,Member,vlada,vlada
+2,07/04/2024 04:58:42,aa526b84-6900-4f9b-9664-85c8fcfc2979,,0,0,0,4a21955f-2f1b-465e-8318-e105eccda7ca,test,test,12/22/2022 00:00:00,test@test.com,0590,1234567890123,Member,test,test

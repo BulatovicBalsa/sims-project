@@ -24,4 +24,9 @@ public class Membership
     public int BookLimit { get; set; }
     public int LoanDaysLimit { get; set; }
     public double Price { get; set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

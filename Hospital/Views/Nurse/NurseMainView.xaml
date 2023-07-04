@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Librarian"
         xmlns:patients="clr-namespace:Hospital.ViewModels.Librarian.Patients"
         mc:Ignorable="d"
-        Title="LibrarianMainView" Height="510" Width="1000"
+        Title="LibrarianMainView" Height="510" Width="1100"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
@@ -33,7 +33,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="220"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border CornerRadius="15,0,0,15"

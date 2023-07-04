@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Hospital.Views.Librarian.Patients"
              xmlns:viewModel="clr-namespace:Hospital.ViewModels.Librarian.Patients"
              mc:Ignorable="d" 
-             d:DesignHeight="675" d:DesignWidth="350"
-             Height="675"
+             d:DesignHeight="720" d:DesignWidth="350"
+             Height="720"
              Width="350"
              Background="Transparent"
              AllowsTransparency="True"
@@ -102,6 +102,9 @@
                 <TextBlock Style="{StaticResource MainTextBlock}">Membership number</TextBlock>
                 <TextBox Text="{Binding MembershipNumber, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding MembershipNumberError, Mode=OneWay}"/>
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Membership</TextBlock>
+                <ComboBox ItemsSource="{Binding AllMemberships}" SelectedItem="{Binding SelectedMembership}"/>
 
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"

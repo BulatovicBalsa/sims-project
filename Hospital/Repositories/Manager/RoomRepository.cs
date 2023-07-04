@@ -55,7 +55,14 @@ public class RoomRepository
 
     public List<Room> Get(List<Room> rooms)
     {
-        return rooms.Select(room => GetById(room.Id) ?? throw new InvalidOperationException()).ToList();
+        try
+        {
+            return rooms.Select(room => GetById(room.Id) ?? throw new InvalidOperationException()).ToList();
+        }
+        catch
+        {
+            return new List<Room>();
+        }
     }
 
     public void Add(Room room)
@@ -117,7 +124,7 @@ public class RoomRepository
     public Room GetWarehouse()
     {
         var warehouse = GetAll().Find(room => room.Type == RoomType.Warehouse);
-        return warehouse ?? throw new NoWarehouseException();
+        return warehouse;
     }
 
     public List<Room> GetAll(RoomType type)

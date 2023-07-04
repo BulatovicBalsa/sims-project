@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Hospital.Models;
 using Hospital.Models.Memberships;
 using Hospital.Repositories;
+using Hospital.Repositories.Memberships;
+using Hospital.Serialization;
 
 namespace Hospital.ViewModels.Librarian.Patients;
 
 public class AddUpdatePatientViewModel : ViewModelBase
 {
     private readonly MemberRepository _memberRepository;
+    private readonly MembershipRepository _membershipRepository;
     private readonly Member? _memberToUpdate;
     private string _firstName;
     private string _lastName;
@@ -29,6 +33,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
     private string _phoneNumberError;
     private string _membershipNumber;
     private string _membershipNumberError;
+    private ObservableCollection<Membership> _allMemberships;
+    private Membership? _selectedMembership;
 
     public event Action? DialogClosed;
 
@@ -40,6 +46,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
     public AddUpdatePatientViewModel(MemberRepository memberRepository)
     {
         _memberRepository = memberRepository;
+        _membershipRepository = new MembershipRepository(new CsvSerializer<Membership>());
+        _allMemberships = new ObservableCollection<Membership>(_membershipRepository.GetAll());
 
         AddMemberCommand = new ViewModelCommand(ExecuteAddMemberCommand, CanExecuteAddUpdateMemberCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
@@ -49,6 +57,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
     {
         _memberToUpdate = selectedMember;
         _memberRepository = memberRepository;
+        _membershipRepository = new MembershipRepository(new CsvSerializer<Membership>());
+        _allMemberships = new ObservableCollection<Membership>(_membershipRepository.GetAll());
 
         SetViewModelProperties(selectedMember);
 
@@ -215,6 +225,26 @@ public class AddUpdatePatientViewModel : ViewModelBase
         }
     }
 
+    public ObservableCollection<Membership> AllMemberships
+    {
+        get => _allMemberships;
+        set
+        {
+            _allMemberships = value;
+            OnPropertyChanged(nameof(AllMemberships));
+        }
+    }
+
+    public Membership? SelectedMembership
+    {
+        get => _selectedMembership;
+        set
+        {
+            _selectedMembership = value;
+            OnPropertyChanged(nameof(SelectedMembership));
+        }
+    }
+
     public ICommand AddMemberCommand { get; }
     public ICommand UpdateMemberCommand { get; }
     public ICommand CancelCommand { get; }
@@ -230,6 +260,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
         PhoneNumber = selectedMember.PhoneNumber;
         MembershipNumber = selectedMember.MembershipNumber;
         BirthDate = selectedMember.BirthDate.ToString("dd/MM/yyyy");
+        SelectedMembership = selectedMember.Membership;
     }
 
     private void ExecuteAddMemberCommand(object obj)
@@ -270,6 +301,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
         _memberToUpdate.PhoneNumber = PhoneNumber;
         _memberToUpdate.MembershipNumber = MembershipNumber;
         _memberToUpdate.BirthDate = DateTime.Parse(BirthDate);
+        _memberToUpdate.Membership = SelectedMembership;
     }
 
     private void CloseDialog()
@@ -391,7 +423,8 @@ public class AddUpdatePatientViewModel : ViewModelBase
                                     !string.IsNullOrEmpty(Email) &&
                                     !string.IsNullOrEmpty(BirthDate) &&
                                     !string.IsNullOrEmpty(PhoneNumber) &&
-                                    !string.IsNullOrEmpty(MembershipNumber);
+                                    !string.IsNullOrEmpty(MembershipNumber) &&
+                                    SelectedMembership != null;
 
         return isAnyFieldNullOrEmpty;
     }

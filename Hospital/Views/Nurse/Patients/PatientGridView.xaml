@@ -29,12 +29,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last name" IsReadOnly="True" Width="*" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="SizeToCells" Binding="{Binding JMBG}"/>
-                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="SizeToCells" Binding="{Binding PhoneNumber}"/>
-                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Profile.Username}"/>
-                <DataGridTextColumn Header="Membership number" IsReadOnly="True" Width="SizeToCells" Binding="{Binding MembershipNumber}"/>
-                <DataGridTextColumn Header="Membership expires" IsReadOnly="True" Width="SizeToCells" Binding="{Binding MembershipExpires}"/>
+                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="*" Binding="{Binding JMBG}"/>
+                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="*" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
+                <DataGridTextColumn Header="Membership number" IsReadOnly="True" Width="*" Binding="{Binding MembershipNumber}"/>
+                <DataGridTextColumn Header="Membership expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires}"/>
             </DataGrid.Columns>
         </DataGrid>
 
