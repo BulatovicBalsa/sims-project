@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using Hospital.Exceptions;
 using Hospital.Models.Books;
 using Hospital.Services.Books;
-using Hospital.Services.Doctor;
+using Hospital.Services.Members;
 
 namespace Hospital.ViewModels.Members;
 
