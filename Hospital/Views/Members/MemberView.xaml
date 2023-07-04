@@ -93,6 +93,7 @@
                         <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
                         <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
                         <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="*"/>
+                        <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="*"/>
 
                         <DataGridTemplateColumn Header="Description">
                             <DataGridTemplateColumn.CellTemplate>
