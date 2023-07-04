@@ -50,4 +50,13 @@ public class LoanService
     {
         return _loanRepository.GetCurrentLoans(doctor);
     }
+
+    public void Return(Loan loan)
+    {
+        loan.Return();
+        Update(loan);
+        var copy = _copyRepository.GetByInventoryNumber(loan.InventoryNumber);
+        copy.Return();
+        _copyRepository.Update(copy);
+    }
 }

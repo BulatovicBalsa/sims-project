@@ -43,4 +43,9 @@ public class Loan
         End = end;
         InventoryNumber = inventoryNumber;
     }
+
+    public void Return()
+    {
+        End = DateTime.Now;
+    }
 }

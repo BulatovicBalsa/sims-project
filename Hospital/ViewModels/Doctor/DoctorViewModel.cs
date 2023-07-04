@@ -64,6 +64,7 @@ public class DoctorViewModel : ViewModelBase
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
         VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
         ViewMostBorrowedBooksCommand = new RelayCommand(ViewMostBorrowedBooks);
+        ReturnLoanCommand = new RelayCommand(ReturnLoan);
     }
 
     public ObservableCollection<Loan> Loans
@@ -152,6 +153,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand AddTimeOffRequestCommand { get; set; }
     public ICommand VisitHospitalizedPatientsCommand { get; set; }
     public ICommand ViewMostBorrowedBooksCommand { get; set; }
+    public ICommand ReturnLoanCommand { get; set; }
 
     private void ViewAdvancedBookDetails(string bookId)
     {
@@ -276,6 +278,18 @@ public class DoctorViewModel : ViewModelBase
         Application.Current.Windows[0]!.Visibility = Visibility.Hidden;
         dialog.ShowDialog();
         Application.Current.Windows[0]!.Visibility = Visibility.Visible;
+    }
+
+    private void ReturnLoan()
+    {
+        var loan = SelectedLoan as Loan;
+        if (loan == null)
+        {
+            MessageBox.Show("Please select a loan to return it");
+        }
+        _loanService.Return(loan);
+        DefaultExaminationView();
+        MessageBox.Show("Loan successfully returned");
     }
 
     private void SendMessage()

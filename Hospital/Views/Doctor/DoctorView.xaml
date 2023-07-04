@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hospital.Views"
         xmlns:viewmodels="clr-namespace:Hospital.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DoctorViewModel}"
         mc:Ignorable="d"
-        Title="PatientView" Height="Auto" Width="900"
+        Title="PatientView" Height="Auto" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -127,6 +127,10 @@
                             Style="{DynamicResource ActionButton}"
                             Content="Add Loan"
                             Margin="5" Command="{Binding AddExaminationCommand}"/>
+                    <Button x:Name="BtnReturnLoan"
+                            Style="{DynamicResource ActionButton}"
+                            Content="Return Loan"
+                            Margin="5" Command="{Binding ReturnLoanCommand}"/>
                     <Button x:Name="BtnUpdateExamination"
                             Style="{DynamicResource ActionButton}"
                             Content="Update Loan"
