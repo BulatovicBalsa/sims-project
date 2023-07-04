@@ -60,7 +60,7 @@ public class BookRepository
 
         allBook[indexToUpdate] = book;
 
-        _serializer.Save(allBook, FilePath);
+        _serializer.Save(allBook, FilePath, new BookWriteMapper());
         BookUpdated?.Invoke(book);
     }
 

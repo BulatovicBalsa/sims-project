@@ -45,6 +45,8 @@ public class AddUpdateBookViewModel : ViewModelBase
         _bookToUpdate = selectedBook;
         _bookRepository = BookRepository;
         _allLanguages = new ObservableCollection<BookLanguage>(Enum.GetValues<BookLanguage>());
+        _allAuthors = new ObservableCollection<Author>(new AuthorRepository().GetAll());
+        _allGenres = new ObservableCollection<Genre>(new GenreRepository(new CsvSerializer<Genre>()).GetAll());
 
         SetViewModelProperties(selectedBook);
 
@@ -207,7 +209,7 @@ public class AddUpdateBookViewModel : ViewModelBase
 
     private void CloseDialog()
     {
-        Application.Current.Windows[1]?.Close();
+        Application.Current.Windows[2]?.Close();
         DialogClosed?.Invoke();
     }
 

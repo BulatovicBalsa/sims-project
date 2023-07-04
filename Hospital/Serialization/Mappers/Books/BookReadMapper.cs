@@ -19,7 +19,7 @@ namespace Hospital.Serialization.Mappers.Books
             Map(book => book.Author).Index(2).TypeConverter<AuthorTypeConverter>();
             Map(book => book.Description).Index(3);
             Map(book => book.Isbn).Index(4);
-            Map(book => book.Udc).Index(5).Convert(row => SplitColumnValues(row.Row.GetField<string>("Udc")).Select(udcPart => Convert.ToInt32(udcPart)).ToList());
+            Map(book => book.Udc).Index(5).Convert(row => SplitColumnValues(row.Row.GetField<string>(5)).Select(udcPart => Convert.ToInt32(udcPart)).ToList());
             Map(book => book.BindingType).Index(6);
             Map(book => book.Language).Index(7);
             Map(book => book.Genre).Index(8).TypeConverter<GenreTypeConverter>();
