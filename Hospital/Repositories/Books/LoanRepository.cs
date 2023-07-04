@@ -4,6 +4,7 @@ using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
+using Hospital.DTOs;
 using Hospital.Exceptions;
 using Hospital.Injectors;
 using Hospital.Models.Books;
@@ -149,12 +150,29 @@ public class LoanRepository
     public bool IsFree(Book book)
     {
         var allLoansForBook = GetAll(book);
-        return allLoansForBook.Any(loan => loan.End is null) || allLoansForBook.Count == 0;
+        return allLoansForBook.All(loan => loan.End is not null) || allLoansForBook.Count == 0;
     }
 
     public void DeleteAll()
     {
         var emptyList = new List<Loan>();
-       _serializer.Save(emptyList, FilePath, new LoanWriteMapper());
+        _serializer.Save(emptyList, FilePath, new LoanWriteMapper());
+    }
+
+    public List<Loan> GetLoans(DateTime startingFrom)
+    {
+        return GetAll().FindAll(e => e.Start >= startingFrom);
+    }
+
+    public List<BookBorrowCountDto> GetBooksOrderedByBorrowCount(DateTime startingFrom)
+    {
+        var loans = GetLoans(startingFrom);
+
+        var bookBorrowCounts = from loan in loans
+            group loan by loan.Book
+            into bookGroup
+            select new BookBorrowCountDto(bookGroup.Key, bookGroup.ToList().Count);
+
+        return bookBorrowCounts.OrderByDescending(e => e.BorrowCount).ToList();
     }
 }

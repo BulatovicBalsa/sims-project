@@ -1,5 +1,0 @@
-EquipmentId,RoomId,Amount,Id,Name,Type,Reserved,Available
-1024,d495e8de-cbe1-4480-808e-66ac5e1c8362,0,1024,Pencil,DynamicEquipment,0,0
-a75b5bdc-7936-43a2-b88c-7edf4edcd93f,d495e8de-cbe1-4480-808e-66ac5e1c8362,0,a75b5bdc-7936-43a2-b88c-7edf4edcd93f,Other 1,DynamicEquipment,0,0
-1024,111e27f6-247a-4942-a3b9-cf70ba6a4e48,0,1024,Pencil,DynamicEquipment,0,0
-a75b5bdc-7936-43a2-b88c-7edf4edcd93f,111e27f6-247a-4942-a3b9-cf70ba6a4e48,0,a75b5bdc-7936-43a2-b88c-7edf4edcd93f,Other 1,DynamicEquipment,0,0

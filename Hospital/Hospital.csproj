@@ -34,8 +34,4 @@
     </Resource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Books\" />
-  </ItemGroup>
-
 </Project>

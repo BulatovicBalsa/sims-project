@@ -23,20 +23,11 @@ public partial class App : Application
     private readonly MedicationOrderService _medicationOrderService = new();
     private readonly System.Timers.Timer _medicationOrderTimer = new(60000);
 
-    private void ProcessEventsThatOccurredBeforeAppStart()
-    {
-        EquipmentOrderService.AttemptPickUpOfAllOrders();
-        TransferService.AttemptDeliveryOfAllTransfers();
-        _medicationOrderService.ExecuteMedicationOrders();
-    }
-
     protected void ApplicationStart(object sender, EventArgs e)
     {
         CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
-        ProcessEventsThatOccurredBeforeAppStart();
         _medicationOrderTimer.Elapsed += ExecuteMedicationOrders;
         _medicationOrderTimer.Enabled = true;
-        RoomOperationCompleter.TryCompleteAll();
 
         var loginView = new LoginView();
         loginView.Show();
