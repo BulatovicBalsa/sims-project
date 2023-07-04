@@ -121,17 +121,22 @@
                     <Label Content="View for:"></Label>
                     <DatePicker Background="Black"  x:Name="ExaminationDatePicker" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
                     <Button Content="Default View"
+                            Style="{DynamicResource ActionButton}"
                             Margin="5" Command="{Binding DefaultExaminationViewCommand}"/>
                     <Button x:Name="BtnAddExamination"
+                            Style="{DynamicResource ActionButton}"
                             Content="Add Loan"
                             Margin="5" Command="{Binding AddExaminationCommand}"/>
                     <Button x:Name="BtnUpdateExamination"
+                            Style="{DynamicResource ActionButton}"
                             Content="Update Loan"
                             Margin="5" Command="{Binding UpdateExaminationCommand}"/>
                     <Button x:Name="BtnDeleteExamination"
+                            Style="{DynamicResource ActionButton}"
                             Content="Delete Loan"
                             Margin="5" Command="{Binding DeleteExaminationCommand}"/>
                     <Button Content="Most read books"
+                            Style="{DynamicResource ActionButton}"
                             Margin="5" Command="{Binding ViewMostBorrowedBooksCommand}"/>
                 </StackPanel>
 
