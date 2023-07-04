@@ -32,9 +32,9 @@
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
                 <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="*" Binding="{Binding PhoneNumber}"/>
                 <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
-                <DataGridTextColumn Header="Membership type" IsReadOnly="True" Width="*" Binding="{Binding Membership.Name}"/>
-                <DataGridTextColumn Header="Membership number" IsReadOnly="True" Width="*" Binding="{Binding MembershipNumber}"/>
-                <DataGridTextColumn Header="Membership expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires}"/>
+                <DataGridTextColumn Header="Type" IsReadOnly="True" Width="*" Binding="{Binding Membership.Name}"/>
+                <DataGridTextColumn Header="Number" IsReadOnly="True" Width="*" Binding="{Binding MembershipNumber}"/>
+                <DataGridTextColumn Header="Expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires, StringFormat={}{0:dd/MM/yyyy}}"/>
             </DataGrid.Columns>
         </DataGrid>
 
