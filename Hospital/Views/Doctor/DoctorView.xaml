@@ -25,6 +25,7 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
             <!-- Window Header -->
@@ -64,7 +65,6 @@
                         Grid.Column="3" HorizontalAlignment="Center" Width="25" Click="BtnClose_Click"/>
             </Grid>
             
-            <!--Patients-->
             <Grid Grid.Row="1" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -103,8 +103,6 @@
                 </DataGrid>
             </Grid>
             
-
-            <!-- Examinations -->
             <Grid Grid.Row="2" Margin="0,0,0, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -125,17 +123,14 @@
                     <Button Content="Default View"
                             Margin="5" Command="{Binding DefaultExaminationViewCommand}"/>
                     <Button x:Name="BtnAddExamination"
-                            Content="Add Examination"
+                            Content="Add Loan"
                             Margin="5" Command="{Binding AddExaminationCommand}"/>
                     <Button x:Name="BtnUpdateExamination"
-                            Content="Update Examination"
+                            Content="Update Loan"
                             Margin="5" Command="{Binding UpdateExaminationCommand}"/>
                     <Button x:Name="BtnDeleteExamination"
-                            Content="Delete Examination"
+                            Content="Delete Loan"
                             Margin="5" Command="{Binding DeleteExaminationCommand}"/>
-                    <Button x:Name="BtnPerformExamination"
-                            Content="Perform Examination"
-                            Margin="5" Command="{Binding PerformExaminationCommand}"/>
                     <Button Content="Most read books"
                             Margin="5" Command="{Binding ViewMostBorrowedBooksCommand}"/>
                 </StackPanel>
