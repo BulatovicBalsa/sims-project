@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    
+
     <Window.DataContext>
         <viewModel:LibrarianMainViewModel/>
     </Window.DataContext>
@@ -65,7 +65,7 @@
                             <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-                  
+
                     <RadioButton Style="{StaticResource MenuButton}"
                                  Command="{Binding ShowCopyViewCommand}"
                                  IsChecked="False">
