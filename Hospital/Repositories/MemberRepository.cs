@@ -54,8 +54,12 @@ namespace Hospital.Repositories
         {
             var allMembers = GetAll();
 
-            if (!allMembers.Remove(member))
+
+            var indexToDelete = allMembers.FindIndex(m => m.Id == member.Id);
+            if (indexToDelete == -1)
                 throw new KeyNotFoundException($"Member with id {member.Id} was not found.");
+
+            allMembers.RemoveAt(indexToDelete);
 
             CsvSerializer<Member>.ToCSV(allMembers, FilePath);
         }

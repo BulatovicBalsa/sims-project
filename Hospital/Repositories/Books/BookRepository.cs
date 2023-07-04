@@ -42,7 +42,7 @@ public class BookRepository
 
         allBook.Add(book);
 
-        _serializer.Save(allBook, FilePath);
+        _serializer.Save(allBook, FilePath, new BookWriteMapper());
     }
 
     public void Update(Book book)
@@ -66,7 +66,7 @@ public class BookRepository
 
         allBook.RemoveAt(indexToDelete);
 
-        _serializer.Save(allBook, FilePath);
+        _serializer.Save(allBook, FilePath, new BookWriteMapper());
     }
 
     public void DeleteAll()
