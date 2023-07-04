@@ -7,7 +7,6 @@ namespace Hospital.Models.Examination;
 using Doctor;
 using Hospital.Repositories.Manager;
 using Patient;
-using Librarian;
 public class UpdateExaminationDto
 {
     public UpdateExaminationDto(DateTime start, bool isOperation, Room? room, Patient patient,

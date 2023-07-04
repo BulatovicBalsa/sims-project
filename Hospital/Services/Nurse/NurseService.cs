@@ -1,9 +1,9 @@
 ﻿using Hospital.DTOs;
-using Hospital.Models.Librarian;
-using Hospital.Repositories.Librarian;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Hospital.Models;
+using Hospital.Repositories;
 
 namespace Hospital.Services
 

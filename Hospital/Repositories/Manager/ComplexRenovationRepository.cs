@@ -28,12 +28,19 @@ public class ComplexRenovationRepository
     {
         foreach (var transfer in complexRenovations.SelectMany(renovation => renovation.TransfersFromOldToNewRooms))
         {
-            transfer.Origin = RoomRepository.Instance.GetById(transfer.OriginId) ??
-                              throw new InvalidOperationException(
-                                  "Could not find origin of complex renovation transfer");
-            transfer.Destination = RoomRepository.Instance.GetById(transfer.DestinationId) ??
-                                   throw new InvalidOperationException(
-                                       "Could not find destination of complex renovation transfer");
+            try
+            {
+                transfer.Origin = RoomRepository.Instance.GetById(transfer.OriginId) ??
+                                  throw new InvalidOperationException(
+                                      "Could not find origin of complex renovation transfer");
+                transfer.Destination = RoomRepository.Instance.GetById(transfer.DestinationId) ??
+                                       throw new InvalidOperationException(
+                                           "Could not find destination of complex renovation transfer");
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 
@@ -53,11 +60,18 @@ public class ComplexRenovationRepository
     {
         foreach (var complexRenovation in complexRenovations)
         {
-            var leftoverEquipmentDestination =
-                complexRenovation.LeftoverEquipmentDestination ?? throw new NullReferenceException();
-            complexRenovation.LeftoverEquipmentDestination =
-                RoomRepository.Instance.GetById(leftoverEquipmentDestination.Id) ??
-                throw new InvalidOperationException("Could not find leftover equipment destination");
+            try
+            {
+                var leftoverEquipmentDestination =
+                    complexRenovation.LeftoverEquipmentDestination ?? throw new NullReferenceException();
+                complexRenovation.LeftoverEquipmentDestination =
+                    RoomRepository.Instance.GetById(leftoverEquipmentDestination.Id) ??
+                    throw new InvalidOperationException("Could not find leftover equipment destination");
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 

@@ -7,9 +7,9 @@ using CsvHelper.TypeConversion;
 using Hospital.Exceptions;
 using Hospital.Filter;
 using Hospital.Injectors;
+using Hospital.Models;
 using Hospital.Repositories.Doctor;
 using Hospital.Repositories.Manager;
-using Hospital.Repositories.Librarian;
 using Hospital.Repositories.Patient;
 using Hospital.Scheduling;
 using Hospital.Serialization;
@@ -19,7 +19,6 @@ namespace Hospital.Repositories.Examination;
 using Hospital.Models.Examination;
 using Hospital.Models.Patient;
 using Hospital.Models.Doctor;
-using Hospital.Models.Librarian;
 
 public sealed class ExaminationReadMapper : ClassMap<Examination>
 {

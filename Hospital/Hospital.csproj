@@ -9,8 +9,15 @@
 
   <ItemGroup>
     <None Remove="Images\HospitalLogo.png" />
+    <None Remove="Images\LibraryLogo.png" />
     <None Remove="Images\PasswordIcon.png" />
     <None Remove="Images\UsernameIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\LibraryLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,9 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\HospitalLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\PasswordIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
