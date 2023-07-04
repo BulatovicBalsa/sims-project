@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Serialization;
 using Hospital.Serialization.Mappers.Books;
@@ -8,8 +10,11 @@ namespace Hospital.Repositories.Books;
 
 public class BookRepository
 {
-    private const string FilePath = "../../../Data/Books.csv";
+    private const string FilePath = "../../../Data/books.csv";
     private readonly ISerializer<Book> _serializer;
+
+    public event Action<Book>? BookAdded;
+    public event Action<Book>? BookUpdated;
 
     public BookRepository(ISerializer<Book> serializer)
     {
@@ -43,6 +48,7 @@ public class BookRepository
         allBook.Add(book);
 
         _serializer.Save(allBook, FilePath, new BookWriteMapper());
+        BookAdded?.Invoke(book);
     }
 
     public void Update(Book book)
@@ -55,6 +61,7 @@ public class BookRepository
         allBook[indexToUpdate] = book;
 
         _serializer.Save(allBook, FilePath);
+        BookUpdated?.Invoke(book);
     }
 
     public void Delete(Book book)

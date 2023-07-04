@@ -22,6 +22,8 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CopyGridViewModel}">
             <local:CopyGridView/>
+        <DataTemplate DataType="{x:Type viewModel:BookGridViewModel}">
+            <local:BookGridView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -62,6 +64,7 @@
                             <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
+                  
                     <RadioButton Style="{StaticResource MenuButton}"
                                  Command="{Binding ShowCopyViewCommand}"
                                  IsChecked="False">
@@ -70,6 +73,12 @@
                         </StackPanel>
                     </RadioButton>
 
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowBooksViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Books" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
                 </StackPanel>
             </Border>
 

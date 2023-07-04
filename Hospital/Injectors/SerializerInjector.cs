@@ -26,6 +26,8 @@ public class SerializerInjector
         { typeof(ISerializer<Book>), new CsvSerializer<Book>() },
         { typeof(ISerializer<Loan>), new CsvSerializer<Loan>() },
         { typeof(ISerializer<Membership>), new CsvSerializer<Membership>() },
+        { typeof(ISerializer<Author>), new CsvSerializer<Author>() },
+        { typeof(ISerializer<Genre>), new CsvSerializer<Genre>() },
         // Add more implementations here
     };
 

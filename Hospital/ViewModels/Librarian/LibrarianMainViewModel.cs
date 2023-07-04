@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Windows.Input;
 using Hospital.DTOs;
 using Hospital.Services;
@@ -14,7 +14,7 @@ public class LibrarianMainViewModel : ViewModelBase
     {
         ShowMembersViewCommand = new ViewModelCommand(ExecuteShowMembersViewCommand);
         ShowCopyViewCommand = new ViewModelCommand(ExecuteShowCopyViewCommand);
-
+        ShowBooksViewCommand = new ViewModelCommand(ExecuteShowBooksViewCommand);
         ExecuteShowMembersViewCommand(null);
     }
 
@@ -27,8 +27,10 @@ public class LibrarianMainViewModel : ViewModelBase
             OnPropertyChanged(nameof(CurrentChildView));
         }
     }
+    
     public ICommand ShowMembersViewCommand { get; }
     public ICommand ShowCopyViewCommand { get; }
+    public ICommand ShowBooksViewCommand { get; }
 
     private void ExecuteShowMembersViewCommand(object? obj)
     {
@@ -38,5 +40,10 @@ public class LibrarianMainViewModel : ViewModelBase
     private void ExecuteShowCopyViewCommand(object? obj)
     {
         CurrentChildView = new CopyGridViewModel();
+    }
+
+    private void ExecuteShowBooksViewCommand(object? obj)
+    {
+        CurrentChildView = new BookGridViewModel();
     }
 }

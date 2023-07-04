@@ -47,8 +47,9 @@ public partial class DoctorView : Window
 
         var filteredPatients = _viewModel.Books.Where(book =>
             book.Title.ToLower().Contains(searchText) ||
-            book.Author.ToLower().Contains(searchText) ||
-            book.Language.ToString().ToLower().Contains(searchText)).ToList();
+            book.Author!.ToString().ToLower().Contains(searchText) ||
+            book.Language.ToString().ToLower().Contains(searchText) ||
+            book.Genre.ToString().ToLower().Contains(searchText)).ToList();
 
         PatientsDataGrid.ItemsSource = filteredPatients;
     }
