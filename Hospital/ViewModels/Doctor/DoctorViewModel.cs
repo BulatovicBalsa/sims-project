@@ -273,7 +273,9 @@ public class DoctorViewModel : ViewModelBase
     private void ViewMostBorrowedBooks()
     {
         var dialog = new MostBorrowedBooksDialog();
+        Application.Current.Windows[0]!.Visibility = Visibility.Hidden;
         dialog.ShowDialog();
+        Application.Current.Windows[0]!.Visibility = Visibility.Visible;
     }
 
     private void SendMessage()
