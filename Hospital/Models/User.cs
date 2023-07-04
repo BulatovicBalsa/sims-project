@@ -43,5 +43,17 @@ namespace Hospital.Models
             Type = type;
             Profile = new Profile(username, password);
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not User objAsUser) return false;
+            return Id == objAsUser.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
     }
 }

@@ -1,9 +1,2 @@
 MembershipNumber,MembershipExpires,TypeId,Name,BookLimit,LoanDaysLimit,Price,Id,FirstName,LastName,BirthDate,Email,PhoneNumber,JMBG,Type,Username,Password
-424,07/04/2024 02:15:08,M002,Adult,5,21,1800,M002,Rosa2,Cossete D'Elise,04/13/2002 00:00:00,rosa@eruseanroyalfamily.gov,390825341452,0123456789123,Member,Princess,erusea
-2,07/04/2024 04:58:42,M004,Executive,15,45,2400,M004,test,test,12/22/2022 00:00:00,test@test.com,0590,1234567890123,Member,test,test
-9,07/04/2024 02:10:00,M002,Adult,5,21,1800,M002,Mihaly,Shilage,07/04/1975 00:00:00,sol1@sol.squadron,00523425,0123456789123,Member,Archange,sol1
-424,07/04/2024 02:15:08,M001,Student,3,14,1500,M001,Rosa,Cossete D'Elise,04/13/2002 00:00:00,rosa@eruseanroyalfamily.gov,390825341452,0123456789123,Member,Princess,erusea
-034,07/04/2024 02:27:57,M001,Student,3,14,1500,M001,can't update,can't update,06/04/2002 00:00:00,asdfaf@sdfsf.com,23421,0123456789123,Member,test1,test1
-345,07/04/2024 02:35:47,99a96e6f-fe9c-4fe7-95b3-7983bb0bd7e6,,0,0,0,99a96e6f-fe9c-4fe7-95b3-7983bb0bd7e6,sdfsdf,sdfsdf,05/07/2002 00:00:00,ajfljasdlkf@adfjklsdf.com,03427802,0123456789012,Member,afadsf,ohohwefhkljh
-756,07/04/2024 02:52:34,M001,Student,3,14,1500,6f22d8c0-965a-4eec-bd8a-54a934dd03e6,erwterter,euertyutyu,03/03/2003 00:00:00,jhsafk@dfgjksdg.com,234897,0123456789012,Member,kyukjhgklsj,fdsghklsdjhg
-097,07/04/2024 03:05:15,M001,Student,3,14,1500,f9f105a7-fa2c-4add-b03a-dbfa8760dbd8,actually updates,acksh,03/03/2003 00:00:00,owiehlk@daklfjlk.com,2078523,0123456789123,Member,afsadf,adfasfsaf
+1,07/04/2024 12:26:49,M002,Adult,5,21,1800,3149788f-1c50-4d5f-9736-4e6395f60ae0,Vladimir,Popov,12/25/2002 00:00:00,vlada@ftn.rs,021021021,1234567890123,Member,vlada,vlada
