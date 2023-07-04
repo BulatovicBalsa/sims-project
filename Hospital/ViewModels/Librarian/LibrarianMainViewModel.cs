@@ -9,7 +9,6 @@ namespace Hospital.ViewModels.Librarian;
 public class LibrarianMainViewModel : ViewModelBase
 {
     private ViewModelBase _currentChildView;
-    private LibrarianService _librarianService = new();
     public LibrarianMainViewModel()
     {
         ShowMembersViewCommand = new ViewModelCommand(ExecuteShowMembersViewCommand);

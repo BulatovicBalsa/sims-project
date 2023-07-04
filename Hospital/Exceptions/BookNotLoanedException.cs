@@ -8,6 +8,14 @@ namespace Hospital.Exceptions
 {
     public class BookNotLoanedException : Exception
     {
-        public BookNotLoanedException(string message) : base(message) { }
+        public BookNotLoanedException() : base()
+        {
+            
+        }
+
+        public BookNotLoanedException(string message) : base(message)
+        {
+            
+        }
     }
 }

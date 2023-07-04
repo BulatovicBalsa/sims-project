@@ -1,9 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Hospital.Exceptions;
 using Hospital.Models.Doctor;
-using Hospital.Models.Examination;
-using Hospital.Models.Manager;
-using Hospital.Models.Patient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +9,6 @@ using System.Windows.Input;
 using Hospital.Models.Books;
 using Hospital.Services;
 using Hospital.Services.Books;
-using Hospital.Services.Manager;
 
 namespace Hospital.ViewModels;
 
@@ -164,7 +160,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            if (ex is DoctorBusyException or BookAlreadyLoanedException or RoomBusyException)
+            if (ex is DoctorBusyException or BookAlreadyLoanedException)
             {
                 MessageBox.Show(ex.Message);
                 return;

@@ -9,8 +9,6 @@ using Hospital.Exceptions;
 using Hospital.Injectors;
 using Hospital.Models.Books;
 using Hospital.Repositories.Doctor;
-using Hospital.Repositories.Manager;
-using Hospital.Scheduling;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Books;

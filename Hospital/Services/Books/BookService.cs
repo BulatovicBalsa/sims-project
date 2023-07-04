@@ -2,7 +2,6 @@
 using System.Linq;
 using Hospital.Injectors;
 using Hospital.Models.Books;
-using Hospital.Models.Patient;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 

@@ -80,10 +80,10 @@
                 <TextBox Text="{Binding Udc, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Author</TextBlock>
-                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox ItemsSource="{Binding AllAuthors}" SelectedItem="{Binding Author}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Genre</TextBlock>
-                <TextBox Text="{Binding Genre, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox ItemsSource="{Binding AllGenres}" SelectedItem="{Binding Genre}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Language</TextBlock>
                 <ComboBox ItemsSource="{Binding AllLanguages}" SelectedItem="{Binding SelectedLanguage}"/>

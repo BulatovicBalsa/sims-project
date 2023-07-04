@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
-using Hospital.Models.Manager;
 using Newtonsoft.Json;
 
 namespace Hospital.Serialization
