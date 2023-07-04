@@ -54,6 +54,11 @@ namespace Hospital.ViewModels.Librarian
         private void ExecuteAddCopyCommand(object obj)
         {
             var addCopyDialog = new AddCopyView();
+            addCopyDialog.Closed += (sender, args) =>
+            {
+                Copies.Clear();
+                _copyRepository.GetAll().ForEach(copy => Copies.Add(copy));
+            };
 
             addCopyDialog.ShowDialog();
         }
