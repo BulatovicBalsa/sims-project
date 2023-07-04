@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:librarian="clr-namespace:Hospital.ViewModels.Librarian"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="350"
-             Height="720"
+             d:DesignHeight="500" d:DesignWidth="350"
+             Height="500"
              Width="350"
              Background="Transparent"
              AllowsTransparency="True"
@@ -77,7 +77,7 @@
                 <TextBlock Style="{StaticResource MainTextBlock}">ISBN</TextBlock>
                 <TextBox Text="{Binding Isbn, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Style="{StaticResource MainTextBlock}">UDC</TextBlock>
+                <TextBlock Style="{StaticResource MainTextBlock}">UDC (separator |)</TextBlock>
                 <TextBox Text="{Binding Udc, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Style="{StaticResource MainTextBlock}">Author</TextBlock>
