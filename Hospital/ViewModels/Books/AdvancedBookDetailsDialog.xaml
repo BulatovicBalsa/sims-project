@@ -10,6 +10,7 @@
         SizeToContent="Height"
         Background="Transparent"
         AllowsTransparency="True"
+        Name="AdvancedWindow"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None">
@@ -87,7 +88,7 @@
                             HorizontalAlignment="Center"
                             Margin="0,20,0,20">
                     <Button Content="Close" Style="{StaticResource ActionButton}" Margin="0,0,15,0"
-                            Command="{Binding CloseDialogCommand}"/>
+                            Command="{Binding CloseDialogCommand}" CommandParameter="{Binding ElementName=AdvancedWindow}"/>
                 </StackPanel>
             </StackPanel>
 

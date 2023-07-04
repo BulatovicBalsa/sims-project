@@ -1,6 +1,7 @@
 ﻿using Hospital.Models.Books;
 using System.Windows;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace Hospital.ViewModels.Books
 {
@@ -12,14 +13,14 @@ namespace Hospital.ViewModels.Books
         public AdvancedBookDetailsViewModel(Book book)
         {
             Book = book;
-            CloseDialogCommand = new ViewModelCommand(ExecuteCloseDialogCommand);
+            CloseDialogCommand = new RelayCommand<Window>(ExecuteCloseDialogCommand);
         }
 
         public ICommand CloseDialogCommand { get; }
 
-        private void ExecuteCloseDialogCommand(object obj)
+        private void ExecuteCloseDialogCommand(Window window)
         {
-            Application.Current.Windows[1]?.Close();
+            window.DialogResult = true;
         }
     }
 }
