@@ -128,10 +128,10 @@
                         Orientation="Vertical"
                         Margin="0,35,0,0">
 
-                <Image Source="../Images/HospitalLogo.png"
+                <Image Source="../Images/LibraryLogo.png"
                        Height="100"/>
 
-                <TextBlock Text="HOSPITAL"
+                <TextBlock Text="LIBRARY"
                            Foreground="{StaticResource SecondaryFont}"
                            FontSize="25"
                            FontWeight="Black"

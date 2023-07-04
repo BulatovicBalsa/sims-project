@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hospital.Models
+{
+    public enum UserType
+    {
+        Administrator,
+        SeniorLibrarian,
+        Librarian,
+        Member
+    }
+    public class User
+    {
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string JMBG { get; set; }
+        public UserType Type { get; set; }
+        public Profile Profile { get; set; }
+
+        public User()
+        {
+            
+        }
+
+        public User(string firstName, string lastName, DateTime birthDate, string email, string phoneNumber,
+            string jmbg, UserType type, string username, string password)
+        {
+            Id = Guid.NewGuid().ToString();
+            FirstName = firstName;
+            LastName = lastName;
+            BirthDate = birthDate;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            JMBG = jmbg;
+            Type = type;
+            Profile = new Profile(username, password);
+        }
+    }
+}

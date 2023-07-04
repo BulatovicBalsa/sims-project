@@ -9,8 +9,15 @@
 
   <ItemGroup>
     <None Remove="Images\HospitalLogo.png" />
+    <None Remove="Images\LibraryLogo.png" />
     <None Remove="Images\PasswordIcon.png" />
     <None Remove="Images\UsernameIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\LibraryLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
