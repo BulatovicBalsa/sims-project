@@ -14,6 +14,7 @@ using Hospital.Services.Books;
 using Hospital.Services.Requests;
 using Hospital.ViewModels.Books;
 using Hospital.Views;
+using Hospital.Views.Books;
 
 namespace Hospital.ViewModels;
 
@@ -62,6 +63,7 @@ public class DoctorViewModel : ViewModelBase
         SendMessageCommand = new RelayCommand(SendMessage);
         AddTimeOffRequestCommand = new RelayCommand(AddTimeOffRequest);
         VisitHospitalizedPatientsCommand = new RelayCommand(VisitHospitalizedPatients);
+        ViewMostBorrowedBooksCommand = new RelayCommand(ViewMostBorrowedBooks);
     }
 
     public ObservableCollection<Loan> Loans
@@ -149,6 +151,7 @@ public class DoctorViewModel : ViewModelBase
     public ICommand SendMessageCommand { get; set; }
     public ICommand AddTimeOffRequestCommand { get; set; }
     public ICommand VisitHospitalizedPatientsCommand { get; set; }
+    public ICommand ViewMostBorrowedBooksCommand { get; set; }
 
     private void ViewAdvancedBookDetails(string bookId)
     {
@@ -264,6 +267,12 @@ public class DoctorViewModel : ViewModelBase
         }
 
         var dialog = new PerformExaminationDialog(examinationToPerform, patientOnExamination);
+        dialog.ShowDialog();
+    }
+
+    private void ViewMostBorrowedBooks()
+    {
+        var dialog = new MostBorrowedBooksDialog();
         dialog.ShowDialog();
     }
 
