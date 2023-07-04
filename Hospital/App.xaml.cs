@@ -5,6 +5,7 @@ using System.Windows;
 using Hospital.Repositories;
 using Hospital.Views;
 using Hospital.Views.Librarian;
+using Hospital.Views.Members;
 
 namespace Hospital;
 

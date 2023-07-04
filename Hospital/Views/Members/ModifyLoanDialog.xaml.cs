@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Hospital.Views
+namespace Hospital.Views.Members
 {
     public partial class ModifyExaminationDialog : Window
     {

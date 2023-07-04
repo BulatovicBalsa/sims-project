@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Hospital.Models;
 using Hospital.Repositories;
 
-namespace Hospital.Services;
+namespace Hospital.Services.Doctor;
 
 public class MemberService
 {

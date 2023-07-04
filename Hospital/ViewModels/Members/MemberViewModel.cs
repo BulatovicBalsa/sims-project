@@ -4,14 +4,13 @@ using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Hospital.Exceptions;
-using Hospital.Models;
 using Hospital.Models.Books;
 using Hospital.Services.Books;
 using Hospital.ViewModels.Books;
-using Hospital.Views;
 using Hospital.Views.Books;
+using Hospital.Views.Members;
 
-namespace Hospital.ViewModels;
+namespace Hospital.ViewModels.Members;
 
 public class MemberViewModel : ViewModelBase
 {
@@ -21,7 +20,7 @@ public class MemberViewModel : ViewModelBase
 
     private ObservableCollection<Book> _books;
 
-    private Member _member;
+    private Models.Member _member;
     private ObservableCollection<Loan> _loans;
 
     private string _searchBoxText;
@@ -30,7 +29,7 @@ public class MemberViewModel : ViewModelBase
 
     private DateTime _selectedDate;
 
-    public MemberViewModel(Member member)
+    public MemberViewModel(Models.Member member)
     {
         _member = member;
         _selectedDate = DateTime.Now;
@@ -70,7 +69,7 @@ public class MemberViewModel : ViewModelBase
         }
     }
 
-    public Member Member
+    public Models.Member Member
     {
         get => _member;
         set

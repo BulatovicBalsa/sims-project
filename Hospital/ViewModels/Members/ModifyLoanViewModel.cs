@@ -1,19 +1,18 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Hospital.Exceptions;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Models;
+using GalaSoft.MvvmLight.Command;
+using Hospital.Exceptions;
 using Hospital.Models.Books;
-using Hospital.Services;
 using Hospital.Services.Books;
+using Hospital.Services.Doctor;
 
-namespace Hospital.ViewModels;
+namespace Hospital.ViewModels.Members;
 
 public class ModifyLoanViewModel : ViewModelBase
 {
-    private readonly Member _member;
+    private readonly Models.Member _member;
     private readonly ObservableCollection<Loan> _loanCollection;
     private readonly LoanService _loanService = new();
     private readonly Loan? _loanToChange;
@@ -24,9 +23,9 @@ public class ModifyLoanViewModel : ViewModelBase
     private string _buttonContent;
 
     private ObservableCollection<Book> _books;
-    private ObservableCollection<Member> _members;
+    private ObservableCollection<Models.Member> _members;
     private Book? _selectedBook;
-    private Member? _selectedMember;
+    private Models.Member? _selectedMember;
     private Copy? _selectedCopy;
     private ObservableCollection<Copy> _copies;
     private ICommand _modifyLoanCommand;
@@ -35,7 +34,7 @@ public class ModifyLoanViewModel : ViewModelBase
     {
         
     }
-    public ModifyLoanViewModel(Member member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
+    public ModifyLoanViewModel(Models.Member member, ObservableCollection<Loan> loanCollection, Loan? loanToChange = null)
     {
         _isUpdate = loanToChange is not null;
         _member = member;
@@ -43,7 +42,7 @@ public class ModifyLoanViewModel : ViewModelBase
         _loanToChange = loanToChange;
 
         _books = new ObservableCollection<Book>(_loanService.GetNotLoanedBooks());
-        _members = new ObservableCollection<Member>(_memberService.GetAll());
+        _members = new ObservableCollection<Models.Member>(_memberService.GetAll());
 
         _selectedBook = _loanToChange?.Book;
         _selectedMember = _loanToChange?.Member;
@@ -75,7 +74,7 @@ public class ModifyLoanViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<Member> Members
+    public ObservableCollection<Models.Member> Members
     {
         get => _members;
         set
@@ -95,7 +94,7 @@ public class ModifyLoanViewModel : ViewModelBase
         }
     }
 
-    public Member? SelectedMember
+    public Models.Member? SelectedMember
     {
         get => _selectedMember;
         set
