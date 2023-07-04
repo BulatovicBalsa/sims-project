@@ -22,6 +22,7 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CopyGridViewModel}">
             <local:CopyGridView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:BookGridViewModel}">
             <local:BookGridView/>
         </DataTemplate>
