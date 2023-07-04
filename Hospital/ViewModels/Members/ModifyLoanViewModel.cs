@@ -157,7 +157,7 @@ public class ModifyLoanViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            if (ex is DoctorBusyException or BookAlreadyLoanedException)
+            if (ex is DoctorBusyException or BookAlreadyLoanedException or MemberHasReachedMaxLoansException)
             {
                 MessageBox.Show(ex.Message);
                 return;

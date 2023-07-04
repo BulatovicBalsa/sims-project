@@ -91,7 +91,7 @@ public class LoanRepository
         var allLoans = GetAll();
 
         if (!IsFree(loan.InventoryNumber)) throw new BookAlreadyLoanedException("Book is already loaned");
-        if (IsReachedMaxActiveLoans(loan.Member)) throw new MemberHasReachedMaxLoansException("Member has reached max loans");
+        if (IsReachedMaxActiveLoans(loan.Member)) throw new MemberHasReachedMaxLoansException("Member has reached max number of loans");
 
         allLoans.Add(loan);
 
