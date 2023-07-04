@@ -21,9 +21,6 @@ public class AddUpdateBookViewModel : ViewModelBase
     private Author? _author;
     private string _description;
     private Genre? _genre;
-    private ObservableCollection<BookLanguage> _allLanguages;
-    private ObservableCollection<Author> _allAuthors;
-    private ObservableCollection<Genre> _allGenres;
 
     private string _isbn;
     private BookLanguage? _selectedLanguage;
@@ -40,7 +37,7 @@ public class AddUpdateBookViewModel : ViewModelBase
         _bookRepository = BookRepository;
         _genreRepository = new GenreRepository(new CsvSerializer<Genre>());
         _authorRepository = new AuthorRepository();
-        
+
         _allLanguages = new ObservableCollection<BookLanguage>(Enum.GetValues<BookLanguage>());
         _allAuthors = new ObservableCollection<Author>(_authorRepository.GetAll());
         _allGenres = new ObservableCollection<Genre>(_genreRepository.GetAll());
@@ -163,28 +160,6 @@ public class AddUpdateBookViewModel : ViewModelBase
         {
             _selectedLanguage = value;
             OnPropertyChanged(nameof(SelectedLanguage));
-        }
-    }
-
-    public ObservableCollection<Genre> AllGenres
-    {
-        get => _allGenres;
-        set
-        {
-            if (Equals(value, _allGenres)) return;
-            _allGenres = value;
-            OnPropertyChanged(nameof(AllGenres));
-        }
-    }
-
-    public ObservableCollection<Author> AllAuthors
-    {
-        get => _allAuthors;
-        set
-        {
-            if (Equals(value, _allAuthors)) return;
-            _allAuthors = value;
-            OnPropertyChanged(nameof(AllAuthors));
         }
     }
 
