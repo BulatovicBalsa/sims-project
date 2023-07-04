@@ -2,6 +2,13 @@ using System;
 
 namespace Hospital.Models;
 
+public enum UserType
+{
+    Administrator,
+    SeniorLibrarian,
+    Librarian,
+    Member
+}
 public abstract class Person
 {
     protected Person()
