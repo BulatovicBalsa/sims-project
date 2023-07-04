@@ -73,7 +73,10 @@
                           SelectedItem="{Binding SelectedMember}"/>
                 <TextBlock Style="{StaticResource MainTextBlock}">Book</TextBlock>
                 <ComboBox Height="30" ItemsSource="{Binding Books}" DisplayMemberPath="ComboBoxString" 
-                          SelectedItem="{Binding Book}"/>
+                          SelectedItem="{Binding SelectedBook}"/>
+                <TextBlock Style="{StaticResource MainTextBlock}">Copy</TextBlock>
+                <ComboBox Height="30" ItemsSource="{Binding Copies}" DisplayMemberPath="InventoryNumber" 
+                          SelectedItem="{Binding SelectedCopy}"/>
                 <Button Style="{StaticResource ActionButton}" 
                         Content="{Binding ButtonContent}"
                         Margin="0,20,0,0"

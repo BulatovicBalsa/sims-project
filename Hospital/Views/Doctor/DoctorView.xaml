@@ -150,6 +150,7 @@
                         <DataGridTextColumn Header="Title" Binding="{Binding Book.Title}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Author" Binding="{Binding Book.Author}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Loan start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Inventory number" Binding="{Binding InventoryNumber}" IsReadOnly="True" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

@@ -32,6 +32,9 @@ public class ModifyExaminationViewModel : ViewModelBase
     private ObservableCollection<Doctor> _members;
     private Book? _selectedBook;
     private Doctor? _selectedMember;
+    private Copy? _selectedCopy;
+    private ObservableCollection<Copy> _copies;
+    private ICommand _modifyLoanCommand;
 
     public ModifyExaminationViewModel()
     {
@@ -52,6 +55,8 @@ public class ModifyExaminationViewModel : ViewModelBase
         _buttonContent = _loanToChange is null ? "Create Loan" : "Update Loan";
 
         ModifyLoanCommand = new RelayCommand(ModifyLoan);
+        Copies = new ObservableCollection<Copy>();
+        SelectedCopy = null;
     }
 
     public Book? SelectedBook
@@ -60,6 +65,7 @@ public class ModifyExaminationViewModel : ViewModelBase
         set
         {
             _selectedBook = value;
+            RefreshCopyList();
             OnPropertyChanged(nameof(SelectedBook));
         }
     }
@@ -104,7 +110,38 @@ public class ModifyExaminationViewModel : ViewModelBase
         }
     }
 
-    public ICommand ModifyLoanCommand { get; set; }
+    public ObservableCollection<Copy> Copies
+    {
+        get => _copies;
+        set
+        {
+            if (Equals(value, _copies)) return;
+            _copies = value;
+            OnPropertyChanged(nameof(Copies));
+        }
+    }
+
+    public Copy? SelectedCopy
+    {
+        get => _selectedCopy;
+        set
+        {
+            if (Equals(value, _selectedCopy)) return;
+            _selectedCopy = value;
+            OnPropertyChanged(nameof(SelectedCopy));
+        }
+    }
+
+    public ICommand ModifyLoanCommand
+    {
+        get => _modifyLoanCommand;
+        set
+        {
+            if (Equals(value, _modifyLoanCommand)) return;
+            _modifyLoanCommand = value;
+            OnPropertyChanged(nameof(ModifyLoanCommand));
+        }
+    }
 
     private void ModifyLoan()
     {
@@ -141,16 +178,16 @@ public class ModifyExaminationViewModel : ViewModelBase
     private Loan? CreateLoanFromForm()
     {
         if (SelectedBook == null
-            || SelectedMember == null)
+            || SelectedMember == null || SelectedCopy == null)
         {
-            MessageBox.Show("You must select book and member");
+            MessageBox.Show("You must select book, member and copy");
             return null;
         }
 
         var startDate = DateTime.Today;
 
         var createdExamination = _isUpdate ? _loanToChange : new Loan();
-        createdExamination?.Update(SelectedMember, SelectedBook, startDate, null);
+        createdExamination?.Update(SelectedMember, SelectedBook, startDate, null, SelectedCopy.InventoryNumber);
         return createdExamination;
     }
 
@@ -162,5 +199,11 @@ public class ModifyExaminationViewModel : ViewModelBase
         _loanCollection.Clear();
         _loanService.GetCurrentLoans(_member)
             .ForEach(loanInRange => _loanCollection.Add(loanInRange));
+    }
+
+    private void RefreshCopyList()
+    {
+        Copies.Clear();
+        _loanService.GetAvailableCopies(SelectedBook).ForEach(copy => Copies.Add(copy));
     }
 }
