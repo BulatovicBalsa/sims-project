@@ -20,19 +20,21 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0" x:Name="PatientsDataGrid" 
-                  ItemsSource="{Binding Path=Patients}" 
+                  ItemsSource="{Binding Path=Members}" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{DynamicResource DataGridCellStyle}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
                   RowStyle="{DynamicResource DataGridRowStyle}"
-                  SelectedItem="{Binding SelectedPatient}">
+                  SelectedItem="{Binding SelectedMember}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" IsReadOnly="True"  Width="SizeToCells" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last name" IsReadOnly="True" Width="*" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Jmbg}"/>
-                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
-                <DataGridTextColumn Header="Password" IsReadOnly="True" Width="*" Binding="{Binding Profile.Password}"/>
+                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="SizeToCells" Binding="{Binding JMBG}"/>
+                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="SizeToCells" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="SizeToCells" Binding="{Binding Profile.Username}"/>
+                <DataGridTextColumn Header="Membership number" IsReadOnly="True" Width="SizeToCells" Binding="{Binding MembershipNumber}"/>
+                <DataGridTextColumn Header="Membership expires" IsReadOnly="True" Width="SizeToCells" Binding="{Binding MembershipExpires}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -40,19 +42,15 @@
                     Orientation="Horizontal">
             <Button Content="Add" Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding AddPatientCommand}"/>
+                    Command="{Binding AddMemberCommand}"/>
             <Button Content="Update" 
                     Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding UpdatePatientCommand}"/>
+                    Command="{Binding UpdateMemberCommand}"/>
             <Button Content="Delete" 
                     Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding DeletePatientCommand}"/>
-            <Button Content="Medical record"
-                    Style="{StaticResource ActionButton}"
-                    Margin="0,0,10,0"
-                    Command="{Binding ShowMedicalRecordCommand}"/>
+                    Command="{Binding DeleteMemberCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

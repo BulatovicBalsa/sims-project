@@ -6,18 +6,6 @@
         xmlns:local="clr-namespace:Hospital.Views.Librarian"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Librarian"
         xmlns:patients="clr-namespace:Hospital.ViewModels.Librarian.Patients"
-        xmlns:patientAdmission="clr-namespace:Hospital.ViewModels.Librarian.PatientAdmission"
-        xmlns:patientAdmissionViews="clr-namespace:Hospital.Views.Librarian.PatientAdmission"
-        xmlns:urgentExaminations="clr-namespace:Hospital.ViewModels.Librarian.UrgentExaminations"
-        xmlns:urgentExaminationsViews="clr-namespace:Hospital.Views.Librarian.UrgentExaminations"
-        xmlns:referrals="clr-namespace:Hospital.ViewModels.Librarian.Referrals"
-        xmlns:referralsViews="clr-namespace:Hospital.Views.Librarian.Referrals"
-        xmlns:medicationManagement="clr-namespace:Hospital.ViewModels.Librarian.Medication"
-        xmlns:medicationManagementViews="clr-namespace:Hospital.Views.Librarian.Medication"
-        xmlns:patientAccommodation="clr-namespace:Hospital.ViewModels.Librarian.PatientAccommodation"
-        xmlns:patientAccommodationViews="clr-namespace:Hospital.Views.Librarian.PatientAccommodation"
-        xmlns:patientVisiting="clr-namespace:Hospital.ViewModels.Librarian.PatientVisiting"
-        xmlns:patientVisitingViews="clr-namespace:Hospital.Views.Librarian.PatientVisiting"
         mc:Ignorable="d"
         Title="LibrarianMainView" Height="510" Width="1000"
         WindowStyle="None"
@@ -32,24 +20,6 @@
     <Window.Resources>
         <DataTemplate DataType="{x:Type patients:PatientGridViewModel}">
             <local:PatientGridView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type patientAdmission:PatientAdmissionViewModel}">
-            <patientAdmissionViews:PatientAdmissionView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type urgentExaminations:UrgentExaminationsViewModel}">
-            <urgentExaminationsViews:UrgentExaminationsView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type referrals:PatientReferralsViewModel}">
-            <referralsViews:PatientReferralsView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type medicationManagement:MedicationManagementViewModel}">
-            <medicationManagementViews:MedicationManagementView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type patientAccommodation:PatientAccommodationViewModel}">
-            <patientAccommodationViews:PatientAccommodationView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type patientVisiting:PatientVisitingViewModel}">
-            <patientVisitingViews:PatientVisitingView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -84,52 +54,10 @@
                                Opacity="1"/>
 
                     <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientsViewCommand}"
+                                 Command="{Binding ShowMembersViewCommand}"
                                  IsChecked="True">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Books" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientAdmissionViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Patient admission" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowUrgentExaminationsViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Urgent examinations" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientReferralsViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Patient referrals" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowMedicationManagementViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Medication management" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowCommunicationViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Send message" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientAccommodationViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Patient accommodation" Style="{StaticResource MenuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource MenuButton}"
-                                 Command="{Binding ShowPatientVisitingViewCommand}">
-                        <StackPanel>
-                            <TextBlock Text="Visit patients" Style="{StaticResource MenuButtonText}"/>
+                            <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>

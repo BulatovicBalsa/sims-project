@@ -33,11 +33,11 @@ namespace Hospital.Serialization.Mappers
 
         public class MembershipTypeConverter : DefaultTypeConverter
         {
-            private MembershipRepository membershipRepository = new MembershipRepository(new CsvSerializer<Membership>());
+            private readonly MembershipRepository _membershipRepository = new(new CsvSerializer<Membership>());
 
             public override object? ConvertFromString(string? text, IReaderRow row, MemberMapData memberMapData)
             {
-                return membershipRepository.GetById(text);
+                return _membershipRepository.GetById(text);
             }
         }
     }

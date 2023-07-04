@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Models;
+using System;
 
 namespace Hospital.Repositories
 {
     public class MemberRepository
     {
         private const string FilePath = "../../../Data/members.csv";
+
+        public event Action<Member>? MemberAdded;
+        public event Action<Member>? MemberUpdated;
         public List<Member> GetAll()
         {
             return CsvSerializer<Member>.FromCSV(FilePath);
@@ -28,6 +32,8 @@ namespace Hospital.Repositories
             var allMembers = GetAll();
             allMembers.Add(member);
             CsvSerializer<Member>.ToCSV(allMembers, FilePath);
+
+            MemberAdded?.Invoke(member);
         }
 
         public void Update(Member member)
@@ -40,6 +46,8 @@ namespace Hospital.Repositories
             allMembers[indexToUpdate] = member;
 
             CsvSerializer<Member>.ToCSV(allMembers, FilePath);
+
+            MemberUpdated?.Invoke(member);
         }
 
         public void Delete(Member member)

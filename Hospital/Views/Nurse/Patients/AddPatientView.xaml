@@ -64,7 +64,7 @@
                        FontFamily="Montserrat"
                        FontSize="25"
                        FontWeight="Bold">
-                Add new patient
+                Add new member
             </TextBlock>
 
             <StackPanel Grid.Row="2"
@@ -87,25 +87,27 @@
                 <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding PasswordError, Mode=OneWay}"/>
 
-                <TextBlock Style="{StaticResource MainTextBlock}">Height</TextBlock>
-                <TextBox Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding HeightError, Mode=OneWay}"/>
-                
-                <TextBlock Style="{StaticResource MainTextBlock}">Weight</TextBlock>
-                <TextBox Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding WeightError, Mode=OneWay}"/>
-                
-                <TextBlock Style="{StaticResource MainTextBlock}">Medical history (format: str1, str2,...)</TextBlock>
-                <TextBox Height="40" TextWrapping="Wrap" Text="{Binding MedicalHistory, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource MainTextBlock}">Email</TextBlock>
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding EmailError, Mode=OneWay}"/>
 
-                <TextBlock Style="{StaticResource MainTextBlock}">Allergies (format: str1, str2,...)</TextBlock>
-                <TextBox Height="40" TextWrapping="Wrap" Text="{Binding Allergies, UpdateSourceTrigger=PropertyChanged}"/>
-                
+                <TextBlock Style="{StaticResource MainTextBlock}">Phone number</TextBlock>
+                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding PhoneNumberError, Mode=OneWay}"/>
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Birth date</TextBlock>
+                <TextBox Text="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding BirthDateError, Mode=OneWay}"/>
+
+                <TextBlock Style="{StaticResource MainTextBlock}">Membership number</TextBlock>
+                <TextBox Text="{Binding MembershipNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Style="{StaticResource ErrorTextBlock}" Text="{Binding MembershipNumberError, Mode=OneWay}"/>
+
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0,20,0,0">
                     <Button Content="Add" Style="{StaticResource ActionButton}" Margin="0,0,15,0"
-                            Command="{Binding AddPatientCommand}"/>
+                            Command="{Binding AddMemberCommand}"/>
                     <Button Content="Cancel" Style="{StaticResource ActionButton}" Margin="15,0,0,0"
                             Command="{Binding CancelCommand}"/>
                 </StackPanel>

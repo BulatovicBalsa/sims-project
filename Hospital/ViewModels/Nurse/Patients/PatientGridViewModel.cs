@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Hospital.Models;
 using Hospital.Models.Patient;
+using Hospital.Repositories;
 using Hospital.Repositories.Patient;
 using Hospital.Views.Librarian.Patients;
 
@@ -8,96 +10,83 @@ namespace Hospital.ViewModels.Librarian.Patients;
 
 public class PatientGridViewModel : ViewModelBase
 {
-    private readonly PatientRepository _patientRepository;
-    private ObservableCollection<Patient> _patients;
-    private Patient? _selectedPatient;
+    private readonly MemberRepository _memberRepository;
+    private ObservableCollection<Member> _members;
+    private Member? _selectedMember;
 
     public PatientGridViewModel()
     {
-        _patientRepository = PatientRepository.Instance;
-        _patients = new ObservableCollection<Patient>(_patientRepository.GetAll());
+        _memberRepository = new MemberRepository();
+        _members = new ObservableCollection<Member>(_memberRepository.GetAll());
 
-        _patientRepository.PatientAdded += (patient) =>
+        _memberRepository.MemberAdded += member =>
         {
-            _patients.Add(patient);
+            _members.Add(member);
         };
 
-        _patientRepository.PatientUpdated += (patient) =>
+        _memberRepository.MemberUpdated += member =>
         {
-            _patients.Remove(patient);
-            _patients.Add(patient);
+            _members.Remove(member);
+            _members.Add(member);
         };
 
-        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
-        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, IsPatientSelected);
-        DeletePatientCommand = new ViewModelCommand(ExecuteDeletePatientCommand, IsPatientSelected);
-        ShowMedicalRecordCommand = new ViewModelCommand(ExecuteShowMedicalRecordCommand, IsPatientSelected);
+        AddMemberCommand = new ViewModelCommand(ExecuteAddMemberCommand);
+        UpdateMemberCommand = new ViewModelCommand(ExecuteUpdateMemberCommand, IsMemberSelected);
+        DeleteMemberCommand = new ViewModelCommand(ExecuteDeleteMemberCommand, IsMemberSelected);
     }
 
-    public Patient? SelectedPatient
+    public Member? SelectedMember
     {
-        get => _selectedPatient;
+        get => _selectedMember;
         set
         {
-            _selectedPatient = value;
-            OnPropertyChanged(nameof(SelectedPatient));
+            _selectedMember = value;
+            OnPropertyChanged(nameof(SelectedMember));
         }
     }
 
-    public ObservableCollection<Patient> Patients
+    public ObservableCollection<Member> Members
     {
-        get => _patients;
+        get => _members;
         set
         {
-            _patients = value;
-            OnPropertyChanged(nameof(Patients));
+            _members = value;
+            OnPropertyChanged(nameof(Members));
         }
     }
 
-    public ICommand AddPatientCommand { get; }
-    public ICommand UpdatePatientCommand { get; }
-    public ICommand DeletePatientCommand { get; }
-    public ICommand ShowMedicalRecordCommand { get; }
-
-    private void ExecuteAddPatientCommand (object obj)
+    public ICommand AddMemberCommand { get; }
+    public ICommand UpdateMemberCommand { get; }
+    public ICommand DeleteMemberCommand { get; }
+    private void ExecuteAddMemberCommand (object obj)
     {
         var addPatientDialog = new AddPatientView
         {
-            DataContext = new AddUpdatePatientViewModel(_patientRepository)
+            DataContext = new AddUpdatePatientViewModel(_memberRepository)
         };
 
         addPatientDialog.ShowDialog();
     }
 
-    private void ExecuteUpdatePatientCommand(object obj)
+    private void ExecuteUpdateMemberCommand(object obj)
     {
         var updatePatientDialog = new UpdatePatientView
         {
-            DataContext = new AddUpdatePatientViewModel(_patientRepository, SelectedPatient)
+            DataContext = new AddUpdatePatientViewModel(_memberRepository, SelectedMember)
         };
 
         updatePatientDialog.ShowDialog();
     }
 
-    private void ExecuteDeletePatientCommand(object obj)
+    private void ExecuteDeleteMemberCommand(object obj)
     {
-        _patientRepository.Delete(SelectedPatient);
-        _patients.Remove(SelectedPatient);
-        SelectedPatient = null;
+        _memberRepository.Delete(SelectedMember);
+        _members.Remove(SelectedMember);
+        SelectedMember = null;
     }
 
-    private void ExecuteShowMedicalRecordCommand(object obj)
+    private bool IsMemberSelected(object obj)
     {
-        var medicalRecordDialog = new MedicalRecordView
-        {
-            DataContext = new MedicalRecordViewModel(SelectedPatient.MedicalRecord)
-        };
-
-        medicalRecordDialog.ShowDialog();
-    }
-
-    private bool IsPatientSelected(object obj)
-    {
-        return _selectedPatient != null;
+        return _selectedMember != null;
     }
 }

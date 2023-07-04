@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Models.Patient;
-using Hospital.Repositories.Patient;
+using Hospital.Models;
+using Hospital.Models.Memberships;
+using Hospital.Repositories;
 
 namespace Hospital.ViewModels.Librarian.Patients;
 
 public class AddUpdatePatientViewModel : ViewModelBase
 {
-    private readonly PatientRepository _patientRepository;
-    private readonly Patient? _patientToUpdate;
-    private string _allergies = "";
+    private readonly MemberRepository _memberRepository;
+    private readonly Member? _memberToUpdate;
     private string _firstName;
-    private string _height;
-    private string _heightError;
+    private string _lastName;
     private string _jmbg;
     private string _jmbgError;
-    private string _lastName;
-    private string _medicalHistory = "";
     private string _password;
     private string _passwordError;
     private string _username;
     private string _usernameError;
-    private string _weight;
-    private string _weightError;
+    private string _email;
+    private string _emailError;
+    private string _birthDate;
+    private string _birthDateError;
+    private string _phoneNumber;
+    private string _phoneNumberError;
+    private string _membershipNumber;
+    private string _membershipNumberError;
 
     public event Action? DialogClosed;
 
@@ -34,33 +37,23 @@ public class AddUpdatePatientViewModel : ViewModelBase
         // dummy constructor
     }
 
-    public AddUpdatePatientViewModel(PatientRepository patientRepository)
+    public AddUpdatePatientViewModel(MemberRepository memberRepository)
     {
-        _patientRepository = patientRepository;
+        _memberRepository = memberRepository;
 
-        AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand, CanExecuteAddUpdatePatientCommand);
+        AddMemberCommand = new ViewModelCommand(ExecuteAddMemberCommand, CanExecuteAddUpdateMemberCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
     }
 
-    public AddUpdatePatientViewModel(PatientRepository patientRepository, Patient selectedPatient)
+    public AddUpdatePatientViewModel(MemberRepository memberRepository, Member selectedMember)
     {
-        _patientToUpdate = selectedPatient;
-        _patientRepository = patientRepository;
+        _memberToUpdate = selectedMember;
+        _memberRepository = memberRepository;
 
-        SetViewModelProperties(selectedPatient);
+        SetViewModelProperties(selectedMember);
 
-        UpdatePatientCommand = new ViewModelCommand(ExecuteUpdatePatientCommand, CanExecuteAddUpdatePatientCommand);
+        UpdateMemberCommand = new ViewModelCommand(ExecuteUpdateMemberCommand, CanExecuteAddUpdateMemberCommand);
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
-    }
-
-    public string Allergies
-    {
-        get => _allergies;
-        set
-        {
-            _allergies = value;
-            OnPropertyChanged(nameof(Allergies));
-        }
     }
 
     public string FirstName
@@ -112,37 +105,6 @@ public class AddUpdatePatientViewModel : ViewModelBase
             OnPropertyChanged(nameof(Password));
         }
     }
-
-    public string Height
-    {
-        get => _height;
-        set
-        {
-            _height = value;
-            OnPropertyChanged(nameof(Height));
-        }
-    }
-
-    public string Weight
-    {
-        get => _weight;
-        set
-        {
-            _weight = value;
-            OnPropertyChanged(nameof(Weight));
-        }
-    }
-
-    public string MedicalHistory
-    {
-        get => _medicalHistory;
-        set
-        {
-            _medicalHistory = value;
-            OnPropertyChanged(nameof(MedicalHistory));
-        }
-    }
-
     public string JmbgError
     {
         get => _jmbgError;
@@ -173,87 +135,141 @@ public class AddUpdatePatientViewModel : ViewModelBase
         }
     }
 
-    public string HeightError
+    public string Email
     {
-        get => _heightError;
+        get => _email;
         set
         {
-            _heightError = value;
-            OnPropertyChanged(nameof(HeightError));
+            _email = value;
+            OnPropertyChanged(nameof(Email));
         }
     }
 
-    public string WeightError
+    public string EmailError
     {
-        get => _weightError;
+        get => _emailError;
         set
         {
-            _weightError = value;
-            OnPropertyChanged(nameof(WeightError));
+            _emailError = value;
+            OnPropertyChanged(nameof(EmailError));
         }
     }
 
-    public ICommand AddPatientCommand { get; }
-    public ICommand UpdatePatientCommand { get; }
+    public string BirthDate
+    {
+        get => _birthDate;
+        set
+        {
+            _birthDate = value;
+            OnPropertyChanged(nameof(BirthDate));
+        }
+    }
+
+    public string BirthDateError
+    {
+        get => _birthDateError;
+        set
+        {
+            _birthDateError = value;
+            OnPropertyChanged(nameof(BirthDateError));
+        }
+    }
+
+    public string PhoneNumber
+    {
+        get => _phoneNumber;
+        set
+        {
+            _phoneNumber = value;
+            OnPropertyChanged(nameof(PhoneNumber));
+        }
+    }
+
+    public string PhoneNumberError
+    {
+        get => _phoneNumberError;
+        set
+        {
+            _phoneNumberError = value;
+            OnPropertyChanged(nameof(PhoneNumberError));
+        }
+    }
+
+    public string MembershipNumber
+    {
+        get => _membershipNumber;
+        set
+        {
+            _membershipNumber = value;
+            OnPropertyChanged(nameof(MembershipNumber));
+        }
+    }
+
+    public string MembershipNumberError
+    {
+        get => _membershipNumberError;
+        set
+        {
+            _membershipNumberError = value;
+            OnPropertyChanged(nameof(MembershipNumberError));
+        }
+    }
+
+    public ICommand AddMemberCommand { get; }
+    public ICommand UpdateMemberCommand { get; }
     public ICommand CancelCommand { get; }
 
-    private void SetViewModelProperties(Patient selectedPatient)
+    private void SetViewModelProperties(Member selectedMember)
     {
-        FirstName = selectedPatient.FirstName;
-        LastName = selectedPatient.LastName;
-        Jmbg = selectedPatient.Jmbg;
-        Username = selectedPatient.Profile.Username;
-        Password = selectedPatient.Profile.Password;
-        Height = selectedPatient.MedicalRecord.Height.ToString();
-        Weight = selectedPatient.MedicalRecord.Weight.ToString();
-        MedicalHistory = GetCommaSeparatedString(selectedPatient.MedicalRecord.MedicalHistory.Conditions);
-        Allergies = GetCommaSeparatedString(selectedPatient.MedicalRecord.Allergies.Conditions);
+        FirstName = selectedMember.FirstName;
+        LastName = selectedMember.LastName;
+        Jmbg = selectedMember.JMBG;
+        Username = selectedMember.Profile.Username;
+        Password = selectedMember.Profile.Password;
+        Email = selectedMember.Email;
+        PhoneNumber = selectedMember.PhoneNumber;
+        MembershipNumber = selectedMember.MembershipNumber;
+        BirthDate = selectedMember.BirthDate.ToString("dd/MM/yyyy");
     }
 
-    private string GetCommaSeparatedString(IEnumerable<string> words)
-    {
-        return string.Join(", ", words);
-    }
-
-    private void ExecuteAddPatientCommand(object obj)
+    private void ExecuteAddMemberCommand(object obj)
     {
         CheckInputErrors();
 
         if (ErrorHappened())
             return;
 
-        _patientRepository.Add(new Patient(FirstName, LastName, Jmbg, Username, Password,
-            new MedicalRecord(int.Parse(Height), int.Parse(Weight), Allergies.Split(", ").ToList(),
-                MedicalHistory.Split(", ").ToList())));
+        _memberRepository.Add(new Member(FirstName, LastName, DateTime.Parse(BirthDate), Email, PhoneNumber, 
+            Jmbg, MembershipNumber, DateTime.Now.AddYears(1), new Membership(), Username, Password));
 
         CloseDialog();
     }
 
-    private void ExecuteUpdatePatientCommand(object obj)
+    private void ExecuteUpdateMemberCommand(object obj)
     {
         CheckInputErrors();
 
         if (ErrorHappened())
             return;
 
-        SetPatientFromProperties();
+        SetMemberFromProperties();
 
-        _patientRepository.Update(_patientToUpdate);
+        _memberRepository.Update(_memberToUpdate);
 
         CloseDialog();
     }
 
-    private void SetPatientFromProperties()
+    private void SetMemberFromProperties()
     {
-        _patientToUpdate.FirstName = FirstName;
-        _patientToUpdate.LastName = LastName;
-        _patientToUpdate.Jmbg = Jmbg;
-        _patientToUpdate.Profile.Username = Username;
-        _patientToUpdate.Profile.Password = Password;
-        _patientToUpdate.MedicalRecord.Height = int.Parse(Height);
-        _patientToUpdate.MedicalRecord.Weight = int.Parse(Weight);
-        _patientToUpdate.MedicalRecord.MedicalHistory.Conditions = MedicalHistory.Split(", ").ToList();
-        _patientToUpdate.MedicalRecord.Allergies.Conditions = Allergies.Split(", ").ToList();
+        _memberToUpdate.FirstName = FirstName;
+        _memberToUpdate.LastName = LastName;
+        _memberToUpdate.JMBG = Jmbg;
+        _memberToUpdate.Profile.Username = Username;
+        _memberToUpdate.Profile.Password = Password;
+        _memberToUpdate.Email = Email;
+        _memberToUpdate.PhoneNumber = PhoneNumber;
+        _memberToUpdate.MembershipNumber = MembershipNumber;
+        _memberToUpdate.BirthDate = DateTime.Parse(BirthDate);
     }
 
     private void CloseDialog()
@@ -265,8 +281,9 @@ public class AddUpdatePatientViewModel : ViewModelBase
     private bool ErrorHappened()
     {
         return !string.IsNullOrEmpty(JmbgError) || !string.IsNullOrEmpty(UsernameError) ||
-               !string.IsNullOrEmpty(PasswordError) || !string.IsNullOrEmpty(HeightError) ||
-               !string.IsNullOrEmpty(WeightError);
+               !string.IsNullOrEmpty(PasswordError) || !string.IsNullOrEmpty(EmailError) ||
+               !string.IsNullOrEmpty(BirthDateError) || !string.IsNullOrEmpty(PhoneNumberError) ||
+               !string.IsNullOrEmpty(MembershipNumberError);
     }
 
     private void CheckInputErrors()
@@ -274,28 +291,10 @@ public class AddUpdatePatientViewModel : ViewModelBase
         CheckJmbgErrors();
         CheckUsernameErrors();
         CheckPasswordErrors();
-        CheckHeightErrors();
-        CheckWeightErrors();
-    }
-
-    private void CheckWeightErrors()
-    {
-        if (!int.TryParse(Weight, out _))
-            WeightError = "* Weight needs to be a numeric value";
-        else if (int.Parse(Weight) < 1 || int.Parse(Weight) > 200)
-            WeightError = "* Invalid weight";
-        else
-            WeightError = "";
-    }
-
-    private void CheckHeightErrors()
-    {
-        if (!int.TryParse(Height, out _))
-            HeightError = "* Height needs to be a numeric value";
-        else if (int.Parse(Height) < 30 || int.Parse(Height) > 250)
-            HeightError = "* Invalid height";
-        else
-            HeightError = "";
+        CheckEmailErrors();
+        CheckBirthDateErrors();
+        CheckPhoneNumberErrors();
+        CheckMembershipNumberErrors();
     }
 
     private void CheckPasswordErrors()
@@ -318,10 +317,10 @@ public class AddUpdatePatientViewModel : ViewModelBase
 
     private bool IsUsernameTaken()
     {
-        if (_patientToUpdate != null && Username == _patientToUpdate.Profile.Username)
+        if (_memberToUpdate != null && Username == _memberToUpdate.Profile.Username)
             return false;
 
-        return _patientRepository.GetByUsername(Username) != null;
+        return _memberRepository.GetByUsername(Username) != null;
     }
 
     private void CheckJmbgErrors()
@@ -334,15 +333,65 @@ public class AddUpdatePatientViewModel : ViewModelBase
             JmbgError = "";
     }
 
-    private bool CanExecuteAddUpdatePatientCommand(object obj)
+    private bool IsValidEmail(string email)
+    {
+        var trimmedEmail = email.Trim();
+
+        if (trimmedEmail.EndsWith("."))
+        {
+            return false; // suggested by @TK-421
+        }
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == trimmedEmail;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private void CheckEmailErrors()
+    {
+        if (!IsValidEmail(Email))
+        {
+            EmailError = "Email is invalid.";
+        }
+    }
+
+    private void CheckBirthDateErrors()
+    {
+        if (!DateTime.TryParse(BirthDate, out _))
+        {
+            BirthDateError = "Invalid date.";
+        }
+    }
+
+    private void CheckPhoneNumberErrors()
+    {
+        if (!PhoneNumber.All(char.IsDigit))
+        {
+            PhoneNumberError = "Invalid phone number.";
+        }
+    }
+
+    private void CheckMembershipNumberErrors()
+    {
+        return;
+    }
+
+    private bool CanExecuteAddUpdateMemberCommand(object obj)
     {
         var isAnyFieldNullOrEmpty = !string.IsNullOrEmpty(FirstName) &&
                                     !string.IsNullOrEmpty(LastName) &&
                                     !string.IsNullOrEmpty(Jmbg) &&
                                     !string.IsNullOrEmpty(Username) &&
                                     !string.IsNullOrEmpty(Password) &&
-                                    !string.IsNullOrEmpty(Height) &&
-                                    !string.IsNullOrEmpty(Weight);
+                                    !string.IsNullOrEmpty(Email) &&
+                                    !string.IsNullOrEmpty(BirthDate) &&
+                                    !string.IsNullOrEmpty(PhoneNumber) &&
+                                    !string.IsNullOrEmpty(MembershipNumber);
 
         return isAnyFieldNullOrEmpty;
     }
