@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Security.Principal;
 using Hospital.Exceptions;
+using Hospital.Models;
 using Hospital.Models.Doctor;
 using Hospital.Models.Manager;
 using Hospital.Models.Patient;

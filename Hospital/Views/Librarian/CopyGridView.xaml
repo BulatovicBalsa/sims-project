@@ -28,6 +28,7 @@
                 <DataGridTextColumn Header="Inventory number" IsReadOnly="True" Width="*" Binding="{Binding InventoryNumber}"/>
                 <DataGridTextColumn Header="Title" IsReadOnly="True" Width="*" Binding="{Binding Book.Title}"/>
                 <DataGridTextColumn Header="Price" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
+                <DataGridTextColumn Header="Status" IsReadOnly="True" Width="*" Binding="{Binding Status}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -35,7 +36,7 @@
                     Orientation="Horizontal">
             <Button Content="Add" Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"
-                    Command="{Binding AddMemberCommand}"/>
+                    Command="{Binding AddCopyCommand}"/>
             <Button Content="Update" 
                     Style="{StaticResource ActionButton}" 
                     Margin="0,0,10,0"

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Hospital.Models.Books;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
+using Hospital.Views.Librarian;
 
 namespace Hospital.ViewModels.Librarian
 {
@@ -52,14 +53,9 @@ namespace Hospital.ViewModels.Librarian
         public ICommand DeleteCopyCommand { get; }
         private void ExecuteAddCopyCommand(object obj)
         {
-            /*
             var addCopyDialog = new AddCopyView();
-            {
-                DataContext = new AddUpdateCopyViewModel(_copyRepository);
-            };
 
             addCopyDialog.ShowDialog();
-            */
         }
 
         private void ExecuteUpdateCopyCommand(object obj)
