@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Hospital.Models;
 using Hospital.Models.Books;
-using Hospital.Repositories;
 using Hospital.Repositories.Books;
 using Hospital.Serialization;
 
@@ -18,18 +15,20 @@ public class AddUpdateBookViewModel : ViewModelBase
     private readonly AuthorRepository _authorRepository;
     private readonly GenreRepository _genreRepository;
     private readonly Book? _bookToUpdate;
-    private string _title;
-    private string _description;
-    private string _isbn;
-    private string _udc;
+    private ObservableCollection<Author> _allAuthors;
+    private ObservableCollection<Genre> _allGenres;
+    private ObservableCollection<BookLanguage> _allLanguages;
     private Author? _author;
+    private string _description;
     private Genre? _genre;
     private ObservableCollection<BookLanguage> _allLanguages;
     private ObservableCollection<Author> _allAuthors;
     private ObservableCollection<Genre> _allGenres;
-    private BookLanguage? _selectedLanguage;
 
-    public event Action? DialogClosed;
+    private string _isbn;
+    private BookLanguage? _selectedLanguage;
+    private string _title;
+    private string _udc;
 
     public AddUpdateBookViewModel()
     {
@@ -167,9 +166,33 @@ public class AddUpdateBookViewModel : ViewModelBase
         }
     }
 
+    public ObservableCollection<Genre> AllGenres
+    {
+        get => _allGenres;
+        set
+        {
+            if (Equals(value, _allGenres)) return;
+            _allGenres = value;
+            OnPropertyChanged(nameof(AllGenres));
+        }
+    }
+
+    public ObservableCollection<Author> AllAuthors
+    {
+        get => _allAuthors;
+        set
+        {
+            if (Equals(value, _allAuthors)) return;
+            _allAuthors = value;
+            OnPropertyChanged(nameof(AllAuthors));
+        }
+    }
+
     public ICommand AddBookCommand { get; }
     public ICommand UpdateBookCommand { get; }
     public ICommand CancelCommand { get; }
+
+    public event Action? DialogClosed;
 
     private void SetViewModelProperties(Book selectedBook)
     {
@@ -187,7 +210,8 @@ public class AddUpdateBookViewModel : ViewModelBase
         if (ErrorHappened())
             return;
 
-        _bookRepository.Add(new Book(Title, Description, Isbn, Udc.Split(Book.UdcSeparator).Select(int.Parse).ToList(), BindingType.Paperback, Author, (BookLanguage)SelectedLanguage, Genre));
+        _bookRepository.Add(new Book(Title, Description, Isbn, Udc.Split(Book.UdcSeparator).Select(int.Parse).ToList(),
+            BindingType.Paperback, Author, (BookLanguage)SelectedLanguage, Genre));
 
         CloseDialog();
     }
@@ -217,7 +241,7 @@ public class AddUpdateBookViewModel : ViewModelBase
 
     private void CloseDialog()
     {
-        Application.Current.Windows[1]?.Close();
+        Application.Current.Windows[2]?.Close();
         DialogClosed?.Invoke();
     }
 
