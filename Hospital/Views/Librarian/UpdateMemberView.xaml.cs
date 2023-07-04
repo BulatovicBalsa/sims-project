@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hospital.Views.Librarian.Patients
+namespace Hospital.Views.Librarian
 {
     /// <summary>
-    /// Interaction logic for UpdatePatientView.xaml
+    /// Interaction logic for UpdateMemberView.xaml
     /// </summary>
-    public partial class UpdatePatientView : Window
+    public partial class UpdateMemberView : Window
     {
-        public UpdatePatientView()
+        public UpdateMemberView()
         {
             InitializeComponent();
         }

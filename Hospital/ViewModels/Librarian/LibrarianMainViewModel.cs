@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Hospital.DTOs;
 using Hospital.Services;
-using Hospital.ViewModels.Librarian.Patients;
 using Hospital.Views;
 
 namespace Hospital.ViewModels.Librarian;
@@ -31,7 +30,7 @@ public class LibrarianMainViewModel : ViewModelBase
 
     private void ExecuteShowMembersViewCommand(object? obj)
     {
-        CurrentChildView = new PatientGridViewModel();
+        CurrentChildView = new MemberGridViewModel();
     }
 
 }

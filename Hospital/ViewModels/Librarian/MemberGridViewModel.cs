@@ -1,20 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Hospital.Models;
-using Hospital.Models.Patient;
 using Hospital.Repositories;
-using Hospital.Repositories.Patient;
-using Hospital.Views.Librarian.Patients;
+using Hospital.Views.Librarian;
 
-namespace Hospital.ViewModels.Librarian.Patients;
+namespace Hospital.ViewModels.Librarian;
 
-public class PatientGridViewModel : ViewModelBase
+public class MemberGridViewModel : ViewModelBase
 {
     private readonly MemberRepository _memberRepository;
     private ObservableCollection<Member> _members;
     private Member? _selectedMember;
 
-    public PatientGridViewModel()
+    public MemberGridViewModel()
     {
         _memberRepository = new MemberRepository();
         _members = new ObservableCollection<Member>(_memberRepository.GetAll());
@@ -58,11 +56,11 @@ public class PatientGridViewModel : ViewModelBase
     public ICommand AddMemberCommand { get; }
     public ICommand UpdateMemberCommand { get; }
     public ICommand DeleteMemberCommand { get; }
-    private void ExecuteAddMemberCommand (object obj)
+    private void ExecuteAddMemberCommand(object obj)
     {
-        var addPatientDialog = new AddPatientView
+        var addPatientDialog = new AddMemberView
         {
-            DataContext = new AddUpdatePatientViewModel(_memberRepository)
+            DataContext = new AddUpdateMemberViewModel(_memberRepository)
         };
 
         addPatientDialog.ShowDialog();
@@ -70,9 +68,9 @@ public class PatientGridViewModel : ViewModelBase
 
     private void ExecuteUpdateMemberCommand(object obj)
     {
-        var updatePatientDialog = new UpdatePatientView
+        var updatePatientDialog = new UpdateMemberView()
         {
-            DataContext = new AddUpdatePatientViewModel(_memberRepository, SelectedMember)
+            DataContext = new AddUpdateMemberViewModel(_memberRepository, SelectedMember)
         };
 
         updatePatientDialog.ShowDialog();

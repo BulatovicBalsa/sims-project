@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hospital.Views.Librarian"
         xmlns:viewModel="clr-namespace:Hospital.ViewModels.Librarian"
-        xmlns:patients="clr-namespace:Hospital.ViewModels.Librarian.Patients"
         mc:Ignorable="d"
         Title="LibrarianMainView" Height="510" Width="1100"
         WindowStyle="None"
@@ -18,8 +17,8 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type patients:PatientGridViewModel}">
-            <local:PatientGridView/>
+        <DataTemplate DataType="{x:Type viewModel:MemberGridViewModel}">
+            <local:MemberGridView/>
         </DataTemplate>
     </Window.Resources>
 

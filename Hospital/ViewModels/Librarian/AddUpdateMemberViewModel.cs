@@ -10,9 +10,9 @@ using Hospital.Repositories;
 using Hospital.Repositories.Memberships;
 using Hospital.Serialization;
 
-namespace Hospital.ViewModels.Librarian.Patients;
+namespace Hospital.ViewModels.Librarian;
 
-public class AddUpdatePatientViewModel : ViewModelBase
+public class AddUpdateMemberViewModel : ViewModelBase
 {
     private readonly MemberRepository _memberRepository;
     private readonly MembershipRepository _membershipRepository;
@@ -38,12 +38,12 @@ public class AddUpdatePatientViewModel : ViewModelBase
 
     public event Action? DialogClosed;
 
-    public AddUpdatePatientViewModel()
+    public AddUpdateMemberViewModel()
     {
         // dummy constructor
     }
 
-    public AddUpdatePatientViewModel(MemberRepository memberRepository)
+    public AddUpdateMemberViewModel(MemberRepository memberRepository)
     {
         _memberRepository = memberRepository;
         _membershipRepository = new MembershipRepository(new CsvSerializer<Membership>());
@@ -53,7 +53,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
         CancelCommand = new ViewModelCommand(ExecuteCancelCommand);
     }
 
-    public AddUpdatePatientViewModel(MemberRepository memberRepository, Member selectedMember)
+    public AddUpdateMemberViewModel(MemberRepository memberRepository, Member selectedMember)
     {
         _memberToUpdate = selectedMember;
         _memberRepository = memberRepository;
@@ -270,7 +270,7 @@ public class AddUpdatePatientViewModel : ViewModelBase
         if (ErrorHappened())
             return;
 
-        _memberRepository.Add(new Member(FirstName, LastName, DateTime.Parse(BirthDate), Email, PhoneNumber, 
+        _memberRepository.Add(new Member(FirstName, LastName, DateTime.Parse(BirthDate), Email, PhoneNumber,
             Jmbg, MembershipNumber, DateTime.Now.AddYears(1), new Membership(), Username, Password));
 
         CloseDialog();

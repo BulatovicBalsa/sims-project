@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Hospital.Views.Librarian
 {
     /// <summary>
-    /// Interaction logic for PatientGridView.xaml
+    /// Interaction logic for MemberGridView.xaml
     /// </summary>
-    public partial class PatientGridView : UserControl
+    public partial class MemberGridView : UserControl
     {
-        public PatientGridView()
+        public MemberGridView()
         {
             InitializeComponent();
         }
