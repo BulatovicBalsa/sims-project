@@ -47,7 +47,6 @@ namespace Hospital.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
-                LoadMedicalStaff();
             }
         }
         private bool _isAllMessagesSelected;
@@ -110,7 +109,6 @@ namespace Hospital.ViewModels
             SearchText = string.Empty;
             SendMessageCommand = new RelayCommand(SendMessage);
             LoadAllEmailMessages();
-            LoadMedicalStaff();
         }
 
         private void LoadAllEmailMessages()
@@ -127,11 +125,6 @@ namespace Hospital.ViewModels
         {
             var emailMessages = _emailMessageService.GetReceivedEmailMessagesByParticipant(_loggedUser.Id);
             EmailMessages = new ObservableCollection<EmailMessage>(emailMessages);
-        }
-        private void LoadMedicalStaff()
-        {
-            var allDoctorsAndLibrarians = _emailMessageService.GetMedicalStaffByFilter(_loggedUser.Id,SearchText);
-            MedicalStaff = new ObservableCollection<PersonDTO>(allDoctorsAndLibrarians);
         }
         private void SendMessage()
         {

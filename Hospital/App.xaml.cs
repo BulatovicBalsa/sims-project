@@ -19,29 +19,10 @@ namespace Hospital;
 public partial class App : Application
 {
     private const string _unsuccessfulLoginMessage = "Login was not successful.";
-    private readonly MedicationOrderService _medicationOrderService = new();
-    private readonly System.Timers.Timer _medicationOrderTimer = new(60000);
-    
-    private void ProcessEventsThatOccurredBeforeAppStart()
-    {
-        EquipmentOrderService.AttemptPickUpOfAllOrders();
-        try
-        {
-            TransferService.AttemptDeliveryOfAllTransfers();
-        }
-        catch
-        {
-            return;
-        }
-
-        _medicationOrderService.ExecuteMedicationOrders();
-    }
     
     protected void ApplicationStart(object sender, EventArgs e)
     {
         CultureInfo.CurrentCulture = new CultureInfo("sr-RS");
-        _medicationOrderTimer.Elapsed += ExecuteMedicationOrders;
-        _medicationOrderTimer.Enabled = true;
 
         var loginView = new LoginView();
         loginView.Show();
@@ -95,28 +76,9 @@ public partial class App : Application
 
                 var doctorView = new DoctorView(doctor);
                 doctorView.Show();
-
-                ShowNotifications(id);
             }
 
             loginView.Close();
         };
-    }
-
-    private void ShowNotifications(string id)
-    {
-        var notificationService = new NotificationService();
-        var notificationsToShow = notificationService.GetAllUnsent(id);
-
-        notificationsToShow.ForEach(notification =>
-        {
-            MessageBox.Show(notification.Message, "Notification");
-            notificationService.MarkSent(notification);
-        });
-    }
-
-    private void ExecuteMedicationOrders(object? source, ElapsedEventArgs e)
-    {
-        _medicationOrderService.ExecuteMedicationOrders();
     }
 }

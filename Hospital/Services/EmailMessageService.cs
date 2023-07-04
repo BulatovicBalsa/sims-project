@@ -37,12 +37,6 @@ namespace Hospital.Services
         {
             return _emailMessageRepository.GetSentMessagesByParticipant(id);
         }
-        public List<PersonDTO> GetMedicalStaffByFilter(string id, string searchText)
-        {
-            var filteredDoctors = _doctorService.GetDoctorsAsPersonDTOsByFilter(id, searchText);
-            var filteredLibrarians = _librarianService.GetLibrariansAsPersonDTOsByFilter(id, searchText);
-            return ConcatenateDoctorsAndLibrarians(filteredDoctors, filteredLibrarians);
-        }
 
         public void SendMessage(EmailMessage message)
         {

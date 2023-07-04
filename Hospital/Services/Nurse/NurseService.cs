@@ -20,10 +20,6 @@ namespace Hospital.Services
         {
             return _librarianRepository.GetAll();
         }
-        public List<PersonDTO> GetLibrariansAsPersonDTOsByFilter(string id, string searchText)
-        {
-            return _librarianRepository.GetLibrariansAsPersonDTOsByFilter(id, searchText);
-        }
 
         public PersonDTO GetLoggedInLibrarian()
         {
