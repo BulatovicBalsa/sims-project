@@ -13,6 +13,7 @@ public class LibrarianMainViewModel : ViewModelBase
     public LibrarianMainViewModel()
     {
         ShowMembersViewCommand = new ViewModelCommand(ExecuteShowMembersViewCommand);
+        ShowCopyViewCommand = new ViewModelCommand(ExecuteShowCopyViewCommand);
 
         ExecuteShowMembersViewCommand(null);
     }
@@ -27,10 +28,15 @@ public class LibrarianMainViewModel : ViewModelBase
         }
     }
     public ICommand ShowMembersViewCommand { get; }
+    public ICommand ShowCopyViewCommand { get; }
 
     private void ExecuteShowMembersViewCommand(object? obj)
     {
         CurrentChildView = new MemberGridViewModel();
     }
 
+    private void ExecuteShowCopyViewCommand(object? obj)
+    {
+        CurrentChildView = new CopyGridViewModel();
+    }
 }

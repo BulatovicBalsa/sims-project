@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type viewModel:MemberGridViewModel}">
             <local:MemberGridView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CopyGridViewModel}">
+            <local:CopyGridView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="15">
@@ -59,6 +62,14 @@
                             <TextBlock Text="Members" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowCopyViewCommand}"
+                                 IsChecked="False">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Copies" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
                 </StackPanel>
             </Border>
 

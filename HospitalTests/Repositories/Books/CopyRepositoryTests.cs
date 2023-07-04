@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hospital.Models.Books;
+using Hospital.Repositories.Books;
 using Hospital.Serialization;
 
 namespace Hospital.Repositories.Copys.Tests

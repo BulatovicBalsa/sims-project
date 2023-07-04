@@ -4,7 +4,7 @@ using System.IO;
 using Hospital.Models.Books;
 using Hospital.Serialization;
 
-namespace Hospital.Repositories.Copys;
+namespace Hospital.Repositories.Books;
 
 public class CopyRepository
 {
