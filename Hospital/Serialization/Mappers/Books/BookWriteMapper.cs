@@ -20,6 +20,7 @@ namespace Hospital.Serialization.Mappers.Books
             Map(book => book.Udc).Index(5).Convert(row => string.Join(Book.UdcSeparator, row.Value.Udc));
             Map(book => book.BindingType).Index(6);
             Map(book => book.Language).Index(7);
+            Map(book => book.Genre).Index(8);
         }
     }
 }
