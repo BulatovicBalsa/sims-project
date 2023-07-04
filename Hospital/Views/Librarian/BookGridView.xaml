@@ -27,7 +27,6 @@
                   SelectedItem="{Binding SelectedBook}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" IsReadOnly="True" Width="*" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="Description" IsReadOnly="True" Width="*" Binding="{Binding Description}"/>
                 <DataGridTextColumn Header="ISBN" IsReadOnly="True" Width="*" Binding="{Binding Isbn}"/>
                 <DataGridTextColumn Header="UDC" IsReadOnly="True" Width="*" Binding="{Binding UdcAsString}"/>
                 <DataGridTextColumn Header="Language" IsReadOnly="True" Width="*" Binding="{Binding Language}"/>
