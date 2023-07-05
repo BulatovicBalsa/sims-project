@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Library.Views.Librarian.MemberGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:librarian="clr-namespace:Library.ViewModels.Librarian"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Transparent">
+
+    <UserControl.DataContext>
+        <librarian:MemberGridViewModel></librarian:MemberGridViewModel>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="PatientsDataGrid" 
+                  ItemsSource="{Binding Path=Members}" 
+                  Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{DynamicResource DataGridCellStyle}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{DynamicResource DataGridRowStyle}"
+                  SelectedItem="{Binding SelectedMember}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last name" IsReadOnly="True" Width="*" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="JMBG" IsReadOnly="True" Width="*" Binding="{Binding Jmbg}"/>
+                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Phone number" IsReadOnly="True" Width="*" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Username" IsReadOnly="True" Width="*" Binding="{Binding Profile.Username}"/>
+                <DataGridTextColumn Header="Type" IsReadOnly="True" Width="*" Binding="{Binding Membership.Name}"/>
+                <DataGridTextColumn Header="Number" IsReadOnly="True" Width="*" Binding="{Binding MembershipNumber}"/>
+                <DataGridTextColumn Header="Expires" IsReadOnly="True" Width="*" Binding="{Binding MembershipExpires, StringFormat={}{0:dd/MM/yyyy}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button Content="Add" Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding AddMemberCommand}"/>
+            <Button Content="Update" 
+                    Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding UpdateMemberCommand}"/>
+            <Button Content="Delete" 
+                    Style="{StaticResource ActionButton}" 
+                    Margin="0,0,10,0"
+                    Command="{Binding DeleteMemberCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
