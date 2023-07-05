@@ -4,7 +4,7 @@ using Library.Models.Memberships;
 namespace Library.Models
 {
     public class Member : Person
-    {
+    {   
         public string MembershipNumber { get; set; }
         public DateTime MembershipExpires { get; set; }
         public Membership Membership { get; set; }
