@@ -26,7 +26,7 @@ namespace Library.ViewModels.Librarian
         public LoanManagementViewModel()
         {
             Loans =
-                new ObservableCollection<Loan>(_loanService.GetAll());
+                new ObservableCollection<Loan>(_loanService.GetCurrentLoans());
             _loans = Loans;
 
             AddLoanCommand = new RelayCommand(AddLoan);
@@ -59,7 +59,7 @@ namespace Library.ViewModels.Librarian
         private void DefaultLoanView()
         {
             Loans.Clear();
-            _loanService.GetAll().ForEach(Loans.Add);
+            _loanService.GetCurrentLoans().ForEach(Loans.Add);
         }
 
         private void AddLoan()

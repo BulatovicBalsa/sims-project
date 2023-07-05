@@ -153,6 +153,12 @@ public class LoanRepository
         return GetAll(member).Where(loan => loan.End is null).ToList();
     }
 
+    public List<Loan> GetCurrentLoans()
+    {
+        return GetAll().Where(loan => loan.End is null).ToList();
+    }
+
+
     public bool IsFree(string inventoryNumber)
     {
         var copyRepository = new CopyRepository(new JsonSerializer<Copy>());
