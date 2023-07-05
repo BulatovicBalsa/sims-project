@@ -100,7 +100,7 @@ public class LoanRepository
 
     private bool IsReachedMaxActiveLoans(Member member)
     {
-        return GetCurrentLoans(member).Count >= Member.MaxNumberOfActiveLoans;
+        return GetCurrentLoans(member).Count >= member.Membership.BookLimit;
     }
 
     public void Update(Loan loan)
