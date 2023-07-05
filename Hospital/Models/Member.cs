@@ -4,7 +4,7 @@ using Hospital.Models.Memberships;
 namespace Hospital.Models
 {
     public class Member : Person
-    {
+    {   
         public string MembershipNumber { get; set; }
         public DateTime MembershipExpires { get; set; }
         public Membership Membership { get; set; }
