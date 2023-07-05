@@ -24,13 +24,14 @@
 
 ## Bibliotekar:
     Ukoliko je ulogovani korisnik bibliotekar, funkcionalnosti koje on moze da izvrsava su vezane za 
-    upravljanje clanovima biblioteke i upravljanje katalogom 
+    upravljanje clanovima biblioteke, upravljanje katalogom i upravljanje pozajmicama
     
 ### Izgled prozora bibiliotekara:
 <div align="center">
   <img src="img/image2.png" alt="Upravljanje clanovima" />
   <img src="img/image3.png" alt="Upravljanje primercima" />
   <img src="img/image4.png" alt="Upravljanje naslovima" />
+  <img src="img/image9.png" alt="Upravljanje pozajmicama" />
 </div>
 
 ## Clan
@@ -42,7 +43,7 @@
   <img src="img/image5.png" alt="Upravljanje naslovima" />
 </div>
 
-### Primer detaljnog prikaza informacija o knjizi i kreiranje pozajmice:
+## Primer detaljnog prikaza informacija o knjizi i kreiranje pozajmice:
 <div align="center">
   <img src="img/image6.png" alt="Detaljne informacije knjige"/>
   <img src="img/image7.png" alt="Kreiranje pozajmice" />
