@@ -160,7 +160,7 @@ public class ModifyLoanViewModel : ViewModelBase
         }
         catch (MemberHasReachedMaxLoansException ex)
         {
-            MessageBox.Show(ex.Message, "Eror", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 
