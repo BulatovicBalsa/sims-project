@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Library.Views.Librarian.LoanGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Library.Views.Librarian"
+             xmlns:viewModel="clr-namespace:Library.ViewModels.Librarian"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:LoanManagementViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="0,0,0, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Loaned books" FontSize="20" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button x:Name="BtnAddLoan"
+                            Style="{DynamicResource ActionButton}"
+                            Content="Add Loan"
+                            Margin="5" Command="{Binding AddLoanCommand}"/>
+            <Button x:Name="BtnReturnLoan"
+                            Style="{DynamicResource ActionButton}"
+                            Content="Return Loan"
+                            Margin="5" Command="{Binding ReturnLoanCommand}"/>
+            <Button x:Name="BtnUpdateLoan"
+                            Style="{DynamicResource ActionButton}"
+                            Content="Update Loan"
+                            Margin="5" Command="{Binding UpdateLoanCommand}"/>
+            <Button x:Name="BtnDeleteLoan"
+                            Style="{DynamicResource ActionButton}"
+                            Content="Delete Loan"
+                            Margin="5" Command="{Binding DeleteLoanCommand}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="LoansDataGrid"
+                          Style="{DynamicResource DataGridStyle}" 
+                          CellStyle="{DynamicResource DataGridCellStyle}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}" 
+                          RowStyle="{DynamicResource DataGridRowStyle}"
+                          ItemsSource="{Binding Loans}" SelectedItem="{Binding SelectedLoan}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Book.Title}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Member" Binding="{Binding Member}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Book.Author}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Loan start" Binding="{Binding Start}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Inventory number" Binding="{Binding InventoryNumber}" IsReadOnly="True" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

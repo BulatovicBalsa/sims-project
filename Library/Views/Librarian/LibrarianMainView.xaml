@@ -26,6 +26,9 @@
         <DataTemplate DataType="{x:Type librarian:BookGridViewModel}">
             <librarian1:BookGridView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type librarian:LoanManagementViewModel}">
+            <librarian1:LoanGridView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="15">
@@ -78,6 +81,13 @@
                                  Command="{Binding ShowBooksViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Books" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource MenuButton}"
+                                 Command="{Binding ShowLoansViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Loans" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>
