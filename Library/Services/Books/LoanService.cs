@@ -55,6 +55,11 @@ public class LoanService
         return _loanRepository.GetCurrentLoans(member);
     }
 
+    public List<Loan> GetCurrentLoans()
+    {
+        return _loanRepository.GetCurrentLoans();
+    }
+
     public void Return(Loan loan)
     {
         loan.Return();
