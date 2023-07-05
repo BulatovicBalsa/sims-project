@@ -24,7 +24,7 @@
 
 ## Bibliotekar:
     Ukoliko je ulogovani korisnik bibliotekar, funkcionalnosti koje on moze da izvrsava su vezane za 
-    upravljanje clanovima biblioteke i upravljanje katalogom 
+    upravljanje clanovima biblioteke, upravljanje katalogom i upravljanje pozajmicama
     
 ### Izgled prozora bibiliotekara:
 <div align="center">
