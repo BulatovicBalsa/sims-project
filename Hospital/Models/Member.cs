@@ -5,7 +5,6 @@ namespace Hospital.Models
 {
     public class Member : Person
     {   
-        public const int MaxNumberOfActiveLoans = 5;
         public string MembershipNumber { get; set; }
         public DateTime MembershipExpires { get; set; }
         public Membership Membership { get; set; }
