@@ -14,6 +14,10 @@ public class LoanService
     private readonly LoanRepository _loanRepository = new(SerializerInjector.CreateInstance<ISerializer<Loan>>());
     private readonly CopyRepository _copyRepository = new(new JsonSerializer<Copy>());
 
+    public List<Loan> GetAll()
+    {
+        return _loanRepository.GetAll();
+    }
     public List<Loan> GetAll(Member member)
     {
         return _loanRepository.GetAll(member);
@@ -49,6 +53,11 @@ public class LoanService
     public List<Loan> GetCurrentLoans(Member member)
     {
         return _loanRepository.GetCurrentLoans(member);
+    }
+
+    public List<Loan> GetCurrentLoans()
+    {
+        return _loanRepository.GetCurrentLoans();
     }
 
     public void Return(Loan loan)
