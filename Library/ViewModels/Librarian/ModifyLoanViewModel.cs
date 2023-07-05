@@ -152,9 +152,7 @@ namespace Library.ViewModels.Librarian
                 else
                 {
                     _loanService.Add(createdLoan);
-                    _loanCollection.Clear();
-                    _loanService.GetCurrentLoans(_member)
-                        .ForEach(loanInRange => _loanCollection.Add(loanInRange));
+                    _loanCollection.Add(createdLoan);
                 }
             }
             catch (BookAlreadyLoanedException ex)
